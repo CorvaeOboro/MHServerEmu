@@ -917,9 +917,6 @@ namespace MHServerEmu.Games.Entities.Avatars
             if (base.OnPowerUnassigned(power) == false)
                 return false;
 
-            if (_pendingAction.PowerProtoRef == power.PrototypeDataRef)
-                CancelPendingAction();
-
             // This fixes PowerChargesMaxBonusForKwd.
             if (GetPowerChargesMax(power.PrototypeDataRef) > 0)
                 Properties.RemoveProperty(new(PropertyEnum.PowerChargesMaxBonus, power.PrototypeDataRef));
@@ -1126,7 +1123,21 @@ namespace MHServerEmu.Games.Entities.Avatars
                     if (!Verify.IsNotNull(throwCancelPower)) return PowerUseResult.GenericError;
                     
                     if (throwCancelPower.Prototype != powerProto)
-                        return PowerUseResult.PowerInProgress;
+                    {
+                        // Configurable auto-cancel: drop the throwable and allow the new power to proceed
+                        if (Game?.CustomGameOptions?.AutoCancelThrowableOnPowerUse == true)
+                        {
+                            TryRestoreThrowable();
+                            if (GetThrowablePower() != null)
+                                UnassignPower(GetThrowablePower().PrototypeDataRef);
+                            if (GetThrowableCancelPower() != null)
+                                UnassignPower(GetThrowableCancelPower().PrototypeDataRef);
+                        }
+                        else
+                        {
+                            return PowerUseResult.PowerInProgress;
+                        }
+                    }
                 }
             }
 

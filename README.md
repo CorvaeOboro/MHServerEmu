@@ -1,6 +1,34 @@
 # MHServerEmu
-
 MHServerEmu is a server emulator for Marvel Heroes.
+- this is a modded fork , the original can be found at https://github.com/crypto137/MHServerEmu
+- major thanks to the original developers and contributors 
+
+## FORKED CHANGES
+a focus on QualityOfLife looting features , these are work in progress and not optimized for multiplayer .
+most of these modded features have options in the config.ini , or are controlled with in game commands , last few are patch based and client side edits . 
+
+- loot filtering by rarity for more item types ( ring , medal , insignia , teamup , catalyst ) controlled by player commands ( !filter set ring epic)
+- loot filtering by character exclusivity ( optionaly remove dropped items for characters that your not currently , SoloSelfFound-ish )
+- auto pickup of "currency" items ( eternity splinters , cosmic worldshards ) default is screenwide (1400)
+- auto pickup and stashing of crafting ingredients ( treating them more like currency items )
+- throwable environment props more easily cancellable ( any ability cancels ) or may disable interaction completely ( most characters dont want to be throwing props or getting locked in the animation )
+- chest items auto open in player inventory ( common chests are by default opened , rare "chests" like cards are not tho could be configured by whitelist in the config )
+- orb pickup radius increased to full screen pickup ( a patch .json mod ) 
+- "Power Not Ready" red onscreen message removed ( edited Client localization file ) 
+
+## FORKED INSTALL
+- backup any existing MHServerEmu and accounts .db 
+- build the server using Build.bat
+- for increased Orb pickup radius = copy the patch into the built serveremu ( MHServerEmu\bin\x64\Release\net8.0\Data\Game\Patches )
+- to remove the "Power Not Ready" message  = copy the .string file in the /client folder to your game installation folder ( C:\Steam\steamapps\common\Marvel Heroes\Data\Game\Loco\eng.all)
+- adjust the settings in the config.ini of server to you preference defaults are all enabled 
+- start server
+- commands in game : `!filter list` , for example show only cosmic+ rings = `!filter set ring epic`  
+
+## FORKED NOTES
+the modded features are implmented primarily with singleplayer self-hosted server in mind , it has not been optimized or hardened for multiplayer and so it may be cheatable dupeable or cause lag  
+
+# MHServerEmu ORIGINAL README BEGINS //=========================================
 
 The only currently supported version of the game client is **1.52.0.1700** (also known as **2.16a**) released on September 7th, 2017.
 

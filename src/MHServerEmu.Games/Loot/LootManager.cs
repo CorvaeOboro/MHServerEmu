@@ -171,6 +171,9 @@ namespace MHServerEmu.Games.Loot
             if ((lootTypes & (LootType.Item | LootType.Agent | LootType.Credits | LootType.Currency)) == 0)
                 return true;
 
+            // Apply custom loot filters (Ring, Medal, Insignia) - pure removal, no credits/PetTech XP
+            LootFilterHelper.ApplyFilters(player, lootResultSummary, recipient.PrototypeDataRef);
+
             // Finalize vaporization (early exit if everything was vaporized)
             ulong sourceEntityId = sourceEntity != null ? sourceEntity.Id : Entity.InvalidId;
 

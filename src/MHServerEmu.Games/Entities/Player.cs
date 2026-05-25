@@ -88,6 +88,8 @@ namespace MHServerEmu.Games.Entities
 
         private readonly EventPointer<SwitchAvatarEvent> _switchAvatarEvent = new();
         private readonly EventPointer<CheckHoursPlayedEvent> _checkHoursPlayedEvent = new();
+        private readonly EventPointer<ItemAutoPickupEvent> _itemAutoPickupEvent = new();
+        private readonly EventPointer<ChestAutoOpenEvent> _chestAutoOpenEvent = new();
         private readonly EventPointer<ScheduledHUDTutorialResetEvent> _hudTutorialResetEvent = new();
         private readonly EventPointer<CommunityBroadcastEvent> _communityBroadcastEvent = new();
         private readonly EventPointer<CommunityPartyCircleChangedEvent> _communityPartyCircleChangedEvent = new();
@@ -98,6 +100,8 @@ namespace MHServerEmu.Games.Entities
         private readonly EventGroup _pendingEvents = new();
 
         private readonly PropertyCollection _permaBuffProperties = new();
+
+        public Loot.PlayerLootFilter LootFilter { get; private set; }
 
         private ReplicatedPropertyCollection _avatarProperties = new();
         private ulong _shardId;     // This was probably used for database sharding, we don't need this
@@ -505,6 +509,9 @@ namespace MHServerEmu.Games.Entities
             InitializeVendors();
             ScheduleAutosave();
             ScheduleCheckHoursPlayedEvent();
+            ScheduleItemAutoPickupEvent();
+            ScheduleChestAutoOpenEvent();
+            LootFilter = PlayerLootFilterStorage.Load(DatabaseUniqueId);
             UpdateUISystemLocks();
 
             Game.GuildManager.OnPlayerEnteringGame(this);
@@ -3956,6 +3963,382 @@ namespace MHServerEmu.Games.Entities
 
         #endregion
 
+        #region Item Auto-Pickup (currency-only magnet)
+
+        /// <summary>
+        /// Periodic per-player tick that vacuums up nearby <see cref="Item"/> entities flagged as
+        /// currency (Eternity Splinters, Cube Shards, Runestones, all the various Marks, etc.).
+        /// Controlled by <c>CustomGameOptionsConfig.EnableItemAutoPickup</c> and friends.
+        /// </summary>
+        private void DoItemAutoPickupTick()
+        {
+            // Respect the live config toggle so admins can flip it off without a restart.
+            var customOptions = Game?.CustomGameOptions;
+            if (customOptions == null || customOptions.EnableItemAutoPickup == false)
+                return;
+
+            Avatar avatar = CurrentAvatar;
+            Region region = avatar?.Region;
+            if (avatar == null || avatar.IsInWorld == false || region == null)
+            {
+                // Player may be transitioning regions or dead; just try again next tick.
+                ScheduleItemAutoPickupEvent();
+                return;
+            }
+
+            float radius = Math.Max(1f, customOptions.ItemAutoPickupRadius);
+            Sphere volume = new(avatar.RegionLocation.Position, radius);
+
+            // Gather candidates into a list first so we can safely mutate the world (destroy items)
+            // outside the spatial-partition iteration. Same pattern as PetTech vacuum.
+            using var candidatesHandle = ListPool<Item>.Instance.Get(out List<Item> candidates);
+            HashSet<Item> pickedUp = new();
+            foreach (WorldEntity worldEntity in region.IterateEntitiesInVolume(volume, new()))
+            {
+                if (worldEntity is not Item item)
+                    continue;
+
+                // Instanced loot: skip items belonging to other players.
+                ulong restrictedToPlayerGuid = item.Properties[PropertyEnum.RestrictedToPlayerGuid];
+                if (restrictedToPlayerGuid != 0 && restrictedToPlayerGuid != DatabaseUniqueId)
+                    continue;
+
+                // Only consider items currently on the ground (root-owner). Already-inventoried
+                // items would have a non-root owner.
+                if (item.IsRootOwner == false)
+                    continue;
+
+                // Currency-only filter: ItemPrototype.IsCurrency is true when the item carries
+                // PropertyEnum.ItemCurrency (Eternity Splinters, Cube Shards, Runestones, Marks).
+                if (item.Prototype is not ItemPrototype itemProto || itemProto.IsCurrency == false)
+                    continue;
+
+                candidates.Add(item);
+            }
+
+            foreach (Item item in candidates)
+            {
+                // AcquireCurrencyItem returns true only after successfully applying currency props.
+                // It rejects non-currency items, so this is a defensive double-check.
+                if (AcquireCurrencyItem(item) == false)
+                    continue;
+
+                pickedUp.Add(item);
+                avatar.TryActivateOnLootPickupProcs(item);
+                item.Destroy();
+            }
+
+            // --- Crafting ingredient pickup (additive, runs after currency loop) ---
+            if (customOptions.EnableCraftingIngredientAutoPickup)
+            {
+                bool verbose = customOptions.EnableCraftingIngredientAutoPickupVerboseLogging;
+                if (verbose)
+                    Logger.Trace($"[ItemAutoPickupCrafting] Starting crafting ingredient scan for player [{this}]. radius={radius}, toStash={customOptions.CraftingIngredientAutoPickupToStash}");
+                candidates.Clear();
+                int scanned = 0;
+                int filteredOut = 0;
+                foreach (WorldEntity worldEntity in region.IterateEntitiesInVolume(volume, new()))
+                {
+                    if (worldEntity is not Item item)
+                        continue;
+
+                    scanned++;
+                    string protoName = GameDatabase.GetPrototypeName(item.Prototype.DataRef);
+
+                    ulong restrictedToPlayerGuid = item.Properties[PropertyEnum.RestrictedToPlayerGuid];
+                    if (restrictedToPlayerGuid != 0 && restrictedToPlayerGuid != DatabaseUniqueId)
+                    {
+                        if (verbose)
+                            Logger.Trace($"[ItemAutoPickupCrafting] Skipping [{protoName}] \u2014 instanced loot for another player.");
+                        filteredOut++;
+                        continue;
+                    }
+
+                    if (item.IsRootOwner == false)
+                    {
+                        if (verbose)
+                            Logger.Trace($"[ItemAutoPickupCrafting] Skipping [{protoName}] \u2014 not a root-owned item (already in inventory).");
+                        filteredOut++;
+                        continue;
+                    }
+
+                    // Only auto-pickup specific crafting ingredients (Astral, Genome, Nano, Ionic element protos)
+                    if (protoName.EndsWith("/Astral.prototype") == false &&
+                        protoName.EndsWith("/Genome.prototype") == false &&
+                        protoName.EndsWith("/Nano.prototype") == false &&
+                        protoName.EndsWith("/Ionic.prototype") == false)
+                    {
+                        if (verbose)
+                            Logger.Trace($"[ItemAutoPickupCrafting] Skipping [{protoName}] \u2014 not a whitelisted crafting ingredient.");
+                        filteredOut++;
+                        continue;
+                    }
+
+                    if (pickedUp.Contains(item))
+                    {
+                        if (verbose)
+                            Logger.Trace($"[ItemAutoPickupCrafting] Skipping [{protoName}] \u2014 already picked up by currency loop.");
+                        filteredOut++;
+                        continue;
+                    }
+
+                    if (verbose)
+                        Logger.Trace($"[ItemAutoPickupCrafting] Candidate accepted: [{protoName}]");
+                    candidates.Add(item);
+                }
+
+                if (verbose)
+                    Logger.Trace($"[ItemAutoPickupCrafting] Scan complete. scanned={scanned}, filteredOut={filteredOut}, candidates={candidates.Count}");
+
+                foreach (Item item in candidates)
+                {
+                    string protoName = GameDatabase.GetPrototypeName(item.Prototype.DataRef);
+                    InventoryResult result;
+                    if (customOptions.CraftingIngredientAutoPickupToStash)
+                    {
+                        if (verbose)
+                            Logger.Trace($"[ItemAutoPickupCrafting] Attempting stash pickup for [{protoName}]...");
+                        result = TryAutoPickupToStash(item);
+                    }
+                    else
+                    {
+                        if (verbose)
+                            Logger.Trace($"[ItemAutoPickupCrafting] Attempting general inventory pickup for [{protoName}]...");
+                        result = TryAutoPickupToInventory(item);
+                    }
+
+                    if (result == InventoryResult.Success)
+                    {
+                        Logger.Info($"[ItemAutoPickupCrafting] Successfully picked up [{protoName}] for player [{this}].");
+                        avatar.TryActivateOnLootPickupProcs(item);
+                        item.Destroy();
+                    }
+                    else
+                    {
+                        if (verbose)
+                            Logger.Trace($"[ItemAutoPickupCrafting] Pickup failed for [{protoName}] \u2014 result={result}. Leaving on ground.");
+                    }
+                }
+            }
+
+            ScheduleItemAutoPickupEvent();
+        }
+
+        /// <summary>
+        /// Attempts to move an item into the player's general inventory.
+        /// </summary>
+        private InventoryResult TryAutoPickupToInventory(Item item)
+        {
+            Inventory inventory = GetInventory(InventoryConvenienceLabel.General);
+            if (inventory == null)
+                return InventoryResult.NoAvailableInventory;
+
+            ulong? stackEntityId = InvalidId;
+            return item.ChangeInventoryLocation(inventory, Inventory.InvalidSlot, ref stackEntityId, true);
+        }
+
+        /// <summary>
+        /// Attempts to move an item into the first unlocked stash tab that accepts it,
+        /// falling back to the general inventory if no stash tab works.
+        /// </summary>
+        private InventoryResult TryAutoPickupToStash(Item item)
+        {
+            using var stashRefsHandle = ListPool<PrototypeId>.Instance.Get(out List<PrototypeId> stashRefs);
+            if (GetStashInventoryProtoRefs(stashRefs, getLocked: false, getUnlocked: true))
+            {
+                foreach (PrototypeId stashRef in stashRefs)
+                {
+                    Inventory stashInv = GetInventoryByRef(stashRef);
+                    if (stashInv == null) continue;
+
+                    if (stashInv.Prototype.AllowEntity(item.Prototype) == false)
+                        continue;
+
+                    ulong? stackEntityId = InvalidId;
+                    InventoryResult result = item.ChangeInventoryLocation(stashInv, Inventory.InvalidSlot, ref stackEntityId, true);
+                    if (result == InventoryResult.Success)
+                        return result;
+                }
+            }
+
+            // Fall back to general inventory
+            return TryAutoPickupToInventory(item);
+        }
+
+        private void ScheduleItemAutoPickupEvent()
+        {
+            if (_itemAutoPickupEvent.IsValid) return;
+            var scheduler = Game?.GameEventScheduler;
+            if (scheduler == null) return;
+            var customOptions = Game.CustomGameOptions;
+            if (customOptions == null || customOptions.EnableItemAutoPickup == false) return;
+
+            // Clamp the interval to a sane floor so misconfiguration can't busy-loop the scheduler.
+            int intervalMs = Math.Max(50, customOptions.ItemAutoPickupIntervalMs);
+            scheduler.ScheduleEvent(_itemAutoPickupEvent, TimeSpan.FromMilliseconds(intervalMs), _pendingEvents);
+            _itemAutoPickupEvent.Get().Initialize(this);
+        }
+
+        private void DoChestAutoOpenTick()
+        {
+            var customOptions = Game?.CustomGameOptions;
+            if (customOptions == null || customOptions.EnableItemChestAutoOpen == false)
+            {
+                Logger.Trace("DoChestAutoOpenTick(): Mod disabled or config missing.");
+                return;
+            }
+
+            bool verbose = customOptions.EnableItemChestAutoOpenVerboseLogging;
+
+            Avatar avatar = CurrentAvatar;
+            if (avatar == null || avatar.IsInWorld == false)
+            {
+                if (verbose)
+                    Logger.Trace($"DoChestAutoOpenTick(): Avatar null or not in world. avatar=[{avatar}]. Rescheduling.");
+                ScheduleChestAutoOpenEvent();
+                return;
+            }
+
+            Inventory generalInv = GetInventory(InventoryConvenienceLabel.General);
+            if (generalInv == null)
+            {
+                if (verbose)
+                    Logger.Trace("DoChestAutoOpenTick(): General inventory is null. Rescheduling.");
+                ScheduleChestAutoOpenEvent();
+                return;
+            }
+
+            if (verbose)
+                Logger.Trace($"DoChestAutoOpenTick(): Scanning General inventory with {generalInv.Count} item(s) for player [{this}].");
+
+            var whitelist = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            string configWhitelist = customOptions.ItemChestAutoOpenWhitelist;
+            if (string.IsNullOrWhiteSpace(configWhitelist) == false)
+            {
+                foreach (string part in configWhitelist.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                {
+                    string trimmed = part.Trim();
+                    if (trimmed.Length > 0)
+                        whitelist.Add(trimmed);
+                }
+            }
+            else
+            {
+                whitelist.Add("Chest");
+                whitelist.Add("Crate");
+                whitelist.Add("LootBox");
+                whitelist.Add("Giftbox");
+                whitelist.Add("GiftBox");
+            }
+
+            if (verbose)
+                Logger.Trace($"DoChestAutoOpenTick(): Whitelist patterns ({whitelist.Count}): [{string.Join(", ", whitelist)}]");
+
+            foreach (var entry in generalInv)
+            {
+                Item item = Game.EntityManager.GetEntity<Item>(entry.Id);
+                if (item == null)
+                {
+                    if (verbose)
+                        Logger.Trace($"DoChestAutoOpenTick(): Skipping slot {entry.Slot} \u2014 entity not found for Id={entry.Id}.");
+                    continue;
+                }
+
+                string protoName = GameDatabase.GetPrototypeName(item.Prototype.DataRef);
+                if (verbose)
+                    Logger.Trace($"DoChestAutoOpenTick(): Evaluating item [{protoName}] at slot {entry.Slot}.");
+
+                if (item.Prototype is not ItemPrototype itemProto)
+                {
+                    if (verbose)
+                        Logger.Trace($"DoChestAutoOpenTick(): Skipping [{protoName}] \u2014 not an ItemPrototype.");
+                    continue;
+                }
+
+                if (itemProto.IsUsable == false)
+                {
+                    if (verbose)
+                        Logger.Trace($"DoChestAutoOpenTick(): Skipping [{protoName}] \u2014 IsUsable is false.");
+                    continue;
+                }
+
+                bool isWhitelisted = false;
+                string matchedPattern = null;
+                foreach (string pattern in whitelist)
+                {
+                    if (protoName.Contains(pattern, StringComparison.OrdinalIgnoreCase))
+                    {
+                        isWhitelisted = true;
+                        matchedPattern = pattern;
+                        break;
+                    }
+                }
+
+                if (isWhitelisted == false)
+                {
+                    if (verbose)
+                        Logger.Trace($"DoChestAutoOpenTick(): Skipping [{protoName}] \u2014 no whitelist match.");
+                    continue;
+                }
+
+                if (verbose)
+                    Logger.Trace($"DoChestAutoOpenTick(): [{protoName}] matched whitelist pattern '{matchedPattern}'.");
+
+                bool canUse = item.CanUse(avatar, checkPower: true, checkInventory: false);
+                if (canUse == false)
+                {
+                    if (verbose)
+                        Logger.Trace($"DoChestAutoOpenTick(): Skipping [{protoName}] \u2014 CanUse returned false.");
+                    continue;
+                }
+
+                if (verbose)
+                    Logger.Trace($"DoChestAutoOpenTick(): Attempting to open [{protoName}] for player [{this}]...");
+                bool opened = item.InteractWithAvatar(avatar);
+                if (opened)
+                    Logger.Info($"DoChestAutoOpenTick(): Successfully opened [{protoName}] for player [{this}].");
+                else
+                    Logger.Warn($"DoChestAutoOpenTick(): InteractWithAvatar returned false for [{protoName}].");
+
+                ScheduleChestAutoOpenEvent();
+                return;
+            }
+
+            if (verbose)
+                Logger.Trace("DoChestAutoOpenTick(): No openable chests found in General inventory. Rescheduling next scan.");
+            ScheduleChestAutoOpenEvent();
+        }
+
+        private void ScheduleChestAutoOpenEvent()
+        {
+            if (_chestAutoOpenEvent.IsValid)
+            {
+                Logger.Trace("ScheduleChestAutoOpenEvent(): Event already valid, not rescheduling.");
+                return;
+            }
+            var scheduler = Game?.GameEventScheduler;
+            if (scheduler == null)
+            {
+                Logger.Trace("ScheduleChestAutoOpenEvent(): Scheduler is null.");
+                return;
+            }
+            var customOptions = Game.CustomGameOptions;
+            if (customOptions == null || customOptions.EnableItemChestAutoOpen == false)
+            {
+                Logger.Trace("ScheduleChestAutoOpenEvent(): Mod disabled or config missing.");
+                return;
+            }
+
+            bool verbose = customOptions.EnableItemChestAutoOpenVerboseLogging;
+            int cooldownMs = Math.Max(500, customOptions.ItemChestAutoOpenCooldownMs);
+            if (verbose)
+                Logger.Trace($"ScheduleChestAutoOpenEvent(): Scheduling next tick in {cooldownMs}ms for player [{this}].");
+            scheduler.ScheduleEvent(_chestAutoOpenEvent, TimeSpan.FromMilliseconds(cooldownMs), _pendingEvents);
+            _chestAutoOpenEvent.Get().Initialize(this);
+        }
+
+        #endregion
+
         #region Tutorial
 
         public void UnlockNewPlayerUISystems()
@@ -4812,6 +5195,16 @@ namespace MHServerEmu.Games.Entities
         private class CheckHoursPlayedEvent : CallMethodEvent<Player>
         {
             protected override CallbackDelegate GetCallback() => (player) => player.CheckHoursPlayed();
+        }
+
+        private class ItemAutoPickupEvent : CallMethodEvent<Player>
+        {
+            protected override CallbackDelegate GetCallback() => (player) => player.DoItemAutoPickupTick();
+        }
+
+        private class ChestAutoOpenEvent : CallMethodEvent<Player>
+        {
+            protected override CallbackDelegate GetCallback() => (player) => player.DoChestAutoOpenTick();
         }
 
         private class CommunityBroadcastEvent : CallMethodEvent<Entity>

@@ -403,6 +403,17 @@ namespace MHServerEmu.Games.Entities
                         if (activePower.IsEnding == false)
                             activePower.EndPower(EndPowerFlags.ExplicitCancel | EndPowerFlags.Interrupting);
                     }
+                    else if (activePower.IsThrowablePower() && Game?.CustomGameOptions?.AutoThrowOnMovementPower == true)
+                    {
+                        // Auto-throw held object before proceeding with the new power
+                        Power throwablePower = GetThrowablePower();
+                        if (throwablePower != null)
+                        {
+                            // Activate the throwable power to throw it, then let the cleanup proceed
+                            PowerActivationSettings throwSettings = new(targetId, targetPosition, RegionLocation.Position);
+                            throwablePower.Activate(ref throwSettings);
+                        }
+                    }
                     else
                     {
                         return PowerUseResult.PowerInProgress;
@@ -578,6 +589,17 @@ namespace MHServerEmu.Games.Entities
         public bool StartThrowing(ulong entityId)
         {
             if (Properties[PropertyEnum.ThrowableOriginatorEntity] == entityId) return true;
+
+            // Configurable opt-out: prevent picking up interactive throwables entirely
+            if (Game?.CustomGameOptions?.DisableInteractiveThrowables == true)
+            {
+                if (this is Avatar)
+                {
+                    Player player = GetOwnerOfType<Player>();
+                    player?.SendMessage(NetMessageCancelPendingActionToClient.CreateBuilder().SetAvatarIndex(0).Build());
+                }
+                return false;
+            }
 
             // Validate entity
             WorldEntity throwableEntity = Game.EntityManager.GetEntity<WorldEntity>(entityId);

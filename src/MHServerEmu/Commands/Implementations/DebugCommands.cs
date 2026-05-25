@@ -1,5 +1,6 @@
 ﻿using System.Runtime;
 using System.Text;
+using System.Text.Json;
 using Gazillion;
 using MHServerEmu.Commands.Attributes;
 using MHServerEmu.Core.Helpers;
@@ -12,6 +13,7 @@ using MHServerEmu.Games.Common;
 using MHServerEmu.Games.Entities;
 using MHServerEmu.Games.Entities.Avatars;
 using MHServerEmu.Games.GameData;
+using MHServerEmu.Games.GameData.Calligraphy;
 using MHServerEmu.Games.GameData.Prototypes;
 using MHServerEmu.Games.Navi;
 using MHServerEmu.Games.Network;
@@ -290,6 +292,125 @@ namespace MHServerEmu.Commands.Implementations
             else
             {
                 return sb.ToString();
+            }
+        }
+
+        [Command("listorbs")]
+        [CommandDescription("Lists every concrete ProceduralProfileOrbPrototype with its OrbRadius. " +
+            "If a multiplier is supplied, also writes a ready-to-use PatchDataPickupRadiusOrbs.json " +
+            "into Data/Game/Patches/ that scales every orb's OrbRadius by that factor.")]
+        [CommandUsage("debug listorbs [multiplier]")]
+        [CommandUserLevel(AccountUserLevel.Admin)]
+        public string ListOrbs(string[] @params, NetClient client)
+        {
+            float multiplier = 0f;
+            if (@params.Length > 0 && float.TryParse(@params[0], System.Globalization.NumberStyles.Float,
+                System.Globalization.CultureInfo.InvariantCulture, out float parsed) && parsed > 0f)
+            {
+                multiplier = parsed;
+            }
+
+            var entries = new List<(string Path, float OrbRadius)>();
+            foreach (PrototypeId protoRef in GameDatabase.DataDirectory.IteratePrototypesInHierarchy<ProceduralProfileOrbPrototype>(
+                PrototypeIterateFlags.NoAbstractApprovedOnly))
+            {
+                var orbProto = GameDatabase.GetPrototype<ProceduralProfileOrbPrototype>(protoRef);
+                if (orbProto == null) continue;
+                entries.Add((GameDatabase.GetPrototypeName(protoRef), orbProto.OrbRadius));
+            }
+
+            entries.Sort((a, b) => string.CompareOrdinal(a.Path, b.Path));
+
+            var summary = new StringBuilder();
+            summary.AppendLine($"ProceduralProfileOrbPrototype count: {entries.Count}");
+            foreach (var entry in entries)
+                summary.AppendLine($"  OrbRadius={entry.OrbRadius,8:F2}  {entry.Path}");
+
+            // Always log the table to the server console.
+            Logger.Info(summary.ToString());
+
+            if (multiplier <= 0f)
+                return $"Listed {entries.Count} orb profiles to the server console (no multiplier supplied; nothing written).";
+
+            // Build the patch JSON.
+            var json = new StringBuilder();
+            json.AppendLine("[");
+            for (int i = 0; i < entries.Count; i++)
+            {
+                var entry = entries[i];
+                float newRadius = entry.OrbRadius * multiplier;
+                json.AppendLine("  {");
+                json.AppendLine("    \"Enabled\": true,");
+                json.AppendLine($"    \"Prototype\": \"{entry.Path}\",");
+                json.AppendLine("    \"Path\": \"OrbRadius\",");
+                json.AppendLine($"    \"Description\": \"[PickupRadius mod] {entry.OrbRadius:F2} -> {newRadius:F2} (x{multiplier})\",");
+                json.AppendLine("    \"ValueType\": \"Float\",");
+                json.AppendLine($"    \"Value\": {newRadius.ToString("0.0##", System.Globalization.CultureInfo.InvariantCulture)}");
+                json.Append(i == entries.Count - 1 ? "  }" : "  },");
+                json.AppendLine();
+            }
+            json.AppendLine("]");
+
+            string patchesDir = Path.Combine(FileHelper.DataDirectory, "Game", "Patches");
+            try
+            {
+                Directory.CreateDirectory(patchesDir);
+                string outPath = Path.Combine(patchesDir, "PatchDataPickupRadiusOrbs.json");
+                File.WriteAllText(outPath, json.ToString());
+                return $"Wrote {entries.Count} orb-radius patches (x{multiplier}) to {outPath}. Restart the server to apply.";
+            }
+            catch (Exception ex)
+            {
+                return $"Failed to write patch file: {ex.Message}";
+            }
+        }
+
+        [Command("dumpitems")]
+        [CommandDescription("Dumps all item prototype names and classes to a JSON file on disk.")]
+        [CommandUsage("debug dumpitems [pattern]")]
+        [CommandUserLevel(AccountUserLevel.Admin)]
+        public string DumpItems(string[] @params, NetClient client)
+        {
+            string pattern = @params.Length > 0 ? @params[0] : "*";
+            bool matchAll = pattern == "*";
+
+            var entries = new List<object>();
+
+            foreach (PrototypeId protoId in GameDatabase.DataDirectory.IteratePrototypesInHierarchy<ItemPrototype>(PrototypeIterateFlags.NoAbstractApprovedOnly))
+            {
+                string protoName = GameDatabase.GetPrototypeName(protoId);
+                if (matchAll == false && protoName.Contains(pattern, StringComparison.OrdinalIgnoreCase) == false)
+                    continue;
+
+                ItemPrototype itemProto = GameDatabase.GetPrototype<ItemPrototype>(protoId);
+                if (itemProto == null) continue;
+
+                entries.Add(new
+                {
+                    Name = protoName,
+                    Class = itemProto.GetType().Name,
+                    DefaultSlot = itemProto.DefaultEquipmentSlot.ToString(),
+                    ItemCategory = itemProto.ItemCategory.ToString(),
+                    ItemSubcategory = itemProto.ItemSubcategory.ToString(),
+                    IsUsable = itemProto.IsUsable,
+                    IsPetItem = itemProto.IsPetItem,
+                    IsGem = itemProto.IsGem,
+                    LootDropWeightMultiplier = itemProto.LootDropWeightMultiplier,
+                });
+            }
+
+            try
+            {
+                string outDir = Path.Combine(Directory.GetCurrentDirectory(), "Data");
+                Directory.CreateDirectory(outDir);
+                string outPath = Path.Combine(outDir, $"ItemDatabaseDump_{DateTime.UtcNow:yyyyMMdd_HHmmss}.json");
+                string json = JsonSerializer.Serialize(entries, new JsonSerializerOptions { WriteIndented = true });
+                File.WriteAllText(outPath, json);
+                return $"Dumped {entries.Count} item prototypes to {outPath}.";
+            }
+            catch (Exception ex)
+            {
+                return $"Failed to write dump: {ex.Message}";
             }
         }
     }
