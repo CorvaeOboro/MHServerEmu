@@ -1275,6 +1275,9 @@ namespace MHServerEmu.Games.Entities
             return false;
         }
 
+        /// <summary>Public accessor for entity-collection membership.</summary>
+        public bool IsInEntityCollection(EntityCollection collection) => IsInCollection(collection);
+
         public InvasiveList<Entity> GetInvasiveCollection(EntityCollection collection)
         {
             EntityManager entityManager = Game?.EntityManager;

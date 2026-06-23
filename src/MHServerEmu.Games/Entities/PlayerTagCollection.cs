@@ -1,4 +1,4 @@
-﻿using MHServerEmu.Games.GameData.Prototypes;
+using MHServerEmu.Games.GameData.Prototypes;
 
 namespace MHServerEmu.Games.Entities
 {

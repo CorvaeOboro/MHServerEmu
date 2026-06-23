@@ -605,6 +605,28 @@ namespace MHServerEmu.Games.Missions
             return FilterHotspots(avatar, PrototypeId.Invalid);
         }
 
+        /// <summary>
+        /// Forces the mission to <see cref="MissionState.Completed"/> without granting rewards.
+        /// Used by the TerminalCubeShard mod to suppress the daily-available visual on Heroic+.
+        /// </summary>
+        /// <param name="suppressRestart">When true, prevents repeatable missions from cycling
+        /// back to Active after completion. The mission stays at Completed until the next daily reset.</param>
+        public void CompleteWithoutRewards(bool suppressRestart = false)
+        {
+            _lootSeed = 0;
+            var player = MissionManager?.Player;
+            if (player != null && MissionManager?.Game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyEnable == true && MissionManager.Game.CustomGameOptions.TerminalDailyCompleteAnyDifficultyLoggingEnable)
+                TerminalCubeShardLogCollator.WriteLine(player.DatabaseUniqueId, $"[CompleteWithoutRewards] Forcing {PrototypeName} from {State} to Completed (lootSeed=0) suppressRestart={suppressRestart}.");
+
+            if (suppressRestart)
+                RestartingMission = true;
+
+            SetState(MissionState.Completed);
+
+            if (suppressRestart)
+                RestartingMission = false;
+        }
+
         public bool SetState(MissionState newState, bool sendUpdate = true)
         {
             if (MissionManager.Debug) 
@@ -619,6 +641,13 @@ namespace MHServerEmu.Games.Missions
 
             var oldState = _state;
             if (oldState == newState) return false;
+
+            if (IsSharedQuest)
+            {
+                var player = MissionManager?.Player;
+                if (player != null && MissionManager?.Game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyEnable == true && MissionManager.Game.CustomGameOptions.TerminalDailyCompleteAnyDifficultyLoggingEnable)
+                    TerminalCubeShardLogCollator.WriteLine(player.DatabaseUniqueId, $"[SetState] {PrototypeName}: {oldState} -> {newState} (sendUpdate={sendUpdate})");
+            }
 
             if (IsSuspended)
             {
@@ -1006,7 +1035,12 @@ namespace MHServerEmu.Games.Missions
             {                
                 if (IsSharedQuest && player != null)
                 {
-                    player.Properties.AdjustProperty(1, new(PropertyEnum.SharedQuestCompletionCount, PrototypeDataRef));
+                    PropertyId propId = new(PropertyEnum.SharedQuestCompletionCount, PrototypeDataRef);
+                    int oldVal = player.Properties[propId];
+                    player.Properties.AdjustProperty(1, propId);
+                    int newVal = player.Properties[propId];
+                    if (MissionManager?.Game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyEnable == true && MissionManager.Game.CustomGameOptions.TerminalDailyCompleteAnyDifficultyLoggingEnable)
+                        TerminalCubeShardLogCollator.WriteLine(player.DatabaseUniqueId, $"[OnSetStateCompleted] {PrototypeName}: SharedQuestCompletionCount {oldVal} -> {newVal} (prop={propId})");
                     SendDailyMissionCompleteToAvatar(player.CurrentAvatar);
                 }
 

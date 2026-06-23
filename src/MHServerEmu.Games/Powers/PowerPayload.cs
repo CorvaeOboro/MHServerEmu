@@ -10,6 +10,8 @@ using MHServerEmu.Games.Behavior;
 using MHServerEmu.Games.Common;
 using MHServerEmu.Games.Entities;
 using MHServerEmu.Games.Entities.Avatars;
+using MHServerEmu.Games.Entities.IncursionEntity;
+using MHServerEmu.Games.Entities.Inventories;
 using MHServerEmu.Games.Entities.Items;
 using MHServerEmu.Games.Events;
 using MHServerEmu.Games.GameData;
@@ -1014,6 +1016,9 @@ namespace MHServerEmu.Games.Powers
                 results.Properties[PropertyEnum.Damage, damageType] = damageValues[(int)damageType];
             }
 
+            // Apply per-ability damage scaling for incursion enemies before crit and mitigation.
+            CalculateResultDamageIncursionScale(results);
+
             // Apply crit
             CalculateResultDamageCriticalModifier(results, target);
 
@@ -1091,7 +1096,134 @@ namespace MHServerEmu.Games.Powers
                 results.SetFlag(PowerResultFlags.NoDamage, hasResultDamage == false);
             }
 
+            // Log incursion enemy damage for tuning.
+            LogIncursionEnemyDamage(results, target);
+
             return true;
+        }
+
+        /// <summary>
+        /// Resolves the per-ability damage scale for an incursion enemy. Returns 1.0 when the payload
+        /// does not originate from an incursion enemy.
+        /// </summary>
+        private float GetIncursionEnemyDamageScale(out WorldEntity ultimateOwner, out PrototypeId rootPowerRef, out bool indirect)
+        {
+            rootPowerRef = PrototypeId.Invalid;
+            indirect = false;
+            ultimateOwner = null;
+
+            WorldEntity immediateOwner = Game.EntityManager.GetEntity<WorldEntity>(UltimateOwnerId);
+            WorldEntity invader = ResolveIncursionInvader(immediateOwner);
+            if (invader == null)
+                return 1f;
+
+            ultimateOwner = invader;
+
+            // Determine the root (activated) power: missiles/summons stamp CreatorPowerPrototype.
+            WorldEntity propertySource = Game.EntityManager.GetEntity<WorldEntity>(_propertySourceEntityId);
+            if (propertySource != null)
+            {
+                rootPowerRef = propertySource.Properties[PropertyEnum.CreatorPowerPrototype];
+                indirect = propertySource != invader;
+            }
+
+            if (rootPowerRef == PrototypeId.Invalid)
+                rootPowerRef = PowerProtoRef;
+
+            // Resolve the scale through the IncursionManager registry.
+            float scale = Game.IncursionManager != null
+                ? Game.IncursionManager.GetOutgoingDamageScale(invader.Id, rootPowerRef)
+                : 1f;
+
+            return scale > 0f ? scale : 0f;
+        }
+
+        /// <summary>
+        /// Walks the ownership chain to find the incursion invader ultimately responsible for this damage.
+        /// </summary>
+        private WorldEntity ResolveIncursionInvader(WorldEntity entity)
+        {
+            EntityManager entityManager = Game.EntityManager;
+
+            // Bounded walk guards against any unexpected cycle in the ownership links.
+            for (int hop = 0; entity != null && hop < 16; hop++)
+            {
+                if (entity.IsClientRenderedAsAvatar)
+                    return entity;
+
+                ulong nextId = entity.PowerUserOverrideId;
+
+                if (nextId == Entity.InvalidId || nextId == entity.Id)
+                {
+                    // Summoned pets/gadgets are tracked in their summoner's Summoned inventory even
+                    // when PowerUserOverrideID is unset; use that container as the owner link.
+                    ref InventoryLocation invLoc = ref entity.InventoryLocation;
+                    if (invLoc.IsValid && invLoc.InventoryConvenienceLabel == InventoryConvenienceLabel.Summoned)
+                        nextId = invLoc.ContainerId;
+                }
+
+                if (nextId == Entity.InvalidId || nextId == entity.Id)
+                    break;
+
+                entity = entityManager.GetEntity<WorldEntity>(nextId);
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Scales an incursion enemy's outgoing damage by the per-ability scale.
+        /// </summary>
+        private void CalculateResultDamageIncursionScale(PowerResults results)
+        {
+            float scale = GetIncursionEnemyDamageScale(out _, out _, out _);
+            if (scale >= 1f)
+                return;
+
+            ApplyDamageMultiplier(results.Properties, scale);
+        }
+
+        /// <summary>
+        /// Logs incursion enemy damage for tuning.
+        /// </summary>
+        private void LogIncursionEnemyDamage(PowerResults results, WorldEntity target)
+        {
+            float scale = GetIncursionEnemyDamageScale(out WorldEntity ultimateOwner, out PrototypeId rootPowerRef, out bool indirect);
+            if (ultimateOwner == null)
+                return;
+
+            float totalAfter = 0f;
+            foreach (var kvp in results.Properties.IteratePropertyRange(PropertyEnum.Damage))
+                totalAfter += kvp.Value;
+
+            if (totalAfter <= 0f)
+                return;
+
+            // Only log damage to player avatars by default.
+            if (target is not Avatar && Game?.CustomGameOptions?.IncursionLogAllDamageTargetsEnable == false)
+                return;
+
+            float totalBefore = scale > 0f ? totalAfter / scale : totalAfter;
+
+            // Resolve the "table power" for logging — when a combo child has no CreatorPowerPrototype,
+            // map it back to the parent so the log parser groups hits correctly.
+            PrototypeId logAbilityRef = rootPowerRef;
+            if (Game?.IncursionManager != null)
+            {
+                PrototypeId parentRef = Game.IncursionManager.GetParentPowerForEffect(ultimateOwner.Id, rootPowerRef);
+                if (parentRef != PrototypeId.Invalid)
+                    logAbilityRef = parentRef;
+            }
+
+            string damageMsg = $"[IncursionEnemy] DAMAGE: '{ultimateOwner.PrototypeName}' (id {ultimateOwner.Id}) " +
+                               $"{(indirect ? "indirect" : "direct")} ability '{GameDatabase.GetPrototypeName(logAbilityRef)}' " +
+                               $"(deliver '{GameDatabase.GetPrototypeName(PowerProtoRef)}') -> after={MathHelper.RoundToInt(totalAfter)} " +
+                               $"(unscaled~{MathHelper.RoundToInt(totalBefore)}, scale x{scale:0.###}) " +
+                               $"to '{target?.PrototypeName}' (id {target?.Id}).";
+            if (Game?.CustomGameOptions?.IncursionLoggingEnable == true)
+                Logger.Info(damageMsg);
+            IncursionLogCollator.WriteLine(ultimateOwner.Id, damageMsg);
+            if (target != null) IncursionLogCollator.WriteLine(target.Id, damageMsg);
         }
 
         private bool CalculateResultDamageCriticalModifier(PowerResults results, WorldEntity target)

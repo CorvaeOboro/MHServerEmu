@@ -16,6 +16,7 @@ using MHServerEmu.Games.Achievements;
 using MHServerEmu.Games.Common;
 using MHServerEmu.Games.Dialog;
 using MHServerEmu.Games.Entities;
+using MHServerEmu.Games.Entities.InteractNearbyAuto;
 using MHServerEmu.Games.Entities.Avatars;
 using MHServerEmu.Games.Entities.Inventories;
 using MHServerEmu.Games.Entities.Items;
@@ -1231,6 +1232,17 @@ namespace MHServerEmu.Games.Network
 
             Avatar avatar = Player.GetActiveAvatarByIndex(useInteractableObject.AvatarIndex);
             if (avatar == null) return Logger.WarnReturn(false, "OnUseInteractableObject(): avatar == null");
+
+            WorldEntity target = Game.EntityManager.GetEntity<WorldEntity>(useInteractableObject.IdTarget);
+            string targetName = target != null ? GameDatabase.GetFormattedPrototypeName(target.PrototypeDataRef) : "null";
+            var customOptions = Game?.CustomGameOptions;
+            bool logging = customOptions?.InteractNearbyAutoLoggingEnable ?? false;
+            if (logging)
+            {
+                string manualLog = $"[InteractNearbyAuto_MANUAL] Player [{Player}] avatar=[{avatar}] clicked [{targetName}#{useInteractableObject.IdTarget}] missionRef={(PrototypeId)useInteractableObject.MissionPrototypeRef}";
+                Logger.Trace(manualLog);
+                InteractObjectAutomaticLogCollator.WriteLine(Player.Id, manualLog);
+            }
 
             avatar.UseInteractableObject(useInteractableObject.IdTarget, (PrototypeId)useInteractableObject.MissionPrototypeRef);
             return true;

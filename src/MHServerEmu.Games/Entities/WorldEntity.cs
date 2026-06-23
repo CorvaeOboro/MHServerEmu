@@ -11,6 +11,7 @@ using MHServerEmu.Core.VectorMath;
 using MHServerEmu.Games.Common;
 using MHServerEmu.Games.Dialog;
 using MHServerEmu.Games.Entities.Avatars;
+using MHServerEmu.Games.Entities.IncursionEntity;
 using MHServerEmu.Games.Entities.Inventories;
 using MHServerEmu.Games.Entities.Locomotion;
 using MHServerEmu.Games.Entities.Physics;
@@ -32,6 +33,7 @@ using MHServerEmu.Games.Powers.Conditions;
 using MHServerEmu.Games.Properties;
 using MHServerEmu.Games.Properties.Evals;
 using MHServerEmu.Games.Regions;
+using MHServerEmu.Games.Social.Guilds;
 
 namespace MHServerEmu.Games.Entities
 {
@@ -212,6 +214,28 @@ namespace MHServerEmu.Games.Entities
             SpawnSpec = settings.SpawnSpec;
             SetFlag(EntityFlags.IsPopulation, settings.IsPopulation);
 
+            // Apply the client render-prototype override before replication.
+            if (settings.SpawnSpec != null && settings.SpawnSpec.ClientRenderPrototypeRef != PrototypeId.Invalid)
+            {
+                ClientPrototypeRefOverride = settings.SpawnSpec.ClientRenderPrototypeRef;
+
+                // Prepare avatar-compatible replication state for non-avatar entities rendered as an avatar.
+                if (this is not Avatar && ClientPrototypeRefOverride.As<AvatarPrototype>() != null)
+                {
+                    IsClientRenderedAsAvatar = true;
+                    SpoofAvatarWorldInstanceId = 1;     // any non-zero id; we never reuse/track it
+
+                    _spoofAvatarPlayerName = new();
+                    _spoofAvatarPlayerName.Bind(this, AOINetworkPolicyValues.AOIChannelProximity | AOINetworkPolicyValues.AOIChannelParty | AOINetworkPolicyValues.AOIChannelOwner);
+
+                    // Custom name drawn above the entity when rendered as an avatar.
+                    if (string.IsNullOrEmpty(settings.SpawnSpec.ClientRenderPlayerName) == false)
+                        _spoofAvatarPlayerName.Set(settings.SpawnSpec.ClientRenderPlayerName);
+
+                    _spoofAvatarAbilityKeyMappings = new();
+                }
+            }
+
             if (worldEntityProto.Bounds != null)
             {
                 _bounds.InitializeFromPrototype(worldEntityProto.Bounds);
@@ -247,6 +271,14 @@ namespace MHServerEmu.Games.Entities
             SpawnSpec = null;
         }
 
+        protected override void UnbindReplicatedFields()
+        {
+            base.UnbindReplicatedFields();
+
+            // Bound in Initialize only when rendering as an avatar (decoupled rendering).
+            _spoofAvatarPlayerName?.Unbind();
+        }
+
         public override bool Serialize(Archive archive)
         {
             bool success = base.Serialize(archive);
@@ -276,6 +308,31 @@ namespace MHServerEmu.Games.Entities
             {
                 int unknown = 0;
                 success &= Serializer.Transfer(archive, ref unknown);
+            }
+
+            // Append the avatar transient tail for non-avatar entities rendered as an avatar.
+            if (IsClientRenderedAsAvatar && this is not Avatar)
+            {
+                if (archive.IsTransient)
+                {
+                    success &= Serializer.Transfer(archive, ref _spoofAvatarPlayerName);
+
+                    ulong ownerPlayerDbId = 0;
+                    success &= Serializer.Transfer(archive, ref ownerPlayerDbId);
+
+                    string emptyString = string.Empty;
+                    success &= Serializer.Transfer(archive, ref emptyString);
+
+                    if (archive.IsReplication)
+                    {
+                        ulong guildId = GuildManager.InvalidGuildId;
+                        string guildName = string.Empty;
+                        GuildMembership guildMembership = GuildMembership.eGMNone;
+                        success &= GuildMember.SerializeReplicationRuntimeInfo(archive, ref guildId, ref guildName, ref guildMembership);
+                    }
+                }
+
+                success &= Serializer.Transfer(archive, ref _spoofAvatarAbilityKeyMappings);
             }
 
             return success;
@@ -2201,6 +2258,18 @@ namespace MHServerEmu.Games.Entities
             // Calculate the new health value
             health += healthDelta;
             health = Math.Clamp(health, Properties[PropertyEnum.HealthMin], Properties[PropertyEnum.HealthMax]);
+
+            // Log health changes caused by incursion enemies for tuning visibility.
+            if (ultimateOwner != null && ultimateOwner.IsClientRenderedAsAvatar && health != startHealth)
+            {
+                PrototypeId hitPowerRef = powerResults.PowerPrototype != null ? powerResults.PowerPrototype.DataRef : PrototypeId.Invalid;
+                string hpMsg = $"[IncursionEnemy] HP: target '{PrototypeName}' (id {Id}) {startHealth} -> {health} " +
+                               $"(delta {health - startHealth}) from '{ultimateOwner.PrototypeName}' power '{GameDatabase.GetPrototypeName(hitPowerRef)}'.";
+                if (Game?.CustomGameOptions?.IncursionLoggingEnable == true)
+                    Logger.Info(hpMsg);
+                IncursionLogCollator.WriteLine(Id, hpMsg);
+                IncursionLogCollator.WriteLine(ultimateOwner.Id, hpMsg);
+            }
 
             // Trigger health events
             WorldEntity powerUser = Game.EntityManager.GetEntity<WorldEntity>(powerResults.PowerOwnerId);
@@ -4186,9 +4255,47 @@ namespace MHServerEmu.Games.Entities
 
         #endregion
 
+        // Prototype the client renders this entity as. The server continues driving the real prototype as the combat body.
+        public PrototypeId ClientPrototypeRefOverride { get; set; } = PrototypeId.Invalid;
+
+        // True when the render override is an AvatarPrototype. Extra replication fields are emitted
+        // so the client builds an avatar actor.
+        public bool IsClientRenderedAsAvatar { get; private set; }
+        public uint SpoofAvatarWorldInstanceId { get; private set; }
+
+        // Bound only when rendering as an avatar.
+        private RepVar_string _spoofAvatarPlayerName;
+        private List<AbilityKeyMapping> _spoofAvatarAbilityKeyMappings;
+
+        /// <summary>
+        /// Clears the replicated overhead name drawn above this entity when it is rendered as an avatar.
+        /// </summary>
+        public void ClearSpoofAvatarPlayerName()
+        {
+            _spoofAvatarPlayerName?.Set(string.Empty);
+        }
+
+        /// <summary>
+        /// The prototype the client should render this entity as. Returns the real
+        /// <see cref="Entity.PrototypeDataRef"/> unless a render override is active.
+        /// </summary>
+        public PrototypeId GetClientPrototypeDataRef()
+        {
+            return ClientPrototypeRefOverride != PrototypeId.Invalid ? ClientPrototypeRefOverride : PrototypeDataRef;
+        }
+
         public virtual AssetId GetEntityWorldAsset()
         {
             // NOTE: Overriden in Agent, Avatar, and Missile
+
+            // If a render override is active, resolve FX and animations against the rendered prototype.
+            if (ClientPrototypeRefOverride != PrototypeId.Invalid)
+            {
+                var renderProto = ClientPrototypeRefOverride.As<WorldEntityPrototype>();
+                if (renderProto != null && renderProto.UnrealClass != AssetId.Invalid)
+                    return renderProto.UnrealClass;
+            }
+
             return GetOriginalWorldAsset();
         }
 
@@ -4447,6 +4554,26 @@ namespace MHServerEmu.Games.Entities
                 .SetIdAgent(Id)
                 .SetIdText((ulong)idText)
                 .SetDuration(duration)
+                .Build();
+
+            Game.NetworkManager.SendMessageToInterested(message, this, AOINetworkPolicyValues.AOIChannelProximity);
+        }
+
+        /// <summary>
+        /// Shows a hardcoded string above this entity by sending a proximity chat message.
+        /// The client may render this as a speech bubble when the sender name matches the entity name.
+        /// </summary>
+        public void ShowOverheadTextRaw(string text, float duration)
+        {
+            var chatMsg = ChatMessage.CreateBuilder()
+                .SetBody(text)
+                .Build();
+
+            var message = ChatNormalMessage.CreateBuilder()
+                .SetRoomType(ChatRoomTypes.CHAT_ROOM_TYPE_SAY)
+                .SetFromPlayerName(PrototypeName)
+                .SetTheMessage(chatMsg)
+                .SetPrestigeLevel(0)
                 .Build();
 
             Game.NetworkManager.SendMessageToInterested(message, this, AOINetworkPolicyValues.AOIChannelProximity);

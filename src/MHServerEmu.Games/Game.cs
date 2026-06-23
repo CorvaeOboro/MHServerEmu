@@ -20,6 +20,7 @@ using MHServerEmu.Games.Loot;
 using MHServerEmu.Games.MetaGames;
 using MHServerEmu.Games.Network;
 using MHServerEmu.Games.Network.InstanceManagement;
+using MHServerEmu.Games.Populations;
 using MHServerEmu.Games.Powers;
 using MHServerEmu.Games.Powers.Conditions;
 using MHServerEmu.Games.Regions;
@@ -88,6 +89,7 @@ namespace MHServerEmu.Games
         public ChatManager ChatManager { get; }
         public PartyManager PartyManager { get; }
         public GuildManager GuildManager { get; }
+        public IncursionManager IncursionManager { get; private set; }
         public LiveTuningData LiveTuningData { get => LiveTuningData.Current; }
         public List<PrototypeId> EventDailyGifts { get => LiveTuningData.EventDailyGifts; }
 
@@ -160,6 +162,9 @@ namespace MHServerEmu.Games
 
             success &= RegionManager.Initialize(this);
             success &= EntityManager.Initialize();
+
+            IncursionManager = new(this);
+            IncursionManager.Initialize();
 
             State = GameState.Running;
             Logger.Info($"Game 0x{Id:X} started, initial replication id: {_currentRepId}");
@@ -349,6 +354,7 @@ namespace MHServerEmu.Games
                 return;
 
             Logger.Info($"Game shutdown requested. Game={this}, Reason={_shutdownReason}");
+            IncursionManager?.Shutdown();
             NetworkManager.SendAllPendingMessages();
             GameManager.OnGameShutdown(this);   // This will notify the PlayerManager and disconnect all players
 

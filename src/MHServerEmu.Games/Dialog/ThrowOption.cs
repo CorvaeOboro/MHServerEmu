@@ -13,7 +13,7 @@ namespace MHServerEmu.Games.Dialog
 
         public override bool IsCurrentlyAvailable(EntityDesc interacteeDesc, WorldEntity localInteractee, WorldEntity interactor, InteractionFlags interactionFlags)
         {
-            if (interactor.Game?.CustomGameOptions?.DisableInteractiveThrowables == true)
+            if (interactor.Game?.CustomGameOptions?.ThrowableDisableInteractive == true)
                 return false;
 
             bool isAvailable = false;

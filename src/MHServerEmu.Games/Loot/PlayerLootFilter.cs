@@ -12,13 +12,50 @@ using MHServerEmu.Games.Loot.Specs;
 namespace MHServerEmu.Games.Loot
 {
     /// <summary>
-    /// Per-player loot filter settings for non-gear slots and special item types.
-    /// Stored in a local JSON file on the server, not synced to the game client.
+    /// A single set of loot filter thresholds/toggles (used for the global defaults
+    /// and for each per-character override block).
     /// </summary>
-    public class PlayerLootFilter
+    public class LootFilterSection
     {
         public Dictionary<string, PrototypeId> Thresholds { get; set; } = new(StringComparer.OrdinalIgnoreCase);
         public Dictionary<string, bool> Booleans { get; set; } = new(StringComparer.OrdinalIgnoreCase);
+    }
+
+    /// <summary>
+    /// Per-player loot filter settings for non-gear slots and special item types.
+    /// Stored in a human-editable JSON file on the server, not synced to the game client.
+    /// Contains a <see cref="Global"/> default block plus optional per-character overrides.
+    /// At drop time the effective threshold for each item type is the HIGHER rarity tier
+    /// between the global value and the active character's override (escalation).
+    /// </summary>
+    public class PlayerLootFilter
+    {
+        /// <summary>Global defaults applied to every character.</summary>
+        public LootFilterSection Global { get; set; } = new();
+
+        /// <summary>Per-character overrides, keyed by avatar short name (e.g. "Rogue", "ScarletWitch"). Case-insensitive.</summary>
+        public Dictionary<string, LootFilterSection> Characters { get; set; } = new(StringComparer.OrdinalIgnoreCase);
+
+        /// <summary>
+        /// Returns the override section for the given avatar short name, optionally creating it.
+        /// </summary>
+        public LootFilterSection GetCharacterSection(string avatarName, bool create = false)
+        {
+            if (string.IsNullOrEmpty(avatarName))
+                return null;
+
+            if (Characters.TryGetValue(avatarName, out LootFilterSection section))
+                return section;
+
+            if (create)
+            {
+                section = new LootFilterSection();
+                Characters[avatarName] = section;
+                return section;
+            }
+
+            return null;
+        }
     }
 
     /// <summary>
@@ -28,14 +65,22 @@ namespace MHServerEmu.Games.Loot
     {
         private static readonly Logger Logger = LogManager.CreateLogger();
         private static readonly string BaseDir = Path.Combine(Directory.GetCurrentDirectory(), "Data", "PlayerLootFilters");
+        private static readonly JsonSerializerOptions WriteOptions = new() { WriteIndented = true };
 
         /// <summary>
-        /// JSON DTO for backward-compatible serialization of <see cref="PlayerLootFilter"/>.
+        /// Human-editable JSON DTO. Rarities are stored by NAME (e.g. "epic") rather than
+        /// opaque prototype ids so the file can be hand-edited by the player.
         /// </summary>
-        private class PersistedFilter
+        private class PersistedSection
         {
-            public Dictionary<string, ulong> Thresholds { get; set; } = new(StringComparer.OrdinalIgnoreCase);
+            public Dictionary<string, string> Thresholds { get; set; } = new(StringComparer.OrdinalIgnoreCase);
             public Dictionary<string, bool> Booleans { get; set; } = new(StringComparer.OrdinalIgnoreCase);
+        }
+
+        private class PersistedFilterV2
+        {
+            public PersistedSection Global { get; set; } = new();
+            public Dictionary<string, PersistedSection> Characters { get; set; } = new(StringComparer.OrdinalIgnoreCase);
         }
 
         public static PlayerLootFilter Load(ulong playerDbId)
@@ -47,48 +92,21 @@ namespace MHServerEmu.Games.Loot
             try
             {
                 string json = File.ReadAllText(path);
+                if (string.IsNullOrWhiteSpace(json))
+                    return new PlayerLootFilter();
 
-                // Try new PersistedFilter format first
-                var persisted = JsonSerializer.Deserialize<PersistedFilter>(json);
-                if (persisted != null)
+                using JsonDocument doc = JsonDocument.Parse(json);
+                JsonElement root = doc.RootElement;
+
+                // New v2 format: { "Global": {...}, "Characters": {...} }
+                if (root.ValueKind == JsonValueKind.Object &&
+                    (root.TryGetProperty("Global", out _) || root.TryGetProperty("Characters", out _)))
                 {
-                    var filter = new PlayerLootFilter();
-                    if (persisted.Booleans != null)
-                        foreach (var kvp in persisted.Booleans)
-                            filter.Booleans[kvp.Key.ToLowerInvariant()] = kvp.Value;
-
-                    if (persisted.Thresholds != null)
-                    {
-                        foreach (var kvp in persisted.Thresholds)
-                        {
-                            string key = kvp.Key;
-                            if (Enum.TryParse<EquipmentInvUISlot>(key, out EquipmentInvUISlot slot))
-                                key = slot.ToString().ToLowerInvariant();
-                            else
-                                key = key.ToLowerInvariant();
-
-                            filter.Thresholds[key] = (PrototypeId)kvp.Value;
-                        }
-                    }
-                    return filter;
+                    return LoadV2(json);
                 }
 
-                // Fallback: old flat dictionary format (all ulong thresholds)
-                var raw = JsonSerializer.Deserialize<Dictionary<string, ulong>>(json);
-                if (raw == null) return new PlayerLootFilter();
-
-                var legacyFilter = new PlayerLootFilter();
-                foreach (var kvp in raw)
-                {
-                    string key = kvp.Key;
-                    if (Enum.TryParse<EquipmentInvUISlot>(key, out EquipmentInvUISlot slot))
-                        key = slot.ToString().ToLowerInvariant();
-                    else
-                        key = key.ToLowerInvariant();
-
-                    legacyFilter.Thresholds[key] = (PrototypeId)kvp.Value;
-                }
-                return legacyFilter;
+                // Legacy formats migrate into the Global section.
+                return LoadLegacy(root);
             }
             catch (Exception e)
             {
@@ -97,24 +115,135 @@ namespace MHServerEmu.Games.Loot
             }
         }
 
+        private static PlayerLootFilter LoadV2(string json)
+        {
+            var persisted = JsonSerializer.Deserialize<PersistedFilterV2>(json) ?? new PersistedFilterV2();
+            var filter = new PlayerLootFilter();
+
+            filter.Global = SectionFromPersisted(persisted.Global);
+            if (persisted.Characters != null)
+            {
+                foreach (var kvp in persisted.Characters)
+                {
+                    if (string.IsNullOrWhiteSpace(kvp.Key))
+                        continue;
+                    filter.Characters[kvp.Key] = SectionFromPersisted(kvp.Value);
+                }
+            }
+            return filter;
+        }
+
+        private static LootFilterSection SectionFromPersisted(PersistedSection persisted)
+        {
+            var section = new LootFilterSection();
+            if (persisted == null)
+                return section;
+
+            if (persisted.Booleans != null)
+                foreach (var kvp in persisted.Booleans)
+                    section.Booleans[kvp.Key.ToLowerInvariant()] = kvp.Value;
+
+            if (persisted.Thresholds != null)
+            {
+                foreach (var kvp in persisted.Thresholds)
+                {
+                    string key = NormalizeKey(kvp.Key);
+                    PrototypeId rarityRef = LootFilterHelper.ResolveRarityByName(kvp.Value);
+                    if (rarityRef == PrototypeId.Invalid)
+                    {
+                        Logger.Warn($"Loot filter: unknown rarity '{kvp.Value}' for '{key}' (ignored).");
+                        continue;
+                    }
+                    section.Thresholds[key] = rarityRef;
+                }
+            }
+            return section;
+        }
+
+        private static PlayerLootFilter LoadLegacy(JsonElement root)
+        {
+            // Old formats stored thresholds as ulong prototype ids, either under a
+            // "Thresholds"/"Booleans" object or as a flat dictionary at the root.
+            var filter = new PlayerLootFilter();
+
+            JsonElement thresholdsElem = root;
+            JsonElement booleansElem = default;
+            bool hasBooleans = false;
+
+            if (root.ValueKind == JsonValueKind.Object && root.TryGetProperty("Thresholds", out JsonElement t))
+            {
+                thresholdsElem = t;
+                hasBooleans = root.TryGetProperty("Booleans", out booleansElem);
+            }
+
+            if (thresholdsElem.ValueKind == JsonValueKind.Object)
+            {
+                foreach (JsonProperty prop in thresholdsElem.EnumerateObject())
+                {
+                    if (prop.Value.ValueKind != JsonValueKind.Number)
+                        continue;
+                    string key = NormalizeKey(prop.Name);
+                    filter.Global.Thresholds[key] = (PrototypeId)prop.Value.GetUInt64();
+                }
+            }
+
+            if (hasBooleans && booleansElem.ValueKind == JsonValueKind.Object)
+            {
+                foreach (JsonProperty prop in booleansElem.EnumerateObject())
+                {
+                    if (prop.Value.ValueKind is JsonValueKind.True or JsonValueKind.False)
+                        filter.Global.Booleans[prop.Name.ToLowerInvariant()] = prop.Value.GetBoolean();
+                }
+            }
+
+            return filter;
+        }
+
+        private static string NormalizeKey(string key)
+        {
+            if (Enum.TryParse<EquipmentInvUISlot>(key, out EquipmentInvUISlot slot))
+                return slot.ToString().ToLowerInvariant();
+            return key.ToLowerInvariant();
+        }
+
         public static void Save(ulong playerDbId, PlayerLootFilter filter)
         {
             try
             {
                 Directory.CreateDirectory(BaseDir);
-                var persisted = new PersistedFilter();
-                foreach (var kvp in filter.Thresholds)
-                    persisted.Thresholds[kvp.Key.ToLowerInvariant()] = (ulong)kvp.Value;
-                foreach (var kvp in filter.Booleans)
-                    persisted.Booleans[kvp.Key.ToLowerInvariant()] = kvp.Value;
 
-                string json = JsonSerializer.Serialize(persisted, new JsonSerializerOptions { WriteIndented = true });
+                var persisted = new PersistedFilterV2
+                {
+                    Global = SectionToPersisted(filter.Global)
+                };
+                foreach (var kvp in filter.Characters)
+                    persisted.Characters[kvp.Key] = SectionToPersisted(kvp.Value);
+
+                string json = JsonSerializer.Serialize(persisted, WriteOptions);
                 File.WriteAllText(GetPath(playerDbId), json);
             }
             catch (Exception e)
             {
                 Logger.Warn($"Failed to save loot filter for player {playerDbId}: {e.Message}");
             }
+        }
+
+        private static PersistedSection SectionToPersisted(LootFilterSection section)
+        {
+            var persisted = new PersistedSection();
+            if (section == null)
+                return persisted;
+
+            foreach (var kvp in section.Thresholds)
+            {
+                if (kvp.Value == PrototypeId.Invalid)
+                    continue;
+                persisted.Thresholds[kvp.Key.ToLowerInvariant()] = LootFilterHelper.GetRarityShortName(kvp.Value);
+            }
+            foreach (var kvp in section.Booleans)
+                persisted.Booleans[kvp.Key.ToLowerInvariant()] = kvp.Value;
+
+            return persisted;
         }
 
         private static string GetPath(ulong playerDbId) => Path.Combine(BaseDir, $"{playerDbId}.json");
@@ -141,25 +270,34 @@ namespace MHServerEmu.Games.Loot
         public static void ApplyFilters(Player player, LootResultSummary summary, PrototypeId avatarProtoRef)
         {
             if (player?.LootFilter == null) return;
-            if (player.Game?.CustomGameOptions?.EnableLootFilters == false) return;
+            if (player.Game?.CustomGameOptions?.LootFilterEnable == false) return;
 
-            bool enableCharacterFilter = player.Game?.CustomGameOptions?.EnableCharacterSpecificLootFilter == true;
+            bool enableCharacterFilter = player.Game?.CustomGameOptions?.LootFilterCharacterSpecificEnable == true;
+            bool lootFilterLogging = player.Game?.CustomGameOptions?.LootFilterLoggingEnable == true;
+            string avatarName = GetAvatarShortName(avatarProtoRef);
             int removed = summary.ItemSpecs.RemoveAll(itemSpec =>
             {
-                bool shouldFilter = ShouldFilter(player.LootFilter, itemSpec, avatarProtoRef, enableCharacterFilter, out string reason);
+                bool shouldFilter = ShouldFilter(player.LootFilter, itemSpec, avatarProtoRef, avatarName, enableCharacterFilter, player.Id, lootFilterLogging, out string reason);
                 if (shouldFilter)
                 {
                     ItemPrototype itemProto = itemSpec.ItemProtoRef.As<ItemPrototype>();
                     string protoName = itemProto?.DataRef.GetName() ?? "unknown";
-                    Logger.Trace($"[LootFilter] Removed [{protoName}] — reason: {reason}");
+                    if (lootFilterLogging)
+                    {
+                        Logger.Trace($"[LootFilter] Removed [{protoName}] — reason: {reason}");
+                        LootFilterLogCollator.WriteLine(player.Id, $"[LootFilter] Removed [{protoName}] — reason: {reason}");
+                    }
                 }
                 return shouldFilter;
             });
-            if (removed > 0)
+            if (removed > 0 && lootFilterLogging)
+            {
                 Logger.Trace($"[LootFilter] Removed {removed} filtered item(s) for player [{player}]");
+                LootFilterLogCollator.WriteLine(player.Id, $"[LootFilter] Removed {removed} filtered item(s) for player [{player}]");
+            }
         }
 
-        private static bool ShouldFilter(PlayerLootFilter filter, ItemSpec itemSpec, PrototypeId avatarProtoRef, bool enableCharacterFilter, out string reason)
+        private static bool ShouldFilter(PlayerLootFilter filter, ItemSpec itemSpec, PrototypeId avatarProtoRef, string avatarName, bool enableCharacterFilter, ulong playerId, bool lootFilterLogging, out string reason)
         {
             reason = null;
             ItemPrototype itemProto = itemSpec.ItemProtoRef.As<ItemPrototype>();
@@ -196,14 +334,20 @@ namespace MHServerEmu.Games.Loot
 
             if (filterKey == null)
             {
-                Logger.Trace($"[LootFilter] Unmatched item [{itemProto.GetType().Name}] protoName=[{itemProto.DataRef.GetName()}]");
+                if (lootFilterLogging)
+                {
+                    string msg = $"[LootFilter] Unmatched item [{itemProto.GetType().Name}] protoName=[{itemProto.DataRef.GetName()}]";
+                    Logger.Trace(msg);
+                    LootFilterLogCollator.WriteLine(playerId, msg);
+                }
                 return false;
             }
 
-            // Boolean filters (e.g. uruforged) - on/off, no rarity threshold
+            // Boolean filters (e.g. uruforged) - on/off, no rarity threshold.
+            // Effective = global OR active character's override.
             if (BooleanFilters.Contains(filterKey))
             {
-                if (filter.Booleans.TryGetValue(filterKey, out bool enabled) == false || enabled == false)
+                if (GetEffectiveBoolean(filter, filterKey, avatarName) == false)
                     return false;
 
                 if (filterKey == "uruforged" && itemSpec.RarityProtoRef == GameDatabase.LootGlobalsPrototype.RarityUruForged)
@@ -215,7 +359,9 @@ namespace MHServerEmu.Games.Loot
                 return false;
             }
 
-            if (filter.Thresholds.TryGetValue(filterKey, out PrototypeId thresholdRef) == false || thresholdRef == PrototypeId.Invalid)
+            // Effective threshold = HIGHER rarity tier of global vs the active character's override.
+            PrototypeId thresholdRef = GetEffectiveThreshold(filter, filterKey, avatarName);
+            if (thresholdRef == PrototypeId.Invalid)
                 return false;
 
             RarityPrototype itemRarity = itemSpec.RarityProtoRef.As<RarityPrototype>();
@@ -249,9 +395,81 @@ namespace MHServerEmu.Games.Loot
                 || protoName.Contains("RadioactiveIsotopeCatalyst", StringComparison.OrdinalIgnoreCase);
         }
 
+        // --- Escalation helpers ---
+
+        /// <summary>
+        /// Returns the avatar's short name (e.g. "Rogue", "ScarletWitch") used as the
+        /// per-character override key. Returns <see langword="null"/> if unresolved.
+        /// </summary>
+        public static string GetAvatarShortName(PrototypeId avatarProtoRef)
+        {
+            if (avatarProtoRef == PrototypeId.Invalid)
+                return null;
+
+            string fullName = GameDatabase.GetPrototypeName(avatarProtoRef);
+            if (string.IsNullOrEmpty(fullName))
+                return null;
+
+            string fileName = Path.GetFileName(fullName);
+            if (fileName.EndsWith(".prototype", StringComparison.OrdinalIgnoreCase))
+                fileName = fileName.Substring(0, fileName.Length - ".prototype".Length);
+            return fileName;
+        }
+
+        /// <summary>
+        /// Returns the threshold with the HIGHER rarity tier. <see cref="PrototypeId.Invalid"/> entries lose.
+        /// </summary>
+        private static PrototypeId HigherTier(PrototypeId a, PrototypeId b)
+        {
+            if (a == PrototypeId.Invalid) return b;
+            if (b == PrototypeId.Invalid) return a;
+
+            RarityPrototype ra = a.As<RarityPrototype>();
+            RarityPrototype rb = b.As<RarityPrototype>();
+            if (ra == null) return b;
+            if (rb == null) return a;
+            return ra.Tier >= rb.Tier ? a : b;
+        }
+
+        /// <summary>
+        /// Computes the effective rarity threshold for an item type: the higher tier of the
+        /// global default and the active character's override.
+        /// </summary>
+        public static PrototypeId GetEffectiveThreshold(PlayerLootFilter filter, string filterKey, string avatarName)
+        {
+            if (filter == null) return PrototypeId.Invalid;
+
+            PrototypeId result = PrototypeId.Invalid;
+            if (filter.Global.Thresholds.TryGetValue(filterKey, out PrototypeId globalRef))
+                result = globalRef;
+
+            LootFilterSection charSection = filter.GetCharacterSection(avatarName);
+            if (charSection != null && charSection.Thresholds.TryGetValue(filterKey, out PrototypeId charRef))
+                result = HigherTier(result, charRef);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Computes the effective boolean toggle for an item type: global OR the active character's override.
+        /// </summary>
+        public static bool GetEffectiveBoolean(PlayerLootFilter filter, string filterKey, string avatarName)
+        {
+            if (filter == null) return false;
+
+            bool result = filter.Global.Booleans.TryGetValue(filterKey, out bool globalVal) && globalVal;
+
+            LootFilterSection charSection = filter.GetCharacterSection(avatarName);
+            if (charSection != null && charSection.Booleans.TryGetValue(filterKey, out bool charVal) && charVal)
+                result = true;
+
+            return result;
+        }
+
         // --- Command helpers ---
 
         private static Dictionary<string, PrototypeId> _rarityNameMap;
+        private static Dictionary<PrototypeId, string> _rarityShortNameMap;
         private static readonly object _rarityMapLock = new();
 
         private static void EnsureRarityMapBuilt()
@@ -261,6 +479,7 @@ namespace MHServerEmu.Games.Loot
                 if (_rarityNameMap != null) return;
 
                 _rarityNameMap = new(StringComparer.OrdinalIgnoreCase);
+                _rarityShortNameMap = new();
                 foreach (PrototypeId rarityRef in DataDirectory.Instance.IteratePrototypesInHierarchy<RarityPrototype>(PrototypeIterateFlags.NoAbstractApprovedOnly))
                 {
                     string fullName = rarityRef.GetName();
@@ -275,13 +494,35 @@ namespace MHServerEmu.Games.Loot
                     string suffix = Regex.Replace(fileName, @"^R\d+", "");
                     if (string.IsNullOrEmpty(suffix) == false)
                         _rarityNameMap[suffix] = rarityRef;
+
+                    // Prefer the friendly suffix (e.g. "Epic") for serialization; fall back to file name.
+                    _rarityShortNameMap[rarityRef] = string.IsNullOrEmpty(suffix) ? fileName : suffix;
                 }
             }
+        }
+
+        /// <summary>
+        /// Returns a human-friendly short rarity name (e.g. "Epic") for the given rarity proto,
+        /// suitable for writing into the editable JSON file.
+        /// </summary>
+        public static string GetRarityShortName(PrototypeId rarityRef)
+        {
+            EnsureRarityMapBuilt();
+            if (_rarityShortNameMap.TryGetValue(rarityRef, out string name))
+                return name;
+            return ((ulong)rarityRef).ToString();
         }
 
         public static PrototypeId ResolveRarityByName(string name)
         {
             EnsureRarityMapBuilt();
+            if (string.IsNullOrWhiteSpace(name))
+                return PrototypeId.Invalid;
+
+            name = name.Trim();
+            if (name.EndsWith(".prototype", StringComparison.OrdinalIgnoreCase))
+                name = name.Substring(0, name.Length - ".prototype".Length);
+
             if (_rarityNameMap.TryGetValue(name, out PrototypeId rarityRef))
                 return rarityRef;
             return PrototypeId.Invalid;

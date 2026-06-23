@@ -9,6 +9,7 @@ using MHServerEmu.Games.GameData.Prototypes;
 using MHServerEmu.Games.GameData.Tables;
 using MHServerEmu.Games.Leaderboards;
 using MHServerEmu.Games.Locales;
+using MHServerEmu.Games.Missions;
 using MHServerEmu.Games.Properties;
 
 namespace MHServerEmu.Games.GameData
@@ -158,6 +159,9 @@ namespace MHServerEmu.Games.GameData
             stopwatch.Stop();
             Logger.Info($"Finished initializing game database in {stopwatch.ElapsedMilliseconds} ms");
             IsInitialized = true;
+
+            // Initialize modded static maps that depend on game data
+            MissionManagerTerminalCubeShard.InitializeTerminalDailyMap();
         }
 
         #region Data Access

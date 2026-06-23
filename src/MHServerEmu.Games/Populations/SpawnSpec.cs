@@ -46,6 +46,16 @@ namespace MHServerEmu.Games.Populations
         public TimeSpan SpawnedTime { get; private set; } = TimeSpan.Zero;
         public TimeSpan PostContactDelayMS { get; set; } = TimeSpan.Zero;
         public Cell CellSlot { get; private set; }
+
+        // Prototype the client renders the spawned entity as.
+        public PrototypeId ClientRenderPrototypeRef { get; set; } = PrototypeId.Invalid;
+
+        // Custom name drawn above the entity when rendered as an avatar.
+        public string ClientRenderPlayerName { get; set; }
+
+        // Visual bounds scale override (1.0 = default size).
+        public float BoundsScaleOverride { get; set; } = 1f;
+
         public float LeashDistance
         {
             get
@@ -107,6 +117,10 @@ namespace MHServerEmu.Games.Populations
             settingsProperties.FlattenCopyFrom(Properties, false);
             settingsProperties.RemovePropertyRange(PropertyEnum.EnemyBoost);
 
+            // Pass through an explicit VariationSeed so the entity uses it instead of Game.Random.
+            if (Properties.HasProperty(PropertyEnum.VariationSeed))
+                settings.VariationSeed = Properties[PropertyEnum.VariationSeed];
+
             int level = area.GetCharacterLevel(entityProto);
             settingsProperties[PropertyEnum.CharacterLevel] = level;
             settingsProperties[PropertyEnum.CombatLevel] = level;
@@ -140,6 +154,7 @@ namespace MHServerEmu.Games.Populations
             settings.Actions = Actions;
             settings.SpawnSpec = this;
             settings.IsPopulation = true;
+            settings.BoundsScaleOverride = BoundsScaleOverride;
 
             if (entityProto is ItemPrototype)
                 settings.ItemSpec = Game.LootManager.CreateItemSpec(EntityRef, LootContext.CashShop, null);

@@ -82,7 +82,7 @@ namespace MHServerEmu.Games.Entities
         {
             AgentPrototype agentProto = GameDatabase.GetPrototype<AgentPrototype>(settings.EntityRef);
             if (!Verify.IsNotNull(agentProto)) return false;
-            
+
             if (agentProto.Locomotion.Immobile == false)
                 Locomotor = new();
 
@@ -170,6 +170,7 @@ namespace MHServerEmu.Games.Entities
             }
             return true;
         }
+
 
         #endregion
 
@@ -403,7 +404,7 @@ namespace MHServerEmu.Games.Entities
                         if (activePower.IsEnding == false)
                             activePower.EndPower(EndPowerFlags.ExplicitCancel | EndPowerFlags.Interrupting);
                     }
-                    else if (activePower.IsThrowablePower() && Game?.CustomGameOptions?.AutoThrowOnMovementPower == true)
+                    else if (activePower.IsThrowablePower() && Game?.CustomGameOptions?.ThrowableAutoThrowOnMovementPower == true)
                     {
                         // Auto-throw held object before proceeding with the new power
                         Power throwablePower = GetThrowablePower();
@@ -591,7 +592,7 @@ namespace MHServerEmu.Games.Entities
             if (Properties[PropertyEnum.ThrowableOriginatorEntity] == entityId) return true;
 
             // Configurable opt-out: prevent picking up interactive throwables entirely
-            if (Game?.CustomGameOptions?.DisableInteractiveThrowables == true)
+            if (Game?.CustomGameOptions?.ThrowableDisableInteractive == true)
             {
                 if (this is Avatar)
                 {

@@ -33,8 +33,26 @@ namespace MHServerEmu.Core.Config
 
         /// <summary>
         /// Gets the value with the specified key from the specified section of this <see cref="IniFile"/> as <see cref="string"/>.
+        /// Inline comments (anything after ';' or '#') are stripped.
         /// </summary>
-        public string GetString(string section, string key) => _iniData[section][key];
+        public string GetString(string section, string key) => StripInlineComments(_iniData[section][key]);
+
+        /// <summary>
+        /// Removes inline comments from a raw INI value so that trailing text
+        /// after ';' or '#' does not break parsing of booleans, numbers, etc.
+        /// </summary>
+        private static string StripInlineComments(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+                return value;
+
+            int index = value.IndexOf(';');
+            if (index < 0) index = value.IndexOf('#');
+            if (index >= 0)
+                value = value.Substring(0, index);
+
+            return value.TrimEnd();
+        }
 
         /// <summary>
         /// Gets the value with the specified key from the specified section of this <see cref="IniFile"/> as <see cref="bool"/>.

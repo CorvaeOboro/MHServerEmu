@@ -726,7 +726,10 @@ namespace MHServerEmu.Games.Network
             ConsiderContainedEntities(entity, InterestTrackOperation.Add);
 
             // Notify the client that we have finished sending everything needed for this avatar
-            if (entity is Avatar && interestPolicies.HasFlag(AOINetworkPolicyValues.AOIChannelProximity))
+            // IncursionMod: non-avatars rendered as avatars included.
+            bool isAvatarLikeForClient = entity is Avatar
+                || (entity is WorldEntity renderWe && renderWe.IsClientRenderedAsAvatar);
+            if (isAvatarLikeForClient && interestPolicies.HasFlag(AOINetworkPolicyValues.AOIChannelProximity))
                 SendMessage(NetMessageFullInWorldHierarchyUpdateEnd.CreateBuilder().SetIdEntity(entity.Id).Build());
         }
 
@@ -735,9 +738,11 @@ namespace MHServerEmu.Games.Network
             // Get current itnerest policies
             AOINetworkPolicyValues currentInterestPolicies = GetCurrentInterestPolicies(entity.Id);
 
-            // Notify the client of a hierarchy update for avatars
-            if (entity is Avatar avatar && avatar.IsInWorld)
-                SendMessage(NetMessageFullInWorldHierarchyUpdateBegin.CreateBuilder().SetIdEntity(avatar.Id).Build());
+            // heirarchyUpdae for this avatar
+            // IncursionMod: non-avatars rendered as avatars included.
+            if (entity is WorldEntity hierarchyWe && hierarchyWe.IsInWorld
+                && (entity is Avatar || hierarchyWe.IsClientRenderedAsAvatar))
+                SendMessage(NetMessageFullInWorldHierarchyUpdateBegin.CreateBuilder().SetIdEntity(entity.Id).Build());
 
             // Remove
             SetEntityInterestPolicies(entity, InterestTrackOperation.Remove);

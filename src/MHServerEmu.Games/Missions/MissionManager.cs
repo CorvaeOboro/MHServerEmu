@@ -22,6 +22,7 @@ using MHServerEmu.Core.System.Time;
 
 namespace MHServerEmu.Games.Missions
 {
+    /// <summary>MissionManager </summary>
     public class MissionManager : ISerialize
     {
         private static readonly Logger Logger = LogManager.CreateLogger();
@@ -50,6 +51,7 @@ namespace MHServerEmu.Games.Missions
         private Event<EntityEnteredMissionHotspotGameEvent>.Action _entityEnteredMissionHotspotAction;
         private Event<EntityLeftMissionHotspotGameEvent>.Action _entityLeftMissionHotspotAction;
         private Event<PlayerLeftRegionGameEvent>.Action _playerLeftRegionAction;
+        private Event<PlayerEnteredRegionGameEvent>.Action _playerEnteredRegionAction;
         private Event<PlayerInteractGameEvent>.Action _playerInteractAction;
         private Event<PlayerCompletedMissionGameEvent>.Action _playerCompletedMissionAction;
         private Event<PlayerFailedMissionGameEvent>.Action _playerFailedMissionAction;
@@ -68,6 +70,7 @@ namespace MHServerEmu.Games.Missions
             _entityEnteredMissionHotspotAction = OnEntityEnteredMissionHotspot;
             _entityLeftMissionHotspotAction = OnEntityLeftMissionHotspot;
             _playerLeftRegionAction = OnPlayerLeftRegion;
+            _playerEnteredRegionAction = OnPlayerEnteredRegion;
             _playerInteractAction = OnPlayerInteract;
             _playerCompletedMissionAction = OnPlayerCompletedMission;
             _playerFailedMissionAction = OnPlayerFailedMission;
@@ -98,6 +101,12 @@ namespace MHServerEmu.Games.Missions
 
         public void Shutdown(Region region)
         {
+            if (Player != null && Game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyEnable == true)
+            {
+                if (Game.CustomGameOptions.TerminalDailyCompleteAnyDifficultyLoggingEnable)
+                    TerminalCubeShardLogCollator.WriteLine(Player.DatabaseUniqueId, "[SessionEnd] MissionManager shutdown.");
+                TerminalCubeShardLogCollator.EndSession(Player.DatabaseUniqueId);
+            }
             IsInitialized = false;
             Game?.GameEventScheduler?.CancelAllEvents(_pendingEvents);
             if (EventsRegistred && region != null)
@@ -156,6 +165,13 @@ namespace MHServerEmu.Games.Missions
 
             UpdateDailyMissions(true, hasMissions);
             ScheduleDailyMissionUpdate();
+
+            if (Game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyEnable == true)
+            {
+                TerminalCubeShardLogCollator.BeginSession(player.DatabaseUniqueId, player.GetName());
+                if (Game.CustomGameOptions.TerminalDailyCompleteAnyDifficultyLoggingEnable)
+                    TerminalCubeShardLogCollator.WriteLine(player.DatabaseUniqueId, $"[SessionBegin] Player={player.GetName()} region={region.PrototypeDataRef.GetName()} hasMissions={hasMissions}");
+            }
 
             RegisterEvents(region);
 
@@ -416,10 +432,18 @@ namespace MHServerEmu.Games.Missions
 
                     if (reset)
                     {
-                        if (mission.State != MissionState.Invalid) 
+                        if (mission.State != MissionState.Invalid)
+                        {
+                            if (Game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyEnable == true && Game.CustomGameOptions.TerminalDailyCompleteAnyDifficultyLoggingEnable)
+                                TerminalCubeShardLogCollator.WriteLine(Player.DatabaseUniqueId, $"[ResetDailyMissions] {mission.PrototypeName}: {mission.State} -> Invalid (daily reset)");
                             mission.SetState(MissionState.Invalid);
+                        }
 
-                        Player.Properties.RemoveProperty(new(PropertyEnum.SharedQuestCompletionCount, mission.PrototypeDataRef));
+                        PropertyId propId = new(PropertyEnum.SharedQuestCompletionCount, mission.PrototypeDataRef);
+                        int oldVal = Player.Properties[propId];
+                        Player.Properties.RemoveProperty(propId);
+                        if (Game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyEnable == true && Game.CustomGameOptions.TerminalDailyCompleteAnyDifficultyLoggingEnable)
+                            TerminalCubeShardLogCollator.WriteLine(Player.DatabaseUniqueId, $"[ResetDailyMissions] {mission.PrototypeName}: Removed SharedQuestCompletionCount (was {oldVal}) (prop={propId})");
                     }
                 }
         }
@@ -717,6 +741,7 @@ namespace MHServerEmu.Games.Missions
                 region.PlayerFailedMissionEvent.AddActionBack(_playerFailedMissionAction);
                 region.PlayerInteractEvent.AddActionBack(_playerInteractAction);
                 region.PlayerLeftRegionEvent.AddActionBack(_playerLeftRegionAction);
+                region.PlayerEnteredRegionEvent.AddActionBack(_playerEnteredRegionAction);
             }
 
             foreach (var mission in _missionDict.Values)
@@ -741,6 +766,7 @@ namespace MHServerEmu.Games.Missions
                 region.PlayerFailedMissionEvent.RemoveAction(_playerFailedMissionAction);
                 region.PlayerInteractEvent.RemoveAction(_playerInteractAction);
                 region.PlayerLeftRegionEvent.RemoveAction(_playerLeftRegionAction);
+                region.PlayerEnteredRegionEvent.RemoveAction(_playerEnteredRegionAction);
             }
 
             foreach (var mission in _missionDict.Values)
@@ -806,6 +832,84 @@ namespace MHServerEmu.Games.Missions
             if (IsRegionMissionManager() || player == Player)
                 foreach (var mission in _missionDict.Values)
                     mission?.OnPlayerLeftRegion(player);
+        }
+
+        private void OnPlayerEnteredRegion(in PlayerEnteredRegionGameEvent evt)
+        {
+            var player = evt.Player;
+            if (player == null) return;
+            if (IsRegionMissionManager() || player != Player) return;
+
+            var game = Game;
+            bool terminalCubeShardLoggingEnabled = game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyLoggingEnable == true;
+            if (game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyEnable != true)
+            {
+                if (terminalCubeShardLoggingEnabled)
+                    TerminalCubeShardLogCollator.WriteLine(player.DatabaseUniqueId, "[OnPlayerEnteredRegion] Config TerminalDailyCompleteAnyDifficultyEnable is false; skipping.");
+                return;
+            }
+
+            var region = player.AOI?.Region;
+            if (region == null)
+            {
+                if (terminalCubeShardLoggingEnabled)
+                    TerminalCubeShardLogCollator.WriteLine(player.DatabaseUniqueId, "[OnPlayerEnteredRegion] player.AOI.Region is null; skipping.");
+                return;
+            }
+
+            if (MissionManagerTerminalCubeShard.TerminalRegionToDailyMissionMap.TryGetValue(region.PrototypeDataRef, out PrototypeId dailyMissionRef) == false)
+            {
+                string msg = $"[OnPlayerEnteredRegion] Region {region.PrototypeDataRef.GetName()} not in terminal-daily map.";
+                if (terminalCubeShardLoggingEnabled)
+                {
+                    Logger.Trace($"[TerminalCubeShard] {msg}");
+                    TerminalCubeShardLogCollator.WriteLine(player.DatabaseUniqueId, msg);
+                }
+                return;
+            }
+
+            var difficultyTierProto = region.DifficultyTierRef.As<DifficultyTierPrototype>();
+            if (difficultyTierProto == null || difficultyTierProto.Tier < DifficultyTier.Red)
+            {
+                string msg = $"[OnPlayerEnteredRegion] Region {region.PrototypeDataRef.GetName()} tier {difficultyTierProto?.Tier} is below Heroic; skipping.";
+                if (terminalCubeShardLoggingEnabled)
+                {
+                    Logger.Trace($"[TerminalCubeShard] {msg}");
+                    TerminalCubeShardLogCollator.WriteLine(player.DatabaseUniqueId, msg);
+                }
+                return;
+            }
+
+            var mission = MissionByDataRef(dailyMissionRef);
+            if (mission == null)
+            {
+                string msg = $"[OnPlayerEnteredRegion] Daily mission {dailyMissionRef.GetName()} not found for player {player}.";
+                if (terminalCubeShardLoggingEnabled)
+                {
+                    Logger.Warn($"[TerminalCubeShard] {msg}");
+                    TerminalCubeShardLogCollator.WriteLine(player.DatabaseUniqueId, msg);
+                }
+                return;
+            }
+
+            if (mission.State == MissionState.Completed)
+            {
+                string msg = $"[OnPlayerEnteredRegion] Daily {mission.PrototypeName} is already Completed; skipping.";
+                if (terminalCubeShardLoggingEnabled)
+                {
+                    Logger.Trace($"[TerminalCubeShard] {msg}");
+                    TerminalCubeShardLogCollator.WriteLine(player.DatabaseUniqueId, msg);
+                }
+                return;
+            }
+
+            string completeMsg = $"[OnPlayerEnteredRegion] Auto-completing daily {mission.PrototypeName} (was {mission.State}) for {player} entering {region.PrototypeDataRef.GetName()} on {difficultyTierProto.Tier}";
+            if (terminalCubeShardLoggingEnabled)
+            {
+                Logger.Info($"[TerminalCubeShard] {completeMsg}");
+                TerminalCubeShardLogCollator.WriteLine(player.DatabaseUniqueId, completeMsg);
+            }
+            mission.CompleteWithoutRewards(suppressRestart: true);
         }
 
         private void OnPlayerInteract(in PlayerInteractGameEvent evt)
@@ -1715,6 +1819,120 @@ namespace MHServerEmu.Games.Missions
         protected class DailyMissionEvent : CallMethodEvent<MissionManager>
         {
             protected override CallbackDelegate GetCallback() => (manager) => manager.OnDailyMissionUpdate();
+        }
+    }
+    /// <summary>
+    /// a WIP Server-side mod: when a player enters a daily terminal region on Heroic+ difficulty,
+    /// auto-completes the corresponding daily mission without rewards so the "cube shard available" visual is OFF .
+    /// </summary>
+    public partial class MissionManagerTerminalCubeShard
+    {
+        private static readonly Logger Logger = LogManager.CreateLogger();
+        internal static readonly Dictionary<PrototypeId, PrototypeId> TerminalRegionToDailyMissionMap = new();
+        internal static bool _terminalMapInitialized;
+
+        public static void InitializeTerminalDailyMap()
+        {
+            if (_terminalMapInitialized) return;
+            _terminalMapInitialized = true;
+
+            foreach (var missionRef in GameDatabase.DataDirectory.IteratePrototypesInHierarchy<DailyMissionPrototype>(PrototypeIterateFlags.NoAbstractApprovedOnly))
+            {
+                var dailyProto = GameDatabase.GetPrototype<DailyMissionPrototype>(missionRef);
+                if (dailyProto == null || dailyProto.Type != DailyMissionType.Terminal) continue;
+
+                using var regionRefsHandle = HashSetPool<PrototypeId>.Instance.Get(out HashSet<PrototypeId> regionRefs);
+                CollectRegionRefsFromMission(dailyProto, regionRefs);
+                ExpandRegionRefs(regionRefs);
+
+                foreach (var regionRef in regionRefs)
+                {
+                    if (GameDatabase.GetPrototype<RegionPrototype>(regionRef) == null) continue;
+                    TerminalRegionToDailyMissionMap[regionRef] = missionRef;
+                }
+            }
+
+            Logger.Info($"[TerminalCubeShard] Built terminal-daily map with {TerminalRegionToDailyMissionMap.Count} region entries.");
+        }
+
+        private static void ExpandRegionRefs(HashSet<PrototypeId> regionRefs)
+        {
+            using var queueHandle = ListPool<PrototypeId>.Instance.Get(out List<PrototypeId> queue);
+            foreach (var r in regionRefs) queue.Add(r);
+
+            for (int i = 0; i < queue.Count; i++)
+            {
+                var currentRef = queue[i];
+                var currentProto = GameDatabase.GetPrototype<RegionPrototype>(currentRef);
+                if (currentProto == null) continue;
+
+                // Expand to explicit alt regions defined on this prototype
+                if (currentProto.AltRegions.HasValue())
+                {
+                    foreach (var altRef in currentProto.AltRegions)
+                    {
+                        if (regionRefs.Add(altRef))
+                            queue.Add(altRef);
+                    }
+                }
+
+                // Expand to child region prototypes (difficulty variants often inherit)
+                foreach (var candidateRef in GameDatabase.DataDirectory.IteratePrototypesInHierarchy<RegionPrototype>(PrototypeIterateFlags.NoAbstractApprovedOnly))
+                {
+                    if (candidateRef == currentRef) continue;
+                    if (GameDatabase.DataDirectory.PrototypeIsAPrototype(candidateRef, currentRef))
+                    {
+                        if (regionRefs.Add(candidateRef))
+                            queue.Add(candidateRef);
+                    }
+                }
+
+                // Expand to parent prototypes that list this one as an alt region
+                foreach (var candidateRef in GameDatabase.DataDirectory.IteratePrototypesInHierarchy<RegionPrototype>(PrototypeIterateFlags.NoAbstractApprovedOnly))
+                {
+                    if (candidateRef == currentRef) continue;
+                    var candidateProto = GameDatabase.GetPrototype<RegionPrototype>(candidateRef);
+                    if (candidateProto?.AltRegions.HasValue() != true) continue;
+                    foreach (var altRef in candidateProto.AltRegions)
+                    {
+                        if (altRef == currentRef && regionRefs.Add(candidateRef))
+                            queue.Add(candidateRef);
+                    }
+                }
+            }
+        }
+
+        private static void CollectRegionRefsFromMission(MissionPrototype missionProto, HashSet<PrototypeId> regionRefs)
+        {
+            CollectRegionRefsFromConditionList(missionProto.ActivateConditions, regionRefs);
+            CollectRegionRefsFromConditionList(missionProto.ActivateNowConditions, regionRefs);
+            CollectRegionRefsFromConditionList(missionProto.PrereqConditions, regionRefs);
+            CollectRegionRefsFromConditionList(missionProto.CompleteNowConditions, regionRefs);
+            CollectRegionRefsFromConditionList(missionProto.FailureConditions, regionRefs);
+
+            if (missionProto.Objectives.HasValue())
+            {
+                foreach (var objective in missionProto.Objectives)
+                {
+                    if (objective == null) continue;
+                    CollectRegionRefsFromConditionList(objective.ActivateConditions, regionRefs);
+                    CollectRegionRefsFromConditionList(objective.SuccessConditions, regionRefs);
+                    CollectRegionRefsFromConditionList(objective.FailureConditions, regionRefs);
+                }
+            }
+        }
+
+        private static void CollectRegionRefsFromConditionList(MissionConditionListPrototype conditionList, HashSet<PrototypeId> regionRefs)
+        {
+            if (conditionList == null) return;
+            foreach (var condition in conditionList.IteratePrototypes())
+            {
+                if (condition == null) continue;
+                using var refsHandle = HashSetPool<PrototypeId>.Instance.Get(out HashSet<PrototypeId> refs);
+                condition.GetPrototypeContextRefs(refs);
+                foreach (var regionRef in refs)
+                    regionRefs.Add(regionRef);
+            }
         }
     }
 }
