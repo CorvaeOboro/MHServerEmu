@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MHServerEmu - Loot Filter</title>
+<style>
+:root { --bg:#0d0d0d; --surface:#141414; --border:#2a2a2a; --text:#e0e0e0; --muted:#999; --accent:#4a7fb5; --link:#64b5f6; --code:#1e1e1e; }
+* { box-sizing:border-box; }
+html,body { margin:0; height:100%; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+.page { display:flex; height:100vh; }
+.sidebar { width:12%; min-width:160px; border-right:1px solid var(--border); background:var(--bg); }
+.sidebar iframe { width:100%; height:100%; border:none; }
+.content { flex:1; overflow-y:auto; }
+header { background:linear-gradient(90deg,#0a1520 0%,#0d0d0d 100%); border-bottom:2px solid var(--accent); padding:1.2rem 1rem; text-align:center; }
+header h1 { margin:0; font-size:2rem; color:#fff; }
+header p { margin:0.5rem 0 0; color:var(--muted); }
+.container { max-width:1000px; margin:0 auto; padding:2rem 1.5rem; }
+h2 { color:#fff; border-bottom:1px solid var(--border); padding-bottom:0.5rem; margin-top:2.5rem; font-size:1.4rem; }
+h3 { color:#fff; margin-top:1.5rem; font-size:1.1rem; }
+a { color:var(--link); text-decoration:none; }
+a:hover { text-decoration:underline; }
+ul,ol { padding-left:1.4rem; }
+li { margin-bottom:0.4rem; }
+table { width:100%; border-collapse:collapse; margin:1rem 0; font-size:0.95rem; }
+th,td { border:1px solid var(--border); padding:0.5rem 0.7rem; text-align:left; }
+th { background:var(--surface); color:#fff; }
+td { background:#111; }
+code,pre { background:var(--code); border:1px solid var(--border); border-radius:4px; font-family:Consolas,Monaco,'Courier New',monospace; font-size:0.9rem; }
+code { padding:0.15rem 0.35rem; }
+pre { padding:0.8rem; overflow-x:auto; }
+.note { border-left:3px solid var(--accent); background:var(--surface); padding:0.8rem 1rem; margin:1rem 0; border-radius:0 6px 6px 0; }
+footer { text-align:center; padding:1.2rem 1rem; color:var(--muted); font-size:0.9rem; border-top:1px solid var(--border); margin-top:3rem; }
+</style>
+</head>
+<body>
+<div class="page">
+    <div class="sidebar"><iframe src="../marvel_heroes_menu.htm"></iframe></div>
+    <div class="content">
+<header>
+    <h1>Loot Filter</h1>
+    <p>Per-player, server-side rarity filtering for unwanted drops</p>
+</header>
+<div class="container">
+
+<p>The loot filter deletes unwanted item drops , expanding the in-game filter to additonal item types . set with commands by the player , globally or per hero . Settings are saved per player in <code>MHServerEmu/Data/PlayerLootFilters/&lt;playerId&gt;.json</code></p>
+
+
+<h2>  Filters</h2>
+<table>
+<tr><th>Type</th><th>Filter Mode</th></tr>
+<tr><td>Ring</td><td>Rarity threshold</td></tr>
+<tr><td>Medal</td><td>Rarity threshold</td></tr>
+<tr><td>Insignia</td><td>Rarity threshold</td></tr>
+<tr><td>Team-Up Gear</td><td>Rarity threshold</td></tr>
+<tr><td>Catalyst</td><td>Rarity threshold</td></tr>
+<tr><td>Uru-Forged</td><td>On / Off toggle</td></tr>
+</table>
+
+<p>Items at or below the configured rarity are discarded.</p>
+
+<h2>Character-Specific Mode</h2>
+<p>With <code>LootFilterCharacterSpecificEnable=true</code>, hero-specific gear for other characters is also filtered out. You only see drops meant for your current hero plus any-hero items. this is prefered for a self-found-ish experience where you only progress hero-specific uniques by playing that hero. </p>
+
+<h2>Commands</h2>
+<p>Use the <code>!filter</code> command group in-game:</p>
+<table>
+<tr><th>Command</th><th>Description</th></tr>
+<tr><td><code>!filter list</code></td><td>Show current thresholds for your character</td></tr>
+<tr><td><code>!filter set &lt;type&gt; &lt;rarity|on/off&gt;</code></td><td>Set a filter globally</td></tr>
+<tr><td><code>!filter set &lt;type&gt; &lt;rarity|on/off&gt; me</code></td><td>Set a filter for your current character only</td></tr>
+<tr><td><code>!filter clear &lt;type&gt;</code></td><td>Remove a filter setting</td></tr>
+<tr><td><code>!filter clearall</code></td><td>Remove all settings</td></tr>
+<tr><td><code>!filter rarities</code></td><td>List valid rarity names</td></tr>
+</table>
+
+<h3>Examples</h3>
+<pre>
+!filter set teamup epic           ; stop team-up drops at epic or below
+!filter set ring epic me          ; ring filter for current character only
+!filter set uruforged off         ; stop all uru-forged drops
+!filter clear ring global         ; remove the global ring threshold
+</pre>
+
+<h2>Config Options</h2>
+<table>
+<tr><th>Option</th><th>Default</th><th>Description</th></tr>
+<tr><td><code>LootFilterEnable</code></td><td>true</td><td>Master switch</td></tr>
+<tr><td><code>LootFilterCharacterSpecificEnable</code></td><td>true</td><td>Filter gear for other heroes</td></tr>
+<tr><td><code>LootFilterLoggingEnable</code></td><td>false</td><td>Log filter decisions</td></tr>
+</table>
+
+</div>
+<footer><p> </p></footer>
+    </div>
+</div>
+</body>
+</html>

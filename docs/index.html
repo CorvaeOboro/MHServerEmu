@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MHServerEmu - Overview</title>
+<style>
+:root { --bg:#0d0d0d; --surface:#141414; --border:#2a2a2a; --text:#e0e0e0; --muted:#999; --accent:#4a7fb5; --link:#64b5f6; --code:#1e1e1e; }
+* { box-sizing:border-box; }
+html,body { margin:0; height:100%; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+.page { display:flex; height:100vh; }
+.sidebar { width:12%; min-width:160px; border-right:1px solid var(--border); background:var(--bg); }
+.sidebar iframe { width:100%; height:100%; border:none; }
+.content { flex:1; overflow-y:auto; }
+header { background:linear-gradient(90deg,#0a1520 0%,#0d0d0d 100%); border-bottom:2px solid var(--accent); padding:1.2rem 1rem; text-align:center; }
+header h1 { margin:0; font-size:2.2rem; color:#fff; letter-spacing:1px; }
+header p { margin:0.5rem 0 0; color:var(--muted); font-size:1.05rem; }
+.container { max-width:1000px; margin:0 auto; padding:2rem 1.5rem; }
+h2 { color:#fff; border-bottom:1px solid var(--border); padding-bottom:0.5rem; margin-top:2.5rem; font-size:1.4rem; }
+h3 { color:#fff; margin-top:1.5rem; font-size:1.1rem; }
+a { color:var(--link); text-decoration:none; }
+a:hover { text-decoration:underline; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:1rem; margin-top:1rem; }
+.card { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:0.8rem; transition:border-color 0.2s; }
+.card:hover { border-color:var(--accent); }
+.card h3 { margin:0 0 0.5rem; color:var(--accent); font-size:1.1rem; }
+.card p { margin:0; color:var(--muted); font-size:0.95rem; }
+.note { border-left:3px solid var(--accent); background:var(--surface); padding:0.8rem 1rem; margin:1rem 0; border-radius:0 6px 6px 0; }
+.mod-list { list-style:none; padding:0; margin:0; }
+.mod-list li { margin-bottom:0.4rem; }
+.mod-list a { color:var(--text); font-weight:600; font-size:1rem; }
+.mod-list a:hover { color:var(--link); }
+.mod-list img { display:block; max-width:200px; width:100%; margin-top:0.4rem; border-radius:4px; border:1px solid var(--border); }
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:1rem; }
+.two-col h2 { margin-top:0; color:var(--accent); border-bottom:1px solid var(--accent); }
+footer { text-align:center; padding:1.2rem 1rem; color:var(--muted); font-size:0.9rem; border-top:1px solid var(--border); margin-top:3rem; }
+</style>
+</head>
+<body>
+<div class="page">
+    <div class="sidebar"><iframe src="marvel_heroes_menu.htm"></iframe></div>
+    <div class="content">
+<header>
+    <h1>Marvel Heroes Server Emulator Mods</h1>
+    <p>A collection of server-side and client-side mods </p>
+</header>
+<div class="container">
+<center>
+<a href="https://github.com/CorvaeOboro/MHServerEmu/archive/refs/heads/master.zip" target="_parent">DOWNLOAD</a>   |   <a href="https://github.com/CorvaeOboro/MHServerEmu" target="_parent">GITHUB</a> 
+</center>
+
+<div class="two-col">
+<div>
+<h2>Server Mods</h2>
+<ul class="mod-list">
+    <li><a href="Mods/Mods_LootFilter.html">Loot Filter</a></li>
+    <li><a href="Mods/Mods_ItemAutoPickup.html">Auto-Pickup Items</a></li>
+    <li><a href="Mods/Mods_OrbPickupRadius.html">Orb Pickup Radius</a></li>
+    <li><a href="Mods/Mods_ChestAutoOpen.html">Chest Auto-Open</a></li>
+    <li><a href="Mods/Mods_ThrowableDisable.html">Throwable Disable</a></li>
+    <li><a href="Mods/Mods_InteractNearbyAuto.html">Interact Nearby Auto<img src="Mods/marvel_heroes_omega_mod_interact_nearby_auto_pickup.webp" alt="Interact Nearby Auto"></a></li>
+    <li><a href="Mods/Mods_DangerRoomCombine.html">DangerRoom Combine<img src="Mods/marvel_heroes_omega_mod_dangerroom_combine.webp" alt="DangerRoom Combine"></a></li>
+    <li><a href="Mods/Mods_Incursion.html">Incursion<img src="Mods/marvel_heroes_omega_mod_incursion_title_wide.png" alt="Incursion"></a></li>
+</ul>
+</div>
+
+<div>
+<h2>Client Mods</h2>
+<ul class="mod-list">
+    <li><a href="Mods/Mods_DisplayMessageRemoval.html">Display Message Removal<img src="Mods/marvel_heroes_omega_mod_display_message_removal.png" alt="Display Message Removal"></a></li>
+    <li><a href="Mods/Mods_DonateWithoutConfirm.html">Donate Without Confirm</a></li>
+    <li><a href="Mods/Mods_SoundSilencer.html">Sound Silencer<img src="https://raw.githubusercontent.com/CorvaeOboro/MH_PCK_SoundSilencer/main/docs/MH_PCK_SoundSilencer_header.png" alt="Sound Silencer"></a></li>
+</ul>
+</div>
+</div>
+
+<h2>Server Mods</h2>
+<div class="grid">
+    <a href="Mods/Mods_LootFilter.html" class="card">
+        <h3>Loot Filter</h3>
+        <p>Per-player rarity filtering for unwanted drops. Set thresholds by item type globally or per hero.</p>
+    </a>
+    <a href="Mods/Mods_ItemAutoPickup.html" class="card">
+        <h3>Auto-Pickup Items</h3>
+        <p>Automatically picks up currency, crafting mats, relics, and runes from the ground near your avatar.</p>
+    </a>
+    <a href="Mods/Mods_OrbPickupRadius.html" class="card">
+        <h3>Orb Pickup Radius</h3>
+        <p>Widens orb auto-magnet range so XP, credits, health, and endurance orbs pull in from much farther away.</p>
+    </a>
+    <a href="Mods/Mods_ChestAutoOpen.html" class="card">
+        <h3>Chest Auto-Open</h3>
+        <p>Automatically opens chests, crates, and gift boxes in general inventory.</p>
+    </a>
+    <a href="Mods/Mods_ThrowableDisable.html" class="card">
+        <h3>Throwable Disable</h3>
+        <p>Prevents the animation lock from picking up and throwing objects like cars and rocks.</p>
+    </a>
+    <a href="Mods/Mods_InteractNearbyAuto.html" class="card">
+        <h3>Interact Nearby Auto</h3>
+        <p>Auto-clicks mission objectives, civilians, and eligible interactables as you walk within range.</p>
+    </a>
+    <a href="Mods/Mods_DangerRoomCombine.html" class="card">
+        <h3>DangerRoom Combine</h3>
+        <p>Combines pairs of Danger Room scenario portals into higher-tier ones.</p>
+    </a>
+    <a href="Mods/Mods_Incursion.html" class="card">
+        <h3>Incursion</h3>
+        <p>Spawns hostile Hero Variant invaders that hunt players in combat regions. 60+ enemy types.</p>
+    </a>
+</div>
+
+<h2>Client Mods</h2>
+<div class="grid">
+    <a href="Mods/Mods_DisplayMessageRemoval.html" class="card">
+        <h3>Display Message Removal</h3>
+        <p>Suppresses on-screen power failure messages like "Power Not Ready" .</p>
+    </a>
+    <a href="Mods/Mods_DonateWithoutConfirm.html" class="card">
+        <h3>Donate Without Confirm</h3>
+        <p>Removes the confirmation popup when donating items .</p>
+    </a>
+    <a href="Mods/Mods_SoundSilencer.html" class="card">
+        <h3>Sound Silencer</h3>
+        <p>Mutes unwanted voicelines and sound effects .</p>
+    </a>
+</div>
+
+</div>
+<footer><p> </p></footer>
+    </div>
+</div>
+</body>
+</html>

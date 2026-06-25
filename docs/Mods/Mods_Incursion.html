@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MHServerEmu - Incursion</title>
+<style>
+:root { --bg:#0d0d0d; --surface:#141414; --border:#2a2a2a; --text:#e0e0e0; --muted:#999; --accent:#4a7fb5; --link:#64b5f6; --code:#1e1e1e; }
+* { box-sizing:border-box; }
+html,body { margin:0; height:100%; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+.page { display:flex; height:100vh; }
+.sidebar { width:12%; min-width:160px; border-right:1px solid var(--border); background:var(--bg); }
+.sidebar iframe { width:100%; height:100%; border:none; }
+.content { flex:1; overflow-y:auto; }
+header { background:linear-gradient(90deg,#0a1520 0%,#0d0d0d 100%); border-bottom:2px solid var(--accent); padding:1.2rem 1rem; text-align:center; }
+header h1 { margin:0; font-size:2rem; color:#fff; }
+header p { margin:0.5rem 0 0; color:var(--muted); }
+.container { max-width:1000px; margin:0 auto; padding:2rem 1.5rem; }
+h2 { color:#fff; border-bottom:1px solid var(--border); padding-bottom:0.5rem; margin-top:2.5rem; font-size:1.4rem; }
+h3 { color:#fff; margin-top:1.5rem; font-size:1.1rem; }
+a { color:var(--link); text-decoration:none; }
+a:hover { text-decoration:underline; }
+ul,ol { padding-left:1.4rem; }
+li { margin-bottom:0.4rem; }
+table { width:100%; border-collapse:collapse; margin:1rem 0; font-size:0.95rem; }
+th,td { border:1px solid var(--border); padding:0.5rem 0.7rem; text-align:left; }
+th { background:var(--surface); color:#fff; }
+td { background:#111; }
+code,pre { background:var(--code); border:1px solid var(--border); border-radius:4px; font-family:Consolas,Monaco,'Courier New',monospace; font-size:0.9rem; }
+code { padding:0.15rem 0.35rem; }
+pre { padding:0.8rem; overflow-x:auto; }
+.note { border-left:3px solid var(--accent); background:var(--surface); padding:0.8rem 1rem; margin:1rem 0; border-radius:0 6px 6px 0; }
+footer { text-align:center; padding:1.2rem 1rem; color:var(--muted); font-size:0.9rem; border-top:1px solid var(--border); margin-top:3rem; }
+</style>
+</head>
+<body>
+<div class="page">
+    <div class="sidebar"><iframe src="../marvel_heroes_menu.htm"></iframe></div>
+    <div class="content">
+<header>
+    <h1>Incursion</h1>
+    <p>Hostile Hero Variant invaders that hunt players in combat regions</p>
+</header>
+<div class="container">
+
+<img src="marvel_heroes_omega_mod_incursion_title_wide.png" alt="Incursion" style="display:block; width:100%; margin:0 auto 1.5rem; border-radius:6px; border:1px solid var(--border);">
+
+<p>Incursion spawns enemy heroes that look and fight like playable characters. They appear randomly ( every 3-9min ) while you are fighting in non-hub regions and actively chase you down.</p>
+
+<ul>
+<li>60+ enemy types, one per playable hero</li>
+<li>They use a subset of that hero's avatar powers</li>
+<li>Balanced to be dangerous but short-lived</li>
+<li>See through invisibility</li>
+</ul>
+
+<h2>Commands</h2>
+<table>
+<tr><th>Command</th><th>Description</th></tr>
+<tr><td><code>!incursion now</code></td><td>Spawn a random invader immediately</td></tr>
+<tr><td><code>!incursion spawn &lt;name&gt;</code></td><td>Spawn a specific invader</td></tr>
+<tr><td><code>!incursion start</code></td><td>Enable spawning</td></tr>
+<tr><td><code>!incursion stop</code></td><td>Disable spawning</td></tr>
+<tr><td><code>!incursion status</code></td><td>Show current settings</td></tr>
+<tr><td><code>!incursion trial</code></td><td>Start a 1v1 gauntlet against all enemy types</td></tr>
+<tr><td><code>!incursion trial stop</code></td><td>End the trial</td></tr>
+</table>
+
+<h2>Config Options</h2>
+<table>
+<tr><th>Option</th><th>Default</th><th>Description</th></tr>
+<tr><td><code>IncursionEnable</code></td><td>true</td><td>Master switch</td></tr>
+<tr><td><code>IncursionIntervalMs</code></td><td>180000</td><td>Minimum time between waves (ms)</td></tr>
+<tr><td><code>IncursionRandomIntervalMaxMs</code></td><td>360000</td><td>Max extra random time added</td></tr>
+<tr><td><code>IncursionEnemyDamageTakenMultiplier</code></td><td>2.0</td><td>Incoming damage multiplier for invaders</td></tr>
+<tr><td><code>IncursionEnemyDamageMultiplier</code></td><td>1.0</td><td>Outgoing damage multiplier</td></tr>
+<tr><td><code>IncursionEnemyVisualScale</code></td><td>1.5</td><td>Size multiplier at spawn</td></tr>
+<tr><td><code>IncursionExcludeEnemies</code></td><td>RasputinIV</td><td>Comma-separated names to skip</td></tr>
+<tr><td><code>IncursionCommandsRequireAdmin</code></td><td>false</td><td>Restrict commands to admins</td></tr>
+<tr><td><code>IncursionLoggingEnable</code></td><td>false</td><td>Combat logging</td></tr>
+<tr><td><code>IncursionLogCollatorEnable</code></td><td>false</td><td>Save per-encounter log files</td></tr>
+</table>
+
+<div class="note"><strong>Note:</strong> Enable logging and the log collator to generate per-encounter files for tuning. Files are saved to <code>Logs/Incursions/</code>.</div>
+</div>
+<footer><p> </p></footer>
+    </div>
+</div>
+</body>
+</html>

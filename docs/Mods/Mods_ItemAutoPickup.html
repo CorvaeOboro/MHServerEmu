@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MHServerEmu - Item Auto-Pickup</title>
+<style>
+:root { --bg:#0d0d0d; --surface:#141414; --border:#2a2a2a; --text:#e0e0e0; --muted:#999; --accent:#4a7fb5; --link:#64b5f6; --code:#1e1e1e; }
+* { box-sizing:border-box; }
+html,body { margin:0; height:100%; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+.page { display:flex; height:100vh; }
+.sidebar { width:12%; min-width:160px; border-right:1px solid var(--border); background:var(--bg); }
+.sidebar iframe { width:100%; height:100%; border:none; }
+.content { flex:1; overflow-y:auto; }
+header { background:linear-gradient(90deg,#0a1520 0%,#0d0d0d 100%); border-bottom:2px solid var(--accent); padding:1.2rem 1rem; text-align:center; }
+header h1 { margin:0; font-size:2rem; color:#fff; }
+header p { margin:0.5rem 0 0; color:var(--muted); }
+.container { max-width:1000px; margin:0 auto; padding:2rem 1.5rem; }
+h2 { color:#fff; border-bottom:1px solid var(--border); padding-bottom:0.5rem; margin-top:2.5rem; font-size:1.4rem; }
+h3 { color:#fff; margin-top:1.5rem; font-size:1.1rem; }
+a { color:var(--link); text-decoration:none; }
+a:hover { text-decoration:underline; }
+ul,ol { padding-left:1.4rem; }
+li { margin-bottom:0.4rem; }
+table { width:100%; border-collapse:collapse; margin:1rem 0; font-size:0.95rem; }
+th,td { border:1px solid var(--border); padding:0.5rem 0.7rem; text-align:left; }
+th { background:var(--surface); color:#fff; }
+td { background:#111; }
+code,pre { background:var(--code); border:1px solid var(--border); border-radius:4px; font-family:Consolas,Monaco,'Courier New',monospace; font-size:0.9rem; }
+code { padding:0.15rem 0.35rem; }
+pre { padding:0.8rem; overflow-x:auto; }
+.note { border-left:3px solid var(--accent); background:var(--surface); padding:0.8rem 1rem; margin:1rem 0; border-radius:0 6px 6px 0; }
+footer { text-align:center; padding:1.2rem 1rem; color:var(--muted); font-size:0.9rem; border-top:1px solid var(--border); margin-top:3rem; }
+</style>
+</head>
+<body>
+<div class="page">
+    <div class="sidebar"><iframe src="../marvel_heroes_menu.htm"></iframe></div>
+    <div class="content">
+<header>
+    <h1>Item Auto-Pickup</h1>
+    <p>Automatically collect nearby ground items on a repeating loop</p>
+</header>
+<div class="container">
+
+<p>A server-side loop that picks up ground items near your avatar automatically. </p>
+
+<h2>What Gets Picked Up</h2>
+<table>
+<tr><th>Category</th><th>Examples</th><th>Optional Stash</th></tr>
+<tr><td>Currency</td><td>Eternity Splinters, Cosmic Shards, Marks, Runestones</td><td>No</td></tr>
+<tr><td>Crafting Ingredients</td><td>Elements , Misc Collectibles</td><td>Yes</td></tr>
+<tr><td>Relics</td><td>All relics </td><td>Yes, and auto-equip merge</td></tr>
+<tr><td>Runes</td><td>Runeword glyphs</td><td>Yes</td></tr>
+</table>
+
+<h2>Config Options</h2>
+<table>
+<tr><th>Option</th><th>Default</th><th>Description</th></tr>
+<tr><td><code>ItemAutoPickupEnable</code></td><td>true</td><td>Master switch</td></tr>
+<tr><td><code>ItemAutoPickupRadius</code></td><td>1400</td><td>Scan radius in world units</td></tr>
+<tr><td><code>ItemAutoPickupIntervalMs</code></td><td>2100</td><td>Scan interval in milliseconds</td></tr>
+<tr><td><code>ItemAutoPickupCraftingIngredientEnable</code></td><td>true</td><td>Pick up crafting mats</td></tr>
+<tr><td><code>ItemAutoPickupCraftingIngredientToStash</code></td><td>true</td><td>Send mats to stash</td></tr>
+<tr><td><code>ItemAutoPickupRelicEnable</code></td><td>true</td><td>Pick up relics</td></tr>
+<tr><td><code>ItemAutoPickupRelicToStash</code></td><td>true</td><td>Send relics to stash</td></tr>
+<tr><td><code>ItemAutoPickupRelicEquipIfSameTypeEquippedEnable</code></td><td>true</td><td>Merge into equipped relic if same type</td></tr>
+<tr><td><code>ItemAutoPickupRuneEnable</code></td><td>true</td><td>Pick up runes</td></tr>
+<tr><td><code>ItemAutoPickupRuneToStash</code></td><td>true</td><td>Send runes to stash</td></tr>
+</table>
+
+</div>
+<footer><p> </p></footer>
+    </div>
+</div>
+</body>
+</html>
