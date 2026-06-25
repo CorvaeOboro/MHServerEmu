@@ -3,32 +3,44 @@ MHServerEmu is a server emulator for Marvel Heroes.
 - this is a modded fork , the original can be found at https://github.com/crypto137/MHServerEmu
 - major thanks to the original developers and contributors 
 
-## FORKED CHANGES
-a focus on QualityOfLife looting features , these are work in progress and not optimized for multiplayer .
-most of these modded features have options in the config.ini , or are controlled with in game commands , last few are patch based and client side edits . 
+| [DOWNLOAD](https://github.com/CorvaeOboro/MHServerEmu/archive/refs/heads/master.zip) | [VIEW MOD WEBSITE](https://corvaeoboro.github.io/MHServerEmu/) | 
 
-- loot filtering by rarity for more item types ( ring , medal , insignia , teamup , catalyst ) controlled by player commands ( !filter set ring epic)
-- loot filtering by character exclusivity ( optionaly remove dropped items for characters that your not currently , SoloSelfFound-ish )
-- auto pickup of "currency" items ( eternity splinters , cosmic worldshards ) default is screenwide (1400)
-- auto pickup and stashing of crafting ingredients ( treating them more like currency items )
-- throwable environment props more easily cancellable ( any ability cancels ) or may disable interaction completely ( most characters dont want to be throwing props or getting locked in the animation )
-- chest items auto open in player inventory ( common chests are by default opened , rare "chests" like cards are not tho could be configured by whitelist in the config )
-- orb pickup radius increased to full screen pickup ( a patch .json mod ) 
-- "Power Not Ready" red onscreen message removed ( edited Client localization file ) 
+## MODS
 
-## FORKED INSTALL
+**Server Mods**
+- [Loot Filter](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_LootFilter.html) - Per-player rarity filtering for unwanted drops for additional item types (ring, medal, insignia, team-up, catalyst, etc.). Set globally or per-hero via commands.
+- [Item Auto-Pickup](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_ItemAutoPickup.html) - Automatically picks up currency, crafting ingredients, relics, and runes from the ground.
+- [Orb Pickup Radius](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_OrbPickupRadius.html) - Widens the auto-magnet range for XP, credits, health, and endurance orbs .
+- [Chest Auto-Open](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_ChestAutoOpen.html) - Automatically opens chests, crates, and gift boxes sitting in your inventory.
+- [Throwable Disable](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_ThrowableDisable.html) - Prevents the animation lock from picking up and throwing environment props.
+- [Interact Nearby Auto](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_InteractNearbyAuto.html) - Auto-clicks mission objectives, civilians, and eligible interactables when in range.
+- ![Interact Nearby Auto](https://corvaeoboro.github.io/MHServerEmu/Mods/marvel_heroes_omega_mod_interact_nearby_auto_pickup.webp)
+- [DangerRoom Combine](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_DangerRoomCombine.html) - Server command to combine pairs of Danger Room scenario portals into higher-tier ones.
+- ![DangerRoom Combine](https://corvaeoboro.github.io/MHServerEmu/Mods/marvel_heroes_omega_mod_dangerroom_combine.webp)
+- [Incursion](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_Incursion.html) - Spawns hostile Hero Variant invaders that hunt players in combat regions.
+- ![Incursion](https://corvaeoboro.github.io/MHServerEmu/Mods/marvel_heroes_omega_mod_incursion_title_wide.png)
+
+**Client Mods**
+- [Display Message Removal](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_DisplayMessageRemoval.html) - Suppresses on-screen power failure messages (e.g. "Power Not Ready")
+- [Donate Without Confirm](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_DonateWithoutConfirm.html) - Removes the confirmation popup when donating unique items 
+- [Sound Silencer](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_SoundSilencer.html) - Mutes unwanted voicelines and SFX 
+- ![Sound Silencer](https://raw.githubusercontent.com/CorvaeOboro/MH_PCK_SoundSilencer/main/docs/MH_PCK_SoundSilencer_header.png)
+
+## MODDED INSTALL
 - backup any existing MHServerEmu and accounts .db 
 - build the server using Build.bat
+
 - for increased Orb pickup radius = copy the patch into the built serveremu ( MHServerEmu\bin\x64\Release\net8.0\Data\Game\Patches )
 - to remove the "Power Not Ready" message  = copy the .string file in the /client folder to your game installation folder ( C:\Steam\steamapps\common\Marvel Heroes\Data\Game\Loco\eng.all)
 - adjust the settings in the config.ini of server to you preference defaults are all enabled 
 - start server
 - commands in game : `!filter list` , for example show only cosmic+ rings = `!filter set ring epic`  
 
-## FORKED NOTES
+## MODDED NOTES
 the modded features are implmented primarily with singleplayer self-hosted server in mind , it has not been optimized or hardened for multiplayer and so it may be cheatable dupeable or cause lag  
+ 
 
-# MHServerEmu ORIGINAL README BEGINS //=========================================
+# MHServerEmu ORIGINAL README BEGINS //==============================
 
 The only currently supported version of the game client is **1.52.0.1700** (also known as **2.16a**) released on September 7th, 2017.
 

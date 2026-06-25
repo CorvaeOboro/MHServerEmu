@@ -1,0 +1,1050 @@
+﻿[
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/ARMORPowerUpCrossbonesProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/ARMORPowerUpKlrtProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/ARMORPowerUpManApeProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/ARMORPowerUpRedSkullProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/ARMORPowerUpUltronProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/ARMORPowerupMrHydeProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/AoSHydraCrossbonesPowerUpProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/AoSHydraHoodPowerUpProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/AoSHydraJuggernautPowerUpProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/AoSHydraKlrtPowerUpProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/AoSHydraMandarinPowerUpProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/AoSHydraTaskmasterPowerUpProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/AoSHydraUltronPowerUpProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/AoSSHIELDBatrocPowerUpProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/AoSSHIELDGorgonPowerUpProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/AoSSHIELDKingpinPowerUpProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/AoSSHIELDKlrtPowerUpProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/AoSSHIELDMandarinPowerUpProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/AoSSHIELDNickFuryPowerUpProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/AoSSHIELDShockerPowerUpProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/AoSShockerPowerUpProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/Art252HydeFormulaOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 7.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/BirthdayEventPowerUpProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpBatrocProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamCapBatrocProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamCapBlackCatProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamCapBullseyeProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamCapCrossbonesProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamCapDocOctProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamCapGreenGoblinProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamCapHoodProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamCapJuggernautProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamCapKirigiProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamCapKurseProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamCapLadyDeathstrikeProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamCapManApeProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamCapMandarinProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamCapMoleManProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamCapRedSkullProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamCapShockerProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamCapSinisterProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamCapTaskmasterProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamIMCrossbonesProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamIMElectroProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamIMGorgonProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamIMHoodProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamIMHydeProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamIMJuggernautProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamIMKingpinProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamIMKirigiProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamIMKurseProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamIMMagnetoProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamIMManApeProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamIMMandarinProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamIMNickFuryProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamIMRedSkullProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamIMShockerProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CWEventLootPowerUpTeamIMSinisterProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CosmicWorldstoneOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 60.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/CreditsOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 120.0 -> 600.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 600.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/DangerRoomBonusOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 200.0 -> 1000.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 1000.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/DeadpoolHulkOutOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 60.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/DeadpoolPowerUpHealOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 60.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/DeadpoolPowerUpHulkOutOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 60.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/DeadpoolPowerUpSpeedOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 60.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/DeadpoolPowerUpSpiritOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 60.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/DeadpoolReworkPowerUpHealingItemProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 60.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/DeadpoolSpeedUpItemProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 60.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/DrStrangeEventAttackBoostProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/EnduranceOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/EnduranceOrbProfileTutorial.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/HalloweenPowerUpProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/HasteOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/HealEnduranceOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/HealOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/HealOrbProfileTutorial.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/Interstellar19LimboEventOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/InvulnOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 75.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/ItemFindPowerUpOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/JOLDoomRemovalOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/JOLHoodRemovalOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/JOLJuggernautRemovalOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/JOLKingpinRemovalOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/JOLKurseRemovalOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/JOLMODOKRemovalOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/JOLMagnetoRemovalOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/JOLMandarinRemovalOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/JOLMrSinisterRemovalOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/JOLOctopusRemovalOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/JOLShockerRemovalOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/JOLTaskmasterRemovalOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/JackOLanternPowerUpDrDoomProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/JackOLanternPowerUpHoodProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/JackOLanternPowerUpJuggProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/JackOLanternPowerUpKingProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/JackOLanternPowerUpKurseProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/JackOLanternPowerUpMODOKProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/JackOLanternPowerUpMagnoProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/JackOLanternPowerUpMandProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/JackOLanternPowerUpMrSProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/JackOLanternPowerUpOckProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/JackOLanternPowerUpShockProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/JackOLanternPowerUpTMProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/JackOLanternPowerUpVultureProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/LegendaryMarkOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 104.0 -> 520.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 520.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/LimboEventOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/Neural30StatBuffGiftProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/OmegaBonusOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 104.0 -> 520.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 520.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/OrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/Radioactive31OrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/RefundLegendaryMarkOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 300.0 -> 1500.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 1500.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/RunestonesOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/SkillPowerUpOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/SlagTrailblazerBuffOrb.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/SpeedPowerUpOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/SummerEventPowerUpProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/SurturAntiBrimstRangedPowerUpOrb.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/SurturAntiHellfirePowerUpOrb.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/SurturEncounter4EnergyDamage.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/SurturEncounter4MentalDamage.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/SurturEncounter4PhysicalDamage.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/SurturMonolithPowerUpOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/SurturMonolithPowerUpOrbProfileFiveMan.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/WinterEventPowerUpProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "AI/ProceduralAI/Prototypes/Profiles/Orbs/XPPowerUpOrbProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "Entity/Items/DropRestrictions/TokenCharacters/StPatricksEventPowerUpProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "Entity/Items/DropRestrictions/TokenCharacters/ValentinesEventPowerUpProfile.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 80.0 -> 400.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 400.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "Entity/Items/Orbs/Items/ProceduralProfiles/ProceduralProfileExperienceOrb.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 104.0 -> 520.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 520.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "Entity/Items/Orbs/Items/ProceduralProfiles/ProceduralProfileExperienceOrbTutorial.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 104.0 -> 520.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 520.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "Entity/Items/Orbs/Items/ProceduralProfiles/ProceduralProfileLongXpOrb.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 104.0 -> 520.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 520.0
+  },
+  {
+    "Enabled": true,
+    "Prototype": "Entity/Items/Orbs/Items/ProceduralProfiles/ProceduralProfileMagnetoMetalOrb.prototype",
+    "Path": "OrbRadius",
+    "Description": "[PickupRadius mod] 150.0 -> 750.0 (x5, floor=400)",
+    "ValueType": "Float",
+    "Value": 750.0
+  }
+]
