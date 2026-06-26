@@ -14,17 +14,17 @@ MHServerEmu is a server emulator for Marvel Heroes.
 - [Chest Auto-Open](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_ChestAutoOpen.html) - Automatically opens chests, crates, and gift boxes sitting in your inventory.
 - [Throwable Disable](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_ThrowableDisable.html) - Prevents the animation lock from picking up and throwing environment props.
 - [Interact Nearby Auto](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_InteractNearbyAuto.html) - Auto-clicks mission objectives, civilians, and eligible interactables when in range.
-- [![Interact Nearby Auto](docs/Mods/marvel_heroes_omega_mod_interact_nearby_auto_pickup.webp)](docs/Mods/Mods_InteractNearbyAuto.html)
+- [![Interact Nearby Auto](docs/Mods/marvel_heroes_omega_mod_interact_nearby_auto_pickup.webp)](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_InteractNearbyAuto.html)
 - [DangerRoom Combine](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_DangerRoomCombine.html) - Server command to combine pairs of Danger Room scenario portals into higher-tier ones.
-- [![DangerRoom Combine](docs/Mods/marvel_heroes_omega_mod_dangerroom_combine.webp)](docs/Mods/Mods_DangerRoomCombine.html)
+- [![DangerRoom Combine](docs/Mods/marvel_heroes_omega_mod_dangerroom_combine.webp)](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_DangerRoomCombine.html)
 - [Incursion](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_Incursion.html) - Spawns hostile Hero Variant invaders that hunt players in combat regions.
-- [![Incursion](docs/Mods/marvel_heroes_omega_mod_incursion_title_wide.png)](docs/Mods/Mods_Incursion.html)
+- [![Incursion](docs/Mods/marvel_heroes_omega_mod_incursion_title_wide.png)](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_Incursion.html)
 
 **Client Mods**
 - [Display Message Removal](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_DisplayMessageRemoval.html) - Suppresses on-screen power failure messages (e.g. "Power Not Ready")
 - [Donate Without Confirm](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_DonateWithoutConfirm.html) - Removes the confirmation popup when donating unique items 
 - [Sound Silencer](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_SoundSilencer.html) - Mutes unwanted voicelines and SFX 
-- <a href="docs/Mods/Mods_SoundSilencer.html"><img src="https://raw.githubusercontent.com/CorvaeOboro/MH_PCK_SoundSilencer/main/docs/MH_PCK_SoundSilencer_header.png" alt="Sound Silencer" height="400"></a>
+- <a href="https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_SoundSilencer.html"><img src="https://raw.githubusercontent.com/CorvaeOboro/MH_PCK_SoundSilencer/main/docs/MH_PCK_SoundSilencer_header.png" alt="Sound Silencer" height="400"></a>
 
 ## MODDED INSTALL
 - backup any existing MHServerEmu and accounts .db 
