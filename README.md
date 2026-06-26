@@ -25,6 +25,7 @@ MHServerEmu is a server emulator for Marvel Heroes.
 
 **Client Mods**
 - [Display Message Removal](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_DisplayMessageRemoval.html) - Suppresses on-screen power failure messages (e.g. "Power Not Ready")
+- [![Display Message Removal](docs/Mods/marvel_heroes_omega_mod_display_message_removal.png)](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_DisplayMessageRemoval.html)
 - [Donate Without Confirm](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_DonateWithoutConfirm.html) - Removes the confirmation popup when donating unique items 
 - [Sound Silencer](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_SoundSilencer.html) - Mutes unwanted voicelines and SFX 
 - <a href="https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_SoundSilencer.html"><img src="https://raw.githubusercontent.com/CorvaeOboro/MH_PCK_SoundSilencer/main/docs/MH_PCK_SoundSilencer_header.png" alt="Sound Silencer" height="400"></a>
