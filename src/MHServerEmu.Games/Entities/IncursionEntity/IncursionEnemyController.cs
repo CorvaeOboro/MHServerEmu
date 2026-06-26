@@ -182,7 +182,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         protected virtual bool SayIntroDialog => true;
 
         /// <summary>
-        /// Fallback raw-string lines. Unused — the controller now sends locale-based
+        /// Fallback raw-string lines. Unused - the controller now sends locale-based
         /// <see cref="NetMessageShowOverheadText"/> via <see cref="IntroDialogLocaleIds"/>.
         /// Kept here so subclasses can still override if raw text ever becomes reliable.
         /// </summary>
@@ -215,7 +215,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         /// Active locale string IDs for intro overhead dialog.
         /// Raw strings proved unreliable; these locale entries are used with <see cref="ShowOverheadText"/>.
         /// Only "Resisting" and "Without Fear" are confirmed to appear in-game.
-        /// The rest are preserved but unconfirmed — some may not render.
+        /// The rest are preserved but unconfirmed - some may not render.
         /// </summary>
         protected virtual LocaleStringId[] IntroDialogLocaleIds => new LocaleStringId[]
         {
@@ -1153,7 +1153,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
                     return;
                 }
 
-                // Grace period disabled — immediate disposal.
+                // Grace period disabled - immediate disposal.
                 IncursionLogCollator.EndSession(AgentId);
                 Dispose();
                 return;
@@ -1289,7 +1289,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             }
             else
             {
-                // Still in grace period — keep scheduling thinks so we can check again.
+                // Still in grace period - keep scheduling thinks so we can check again.
                 ScheduleNextThink();
             }
         }
@@ -1773,7 +1773,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             }
             else if (lastReady != PrototypeId.Invalid)
             {
-                // Only the last-used power is ready — allow it.
+                // Only the last-used power is ready - allow it.
                 chosen = lastReady;
             }
             else

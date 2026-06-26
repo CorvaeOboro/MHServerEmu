@@ -92,10 +92,6 @@ footer { text-align: center; padding: 1.2rem 1rem; color: var(--muted); font-siz
 
 <p>A client-side mod that suppresses on-screen power failure messages by blanking their localized strings in the game's English <code>.string</code> locale files. 
 
-<div class="note">
-   modded files live in <code>mods/DisplayMessageRemoval/</code>.
-</div>
-
 <table>
 <tr><th>Phrase</th></tr>
 <tr><td><code>Power Not Ready</code></td></tr>
@@ -122,41 +118,6 @@ C:\Steam\steamapps\common\Marvel Heroes\Data\Game\Loco\eng.all\
 
 <p>This mod intercepts at the <strong>localization layer</strong>: the targeted string entries are overwritten in-place with a single space (<code>" "</code>) plus null terminator. The client still receives the network message and attempts to render it, but because the resolved text is blank, <strong>nothing appears on screen</strong>. 
 
-
-<h2>Dev Tool: locale_string_tool.py</h2>
-
-<p>A Python 3 script (<code>argparse</code> + <code>json</code> stdlib) that parses, searches, and modifies Marvel Heroes <code>.string</code> locale files.</p>
-
-<h3>Default Invocation</h3>
-
-<pre>py locale_string_tool.py</pre>
-
-<p>This scans the four English <code>.string</code> shards in your live Steam installation and blanks every entry matching the hardcoded <code>TARGET_PHRASES</code> list. Each modified file is backed up once (<code>.bak</code>) before writing.</p>
-
-<p>If your game is installed elsewhere, use <code>--locale-dir</code>:</p>
-
-<pre>py locale_string_tool.py --locale-dir "D:\Games\Marvel Heroes\Data\Game\Loco\eng.all"</pre>
-
-<h3> Search / Replace</h3>
-
-<pre>
-py locale_string_tool.py some.string --search "Power Not Ready" --log search.log
-py locale_string_tool.py some.string --search "Power Not Ready" --replace " " --output-file patched.string
-</pre>
-
-<h3>Options</h3>
-
-<table>
-<tr><th>Flag</th><th>Description</th></tr>
-<tr><td><code>--search &lt;term&gt;</code></td><td>Search for a specific string (case-insensitive)</td></tr>
-<tr><td><code>--replace &lt;text&gt;</code></td><td>Replacement string (default: <code>" "</code>)</td></tr>
-<tr><td><code>--output-file &lt;path&gt;</code></td><td>Write modified file to a new path instead of in-place</td></tr>
-<tr><td><code>--output-json &lt;path&gt;</code></td><td>Dump the full parsed string map as JSON</td></tr>
-<tr><td><code>--locale-dir &lt;path&gt;</code></td><td>Directory containing the <code>.string</code> files (default: Steam install)</td></tr>
-<tr><td><code>--contains</code></td><td>Use substring matching instead of exact phrase matching</td></tr>
-<tr><td><code>--dry-run</code></td><td>Report matches without writing any files</td></tr>
-<tr><td><code>--log &lt;path&gt;</code></td><td>Write detailed log to a file</td></tr>
-</table>
 
 </div>
 </body>

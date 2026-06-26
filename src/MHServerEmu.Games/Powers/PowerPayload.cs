@@ -1205,7 +1205,7 @@ namespace MHServerEmu.Games.Powers
 
             float totalBefore = scale > 0f ? totalAfter / scale : totalAfter;
 
-            // Resolve the "table power" for logging — when a combo child has no CreatorPowerPrototype,
+            // Resolve the "table power" for logging - when a combo child has no CreatorPowerPrototype,
             // map it back to the parent so the log parser groups hits correctly.
             PrototypeId logAbilityRef = rootPowerRef;
             if (Game?.IncursionManager != null)

@@ -128,7 +128,7 @@ namespace MHServerEmu.Games.Entities
                     if (restrictedToPlayerGuid != 0 && restrictedToPlayerGuid != DatabaseUniqueId)
                     {
                         if (itemAutoPickupCraftingIngredientLogging)
-                            Logger.Trace($"[ItemAutoPickupCrafting] Skipping [{protoName}] \u2014 instanced loot for another player.");
+                            Logger.Trace($"[ItemAutoPickupCrafting] Skipping [{protoName}] - instanced loot for another player.");
                         filteredOut++;
                         continue;
                     }
@@ -136,7 +136,7 @@ namespace MHServerEmu.Games.Entities
                     if (item.IsRootOwner == false)
                     {
                         if (itemAutoPickupCraftingIngredientLogging)
-                            Logger.Trace($"[ItemAutoPickupCrafting] Skipping [{protoName}] \u2014 not a root-owned item (already in inventory).");
+                            Logger.Trace($"[ItemAutoPickupCrafting] Skipping [{protoName}] - not a root-owned item (already in inventory).");
                         filteredOut++;
                         continue;
                     }
@@ -153,7 +153,7 @@ namespace MHServerEmu.Games.Entities
                     if (isWhitelistedCraftingIngredient == false)
                     {
                         if (itemAutoPickupCraftingIngredientLogging)
-                            Logger.Trace($"[ItemAutoPickupCrafting] Skipping [{protoName}] \u2014 not a whitelisted crafting ingredient.");
+                            Logger.Trace($"[ItemAutoPickupCrafting] Skipping [{protoName}] - not a whitelisted crafting ingredient.");
                         filteredOut++;
                         continue;
                     }
@@ -161,7 +161,7 @@ namespace MHServerEmu.Games.Entities
                     if (pickedUp.Contains(item))
                     {
                         if (itemAutoPickupCraftingIngredientLogging)
-                            Logger.Trace($"[ItemAutoPickupCrafting] Skipping [{protoName}] \u2014 already picked up by currency loop.");
+                            Logger.Trace($"[ItemAutoPickupCrafting] Skipping [{protoName}] - already picked up by currency loop.");
                         filteredOut++;
                         continue;
                     }
@@ -201,7 +201,7 @@ namespace MHServerEmu.Games.Entities
                     else
                     {
                         if (itemAutoPickupCraftingIngredientLogging)
-                            Logger.Trace($"[ItemAutoPickupCrafting] Pickup failed for [{protoName}] \u2014 result={result}. Leaving on ground.");
+                            Logger.Trace($"[ItemAutoPickupCrafting] Pickup failed for [{protoName}] - result={result}. Leaving on ground.");
                     }
                 }
             }
@@ -227,7 +227,7 @@ namespace MHServerEmu.Games.Entities
                     if (restrictedToPlayerGuid != 0 && restrictedToPlayerGuid != DatabaseUniqueId)
                     {
                         if (itemAutoPickupRelicLogging)
-                            Logger.Trace($"[ItemAutoPickupRelic] Skipping [{protoName}] \u2014 instanced loot for another player.");
+                            Logger.Trace($"[ItemAutoPickupRelic] Skipping [{protoName}] - instanced loot for another player.");
                         filteredOut++;
                         continue;
                     }
@@ -235,7 +235,7 @@ namespace MHServerEmu.Games.Entities
                     if (item.IsRootOwner == false)
                     {
                         if (itemAutoPickupRelicLogging)
-                            Logger.Trace($"[ItemAutoPickupRelic] Skipping [{protoName}] \u2014 not a root-owned item.");
+                            Logger.Trace($"[ItemAutoPickupRelic] Skipping [{protoName}] - not a root-owned item.");
                         filteredOut++;
                         continue;
                     }
@@ -243,7 +243,7 @@ namespace MHServerEmu.Games.Entities
                     if (item.Prototype is not RelicPrototype)
                     {
                         if (itemAutoPickupRelicLogging)
-                            Logger.Trace($"[ItemAutoPickupRelic] Skipping [{protoName}] \u2014 not a RelicPrototype.");
+                            Logger.Trace($"[ItemAutoPickupRelic] Skipping [{protoName}] - not a RelicPrototype.");
                         filteredOut++;
                         continue;
                     }
@@ -251,7 +251,7 @@ namespace MHServerEmu.Games.Entities
                     if (pickedUp.Contains(item))
                     {
                         if (itemAutoPickupRelicLogging)
-                            Logger.Trace($"[ItemAutoPickupRelic] Skipping [{protoName}] \u2014 already picked up by an earlier loop.");
+                            Logger.Trace($"[ItemAutoPickupRelic] Skipping [{protoName}] - already picked up by an earlier loop.");
                         filteredOut++;
                         continue;
                     }
@@ -312,7 +312,7 @@ namespace MHServerEmu.Games.Entities
                     else
                     {
                         if (itemAutoPickupRelicLogging)
-                            Logger.Trace($"[ItemAutoPickupRelic] Pickup failed for [{protoName}] \u2014 result={result}. Leaving on ground.");
+                            Logger.Trace($"[ItemAutoPickupRelic] Pickup failed for [{protoName}] - result={result}. Leaving on ground.");
                     }
                 }
             }
@@ -338,7 +338,7 @@ namespace MHServerEmu.Games.Entities
                     if (restrictedToPlayerGuid != 0 && restrictedToPlayerGuid != DatabaseUniqueId)
                     {
                         if (itemAutoPickupRuneLogging)
-                            Logger.Trace($"[ItemAutoPickupRune] Skipping [{protoName}] \u2014 instanced loot for another player.");
+                            Logger.Trace($"[ItemAutoPickupRune] Skipping [{protoName}] - instanced loot for another player.");
                         filteredOut++;
                         continue;
                     }
@@ -346,7 +346,7 @@ namespace MHServerEmu.Games.Entities
                     if (item.IsRootOwner == false)
                     {
                         if (itemAutoPickupRuneLogging)
-                            Logger.Trace($"[ItemAutoPickupRune] Skipping [{protoName}] \u2014 not a root-owned item.");
+                            Logger.Trace($"[ItemAutoPickupRune] Skipping [{protoName}] - not a root-owned item.");
                         filteredOut++;
                         continue;
                     }
@@ -356,7 +356,7 @@ namespace MHServerEmu.Games.Entities
                         protoName.Contains("/Runewords/Glyphs/OnslaughtRune") == false)
                     {
                         if (itemAutoPickupRuneLogging)
-                            Logger.Trace($"[ItemAutoPickupRune] Skipping [{protoName}] \u2014 not a recognized rune item.");
+                            Logger.Trace($"[ItemAutoPickupRune] Skipping [{protoName}] - not a recognized rune item.");
                         filteredOut++;
                         continue;
                     }
@@ -364,7 +364,7 @@ namespace MHServerEmu.Games.Entities
                     if (pickedUp.Contains(item))
                     {
                         if (itemAutoPickupRuneLogging)
-                            Logger.Trace($"[ItemAutoPickupRune] Skipping [{protoName}] \u2014 already picked up by an earlier loop.");
+                            Logger.Trace($"[ItemAutoPickupRune] Skipping [{protoName}] - already picked up by an earlier loop.");
                         filteredOut++;
                         continue;
                     }
@@ -404,7 +404,7 @@ namespace MHServerEmu.Games.Entities
                     else
                     {
                         if (itemAutoPickupRuneLogging)
-                            Logger.Trace($"[ItemAutoPickupRune] Pickup failed for [{protoName}] \u2014 result={result}. Leaving on ground.");
+                            Logger.Trace($"[ItemAutoPickupRune] Pickup failed for [{protoName}] - result={result}. Leaving on ground.");
                     }
                 }
             }
@@ -574,8 +574,8 @@ namespace MHServerEmu.Games.Entities
                 if (blacklist.Length > 0 && blacklist.Any(b => entityName.Contains(b, StringComparison.OrdinalIgnoreCase)))
                 {
                     blacklisted++;
-                    if (interactNearbyAutoLogging) Logger.Trace($"[InteractNearbyAuto] SKIP [{entityName}#{entityId}] — blacklisted");
-                    if (interactNearbyAutoLogging) InteractObjectAutomaticLogCollator.WriteLine(Id, $"[InteractNearbyAuto_AUTO] SKIP [{entityName}#{entityId}] — blacklisted (matches one of: {string.Join(", ", blacklist)})");
+                    if (interactNearbyAutoLogging) Logger.Trace($"[InteractNearbyAuto] SKIP [{entityName}#{entityId}] - blacklisted");
+                    if (interactNearbyAutoLogging) InteractObjectAutomaticLogCollator.WriteLine(Id, $"[InteractNearbyAuto_AUTO] SKIP [{entityName}#{entityId}] - blacklisted (matches one of: {string.Join(", ", blacklist)})");
                     continue;
                 }
 
@@ -587,19 +587,19 @@ namespace MHServerEmu.Games.Entities
                 bool isWhitelisted = whitelist.Length > 0 && whitelist.Any(w => entityName.Contains(w, StringComparison.OrdinalIgnoreCase));
                 if (isWhitelisted == false)
                 {
-                    // Not whitelisted — apply normal type filters
+                    // Not whitelisted - apply normal type filters
                     if (worldEntity is Item)
                     {
-                        if (interactNearbyAutoLogging) Logger.Trace($"[InteractNearbyAuto] SKIP [{entityName}#{entityId}] — is an Item (not whitelisted)");
-                        if (interactNearbyAutoLogging) InteractObjectAutomaticLogCollator.WriteLine(Id, $"[InteractNearbyAuto_AUTO] SKIP [{entityName}#{entityId}] — is an Item (not whitelisted)");
+                        if (interactNearbyAutoLogging) Logger.Trace($"[InteractNearbyAuto] SKIP [{entityName}#{entityId}] - is an Item (not whitelisted)");
+                        if (interactNearbyAutoLogging) InteractObjectAutomaticLogCollator.WriteLine(Id, $"[InteractNearbyAuto_AUTO] SKIP [{entityName}#{entityId}] - is an Item (not whitelisted)");
                         continue; // exclude items / pickups unless explicitly whitelisted
                     }
 
-                    // Exclude stashes — they are non-hostile agents but not "civilians" in the gameplay sense
+                    // Exclude stashes - they are non-hostile agents but not "civilians" in the gameplay sense
                     if (worldEntity.Properties[PropertyEnum.OpenPlayerStash])
                     {
-                        if (interactNearbyAutoLogging) Logger.Trace($"[InteractNearbyAuto] SKIP [{entityName}#{entityId}] — is a stash (OpenPlayerStash)");
-                        if (interactNearbyAutoLogging) InteractObjectAutomaticLogCollator.WriteLine(Id, $"[InteractNearbyAuto_AUTO] SKIP [{entityName}#{entityId}] — is a stash (OpenPlayerStash)");
+                        if (interactNearbyAutoLogging) Logger.Trace($"[InteractNearbyAuto] SKIP [{entityName}#{entityId}] - is a stash (OpenPlayerStash)");
+                        if (interactNearbyAutoLogging) InteractObjectAutomaticLogCollator.WriteLine(Id, $"[InteractNearbyAuto_AUTO] SKIP [{entityName}#{entityId}] - is a stash (OpenPlayerStash)");
                         continue;
                     }
 
@@ -611,22 +611,22 @@ namespace MHServerEmu.Games.Entities
                     if (isMissionObjective == false && isCivilian == false && isInteractableWorldObject == false)
                     {
                         filtered++;
-                        if (interactNearbyAutoLogging) Logger.Trace($"[InteractNearbyAuto] SKIP [{entityName}#{entityId}] — not mission objective, civilian, or interactable world object (MissionProto={worldEntity.MissionPrototype})");
-                        if (interactNearbyAutoLogging) InteractObjectAutomaticLogCollator.WriteLine(Id, $"[InteractNearbyAuto_AUTO] SKIP [{entityName}#{entityId}] — not mission/civilian/worldObject  MissionProto={worldEntity.MissionPrototype}  EntityType={worldEntity.GetType().Name}");
+                        if (interactNearbyAutoLogging) Logger.Trace($"[InteractNearbyAuto] SKIP [{entityName}#{entityId}] - not mission objective, civilian, or interactable world object (MissionProto={worldEntity.MissionPrototype})");
+                        if (interactNearbyAutoLogging) InteractObjectAutomaticLogCollator.WriteLine(Id, $"[InteractNearbyAuto_AUTO] SKIP [{entityName}#{entityId}] - not mission/civilian/worldObject  MissionProto={worldEntity.MissionPrototype}  EntityType={worldEntity.GetType().Name}");
                         continue;
                     }
                 }
                 else if (interactNearbyAutoLogging)
                 {
-                    Logger.Trace($"[InteractNearbyAuto] WHITELISTED [{entityName}#{entityId}] — bypassing type filter");
-                    InteractObjectAutomaticLogCollator.WriteLine(Id, $"[InteractNearbyAuto_AUTO] WHITELISTED [{entityName}#{entityId}] — bypassing type filter");
+                    Logger.Trace($"[InteractNearbyAuto] WHITELISTED [{entityName}#{entityId}] - bypassing type filter");
+                    InteractObjectAutomaticLogCollator.WriteLine(Id, $"[InteractNearbyAuto_AUTO] WHITELISTED [{entityName}#{entityId}] - bypassing type filter");
                 }
 
                 if (avatar.InInteractRange(worldEntity, InteractionMethod.Use) == false)
                 {
                     outOfRange++;
-                    if (interactNearbyAutoLogging) Logger.Trace($"[InteractNearbyAuto] SKIP [{entityName}#{entityId}] — out of interact range");
-                    if (interactNearbyAutoLogging) InteractObjectAutomaticLogCollator.WriteLine(Id, $"[InteractNearbyAuto_AUTO] SKIP [{entityName}#{entityId}] — out of range");
+                    if (interactNearbyAutoLogging) Logger.Trace($"[InteractNearbyAuto] SKIP [{entityName}#{entityId}] - out of interact range");
+                    if (interactNearbyAutoLogging) InteractObjectAutomaticLogCollator.WriteLine(Id, $"[InteractNearbyAuto_AUTO] SKIP [{entityName}#{entityId}] - out of range");
                     continue;
                 }
 
@@ -638,8 +638,8 @@ namespace MHServerEmu.Games.Entities
                 if (interactionStatus == InteractionMethod.None)
                 {
                     noInteract++;
-                    if (interactNearbyAutoLogging) Logger.Trace($"[InteractNearbyAuto] SKIP [{entityName}#{entityId}] — CallGetInteractionStatus returned None");
-                    if (interactNearbyAutoLogging) InteractObjectAutomaticLogCollator.WriteLine(Id, $"[InteractNearbyAuto_AUTO] SKIP [{entityName}#{entityId}] — interactionStatus=None");
+                    if (interactNearbyAutoLogging) Logger.Trace($"[InteractNearbyAuto] SKIP [{entityName}#{entityId}] - CallGetInteractionStatus returned None");
+                    if (interactNearbyAutoLogging) InteractObjectAutomaticLogCollator.WriteLine(Id, $"[InteractNearbyAuto_AUTO] SKIP [{entityName}#{entityId}] - interactionStatus=None");
                     continue;
                 }
 
@@ -648,16 +648,16 @@ namespace MHServerEmu.Games.Entities
                     && interactionStatus.HasFlag(InteractionMethod.Converse) == false)
                 {
                     wrongMethod++;
-                    if (interactNearbyAutoLogging) Logger.Trace($"[InteractNearbyAuto] SKIP [{entityName}#{entityId}] — interactionStatus={interactionStatus} (needs Use or Converse)");
-                    if (interactNearbyAutoLogging) InteractObjectAutomaticLogCollator.WriteLine(Id, $"[InteractNearbyAuto_AUTO] SKIP [{entityName}#{entityId}] — interactionStatus={interactionStatus} (needs Use|Converse)");
+                    if (interactNearbyAutoLogging) Logger.Trace($"[InteractNearbyAuto] SKIP [{entityName}#{entityId}] - interactionStatus={interactionStatus} (needs Use or Converse)");
+                    if (interactNearbyAutoLogging) InteractObjectAutomaticLogCollator.WriteLine(Id, $"[InteractNearbyAuto_AUTO] SKIP [{entityName}#{entityId}] - interactionStatus={interactionStatus} (needs Use|Converse)");
                     continue;
                 }
 
                 activated++;
                 if (interactNearbyAutoLogging)
                 {
-                    Logger.Info($"[InteractNearbyAuto] ACTIVATE [{entityName}#{entityId}] — interactionStatus={interactionStatus} isMission={isMissionObjective} isCivilian={isCivilian}");
-                    InteractObjectAutomaticLogCollator.WriteLine(Id, $"[InteractNearbyAuto_AUTO] ACTIVATE [{entityName}#{entityId}] — interactionStatus={interactionStatus} isMission={isMissionObjective} isCivilian={isCivilian} missionRef={worldEntity.MissionPrototype}");
+                    Logger.Info($"[InteractNearbyAuto] ACTIVATE [{entityName}#{entityId}] - interactionStatus={interactionStatus} isMission={isMissionObjective} isCivilian={isCivilian}");
+                    InteractObjectAutomaticLogCollator.WriteLine(Id, $"[InteractNearbyAuto_AUTO] ACTIVATE [{entityName}#{entityId}] - interactionStatus={interactionStatus} isMission={isMissionObjective} isCivilian={isCivilian} missionRef={worldEntity.MissionPrototype}");
                 }
                 avatar.UseInteractableObject(worldEntity.Id, PrototypeId.Invalid);
             }
@@ -750,7 +750,7 @@ namespace MHServerEmu.Games.Entities
                 if (item == null)
                 {
                     if (itemChestAutoOpenLogging)
-                        Logger.Trace($"DoChestAutoOpenTick(): Skipping slot {entry.Slot} — entity not found for Id={entry.Id}.");
+                        Logger.Trace($"DoChestAutoOpenTick(): Skipping slot {entry.Slot} - entity not found for Id={entry.Id}.");
                     continue;
                 }
 
@@ -761,14 +761,14 @@ namespace MHServerEmu.Games.Entities
                 if (item.Prototype is not ItemPrototype itemProto)
                 {
                     if (itemChestAutoOpenLogging)
-                        Logger.Trace($"DoChestAutoOpenTick(): Skipping [{protoName}] — not an ItemPrototype.");
+                        Logger.Trace($"DoChestAutoOpenTick(): Skipping [{protoName}] - not an ItemPrototype.");
                     continue;
                 }
 
                 if (itemProto.IsUsable == false)
                 {
                     if (itemChestAutoOpenLogging)
-                        Logger.Trace($"DoChestAutoOpenTick(): Skipping [{protoName}] — IsUsable is false.");
+                        Logger.Trace($"DoChestAutoOpenTick(): Skipping [{protoName}] - IsUsable is false.");
                     continue;
                 }
 
@@ -787,7 +787,7 @@ namespace MHServerEmu.Games.Entities
                 if (isWhitelisted == false)
                 {
                     if (itemChestAutoOpenLogging)
-                        Logger.Trace($"DoChestAutoOpenTick(): Skipping [{protoName}] — no whitelist match.");
+                        Logger.Trace($"DoChestAutoOpenTick(): Skipping [{protoName}] - no whitelist match.");
                     continue;
                 }
 
@@ -798,7 +798,7 @@ namespace MHServerEmu.Games.Entities
                 if (canUse == false)
                 {
                     if (itemChestAutoOpenLogging)
-                        Logger.Trace($"DoChestAutoOpenTick(): Skipping [{protoName}] — CanUse returned false.");
+                        Logger.Trace($"DoChestAutoOpenTick(): Skipping [{protoName}] - CanUse returned false.");
                     continue;
                 }
 

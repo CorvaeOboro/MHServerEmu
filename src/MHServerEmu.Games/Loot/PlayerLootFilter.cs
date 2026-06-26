@@ -284,8 +284,8 @@ namespace MHServerEmu.Games.Loot
                     string protoName = itemProto?.DataRef.GetName() ?? "unknown";
                     if (lootFilterLogging)
                     {
-                        Logger.Trace($"[LootFilter] Removed [{protoName}] — reason: {reason}");
-                        LootFilterLogCollator.WriteLine(player.Id, $"[LootFilter] Removed [{protoName}] — reason: {reason}");
+                        Logger.Trace($"[LootFilter] Removed [{protoName}] - reason: {reason}");
+                        LootFilterLogCollator.WriteLine(player.Id, $"[LootFilter] Removed [{protoName}] - reason: {reason}");
                     }
                 }
                 return shouldFilter;

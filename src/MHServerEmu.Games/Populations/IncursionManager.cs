@@ -855,7 +855,7 @@ namespace MHServerEmu.Games.Populations
             if (region == null || IsHubRegion(region))
                 return "Cannot start an incursion trial in a hub region.";
 
-            // Build a shuffled roster of every enemy type (highlander — each once).
+            // Build a shuffled roster of every enemy type (highlander - each once).
             _trialRoster.Clear();
             foreach (var factory in s_enemyFactories)
                 _trialRoster.Add(factory);
@@ -997,7 +997,7 @@ namespace MHServerEmu.Games.Populations
                 return;
             }
 
-            // Current enemy defeated — advance index.
+            // Current enemy defeated - advance index.
             _trialIndex++;
             if (_trialIndex >= _trialRoster.Count)
             {
@@ -1214,7 +1214,7 @@ namespace MHServerEmu.Games.Populations
         /// </summary>
         private static readonly HashSet<string> s_regionBlacklist = new(StringComparer.OrdinalIgnoreCase)
         {
-            // SWORD headquarters building in Hightown — behaves like a safe zone
+            // SWORD headquarters building in Hightown - behaves like a safe zone
             "SwordHQ",
             "SwordHeadquarters",
         };
