@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
 using MHServerEmu.Core.Config;
 using MHServerEmu.Core.Logging;
 using MHServerEmu.Core.VectorMath;
@@ -121,7 +122,9 @@ namespace MHServerEmu.Games.Populations
         // Maps combat-body entity id to controller for damage scaling and stealable-power lookup.
         private readonly Dictionary<ulong, IncursionEnemyController> _controllersByEntity = new();
 
-        private int _roundRobinIndex;
+        // Process-global round-robin counter so new games continue the sequence rather
+        // than restarting from 0 every time a player transfers to a new region.
+        private static int s_roundRobinIndex = -1;
 
         private PrototypeId _enemyProtoRef = PrototypeId.Invalid;
 
@@ -619,8 +622,8 @@ namespace MHServerEmu.Games.Populations
         private IncursionEnemyController CreateRandomController()
         {
             var factories = GetRandomFactories();
-            int index = _roundRobinIndex % factories.Length;
-            _roundRobinIndex = (_roundRobinIndex + 1) % factories.Length;
+            int idx = Interlocked.Increment(ref s_roundRobinIndex);
+            int index = (int)((uint)idx % (uint)factories.Length);
             var controller = factories[index](_game);
             LogInfo($"[Incursion] Round-robin selected {controller.GetLabel()} ({index + 1}/{factories.Length})");
             return controller;
@@ -686,11 +689,10 @@ namespace MHServerEmu.Games.Populations
                 }
 
                 // Shuffle so the round-robin order is random, not alphabetical by registration.
-                var rng = new System.Random((int)(System.DateTime.UtcNow.Ticks ^ System.Environment.TickCount));
                 int n = s_randomFactories.Length;
                 for (int i = n - 1; i > 0; i--)
                 {
-                    int j = rng.Next(i + 1);
+                    int j = Random.Shared.Next(i + 1);
                     (s_randomFactories[i], s_randomFactories[j]) = (s_randomFactories[j], s_randomFactories[i]);
                 }
 

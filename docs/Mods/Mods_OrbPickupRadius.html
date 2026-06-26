@@ -45,13 +45,20 @@ footer { text-align:center; padding:1.2rem 1rem; color:var(--muted); font-size:0
 
 <p>A data-only patch mod that widens the range at which you can pick up orbs (XP, credits, health, endurance) </p>
 
+<img src="marvel_heroes_omega_mod_orb_pickup_radius.png" alt="Orb Pickup Radius" style="display:block; max-width:480px; width:100%; margin:0 auto 1.5rem; border-radius:6px; border:1px solid var(--border);">
+
 <h2>Install</h2>
-<p>Copy the patch JSON files into your server's patch folder:</p>
+<p>Copy the patch JSON patch file into your server's patch folder:</p>
+from repo 
+
+<a href="patches/PatchDataPickupRadiusOrbs.json">patches/PatchDataPickupRadiusOrbs.json</a>
+
+into your built server patches folder , for example = 
 <pre>
 MHServerEmu/Data/Game/Patches/
+MHServerEmu\bin\x64\Release\net8.0\Data\Game\Patches
 </pre>
 <p>Restart the server. Make sure <code>[GameData] EnablePatchManager=true</code> in <code>Config.ini</code>.</p>
-
 
 
 </div>

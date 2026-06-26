@@ -9,8 +9,11 @@ MHServerEmu is a server emulator for Marvel Heroes.
 
 **Server Mods**
 - [Loot Filter](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_LootFilter.html) - Per-player rarity filtering for unwanted drops for additional item types (ring, medal, insignia, team-up, catalyst, etc.). Set globally or per-hero via commands.
+- [![Loot Filter](docs/Mods/marvel_heroes_omega_mod_loot_filter.png)](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_LootFilter.html)
 - [Item Auto-Pickup](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_ItemAutoPickup.html) - Automatically picks up currency, crafting ingredients, relics, and runes from the ground.
+- [![Item Auto-Pickup](docs/Mods/marvel_heroes_omega_mod_item_pickup_auto.png)](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_ItemAutoPickup.html)
 - [Orb Pickup Radius](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_OrbPickupRadius.html) - Widens the auto-magnet range for XP, credits, health, and endurance orbs .
+- [![Orb Pickup Radius](docs/Mods/marvel_heroes_omega_mod_orb_pickup_radius.png)](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_OrbPickupRadius.html)
 - [Chest Auto-Open](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_ChestAutoOpen.html) - Automatically opens chests, crates, and gift boxes sitting in your inventory.
 - [Throwable Disable](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_ThrowableDisable.html) - Prevents the animation lock from picking up and throwing environment props.
 - [Interact Nearby Auto](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_InteractNearbyAuto.html) - Auto-clicks mission objectives, civilians, and eligible interactables when in range.

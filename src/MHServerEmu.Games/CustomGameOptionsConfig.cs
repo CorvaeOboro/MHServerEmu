@@ -92,5 +92,8 @@ namespace MHServerEmu.Games
         public bool InteractNearbyAutoLoggingEnable { get; private set; } = false;
         public string InteractNearbyAutoWhitelist { get; private set; } = "DoombotFactoryCommandConsole,HeroCommendationReward,BoxcarMutantDesirae,";
         public string InteractNearbyAutoBlacklist { get; private set; } = "StanLee,Stash,Vendor,Waypoint,GLFSupplyOfficer,Trans,Transition,EGPVEManhattan,EGPVESubterranea,Elevator,Door,Floor,Portal,DefaultEND,ReturnToLastBase,XMansionToHeli,";
+
+        // DANGER ROOM COMBINE COMMAND = combines lower-rarity scenarios into higher-rarity ones
+        public bool DangerRoomCombineCommandEnable { get; private set; } = true;
     }
 }
