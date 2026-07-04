@@ -967,6 +967,10 @@ namespace MHServerEmu.Games.Entities.Avatars
             if (power == null)
                 return PowerUseResult.AbilityMissing;
 
+            // Expanded: forward swapped Team-Up powers to the visible body (Avatar.Expanded.cs)
+            if (TryForwardExpandedPower(powerRef, ref settings, out PowerUseResult expandedResult))
+                return expandedResult;
+
             return base.ActivatePower(powerRef, ref settings);
         }
 
@@ -7042,6 +7046,9 @@ namespace MHServerEmu.Games.Entities.Avatars
             ScheduleEntityEvent(_avatarEnteredRegionEvent, TimeSpan.Zero);
 
             player.TryDoVendorXPCapRollover();
+
+            // Expanded: resume playas mode after region transfer or auto-enter from persisted JSON.
+            OnEnteredWorldExpanded();
         }
 
         private void ApplyLiveTuneServerConditions()
@@ -7077,6 +7084,9 @@ namespace MHServerEmu.Games.Entities.Avatars
             // Clear dialog target
             Player player = GetOwnerOfType<Player>();
             player?.SetDialogTargetId(InvalidId, InvalidId);
+
+            // Expanded: restore any active swap state before persistent agents despawn (Avatar.Expanded.cs)
+            OnExitedWorldExpanded();
 
             // despawn teamups / controlled entities
             DespawnPersistentAgents();

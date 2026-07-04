@@ -550,6 +550,7 @@ namespace MHServerEmu.Games.Entities
             int scanned = 0;
             int filtered = 0;
             int blacklisted = 0;
+            int invisible = 0;
             int outOfRange = 0;
             int noInteract = 0;
             int wrongMethod = 0;
@@ -622,6 +623,60 @@ namespace MHServerEmu.Games.Entities
                     InteractObjectAutomaticLogCollator.WriteLine(Id, $"[InteractNearbyAuto_AUTO] WHITELISTED [{entityName}#{entityId}] - bypassing type filter");
                 }
 
+                // Detect chest-like entities by prototype name so we can enforce visibility on them even if they are mission objectives
+                bool looksLikeChest = entityName.Contains("Chest", StringComparison.OrdinalIgnoreCase)
+                                   || entityName.Contains("Reward", StringComparison.OrdinalIgnoreCase)
+                                   || entityName.Contains("Bounty", StringComparison.OrdinalIgnoreCase)
+                                   || entityName.Contains("Crate", StringComparison.OrdinalIgnoreCase)
+                                   || entityName.Contains("LootBox", StringComparison.OrdinalIgnoreCase)
+                                   || entityName.Contains("Giftbox", StringComparison.OrdinalIgnoreCase)
+                                   || entityName.Contains("GiftBox", StringComparison.OrdinalIgnoreCase)
+                                   || entityName.Contains("Commendation", StringComparison.OrdinalIgnoreCase);
+
+                // ---- Visibility diagnostics (always log for chests to help debug hidden vs visible) ----
+                bool hasVisibleProperty = worldEntity.Properties.HasProperty(PropertyEnum.Visible);
+                bool visiblePropertyValue = worldEntity.Properties[PropertyEnum.Visible];
+                bool defaultRuntimeVisibility = worldEntity.DefaultRuntimeVisibility;
+                bool dormancy = worldEntity.Properties[PropertyEnum.Dormant];
+                bool enabled = worldEntity.Properties[PropertyEnum.Enabled];
+                var entityState = worldEntity.Properties[PropertyEnum.EntityState];
+                var interactable = worldEntity.Properties[PropertyEnum.Interactable];
+                int interactableUsesLeft = worldEntity.Properties[PropertyEnum.InteractableUsesLeft];
+
+                if (looksLikeChest)
+                {
+                    // Unconditional INFO-level logging for chests so diagnostics are always captured
+                    string diag = $"[InteractNearbyAuto] CHEST_DIAGNOSTIC [{entityName}#{entityId}] hasVisibleProp={hasVisibleProperty} visibleProp={visiblePropertyValue} defaultRuntimeVis={defaultRuntimeVisibility} dormancy={dormancy} enabled={enabled} entityState={entityState} interactable={interactable} interactableUsesLeft={interactableUsesLeft} isMission={isMissionObjective} isCivilian={isCivilian}";
+                    Logger.Info(diag);
+                    InteractObjectAutomaticLogCollator.WriteLine(Id, $"[InteractNearbyAuto_AUTO] {diag}");
+                }
+                else if (interactNearbyAutoLogging)
+                {
+                    Logger.Trace($"[InteractNearbyAuto] VISIBILITY [{entityName}#{entityId}] hasVisibleProp={hasVisibleProperty} visibleProp={visiblePropertyValue} defaultRuntimeVis={defaultRuntimeVisibility} dormancy={dormancy} enabled={enabled} isMission={isMissionObjective} isCivilian={isCivilian}");
+                    InteractObjectAutomaticLogCollator.WriteLine(Id, $"[InteractNearbyAuto_AUTO] VISIBILITY [{entityName}#{entityId}] hasVisibleProp={hasVisibleProperty} visibleProp={visiblePropertyValue} defaultRuntimeVis={defaultRuntimeVisibility} dormancy={dormancy} enabled={enabled} isMission={isMissionObjective} isCivilian={isCivilian}");
+                }
+
+                // Gate 1: Chest-like entities - skip ONLY if explicitly marked invisible (HasProperty && value == false).
+                // We avoid DefaultRuntimeVisibility because most prototypes have VisibleByDefault=false, which would
+                // incorrectly block visible chests that had SetVisible(true) called (true == global default causes
+                // PropertyCollection to remove the property, making HasProperty false).
+                if (looksLikeChest && hasVisibleProperty && visiblePropertyValue == false)
+                {
+                    invisible++;
+                    if (interactNearbyAutoLogging) Logger.Trace($"[InteractNearbyAuto] SKIP [{entityName}#{entityId}] - CHEST explicitly invisible");
+                    if (interactNearbyAutoLogging) InteractObjectAutomaticLogCollator.WriteLine(Id, $"[InteractNearbyAuto_AUTO] SKIP [{entityName}#{entityId}] - CHEST explicitly invisible");
+                    continue;
+                }
+
+                // Gate 2: Other non-mission / non-civilian world objects
+                if (isMissionObjective == false && isCivilian == false && visiblePropertyValue == false)
+                {
+                    invisible++;
+                    if (interactNearbyAutoLogging) Logger.Trace($"[InteractNearbyAuto] SKIP [{entityName}#{entityId}] - invisible (not yet visible)");
+                    if (interactNearbyAutoLogging) InteractObjectAutomaticLogCollator.WriteLine(Id, $"[InteractNearbyAuto_AUTO] SKIP [{entityName}#{entityId}] - invisible (not yet visible)");
+                    continue;
+                }
+
                 if (avatar.InInteractRange(worldEntity, InteractionMethod.Use) == false)
                 {
                     outOfRange++;
@@ -664,7 +719,7 @@ namespace MHServerEmu.Games.Entities
 
             if (interactNearbyAutoLogging)
             {
-                string summary = $"[InteractNearbyAuto] Tick end for [{this}]: scanned={scanned} filtered={filtered} blacklisted={blacklisted} outOfRange={outOfRange} noInteract={noInteract} wrongMethod={wrongMethod} activated={activated}";
+                string summary = $"[InteractNearbyAuto] Tick end for [{this}]: scanned={scanned} filtered={filtered} blacklisted={blacklisted} invisible={invisible} outOfRange={outOfRange} noInteract={noInteract} wrongMethod={wrongMethod} activated={activated}";
                 Logger.Trace(summary);
                 InteractObjectAutomaticLogCollator.WriteLine(Id, $"[InteractNearbyAuto_AUTO] {summary}");
             }

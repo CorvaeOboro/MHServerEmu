@@ -82,6 +82,12 @@ namespace MHServerEmu.Games
         public bool IncursionLogAllDamageTargetsEnable { get; private set; } = false;
         public bool IncursionLogCollatorEnable { get; private set; } = false;
 
+        // PLAYABLE EXPANDED = play as NEW characters built from Team-Up (and other) assets - EXPERIMENTAL
+        public bool PlayableExpandedEnable { get; private set; } = true;
+        public float PlayableExpandedDamageScale { get; private set; } = 1.0f; // global multiplier on top of per-character/per-power scales
+        public bool PlayableExpandedCommandsRequireAdmin { get; private set; } = false;
+        public bool PlayableExpandedLoggingEnable { get; private set; } = false;
+
         // TERMINAL DAILY COMPLETE any DIFFICULTY = any difficulty clears available - NOT WORKING
         public bool TerminalDailyCompleteAnyDifficultyEnable { get; private set; } = false;
         public bool TerminalDailyCompleteAnyDifficultyLoggingEnable { get; private set; } = false;
