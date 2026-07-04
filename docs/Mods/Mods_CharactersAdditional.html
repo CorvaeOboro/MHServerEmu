@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MHServerEmu - PlayableExpanded</title>
+<style>
+:root { --bg:#0d0d0d; --surface:#141414; --border:#2a2a2a; --text:#e0e0e0; --muted:#999; --accent:#4a7fb5; --link:#64b5f6; --code:#1e1e1e; }
+* { box-sizing:border-box; }
+html,body { margin:0; height:100%; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+.page { display:flex; height:100vh; }
+.sidebar { width:12%; min-width:160px; border-right:1px solid var(--border); background:var(--bg); }
+.sidebar iframe { width:100%; height:100%; border:none; }
+.content { flex:1; overflow-y:auto; }
+header { background:linear-gradient(90deg,#0a1520 0%,#0d0d0d 100%); border-bottom:2px solid var(--accent); padding:1.2rem 1rem; text-align:center; }
+header h1 { margin:0; font-size:2rem; color:#fff; }
+header p { margin:0.5rem 0 0; color:var(--muted); }
+.container { max-width:1000px; margin:0 auto; padding:2rem 1.5rem; }
+h2 { color:#fff; border-bottom:1px solid var(--border); padding-bottom:0.5rem; margin-top:2.5rem; font-size:1.4rem; }
+h3 { color:#fff; margin-top:1.5rem; font-size:1.1rem; }
+a { color:var(--link); text-decoration:none; }
+a:hover { text-decoration:underline; }
+ul,ol { padding-left:1.4rem; }
+li { margin-bottom:0.4rem; }
+table { width:100%; border-collapse:collapse; margin:1rem 0; font-size:0.95rem; }
+th,td { border:1px solid var(--border); padding:0.5rem 0.7rem; text-align:left; }
+th { background:var(--surface); color:#fff; }
+td { background:#111; }
+code,pre { background:var(--code); border:1px solid var(--border); border-radius:4px; font-family:Consolas,Monaco,'Courier New',monospace; font-size:0.9rem; }
+code { padding:0.15rem 0.35rem; }
+pre { padding:0.8rem; overflow-x:auto; }
+.note { border-left:3px solid var(--accent); background:var(--surface); padding:0.8rem 1rem; margin:1rem 0; border-radius:0 6px 6px 0; }
+footer { text-align:center; padding:1.2rem 1rem; color:var(--muted); font-size:0.9rem; border-top:1px solid var(--border); margin-top:3rem; }
+.screenshots { display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; margin:1.5rem 0; }
+.screenshots img { max-width:48%; border-radius:6px; border:1px solid var(--border); cursor:zoom-in; }
+.char-grid { display:flex; flex-wrap:wrap; gap:0.4rem; margin:1rem 0; }
+.char-grid span { background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:0.3rem 0.6rem; font-size:0.9rem; }
+
+/* Lightbox overlay */
+.lightbox-overlay { display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.92); align-items:center; justify-content:center; cursor:zoom-out; }
+.lightbox-overlay.active { display:flex; }
+.lightbox-overlay img { max-width:90vw; max-height:90vh; border-radius:6px; border:1px solid var(--border); object-fit:contain; }
+</style>
+</head>
+<body>
+<div class="lightbox-overlay" id="lightbox"><img src="" alt="" id="lightbox-img"></div>
+<div class="page">
+    <div class="sidebar"><iframe src="../marvel_heroes_menu.htm"></iframe></div>
+    <div class="content">
+<header>
+    <h1>CharactersAdditional</h1>
+    <p>Play as additional characters . no .sip editing required</p>
+</header>
+<div class="container">
+
+<div class="screenshots">
+    <img src="marvel_heroes_omega_mod_playas_archangel.webp" alt="ArchAngel">
+    <img src="marvel_heroes_omega_mod_playas_jubilee.webp" alt="Jubilee">
+</div>
+
+<p>CharactersAdditional lets you swap your hero into other playable character from Team-Ups .</p> 
+    
+
+    the current hero becomes an invisible "driver" (health, movement, talents) while an "illusion" entity plays the animations and powers of the chosen character.</p>
+
+<ul>
+<li><strong>Pros</strong> - Persistent , stores the override per player character . character powers map over slotted powers </li>
+<li><strong>Cons</strong> - overrides an existing character , desync between the controller and the illusion . everything about the character like talents or resources are inherited from the underlying driver character .   </li>
+</ul>
+
+<div class="note"><strong>Note:</strong> this implementation is experimental , and likely not viable for multiplayer due to desync of driving the illusion thru the server . other systems for this would be more ideal  </div>
+
+<h2>Commands</h2>
+<table>
+<tr><th>Command</th><th>Description</th></tr>
+<tr><td><code>!playas &lt;pattern&gt;</code></td><td>Swap into the character matching the name ( <code>!playas jubilee</code>)</td></tr>
+<tr><td><code>!playas list </code></td><td>List all available playable Team-Up characters</td></tr>
+<tr><td><code>!playas off</code></td><td>Swap back to your hero</td></tr>
+<tr><td><code>!playas me</code></td><td>Restore your hero's original powers ( legacy fix )</td></tr>
+<tr><td><code>!playas status</code></td><td> current play-as state</td></tr>
+</table>
+
+<h2>Playable Team-Up Characters</h2>
+
+<div class="char-grid">
+<span>Agent13</span><span>AgentCoulson</span><span>AgentVenom</span><span>Angel</span><span>Arachne</span><span>ArchAngel</span>
+<span>BackInBlackSpiderman</span><span>BetaRayBill</span><span>CaptainAmerica</span><span>CaptainAmericaCivilWar</span>
+<span>Carnage</span><span>Clea</span><span>DeadpoolTheKid</span><span>Domino</span><span>DrDoom</span><span>DrStrange</span>
+<span>DrStrangeMovie</span><span>Drax</span><span>DraxVol2</span><span>Falcon</span><span>FalconCivilWar</span>
+<span>Firestar</span><span>FirestarYellow</span><span>FrankenCastle</span><span>Gamora</span><span>GamoraVol2</span>
+<span>Groot</span><span>Havok</span><span>HolidayDoctorDoom</span><span>HolidayGroot</span><span>HowardTheDuck</span>
+<span>HydraAgent</span><span>IronManCivilWar</span><span>IronManMark2</span><span>IronmanHulkbuster</span>
+<span>JessicaJones</span><span>Jubilee</span><span>KamalaKhan</span><span>Magik</span><span>MagikLimboReward</span>
+<span>Medusa</span><span>MilesMorales</span><span>Mordo</span><span>MovieGroot</span><span>OldManLogan</span>
+<span>OldManThor</span><span>PirateDeadpool</span><span>PunisherDeadWinter</span><span>PunisherNetflixVariant</span>
+<span>Quake</span><span>Quicksilver</span><span>RachelAlves</span><span>Rescue</span><span>RobbieReyes</span>
+<span>SamWilson</span><span>SheHulk</span><span>ShieldAgent</span><span>ShieldAirSupport</span><span>SpiderGwen</span>
+<span>SpiderWoman</span><span>SpiderWomanShieldVariant</span><span>Spiderman</span><span>SpidermanRework</span>
+<span>Sunspot</span><span>Wasp</span><span>Wolverine</span><span>WolverineBrood</span><span>WolverineDangerRoomReward</span>
+</div>
+
+<h2>Config Options</h2>
+<table>
+<tr><th>Option</th><th>Default</th><th>Description</th></tr>
+<tr><td><code>PlayableExpandedEnable</code></td><td>true</td><td>Master switch</td></tr>
+<tr><td><code>PlayableExpandedDamageScale</code></td><td>1.0</td><td>Global damage multiplier on top of per-character/per-power scales</td></tr>
+<tr><td><code>PlayableExpandedCommandsRequireAdmin</code></td><td>false</td><td>Restrict commands to admins</td></tr>
+<tr><td><code>PlayableExpandedLoggingEnable</code></td><td>false</td><td> logging </td></tr>
+</table>
+
+<div class="note"><strong>Note:</strong> Per-character tuning ( powers , damage scales , cast time ) lives in <code>src/MHServerEmu.Games/Entities/PlayableExpanded/Characters/*.cs</code> , to potential add movement powers or other chimera powers to an expanded characters kit .</div>
+
+</div>
+<footer><p> </p></footer>
+    </div>
+</div>
+<script>
+(function(){
+    const overlay = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightbox-img');
+    document.querySelectorAll('.screenshots img').forEach(img => {
+        img.addEventListener('click', () => {
+            lbImg.src = img.src;
+            lbImg.alt = img.alt;
+            overlay.classList.add('active');
+        });
+    });
+    overlay.addEventListener('click', () => overlay.classList.remove('active'));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') overlay.classList.remove('active'); });
+})();
+</script>
+</body>
+</html>
