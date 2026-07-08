@@ -236,9 +236,20 @@ namespace MHServerEmu.Games.Entities
                 }
             }
 
-            if (worldEntityProto.Bounds != null)
+            // When rendering as a different prototype (e.g. Incursion avatar render),
+            // use the render prototype's bounds so server-side collision matches the
+            // visible body instead of the invisible combat body.
+            BoundsPrototype boundsProto = worldEntityProto.Bounds;
+            if (IsClientRenderedAsAvatar && ClientPrototypeRefOverride != PrototypeId.Invalid)
             {
-                _bounds.InitializeFromPrototype(worldEntityProto.Bounds);
+                var renderWorldProto = ClientPrototypeRefOverride.As<WorldEntityPrototype>();
+                if (renderWorldProto?.Bounds != null)
+                    boundsProto = renderWorldProto.Bounds;
+            }
+
+            if (boundsProto != null)
+            {
+                _bounds.InitializeFromPrototype(boundsProto);
                 if (settings.BoundsScaleOverride != 1f)
                     _bounds.Scale(settings.BoundsScaleOverride);
             }

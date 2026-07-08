@@ -101,7 +101,7 @@ namespace MHServerEmu.Games.Entities
 
         private readonly PropertyCollection _permaBuffProperties = new();
 
-        public Loot.PlayerLootFilter LootFilter { get; private set; }
+        public Loot.ModLootFilter LootFilter { get; private set; }     // MOD LootFilter
 
         private ReplicatedPropertyCollection _avatarProperties = new();
         private ulong _shardId;     // This was probably used for database sharding, we don't need this
@@ -222,7 +222,7 @@ namespace MHServerEmu.Games.Entities
 
             Game.EntityManager.AddPlayer(this);
             MatchQueueStatus.SetOwner(this);
-            LootFilterLogCollator.BeginSession(Id, GetName());
+            ModLootFilterLogCollator.BeginSession(Id, GetName());      // MOD LootFilter
             InteractObjectAutomaticLogCollator.BeginSession(Id, GetName());
 
             // Perma buff properties are attached as child to avatar properties because avatar properties are persistent, while perma buffs are not.
@@ -514,7 +514,7 @@ namespace MHServerEmu.Games.Entities
             ScheduleItemAutoPickupEvent();
             ScheduleInteractNearbyAutoEvent();
             ScheduleChestAutoOpenEvent();
-            LootFilter = PlayerLootFilterStorage.Load(DatabaseUniqueId);
+            LootFilter = ModLootFilterStorage.Load(DatabaseUniqueId);   // MOD LootFilter
             UpdateUISystemLocks();
 
             Game.GuildManager.OnPlayerEnteringGame(this);
@@ -559,8 +559,10 @@ namespace MHServerEmu.Games.Entities
             MissionManager.Deallocate();
             AchievementManager.Deallocate();
             Game.EntityManager.RemovePlayer(this);
-            LootFilterLogCollator.EndSession(Id);
+            ModLootFilterLogCollator.EndSession(Id);                  // MOD LootFilter
             InteractObjectAutomaticLogCollator.EndSession(Id);
+            // TerminalCubeShardLogCollator.EndSession is called in PlayerConnection.OnDisconnect
+            // to keep the session continuous across region transfers (which destroy/recreate player entities).
             base.OnDeallocate();
         }
 
@@ -3453,7 +3455,14 @@ namespace MHServerEmu.Games.Entities
             {
                 var filterProto = GameDatabase.GetPrototype<MissionTrackerFilterPrototype>(filterRef);
                 if (filterProto.DisplayByDefault)
+                {
                     Properties[PropertyEnum.MissionTrackerFilter, filterRef] = true;
+                    if (Game?.CustomGameOptions?.MissionTrackerHideCompletedSharedQuestsLoggingEnable == true)
+                    {
+                        string filterTypeName = filterProto.FilterType.ToString();
+                        TerminalCubeShardLogCollator.WriteLine(DatabaseUniqueId, $"[InitializeMissionTrackerFilters] Enabled by default: {filterProto} (FilterType={filterTypeName})");
+                    }
+                }
             }
         }
 

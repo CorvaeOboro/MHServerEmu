@@ -92,6 +92,10 @@ namespace MHServerEmu.Games
         public bool TerminalDailyCompleteAnyDifficultyEnable { get; private set; } = false;
         public bool TerminalDailyCompleteAnyDifficultyLoggingEnable { get; private set; } = false;
 
+        // MISSION TRACKER HIDE COMPLETED SHARED QUESTS = hides shared quest objectives after daily bonus is consumed
+        public bool MissionTrackerHideCompletedSharedQuestsEnable { get; private set; } = false;
+        public bool MissionTrackerHideCompletedSharedQuestsLoggingEnable { get; private set; } = false;
+
         // INTERACT NEARBY AUTO = mission objectives, civilians, chests
         public bool InteractNearbyAutoEnable { get; private set; } = true;
         public int InteractNearbyAutoIntervalMs { get; private set; } = 250;

@@ -462,6 +462,13 @@ namespace MHServerEmu.Games.Missions
             var missionProto = Prototype;
             if (missionProto == null || missionProto.HasClientInterest == false) return;
 
+            if (IsSharedQuest && MissionManager?.Game?.CustomGameOptions?.MissionTrackerHideCompletedSharedQuestsLoggingEnable == true)
+            {
+                var mgrPlayer = MissionManager?.Player;
+                if (mgrPlayer != null)
+                    TerminalCubeShardLogCollator.WriteLine(mgrPlayer.DatabaseUniqueId, $"[SendUpdateToPlayer] {PrototypeName} -> {player.GetName()}: missionFlags={missionFlags} objectiveFlags={objectiveFlags} state={State} participants={_participants.Count} suspended={IsSuspended}");
+            }
+
             if (missionFlags != MissionUpdateFlags.None)
             {
                 var message = NetMessageMissionUpdate.CreateBuilder();
@@ -615,13 +622,32 @@ namespace MHServerEmu.Games.Missions
         {
             _lootSeed = 0;
             var player = MissionManager?.Player;
-            if (player != null && MissionManager?.Game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyEnable == true && MissionManager.Game.CustomGameOptions.TerminalDailyCompleteAnyDifficultyLoggingEnable)
+            bool terminalLog = MissionManager?.Game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyEnable == true && MissionManager.Game.CustomGameOptions.TerminalDailyCompleteAnyDifficultyLoggingEnable;
+            bool trackerLog = MissionManager?.Game?.CustomGameOptions?.MissionTrackerHideCompletedSharedQuestsEnable == true && MissionManager.Game.CustomGameOptions.MissionTrackerHideCompletedSharedQuestsLoggingEnable;
+            if (player != null && (terminalLog || trackerLog))
                 TerminalCubeShardLogCollator.WriteLine(player.DatabaseUniqueId, $"[CompleteWithoutRewards] Forcing {PrototypeName} from {State} to Completed (lootSeed=0) suppressRestart={suppressRestart}.");
 
             if (suppressRestart)
+            {
                 RestartingMission = true;
+                // Cancel any pending restart event so the mission does not cycle back to Active after completion
+                var scheduler = GameEventScheduler;
+                if (scheduler != null && _restartMissionEvent.IsValid)
+                {
+                    if (terminalLog || trackerLog)
+                        TerminalCubeShardLogCollator.WriteLine(player.DatabaseUniqueId, $"[CompleteWithoutRewards] Cancelling pending RestartMissionEvent for {PrototypeName} before completion.");
+                    scheduler.CancelEvent(_restartMissionEvent);
+                }
+            }
 
             SetState(MissionState.Completed);
+
+            if (IsSharedQuest && player != null && MissionManager?.Game?.CustomGameOptions?.MissionTrackerHideCompletedSharedQuestsEnable == true)
+            {
+                if (trackerLog)
+                    TerminalCubeShardLogCollator.WriteLine(player.DatabaseUniqueId, $"[CompleteWithoutRewards] {PrototypeName} is shared quest; calling SetSuspendedState(true) to hide from tracker.");
+                SetSuspendedState(true);
+            }
 
             if (suppressRestart)
                 RestartingMission = false;
@@ -645,7 +671,9 @@ namespace MHServerEmu.Games.Missions
             if (IsSharedQuest)
             {
                 var player = MissionManager?.Player;
-                if (player != null && MissionManager?.Game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyEnable == true && MissionManager.Game.CustomGameOptions.TerminalDailyCompleteAnyDifficultyLoggingEnable)
+                bool terminalLog = MissionManager?.Game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyEnable == true && MissionManager.Game.CustomGameOptions.TerminalDailyCompleteAnyDifficultyLoggingEnable;
+                bool trackerLog = MissionManager?.Game?.CustomGameOptions?.MissionTrackerHideCompletedSharedQuestsEnable == true && MissionManager.Game.CustomGameOptions.MissionTrackerHideCompletedSharedQuestsLoggingEnable;
+                if (player != null && (terminalLog || trackerLog))
                     TerminalCubeShardLogCollator.WriteLine(player.DatabaseUniqueId, $"[SetState] {PrototypeName}: {oldState} -> {newState} (sendUpdate={sendUpdate})");
             }
 
@@ -663,9 +691,19 @@ namespace MHServerEmu.Games.Missions
 
             if (sendUpdate)
             {                
-                SendToParticipants(MissionUpdateFlags.State | MissionUpdateFlags.StateExpireTime,
+                var missionFlags = MissionUpdateFlags.State | MissionUpdateFlags.StateExpireTime;
+                if (IsSharedQuest) missionFlags |= MissionUpdateFlags.Participants;
+                SendToParticipants(missionFlags,
                 MissionObjectiveUpdateFlags.Default | MissionObjectiveUpdateFlags.SuppressNotification,
                 _state == MissionState.Completed || _state == MissionState.Failed);
+
+                if (IsSharedQuest)
+                {
+                    var player = MissionManager?.Player;
+                    bool trackerLog = MissionManager?.Game?.CustomGameOptions?.MissionTrackerHideCompletedSharedQuestsEnable == true && MissionManager.Game.CustomGameOptions.MissionTrackerHideCompletedSharedQuestsLoggingEnable;
+                    if (player != null && trackerLog)
+                        TerminalCubeShardLogCollator.WriteLine(player.DatabaseUniqueId, $"[SetState] {PrototypeName} sent update flags={missionFlags} participants={_participants.Count} state={State}");
+                }
             }
 
             MissionManager.OnMissionStateChange(this);
@@ -746,7 +784,16 @@ namespace MHServerEmu.Games.Missions
 
         private bool OnChangeStateCompleted()
         {
-            if (IsOpenMission == false && Prototype.Repeatable) return ScheduleRestartMission();
+            if (IsOpenMission == false && Prototype.Repeatable)
+            {
+                bool result = ScheduleRestartMission();
+                var player = MissionManager?.Player;
+                bool terminalLog = MissionManager?.Game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyLoggingEnable == true;
+                bool trackerLog = MissionManager?.Game?.CustomGameOptions?.MissionTrackerHideCompletedSharedQuestsLoggingEnable == true;
+                if (player != null && (terminalLog || trackerLog))
+                    TerminalCubeShardLogCollator.WriteLine(player.DatabaseUniqueId, $"[OnChangeStateCompleted] {PrototypeName}: ScheduleRestartMission returned {result} (RestartingMission={RestartingMission}, eventValid={_restartMissionEvent.IsValid}).");
+                return result;
+            }
             return false;
         }
 
@@ -1039,7 +1086,9 @@ namespace MHServerEmu.Games.Missions
                     int oldVal = player.Properties[propId];
                     player.Properties.AdjustProperty(1, propId);
                     int newVal = player.Properties[propId];
-                    if (MissionManager?.Game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyEnable == true && MissionManager.Game.CustomGameOptions.TerminalDailyCompleteAnyDifficultyLoggingEnable)
+                    bool terminalLog = MissionManager?.Game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyEnable == true && MissionManager.Game.CustomGameOptions.TerminalDailyCompleteAnyDifficultyLoggingEnable;
+                    bool trackerLog = MissionManager?.Game?.CustomGameOptions?.MissionTrackerHideCompletedSharedQuestsEnable == true && MissionManager.Game.CustomGameOptions.MissionTrackerHideCompletedSharedQuestsLoggingEnable;
+                    if (terminalLog || trackerLog)
                         TerminalCubeShardLogCollator.WriteLine(player.DatabaseUniqueId, $"[OnSetStateCompleted] {PrototypeName}: SharedQuestCompletionCount {oldVal} -> {newVal} (prop={propId})");
                     SendDailyMissionCompleteToAvatar(player.CurrentAvatar);
                 }
@@ -1233,7 +1282,21 @@ namespace MHServerEmu.Games.Missions
             if (MissionManager.IsInitialized == false) return false;
 
             bool suspended = Prototype.SuspendedMissionState(Region);
-            SetSuspendedState(suspended);
+
+            // Don't unsuspend completed shared quests that were intentionally suspended (e.g. by TerminalDailyCompleteAnyDifficulty).
+            // Unsuspending triggers OnChangeState -> ScheduleRestartMission -> RestartMission, which cycles the mission back to Active.
+            if (suspended == false && IsSuspended && State == MissionState.Completed && IsSharedQuest)
+            {
+                var player = MissionManager?.Player;
+                bool terminalLog = MissionManager?.Game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyLoggingEnable == true;
+                bool trackerLog = MissionManager?.Game?.CustomGameOptions?.MissionTrackerHideCompletedSharedQuestsLoggingEnable == true;
+                if (player != null && (terminalLog || trackerLog))
+                    TerminalCubeShardLogCollator.WriteLine(player.DatabaseUniqueId, $"[Initialize] {PrototypeName}: Keeping suspended state (Completed shared quest, region={Region?.PrototypeDataRef.GetName()}).");
+            }
+            else
+            {
+                SetSuspendedState(suspended);
+            }
 
             if (_creationState == MissionCreationState.Initialized) return true;
             _creationState = MissionCreationState.Initialized;
@@ -1252,6 +1315,13 @@ namespace MHServerEmu.Games.Missions
         {
             var region = Region;
             if (region == null || suspended == IsSuspended) return false;
+
+            if (IsSharedQuest && MissionManager?.Game?.CustomGameOptions?.MissionTrackerHideCompletedSharedQuestsLoggingEnable == true)
+            {
+                var player = MissionManager?.Player;
+                if (player != null)
+                    TerminalCubeShardLogCollator.WriteLine(player.DatabaseUniqueId, $"[SetSuspendedState] {PrototypeName}: {IsSuspended} -> {suspended}");
+            }
 
             _isSuspended = suspended;
 
@@ -1458,7 +1528,23 @@ namespace MHServerEmu.Games.Missions
 
         public bool RestartMission()
         {
+            if (RestartingMission)
+            {
+                var player = MissionManager?.Player;
+                bool terminalLog = MissionManager?.Game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyLoggingEnable == true;
+                bool trackerLog = MissionManager?.Game?.CustomGameOptions?.MissionTrackerHideCompletedSharedQuestsLoggingEnable == true;
+                if (player != null && (terminalLog || trackerLog))
+                    TerminalCubeShardLogCollator.WriteLine(player.DatabaseUniqueId, $"[RestartMission] {PrototypeName}: SKIPPED because RestartingMission is already true.");
+                return true;
+            }
+
             RestartingMission = true;
+            var player2 = MissionManager?.Player;
+            bool terminalLog2 = MissionManager?.Game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyLoggingEnable == true;
+            bool trackerLog2 = MissionManager?.Game?.CustomGameOptions?.MissionTrackerHideCompletedSharedQuestsLoggingEnable == true;
+            if (player2 != null && (terminalLog2 || trackerLog2))
+                TerminalCubeShardLogCollator.WriteLine(player2.DatabaseUniqueId, $"[RestartMission] {PrototypeName}: Executing restart from state={State}.");
+
             if (State != MissionState.Invalid) SetState(MissionState.Invalid);
             bool result = SetState(MissionState.Inactive);
             RestartingMission = false;
@@ -2510,6 +2596,11 @@ namespace MHServerEmu.Games.Missions
         private void OnTimeLimit()
         {
             _timeExpireCurrentState = TimeSpan.Zero;
+            var player = MissionManager?.Player;
+            bool terminalLog = MissionManager?.Game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyLoggingEnable == true;
+            bool trackerLog = MissionManager?.Game?.CustomGameOptions?.MissionTrackerHideCompletedSharedQuestsLoggingEnable == true;
+            if (player != null && (terminalLog || trackerLog))
+                TerminalCubeShardLogCollator.WriteLine(player.DatabaseUniqueId, $"[OnTimeLimit] {PrototypeName}: state={State} RestartingMission={RestartingMission}.");
 
             switch (State)
             {
@@ -2607,13 +2698,19 @@ namespace MHServerEmu.Games.Missions
 
         private bool ScheduleRestartMission()
         {            
-            if (RestartingMission == false && _restartMissionEvent.IsValid == false)
+            bool willSchedule = RestartingMission == false && _restartMissionEvent.IsValid == false;
+            if (willSchedule)
             {
                 var scheduler = GameEventScheduler;
                 if (scheduler == null) return false;
                 scheduler.ScheduleEvent(_restartMissionEvent, TimeSpan.Zero, EventGroup);
                 _restartMissionEvent.Get().Initialize(this);
             }
+            var player = MissionManager?.Player;
+            bool terminalLog = MissionManager?.Game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyLoggingEnable == true;
+            bool trackerLog = MissionManager?.Game?.CustomGameOptions?.MissionTrackerHideCompletedSharedQuestsLoggingEnable == true;
+            if (player != null && (terminalLog || trackerLog))
+                TerminalCubeShardLogCollator.WriteLine(player.DatabaseUniqueId, $"[ScheduleRestartMission] {PrototypeName}: willSchedule={willSchedule} (RestartingMission={RestartingMission}, eventValid={_restartMissionEvent.IsValid}).");
             return true;
         }
 
@@ -2753,12 +2850,29 @@ namespace MHServerEmu.Games.Missions
 
             if (missionProto.ResetsWithRegion == PrototypeId.Invalid) return false;
 
+            if (IsSuspended)
+            {
+                var player = MissionManager?.Player;
+                bool terminalLog = MissionManager?.Game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyLoggingEnable == true;
+                bool trackerLog = MissionManager?.Game?.CustomGameOptions?.MissionTrackerHideCompletedSharedQuestsLoggingEnable == true;
+                if (player != null && (terminalLog || trackerLog))
+                    TerminalCubeShardLogCollator.WriteLine(player.DatabaseUniqueId, $"[ResetWithRegion] {PrototypeName}: SKIPPED because mission is suspended (state={State}).");
+                return false;
+            }
+
             if (State == MissionState.Active || State == MissionState.Completed || State == MissionState.Failed)
             {
                 var region = Region;
                 if (region == null) return false;
                 if (region.FilterRegion(missionProto.ResetsWithRegion, false) && region.Id != ResetsWithRegionId)
+                {
+                    var player = MissionManager?.Player;
+                    bool terminalLog = MissionManager?.Game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyLoggingEnable == true;
+                    bool trackerLog = MissionManager?.Game?.CustomGameOptions?.MissionTrackerHideCompletedSharedQuestsLoggingEnable == true;
+                    if (player != null && (terminalLog || trackerLog))
+                        TerminalCubeShardLogCollator.WriteLine(player.DatabaseUniqueId, $"[ResetWithRegion] {PrototypeName}: Restarting due to region filter match (state={State}, region={region.PrototypeDataRef.GetName()}).");
                     return RestartMission();
+                }
             }
 
             return false;

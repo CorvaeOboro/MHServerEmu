@@ -3,11 +3,11 @@ using MHServerEmu.Core.Logging;
 namespace MHServerEmu.Games.Loot
 {
     /// <summary>
-    /// Per-player log collator for loot-filter diagnostics.
-    /// Buffers unmatched items, filtered drops, and rarity decisions in memory
-    /// and writes them to a dedicated file when the player session ends.
+    /// Per-player log collator for loot-filter and auto pickup development .
+    /// records unmatched items, filtered drops, and rarity decisions in log
+    /// and writes them to a dedicated collated file when the player session ends.
     /// </summary>
-    public static class LootFilterLogCollator
+    public static class ModLootFilterLogCollator
     {
         private static readonly Logger Logger = LogManager.CreateLogger();
         private static readonly Dictionary<ulong, Session> _sessions = new();

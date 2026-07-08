@@ -27,6 +27,7 @@ using MHServerEmu.Games.GameData;
 using MHServerEmu.Games.GameData.Prototypes;
 using MHServerEmu.Games.Leaderboards;
 using MHServerEmu.Games.MetaGames;
+using MHServerEmu.Games.Missions;
 using MHServerEmu.Games.MTXStore;
 using MHServerEmu.Games.Navi;
 using MHServerEmu.Games.Powers;
@@ -342,6 +343,11 @@ namespace MHServerEmu.Games.Network
                 avatar.ExitWorld();
             
             SaveToDBAccount(true);
+
+            // End TerminalCubeShard log session here (true disconnect) rather than in OnDeallocate
+            // so that the session stays continuous across region transfers.
+            if (Player != null)
+                TerminalCubeShardLogCollator.EndSession(Player.DatabaseUniqueId);
 
             AOI.SetRegion(0, true);
             if (Player != null)

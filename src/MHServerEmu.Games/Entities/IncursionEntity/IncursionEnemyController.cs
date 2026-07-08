@@ -533,6 +533,12 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             // Hub NPCs can start dormant, leaving the invader inert/invisible.
             agent.Properties[PropertyEnum.Dormant] = false;
 
+            // Prevent the invisible combat body from physically blocking melee players.
+            // NoEntityCollide disables entity-entity physical blocking and nav mesh
+            // influence while preserving power targeting and damage. Players can walk
+            // through the invisible combat body to reach the visible rendered avatar.
+            agent.Properties[PropertyEnum.NoEntityCollide] = true;
+
             // Detach from any mission/encounter so cross-encounter hostility checks don't
             // block fighting with players.
             if (agent.Properties.HasProperty(PropertyEnum.MissionPrototype))

@@ -101,11 +101,19 @@ namespace MHServerEmu.Games.Missions
 
         public void Shutdown(Region region)
         {
-            if (Player != null && Game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyEnable == true)
+            if (Player != null)
             {
-                if (Game.CustomGameOptions.TerminalDailyCompleteAnyDifficultyLoggingEnable)
-                    TerminalCubeShardLogCollator.WriteLine(Player.DatabaseUniqueId, "[SessionEnd] MissionManager shutdown.");
-                TerminalCubeShardLogCollator.EndSession(Player.DatabaseUniqueId);
+                bool terminalEnabled = Game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyEnable == true;
+                bool trackerEnabled = Game?.CustomGameOptions?.MissionTrackerHideCompletedSharedQuestsEnable == true;
+                if (terminalEnabled || trackerEnabled)
+                {
+                    if (terminalEnabled && Game.CustomGameOptions.TerminalDailyCompleteAnyDifficultyLoggingEnable)
+                        TerminalCubeShardLogCollator.WriteLine(Player.DatabaseUniqueId, $"[RegionChange] Leaving region {(region != null ? region.PrototypeDataRef.GetName() : "null")}.");
+                    if (trackerEnabled && Game.CustomGameOptions.MissionTrackerHideCompletedSharedQuestsLoggingEnable)
+                        TerminalCubeShardLogCollator.WriteLine(Player.DatabaseUniqueId, $"[RegionChange] Leaving region (tracker) {(region != null ? region.PrototypeDataRef.GetName() : "null")}.");
+                    // Do NOT EndSession here — keep the session continuous across region changes.
+                    // Session is ended in Player.OnDeallocate when the player truly disconnects.
+                }
             }
             IsInitialized = false;
             Game?.GameEventScheduler?.CancelAllEvents(_pendingEvents);
@@ -166,11 +174,17 @@ namespace MHServerEmu.Games.Missions
             UpdateDailyMissions(true, hasMissions);
             ScheduleDailyMissionUpdate();
 
-            if (Game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyEnable == true)
+            bool terminalFeatureEnabled = Game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyEnable == true;
+            bool trackerFeatureEnabled = Game?.CustomGameOptions?.MissionTrackerHideCompletedSharedQuestsEnable == true;
+            if (terminalFeatureEnabled || trackerFeatureEnabled)
             {
-                TerminalCubeShardLogCollator.BeginSession(player.DatabaseUniqueId, player.GetName());
-                if (Game.CustomGameOptions.TerminalDailyCompleteAnyDifficultyLoggingEnable)
-                    TerminalCubeShardLogCollator.WriteLine(player.DatabaseUniqueId, $"[SessionBegin] Player={player.GetName()} region={region.PrototypeDataRef.GetName()} hasMissions={hasMissions}");
+                // Keep session continuous across region changes — only begin if not already tracked
+                if (TerminalCubeShardLogCollator.IsTracked(player.DatabaseUniqueId) == false)
+                    TerminalCubeShardLogCollator.BeginSession(player.DatabaseUniqueId, player.GetName());
+                if (terminalFeatureEnabled && Game.CustomGameOptions.TerminalDailyCompleteAnyDifficultyLoggingEnable)
+                    TerminalCubeShardLogCollator.WriteLine(player.DatabaseUniqueId, $"[RegionChange] Entering region={region.PrototypeDataRef.GetName()} hasMissions={hasMissions}");
+                if (trackerFeatureEnabled && Game.CustomGameOptions.MissionTrackerHideCompletedSharedQuestsLoggingEnable)
+                    TerminalCubeShardLogCollator.WriteLine(player.DatabaseUniqueId, $"[RegionChange] Entering region (tracker)={region.PrototypeDataRef.GetName()} trackerHideEnabled={trackerFeatureEnabled}");
             }
 
             RegisterEvents(region);
@@ -434,7 +448,9 @@ namespace MHServerEmu.Games.Missions
                     {
                         if (mission.State != MissionState.Invalid)
                         {
-                            if (Game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyEnable == true && Game.CustomGameOptions.TerminalDailyCompleteAnyDifficultyLoggingEnable)
+                            bool terminalLog = Game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyEnable == true && Game.CustomGameOptions.TerminalDailyCompleteAnyDifficultyLoggingEnable;
+                            bool trackerLog = Game?.CustomGameOptions?.MissionTrackerHideCompletedSharedQuestsEnable == true && Game.CustomGameOptions.MissionTrackerHideCompletedSharedQuestsLoggingEnable;
+                            if (terminalLog || trackerLog)
                                 TerminalCubeShardLogCollator.WriteLine(Player.DatabaseUniqueId, $"[ResetDailyMissions] {mission.PrototypeName}: {mission.State} -> Invalid (daily reset)");
                             mission.SetState(MissionState.Invalid);
                         }
@@ -442,7 +458,9 @@ namespace MHServerEmu.Games.Missions
                         PropertyId propId = new(PropertyEnum.SharedQuestCompletionCount, mission.PrototypeDataRef);
                         int oldVal = Player.Properties[propId];
                         Player.Properties.RemoveProperty(propId);
-                        if (Game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyEnable == true && Game.CustomGameOptions.TerminalDailyCompleteAnyDifficultyLoggingEnable)
+                        bool terminalLog2 = Game?.CustomGameOptions?.TerminalDailyCompleteAnyDifficultyEnable == true && Game.CustomGameOptions.TerminalDailyCompleteAnyDifficultyLoggingEnable;
+                        bool trackerLog2 = Game?.CustomGameOptions?.MissionTrackerHideCompletedSharedQuestsEnable == true && Game.CustomGameOptions.MissionTrackerHideCompletedSharedQuestsLoggingEnable;
+                        if (terminalLog2 || trackerLog2)
                             TerminalCubeShardLogCollator.WriteLine(Player.DatabaseUniqueId, $"[ResetDailyMissions] {mission.PrototypeName}: Removed SharedQuestCompletionCount (was {oldVal}) (prop={propId})");
                     }
                 }
@@ -869,16 +887,7 @@ namespace MHServerEmu.Games.Missions
             }
 
             var difficultyTierProto = region.DifficultyTierRef.As<DifficultyTierPrototype>();
-            if (difficultyTierProto == null || difficultyTierProto.Tier < DifficultyTier.Red)
-            {
-                string msg = $"[OnPlayerEnteredRegion] Region {region.PrototypeDataRef.GetName()} tier {difficultyTierProto?.Tier} is below Heroic; skipping.";
-                if (terminalCubeShardLoggingEnabled)
-                {
-                    Logger.Trace($"[TerminalCubeShard] {msg}");
-                    TerminalCubeShardLogCollator.WriteLine(player.DatabaseUniqueId, msg);
-                }
-                return;
-            }
+            // Any difficulty triggers auto-complete (that's the whole point of TerminalDailyCompleteAnyDifficulty)
 
             var mission = MissionByDataRef(dailyMissionRef);
             if (mission == null)
@@ -903,7 +912,7 @@ namespace MHServerEmu.Games.Missions
                 return;
             }
 
-            string completeMsg = $"[OnPlayerEnteredRegion] Auto-completing daily {mission.PrototypeName} (was {mission.State}) for {player} entering {region.PrototypeDataRef.GetName()} on {difficultyTierProto.Tier}";
+            string completeMsg = $"[OnPlayerEnteredRegion] Auto-completing daily {mission.PrototypeName} (was {mission.State}) for {player} entering {region.PrototypeDataRef.GetName()} on {difficultyTierProto?.Tier ?? DifficultyTier.Green}";
             if (terminalCubeShardLoggingEnabled)
             {
                 Logger.Info($"[TerminalCubeShard] {completeMsg}");
