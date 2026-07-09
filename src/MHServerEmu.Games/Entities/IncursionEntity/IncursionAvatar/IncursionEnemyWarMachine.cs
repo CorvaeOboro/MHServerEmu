@@ -43,26 +43,26 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/WarMachine/AlphaStrike.prototype",                           true,  0.0473f), // 2026-06-20
+            new("Powers/Player/WarMachine/AlphaStrike.prototype",                           true,  0.0301f), // 2026-06-20
             new("Powers/Player/WarMachine/AutogunPassive.prototype",                        false, 0.05f),
-            new("Powers/Player/WarMachine/BasicLaserBlade.prototype",                       true,  0.0685f), // 2026-06-20
-            new("Powers/Player/WarMachine/BulletOneOff.prototype",                          true,  0.0490f), // 2026-06-20
-            new("Powers/Player/WarMachine/ChaingunBulletSpray.prototype",                   true,  0.1427f), // 2026-06-18
-            new("Powers/Player/WarMachine/ChaingunBurst.prototype",                         true,  0.2397f), // 2026-06-20
-            new("Powers/Player/WarMachine/ChaingunFullAuto.prototype",                      true,  0.1690f), // 2026-06-20
-            new("Powers/Player/WarMachine/ChainsawImpale.prototype",                        true,  0.0537f), // 2026-06-20
-            new("Powers/Player/WarMachine/Chainsaws.prototype",                             true,  0.0904f), // 2026-06-18
-            new("Powers/Player/WarMachine/DeathFromAbove.prototype",                        true,  0.0352f), // 2026-06-20
-            new("Powers/Player/WarMachine/EMP.prototype",                                   true,  0.0598f), // 2026-06-20
-            new("Powers/Player/WarMachine/FlameThrower.prototype",                          true,  0.0356f), // 2026-06-18
+            new("Powers/Player/WarMachine/BasicLaserBlade.prototype",                       true,  0.0898f), // 2026-06-05
+            new("Powers/Player/WarMachine/BulletOneOff.prototype",                          true,  0.0418f), // 2026-06-20
+            new("Powers/Player/WarMachine/ChaingunBulletSpray.prototype",                   true,  0.1420f), // 2026-06-18
+            new("Powers/Player/WarMachine/ChaingunBurst.prototype",                         true,  0.2155f), // 2026-06-05
+            new("Powers/Player/WarMachine/ChaingunFullAuto.prototype",                      true,  0.2203f), // 2026-06-03
+            new("Powers/Player/WarMachine/ChainsawImpale.prototype",                        true,  0.0526f), // 2026-06-20
+            new("Powers/Player/WarMachine/Chainsaws.prototype",                             true,  0.0982f), // 2026-06-18
+            new("Powers/Player/WarMachine/DeathFromAbove.prototype",                        true,  0.0319f), // 2026-06-20
+            new("Powers/Player/WarMachine/EMP.prototype",                                   true,  0.0580f), // 2026-06-20
+            new("Powers/Player/WarMachine/FlameThrower.prototype",                          true,  0.0576f), // 2026-06-05
             new("Powers/Player/WarMachine/HeatDecay.prototype",                             true,  0.05f),
-            new("Powers/Player/WarMachine/LaserBladeDash.prototype",                        true,  0.0886f), // 2026-06-18
+            new("Powers/Player/WarMachine/LaserBladeDash.prototype",                        true,  0.0993f), // 2026-06-18
             new("Powers/Player/WarMachine/Overheat.prototype",                              true,  0.05f),
-            new("Powers/Player/WarMachine/PlasmaCannon.prototype",                          true,  0.0846f), // 2026-06-19
+            new("Powers/Player/WarMachine/PlasmaCannon.prototype",                          true,  0.0734f), // 2026-06-05
             new("Powers/Player/WarMachine/Talents/Talent1AutoGun.prototype",                false, 0.05f),
             new("Powers/Player/WarMachine/Talents/Talent1LaserBlade.prototype",             false, 0.05f),
-            new("Powers/Player/WarMachine/Talents/Talent1PlasmaCannon.prototype",           false, 0.0846f), // 2026-06-19
-            new("Powers/Player/WarMachine/Talents/Talent2Chainsaws.prototype",              false, 0.0904f), // 2026-06-18
+            new("Powers/Player/WarMachine/Talents/Talent1PlasmaCannon.prototype",           false, 0.0734f), // 2026-06-05
+            new("Powers/Player/WarMachine/Talents/Talent2Chainsaws.prototype",              false, 0.0982f), // 2026-06-18
             new("Powers/Player/WarMachine/Talents/Talent2MissileTargeting.prototype",       false, 0.01f),
             new("Powers/Player/WarMachine/Talents/Talent2ThermalExpulsion.prototype",       false, 0.05f),
             new("Powers/Player/WarMachine/Talents/Talent3ArcReactor.prototype",             false, 0.05f),
@@ -80,9 +80,9 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/WarMachine/Traits/MechanicTrait.prototype",                  false, 0.05f),
             new("Powers/Player/WarMachine/Traits/OffenseTrait.prototype",                   false, 0.05f),
             new("Powers/Player/WarMachine/UltimateHiddenPassive.prototype",                 false, 0.006f),
-            new("Powers/Player/WarMachine/UltimateSidekick.prototype",                      true,  0.0074f), // 2026-06-18
-            new("Powers/Player/WarMachine/WarMachineArmor.prototype",                       true,  0.0715f), // 2026-06-20
-            new("Powers/Player/WarMachine/Warhead.prototype",                               true,  0.0369f), // 2026-06-20
+            new("Powers/Player/WarMachine/UltimateSidekick.prototype",                      true,  0.0056f), // 2026-06-18
+            new("Powers/Player/WarMachine/WarMachineArmor.prototype",                       true,  0.0741f), // 2026-06-20
+            new("Powers/Player/WarMachine/Warhead.prototype",                               true,  0.0364f), // 2026-06-20
             new("Powers/StolenPowers/StealablePowers/WarMachineStolenPower.prototype",      false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",                  false, 0.05f),
             new("Powers/Player/Active/ResurrectAnimOnly.prototype",                         false, 0.05f),

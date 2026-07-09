@@ -42,28 +42,28 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/MrFantastic/BasicStretchyPunch.prototype",               true,  0.1175f), // 2026-06-17
-            new("Powers/Player/MrFantastic/BigFistedPunch.prototype",                   true,  0.0806f), // 2026-06-17
+            new("Powers/Player/MrFantastic/BasicStretchyPunch.prototype",               true,  0.1448f), // 2026-06-05
+            new("Powers/Player/MrFantastic/BigFistedPunch.prototype",                   true,  0.1087f), // 2026-06-05
             new("Powers/Player/MrFantastic/ChargedPBAoE.prototype",                     true,  0.03f),
-            new("Powers/Player/MrFantastic/ConePunchSTSS.prototype",                    true,  0.0733f), // 2026-06-17
-            new("Powers/Player/MrFantastic/ConeRapidPunch.prototype",                   true,  0.1291f), // 2026-06-17
-            new("Powers/Player/MrFantastic/ConeYank.prototype",                         true,  0.1235f), // 2026-06-05
-            new("Powers/Player/MrFantastic/DeathFromAbove.prototype",                   true,  0.0367f), // 2026-06-17
-            new("Powers/Player/MrFantastic/ElectricAoEGadget.prototype",                true,  0.0676f), // 2026-06-17
-            new("Powers/Player/MrFantastic/ExpandingPBAoE.prototype",                   true,  0.03f),
-            new("Powers/Player/MrFantastic/GiantGunGadget.prototype",                   true,  0.0765f), // 2026-06-17
-            new("Powers/Player/MrFantastic/GiantGunGadgetHiddenPassive.prototype",      false, 0.0765f), // 2026-06-17
-            new("Powers/Player/MrFantastic/HammerFist.prototype",                       true,  0.05f),
-            new("Powers/Player/MrFantastic/ImplosionGadget.prototype",                  true,  0.0753f), // 2026-06-17
-            new("Powers/Player/MrFantastic/SignatureCrushingLeap.prototype",            true,  0.0362f), // 2026-06-17
+            new("Powers/Player/MrFantastic/ConePunchSTSS.prototype",                    true,  0.0737f), // 2026-07-05
+            new("Powers/Player/MrFantastic/ConeRapidPunch.prototype",                   true,  0.1090f), // 2026-07-05
+            new("Powers/Player/MrFantastic/ConeYank.prototype",                         true,  0.1342f), // 2026-06-05
+            new("Powers/Player/MrFantastic/DeathFromAbove.prototype",                   true,  0.0347f), // 2026-07-05
+            new("Powers/Player/MrFantastic/ElectricAoEGadget.prototype",                true,  0.0646f), // 2026-06-05
+            new("Powers/Player/MrFantastic/ExpandingPBAoE.prototype",                   true,  0.0257f), // 2026-07-05
+            new("Powers/Player/MrFantastic/GiantGunGadget.prototype",                   true,  0.0532f), // 2026-07-05
+            new("Powers/Player/MrFantastic/GiantGunGadgetHiddenPassive.prototype",      false, 0.0532f), // 2026-07-05
+            new("Powers/Player/MrFantastic/HammerFist.prototype",                       true,  0.0562f), // 2026-07-05
+            new("Powers/Player/MrFantastic/ImplosionGadget.prototype",                  true,  0.0511f), // 2026-07-05
+            new("Powers/Player/MrFantastic/SignatureCrushingLeap.prototype",            true,  0.0408f), // 2026-06-17
             new("Powers/Player/MrFantastic/SignatureHiddenPassiveRanks.prototype",      false, 0.02f),
-            new("Powers/Player/MrFantastic/SignatureMicroNullifier.prototype",          true,  0.0144f), // 2026-06-17
+            new("Powers/Player/MrFantastic/SignatureMicroNullifier.prototype",          true,  0.0189f), // 2026-06-05
             new("Powers/Player/MrFantastic/StretchyBrain.prototype",                    true,  0.05f),
-            new("Powers/Player/MrFantastic/StretchyDash.prototype",                     true,  0.1604f), // 2026-06-05
+            new("Powers/Player/MrFantastic/StretchyDash.prototype",                     true,  0.1977f), // 2026-06-05
             new("Powers/Player/MrFantastic/Talents/BouncyBuild.prototype",              false, 0.05f),
             new("Powers/Player/MrFantastic/Talents/BouncyExpandingPBAOE.prototype",     false, 0.03f),
-            new("Powers/Player/MrFantastic/Talents/BouncyWhirlwind.prototype",          false, 0.05f),
-            new("Powers/Player/MrFantastic/Talents/ChargedPBAoEConeYank.prototype",     false, 0.1235f), // 2026-06-05
+            new("Powers/Player/MrFantastic/Talents/BouncyWhirlwind.prototype",          false, 0.0266f), // 2026-07-05
+            new("Powers/Player/MrFantastic/Talents/ChargedPBAoEConeYank.prototype",     false, 0.1342f), // 2026-06-05
             new("Powers/Player/MrFantastic/Talents/CircularLogic.prototype",            false, 0.05f),
             new("Powers/Player/MrFantastic/Talents/CombatTactics.prototype",            false, 0.05f),
             new("Powers/Player/MrFantastic/Talents/CooldownSynergyBuff.prototype",      false, 0.05f),
@@ -71,14 +71,14 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/MrFantastic/Talents/GadgetsAlwaysCrit.prototype",        false, 0.05f),
             new("Powers/Player/MrFantastic/Talents/GiantGunBonus.prototype",            false, 0.05f),
             new("Powers/Player/MrFantastic/Talents/HERBIE.prototype",                   false, 0.05f),
-            new("Powers/Player/MrFantastic/Talents/HammerFistBonus.prototype",          false, 0.05f),
+            new("Powers/Player/MrFantastic/Talents/HammerFistBonus.prototype",          false, 0.0562f), // 2026-07-05
             new("Powers/Player/MrFantastic/Talents/ImplosionPulses.prototype",          false, 0.05f),
             new("Powers/Player/MrFantastic/Talents/MicroNullifierBonus.prototype",      false, 0.05f),
             new("Powers/Player/MrFantastic/Talents/TeslaCoilGadget.prototype",          false, 0.05f),
             new("Powers/Player/MrFantastic/Traits/DefenseTrait.prototype",              false, 0.05f),
             new("Powers/Player/MrFantastic/Traits/OffenseTrait.prototype",              false, 0.05f),
             new("Powers/Player/MrFantastic/UltimateFantasticFour.prototype",            true,  0.006f),
-            new("Powers/Player/MrFantastic/Whirlwind.prototype",                        true,  0.0107f), // 2026-06-05
+            new("Powers/Player/MrFantastic/Whirlwind.prototype",                        true,  0.0266f), // 2026-07-05
             new("Powers/Player/TravelPower/MrFantasticSprint.prototype",                false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/MrFantasticStolenPower.prototype", false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",              false, 0.05f),

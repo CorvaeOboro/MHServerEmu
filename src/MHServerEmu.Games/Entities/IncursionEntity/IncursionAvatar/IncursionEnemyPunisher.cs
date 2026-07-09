@@ -55,25 +55,25 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         private static readonly IncursionPowerEntry[] _powerTable =
         {
             new("Powers/CharacterSelectOnly/HeroProfilePowerPunisher.prototype",     true,  0.05f),
-            new("Powers/Player/Punisher/Rework/ArmorPiercing.prototype",             true,  0.0834f), // 2026-06-18
+            new("Powers/Player/Punisher/Rework/ArmorPiercing.prototype",             true,  0.0928f), // 2026-06-10
             new("Powers/Player/Punisher/Rework/BackwardsTumble.prototype",           true,  0.05f),
-            new("Powers/Player/Punisher/Rework/Bazooka.prototype",                   true,  0.0785f), // 2026-06-18
-            new("Powers/Player/Punisher/Rework/BulletSpray.prototype",               true,  0.0572f), // 2026-06-18
-            new("Powers/Player/Punisher/Rework/ChemicalBomb.prototype",              true,  0.0995f), // 2026-06-10
-            new("Powers/Player/Punisher/Rework/Flamethrower.prototype",              true,  0.0649f), // 2026-06-18
-            new("Powers/Player/Punisher/Rework/Flashbang.prototype",                 true,  0.1007f), // 2026-06-03
+            new("Powers/Player/Punisher/Rework/Bazooka.prototype",                   true,  0.0491f), // 2026-06-10
+            new("Powers/Player/Punisher/Rework/BulletSpray.prototype",               true,  0.0473f), // 2026-06-10
+            new("Powers/Player/Punisher/Rework/ChemicalBomb.prototype",              true,  0.1120f), // 2026-06-10
+            new("Powers/Player/Punisher/Rework/Flamethrower.prototype",              true,  0.0447f), // 2026-06-07
+            new("Powers/Player/Punisher/Rework/Flashbang.prototype",                 true,  0.1084f), // 2026-06-10
             new("Powers/Player/Punisher/Rework/Magnum.prototype",                    true,  0.05f),
-            new("Powers/Player/Punisher/Rework/PineappleGrenade.prototype",          true,  0.1113f), // 2026-06-18
+            new("Powers/Player/Punisher/Rework/PineappleGrenade.prototype",          true,  0.0890f), // 2026-06-10
             new("Powers/Player/Punisher/Rework/Reload.prototype",                    true,  0.05f),
-            new("Powers/Player/Punisher/Rework/Rpg.prototype",                       true,  0.05f),
-            new("Powers/Player/Punisher/Rework/SawedOff.prototype",                  true,  0.1071f), // 2026-06-18
+            new("Powers/Player/Punisher/Rework/Rpg.prototype",                       true,  0.0603f), // 2026-06-30
+            new("Powers/Player/Punisher/Rework/SawedOff.prototype",                  true,  0.1578f), // 2026-06-10
             new("Powers/Player/Punisher/Rework/Sidearms.prototype",                  true,  0.05f),
             new("Powers/Player/Punisher/Rework/ThreeRoundBurst.prototype",           true,  0.05f),
             new("Powers/Player/Punisher/Rework/Tumble.prototype",                    true,  0.05f),
-            new("Powers/Player/Punisher/Rework/UltimateHiddenPassive.prototype",     false, 0.0126f), // 2026-06-18
+            new("Powers/Player/Punisher/Rework/UltimateHiddenPassive.prototype",     false, 0.0145f), // 2026-06-03
             new("Powers/Player/Punisher/Talents/AutomaticShotgun.prototype",         false, 0.05f),
             new("Powers/Player/Punisher/Talents/CombatKnife.prototype",              false, 0.05f),
-            new("Powers/Player/Punisher/Talents/FlamethrowerBuff.prototype",         false, 0.0649f), // 2026-06-18
+            new("Powers/Player/Punisher/Talents/FlamethrowerBuff.prototype",         false, 0.0447f), // 2026-06-07
             new("Powers/Player/Punisher/Talents/GrenadeLauncher.prototype",          false, 0.01f),
             new("Powers/Player/Punisher/Talents/HighCapacityMagazine.prototype",     false, 0.05f),
             new("Powers/Player/Punisher/Talents/HollowPointRounds.prototype",        false, 0.05f),
@@ -85,11 +85,11 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Punisher/Talents/SMG.prototype",                      false, 0.05f),
             new("Powers/Player/Punisher/Talents/SniperRifleBuff.prototype",          false, 0.05f),
             new("Powers/Player/Punisher/Talents/TacticalShotgun.prototype",          false, 0.05f),
-            new("Powers/Player/Punisher/Talents/TriBarrelRPG.prototype",             false, 0.05f),
+            new("Powers/Player/Punisher/Talents/TriBarrelRPG.prototype",             false, 0.0603f), // 2026-06-30
             new("Powers/Player/Punisher/Traits/DefenseTrait.prototype",              false, 0.05f),
             new("Powers/Player/Punisher/Traits/MechanicTraitAmmo.prototype",         false, 0.05f),
             new("Powers/Player/Punisher/Traits/OffenseTrait.prototype",              false, 0.05f),
-            new("Powers/Player/Punisher/Ultimate.prototype",                         true,  0.0126f), // 2026-06-18
+            new("Powers/Player/Punisher/Ultimate.prototype",                         true,  0.0145f), // 2026-06-03
             new("Powers/Player/TravelPower/PunisherSprint.prototype",                false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/PunisherStolenPower.prototype", false, 0.05f),
             new("Powers/SynergyPowers/SynergyPunisherHealOnKill.prototype",          true,  0.05f),

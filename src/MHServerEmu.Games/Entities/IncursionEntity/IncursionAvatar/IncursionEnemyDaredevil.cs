@@ -66,28 +66,28 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Daredevil/Talents/SigCooldownReductionTalent.prototype",          false, 0.02f),
             new("Powers/Player/Daredevil/Talents/SigDoubleDamageCenterTalent.prototype",         false, 0.02f),
             new("Powers/Player/Daredevil/Talents/SlowComboPointTalent.prototype",                false, 0.025f),
-            new("Powers/Player/Daredevil/Talents/WhirlingClubStaminaCancelTalent.prototype",     false, 0.1633f), // 2026-06-18
+            new("Powers/Player/Daredevil/Talents/WhirlingClubStaminaCancelTalent.prototype",     false, 0.1991f), // 2026-06-05
             new("Powers/Player/Daredevil/Traits/DefenseTrait.prototype",                         false, 0.05f),
             new("Powers/Player/Daredevil/Traits/MechanicTraitComboPoints.prototype",             false, 0.025f),
             new("Powers/Player/Daredevil/Traits/OffenseTrait.prototype",                         false, 0.05f),
-            new("Powers/Player/Daredevil/Ultimate.prototype",                                    true,  0.0173f), // 2026-06-18
-            new("Powers/Player/Daredevil/Update/BillyClubSweep.prototype",                       true,  0.1513f), // 2026-06-18
+            new("Powers/Player/Daredevil/Ultimate.prototype",                                    true,  0.0199f), // 2026-06-10
+            new("Powers/Player/Daredevil/Update/BillyClubSweep.prototype",                       true,  0.1737f), // 2026-06-10
             new("Powers/Player/Daredevil/Update/BouncingStrike.prototype",                       true,  0.05f),
             new("Powers/Player/Daredevil/Update/BrutalStrike.prototype",                         true,  0.05f),
-            new("Powers/Player/Daredevil/Update/CaneAttack.prototype",                           true,  0.1156f), // 2026-06-18
-            new("Powers/Player/Daredevil/Update/ClubAttack.prototype",                           true,  0.1415f), // 2026-06-16
+            new("Powers/Player/Daredevil/Update/CaneAttack.prototype",                           true,  0.1715f), // 2026-06-10
+            new("Powers/Player/Daredevil/Update/ClubAttack.prototype",                           true,  0.1612f), // 2026-06-10
             new("Powers/Player/Daredevil/Update/ClubRicochet.prototype",                         true,  0.05f),
             new("Powers/Player/Daredevil/Update/ComboPointGainMechanic.prototype",               true,  0.025f),
             new("Powers/Player/Daredevil/Update/ComboPointHiddenPassive.prototype",              false, 0.025f),
-            new("Powers/Player/Daredevil/Update/ConeYank.prototype",                             true,  0.0436f), // 2026-06-18
-            new("Powers/Player/Daredevil/Update/NunchuckAttack.prototype",                       true,  0.1307f), // 2026-06-17
-            new("Powers/Player/Daredevil/Update/NunchuckBulldoze.prototype",                     true,  0.0655f), // 2026-06-18
-            new("Powers/Player/Daredevil/Update/OpeningLunge.prototype",                         true,  0.0499f), // 2026-06-18
+            new("Powers/Player/Daredevil/Update/ConeYank.prototype",                             true,  0.0689f), // 2026-06-03
+            new("Powers/Player/Daredevil/Update/NunchuckAttack.prototype",                       true,  0.1504f), // 2026-06-10
+            new("Powers/Player/Daredevil/Update/NunchuckBulldoze.prototype",                     true,  0.0641f), // 2026-06-18
+            new("Powers/Player/Daredevil/Update/OpeningLunge.prototype",                         true,  0.0455f), // 2026-07-02
             new("Powers/Player/Daredevil/Update/RoundhouseKick.prototype",                       true,  0.05f),
-            new("Powers/Player/Daredevil/Update/ShadowStrike.prototype",                         true,  0.0202f), // 2026-06-18
+            new("Powers/Player/Daredevil/Update/ShadowStrike.prototype",                         true,  0.0147f), // 2026-07-02
             new("Powers/Player/Daredevil/Update/Tumble.prototype",                               true,  0.05f),
             new("Powers/Player/Daredevil/Update/Vault.prototype",                                true,  0.05f),
-            new("Powers/Player/Daredevil/Update/WhirlingClub.prototype",                         true,  0.1633f), // 2026-06-18
+            new("Powers/Player/Daredevil/Update/WhirlingClub.prototype",                         true,  0.1991f), // 2026-06-05
             new("Powers/Player/TravelPower/DaredevilFlight.prototype",                           false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/DaredevilStolenPower.prototype",            false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",                       false, 0.05f),

@@ -54,22 +54,22 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/JeanGrey/DebrisMaelstrom.prototype",                     true,  0.0430f), // 2026-06-17
+            new("Powers/Player/JeanGrey/DebrisMaelstrom.prototype",                     true,  0.0289f), // 2026-06-10
             new("Powers/Player/JeanGrey/PanicJean.prototype",                           true,  0.05f),
             new("Powers/Player/JeanGrey/PhoenixForceHiddenPassive.prototype",           false, 0.05f),
             new("Powers/Player/JeanGrey/PsiShield.prototype",                           true,  0.05f),
-            new("Powers/Player/JeanGrey/Rework/DamageMaelstrom.prototype",              true,  0.0613f), // 2026-06-20
+            new("Powers/Player/JeanGrey/Rework/DamageMaelstrom.prototype",              true,  0.0606f), // 2026-06-10
             new("Powers/Player/JeanGrey/Rework/DarkPhoenixExpelPhoenixForce.prototype", true,  0.05f),
-            new("Powers/Player/JeanGrey/Rework/Drain.prototype",                        true,  0.0360f), // 2026-06-20
-            new("Powers/Player/JeanGrey/Rework/ForcePushJean.prototype",                true,  0.0988f), // 2026-06-20
-            new("Powers/Player/JeanGrey/Rework/ImplosionJean.prototype",                true,  0.1316f), // 2026-06-20
+            new("Powers/Player/JeanGrey/Rework/Drain.prototype",                        true,  0.0290f), // 2026-06-20
+            new("Powers/Player/JeanGrey/Rework/ForcePushJean.prototype",                true,  0.1097f), // 2026-06-06
+            new("Powers/Player/JeanGrey/Rework/ImplosionJean.prototype",                true,  0.1437f), // 2026-06-10
             new("Powers/Player/JeanGrey/Rework/KineticBoltJean.prototype",              true,  0.05f),
             new("Powers/Player/JeanGrey/Rework/LiftAndSlamJean.prototype",              true,  0.05f),
-            new("Powers/Player/JeanGrey/Rework/NeuralNetworkJean.prototype",            true,  0.0837f), // 2026-06-20
-            new("Powers/Player/JeanGrey/Rework/PsychicHammerJean.prototype",            true,  0.0872f), // 2026-06-20
-            new("Powers/Player/JeanGrey/Rework/SignatureTKHurlJean.prototype",          true,  0.0171f), // 2026-06-20
-            new("Powers/Player/JeanGrey/Rework/SlowAoE.prototype",                      true,  0.0617f), // 2026-06-20
-            new("Powers/Player/JeanGrey/Rework/SpeedRushJean.prototype",                true,  0.05f),
+            new("Powers/Player/JeanGrey/Rework/NeuralNetworkJean.prototype",            true,  0.0828f), // 2026-06-06
+            new("Powers/Player/JeanGrey/Rework/PsychicHammerJean.prototype",            true,  0.0975f), // 2026-06-06
+            new("Powers/Player/JeanGrey/Rework/SignatureTKHurlJean.prototype",          true,  0.0114f), // 2026-07-02
+            new("Powers/Player/JeanGrey/Rework/SlowAoE.prototype",                      true,  0.0462f), // 2026-07-02
+            new("Powers/Player/JeanGrey/Rework/SpeedRushJean.prototype",                true,  0.0922f), // 2026-07-02
             new("Powers/Player/JeanGrey/Rework/TKTossJean.prototype",                   true,  0.05f),
             new("Powers/Player/JeanGrey/Rework/TelepathicIllusionJean.prototype",       true,  0.05f),
             new("Powers/Player/JeanGrey/Talents/CarThrow.prototype",                    false, 0.05f),
@@ -89,8 +89,8 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/JeanGrey/Talents/TKTossTripleThrow.prototype",           false, 0.05f),
             new("Powers/Player/JeanGrey/Traits/DefenseTrait.prototype",                 false, 0.05f),
             new("Powers/Player/JeanGrey/Traits/OffenseTrait.prototype",                 false, 0.05f),
-            new("Powers/Player/JeanGrey/Ultimate.prototype",                            true,  0.0100f), // 2026-06-20
-            new("Powers/Player/JeanGrey/UltimateHiddenPassive.prototype",               false, 0.0100f), // 2026-06-20
+            new("Powers/Player/JeanGrey/Ultimate.prototype",                            true,  0.0063f), // 2026-07-02
+            new("Powers/Player/JeanGrey/UltimateHiddenPassive.prototype",               false, 0.0063f), // 2026-07-02
             new("Powers/Player/TravelPower/JeanGreyFlight.prototype",                   false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/JeanGreyStolenPower.prototype",    false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",              false, 0.05f),

@@ -42,43 +42,43 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/Magik/Assassinate.prototype",                              true,  0.0825f), // 2026-06-18
+            new("Powers/Player/Magik/Assassinate.prototype",                              true,  0.0950f), // 2026-06-18
             new("Powers/Player/Magik/BoneSpirit.prototype",                               true,  0.05f),
             new("Powers/Player/Magik/BoneSpiritHiddenPassive.prototype",                  false, 0.05f),
             new("Powers/Player/Magik/BoneWall.prototype",                                 true,  0.05f),
-            new("Powers/Player/Magik/BounceStrikeStart.prototype",                        true,  0.0507f), // 2026-06-18
+            new("Powers/Player/Magik/BounceStrikeStart.prototype",                        true,  0.0467f), // 2026-06-18
             new("Powers/Player/Magik/DarkPact.prototype",                                 true,  0.05f),
-            new("Powers/Player/Magik/LifeTap.prototype",                                  true,  0.0819f), // 2026-06-20
-            new("Powers/Player/Magik/LifeTapHiddenPassive.prototype",                     false, 0.0819f), // 2026-06-20
-            new("Powers/Player/Magik/OtherworldlyNova.prototype",                         true,  0.0144f), // 2026-06-20
-            new("Powers/Player/Magik/SorcerousEruption.prototype",                        true,  0.0739f), // 2026-06-16
-            new("Powers/Player/Magik/SoulCapture.prototype",                              true,  0.0461f), // 2026-06-20
-            new("Powers/Player/Magik/SoulCone.prototype",                                 true,  0.0992f), // 2026-06-18
-            new("Powers/Player/Magik/SoulShockwave.prototype",                            true,  0.0552f), // 2026-06-18
-            new("Powers/Player/Magik/SoulswordBasic.prototype",                           true,  0.1083f), // 2026-06-17
-            new("Powers/Player/Magik/SoulswordWideSlash.prototype",                       true,  0.1001f), // 2026-06-20
-            new("Powers/Player/Magik/SummonLimboDemon.prototype",                         true,  0.0466f), // 2026-06-20
-            new("Powers/Player/Magik/SummonNastirh.prototype",                            true,  0.0556f), // 2026-06-20
+            new("Powers/Player/Magik/LifeTap.prototype",                                  true,  0.0770f), // 2026-06-28
+            new("Powers/Player/Magik/LifeTapHiddenPassive.prototype",                     false, 0.0770f), // 2026-06-28
+            new("Powers/Player/Magik/OtherworldlyNova.prototype",                         true,  0.0091f), // 2026-06-28
+            new("Powers/Player/Magik/SorcerousEruption.prototype",                        true,  0.0706f), // 2026-06-28
+            new("Powers/Player/Magik/SoulCapture.prototype",                              true,  0.0405f), // 2026-06-10
+            new("Powers/Player/Magik/SoulCone.prototype",                                 true,  0.1226f), // 2026-06-10
+            new("Powers/Player/Magik/SoulShockwave.prototype",                            true,  0.0697f), // 2026-06-10
+            new("Powers/Player/Magik/SoulswordBasic.prototype",                           true,  0.1706f), // 2026-06-08
+            new("Powers/Player/Magik/SoulswordWideSlash.prototype",                       true,  0.0979f), // 2026-06-08
+            new("Powers/Player/Magik/SummonLimboDemon.prototype",                         true,  0.0559f), // 2026-06-28
+            new("Powers/Player/Magik/SummonNastirh.prototype",                            true,  0.0522f), // 2026-06-20
             new("Powers/Player/Magik/Talents/Talent1LimboDemonIntoSpitter.prototype",     false, 0.05f),
-            new("Powers/Player/Magik/Talents/Talent1SoulConeLayer.prototype",             false, 0.0992f), // 2026-06-18
-            new("Powers/Player/Magik/Talents/Talent1SoulConeProjectiles.prototype",       false, 0.0992f), // 2026-06-18
-            new("Powers/Player/Magik/Talents/Talent2LifeTapAmpDamage.prototype",          false, 0.0819f), // 2026-06-20
-            new("Powers/Player/Magik/Talents/Talent2LifeTapConfuse.prototype",            false, 0.0819f), // 2026-06-20
-            new("Powers/Player/Magik/Talents/Talent2LifeTapWeaken.prototype",             false, 0.0819f), // 2026-06-20
+            new("Powers/Player/Magik/Talents/Talent1SoulConeLayer.prototype",             false, 0.1226f), // 2026-06-10
+            new("Powers/Player/Magik/Talents/Talent1SoulConeProjectiles.prototype",       false, 0.1226f), // 2026-06-10
+            new("Powers/Player/Magik/Talents/Talent2LifeTapAmpDamage.prototype",          false, 0.0770f), // 2026-06-28
+            new("Powers/Player/Magik/Talents/Talent2LifeTapConfuse.prototype",            false, 0.0770f), // 2026-06-28
+            new("Powers/Player/Magik/Talents/Talent2LifeTapWeaken.prototype",             false, 0.0770f), // 2026-06-28
             new("Powers/Player/Magik/Talents/Talent3MagicalProjection.prototype",         false, 0.05f),
             new("Powers/Player/Magik/Talents/Talent3NastirthIntoBFLD.prototype",          false, 0.05f),
             new("Powers/Player/Magik/Talents/Talent3SteppingMastery.prototype",           false, 0.05f),
-            new("Powers/Player/Magik/Talents/Talent4AssassinateSoulCollection.prototype", false, 0.0825f), // 2026-06-18
+            new("Powers/Player/Magik/Talents/Talent4AssassinateSoulCollection.prototype", false, 0.0950f), // 2026-06-18
             new("Powers/Player/Magik/Talents/Talent4AutoBoneSpirit.prototype",            false, 0.05f),
             new("Powers/Player/Magik/Talents/Talent4BloodSpirit.prototype",               false, 0.05f),
             new("Powers/Player/Magik/Talents/Talent5DarkPactIntoDarkAlliance.prototype",  false, 0.05f),
-            new("Powers/Player/Magik/Talents/Talent5OtherworldlyNovaDemonBuff.prototype", false, 0.0144f), // 2026-06-20
+            new("Powers/Player/Magik/Talents/Talent5OtherworldlyNovaDemonBuff.prototype", false, 0.0091f), // 2026-06-28
             new("Powers/Player/Magik/Talents/Talent5ReviveEnslavedMinionBuff.prototype",  false, 0.05f),
-            new("Powers/Player/Magik/Teleport.prototype",                                 true,  0.1427f), // 2026-06-18
-            new("Powers/Player/Magik/TeleportOther.prototype",                            true,  0.0784f), // 2026-06-20
+            new("Powers/Player/Magik/Teleport.prototype",                                 true,  0.1420f), // 2026-06-28
+            new("Powers/Player/Magik/TeleportOther.prototype",                            true,  0.1008f), // 2026-06-10
             new("Powers/Player/Magik/Traits/DefenseTrait.prototype",                      false, 0.05f),
             new("Powers/Player/Magik/Traits/OffenseTrait.prototype",                      false, 0.05f),
-            new("Powers/Player/Magik/Ultimate.prototype",                                 true,  0.0118f), // 2026-06-20
+            new("Powers/Player/Magik/Ultimate.prototype",                                 true,  0.0153f), // 2026-06-08
             new("Powers/Player/TravelPower/MagikFlight.prototype",                        false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/MagikStolenPower.prototype",         false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",                false, 0.05f),

@@ -44,29 +44,29 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/MoonKnight/BasicCrescentDart.prototype",                             true,  0.1733f), // 2026-06-20
-            new("Powers/Player/MoonKnight/BasicGauntletPunch.prototype",                            true,  0.0973f), // 2026-06-17
-            new("Powers/Player/MoonKnight/BasicStaffStrike.prototype",                              true,  0.1271f), // 2026-06-17
-            new("Powers/Player/MoonKnight/CestusGauntletPunch.prototype",                           true,  0.0879f), // 2026-06-14
-            new("Powers/Player/MoonKnight/ConeYank.prototype",                                      true,  0.0990f), // 2026-06-17
-            new("Powers/Player/MoonKnight/CrescentBola.prototype",                                  true,  0.3780f), // 2026-06-17
-            new("Powers/Player/MoonKnight/CrescentDartFan.prototype",                               true,  0.1464f), // 2026-06-20
-            new("Powers/Player/MoonKnight/DeathFromAbove.prototype",                                true,  0.0708f), // 2026-06-17
+            new("Powers/Player/MoonKnight/BasicCrescentDart.prototype",                             true,  0.2034f), // 2026-06-11
+            new("Powers/Player/MoonKnight/BasicGauntletPunch.prototype",                            true,  0.1190f), // 2026-06-11
+            new("Powers/Player/MoonKnight/BasicStaffStrike.prototype",                              true,  0.1502f), // 2026-06-11
+            new("Powers/Player/MoonKnight/CestusGauntletPunch.prototype",                           true,  0.0751f), // 2026-06-11
+            new("Powers/Player/MoonKnight/ConeYank.prototype",                                      true,  0.1255f), // 2026-06-05
+            new("Powers/Player/MoonKnight/CrescentBola.prototype",                                  true,  0.3639f), // 2026-06-11
+            new("Powers/Player/MoonKnight/CrescentDartFan.prototype",                               true,  0.1042f), // 2026-07-08
+            new("Powers/Player/MoonKnight/DeathFromAbove.prototype",                                true,  0.0567f), // 2026-07-08
             new("Powers/Player/MoonKnight/HighlightSteroids.prototype",                             true,  0.05f),
             new("Powers/Player/MoonKnight/KhonshuSteroidHealth.prototype",                          true,  0.05f),
-            new("Powers/Player/MoonKnight/NunchuckBulldoze.prototype",                              true,  0.0430f), // 2026-06-17
-            new("Powers/Player/MoonKnight/RapidFire.prototype",                                     true,  0.05f),
-            new("Powers/Player/MoonKnight/Ricochet.prototype",                                      true,  0.05f),
-            new("Powers/Player/MoonKnight/SignatureFrenzy.prototype",                               true,  0.0613f), // 2026-06-05
-            new("Powers/Player/MoonKnight/StaffPBAoE.prototype",                                    true,  0.0094f), // 2026-06-05
-            new("Powers/Player/MoonKnight/Strafe.prototype",                                        true,  0.1390f), // 2026-06-05
+            new("Powers/Player/MoonKnight/NunchuckBulldoze.prototype",                              true,  0.0296f), // 2026-07-08
+            new("Powers/Player/MoonKnight/RapidFire.prototype",                                     true,  0.0957f), // 2026-07-08
+            new("Powers/Player/MoonKnight/Ricochet.prototype",                                      true,  0.0811f), // 2026-07-08
+            new("Powers/Player/MoonKnight/SignatureFrenzy.prototype",                               true,  0.0633f), // 2026-07-08
+            new("Powers/Player/MoonKnight/StaffPBAoE.prototype",                                    true,  0.0325f), // 2026-06-05
+            new("Powers/Player/MoonKnight/Strafe.prototype",                                        true,  0.1134f), // 2026-06-05
             new("Powers/Player/MoonKnight/SummonKhonshuStatue.prototype",                           true,  0.05f),
             new("Powers/Player/MoonKnight/Talents/AngelwingStrafeDFACharges.prototype",             false, 0.05f),
-            new("Powers/Player/MoonKnight/Talents/BasicCrescentExplosiveRapidFireBounce.prototype", false, 0.05f),
+            new("Powers/Player/MoonKnight/Talents/BasicCrescentExplosiveRapidFireBounce.prototype", false, 0.0957f), // 2026-07-08
             new("Powers/Player/MoonKnight/Talents/BrutalChanceTerrify.prototype",                   false, 0.05f),
             new("Powers/Player/MoonKnight/Talents/CestusPunchLayer.prototype",                      false, 0.05f),
             new("Powers/Player/MoonKnight/Talents/CestusUppercutTribute.prototype",                 false, 0.05f),
-            new("Powers/Player/MoonKnight/Talents/ConeYankNunchuckBulldozeBonus.prototype",         false, 0.0990f), // 2026-06-17
+            new("Powers/Player/MoonKnight/Talents/ConeYankNunchuckBulldozeBonus.prototype",         false, 0.1255f), // 2026-06-05
             new("Powers/Player/MoonKnight/Talents/CrescentFanCooldown.prototype",                   false, 0.05f),
             new("Powers/Player/MoonKnight/Talents/HealthDefenseSelfRez.prototype",                  false, 0.05f),
             new("Powers/Player/MoonKnight/Talents/KhonshuStatueSteroidCombined.prototype",          false, 0.05f),
@@ -75,7 +75,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/MoonKnight/Talents/RangedSignature.prototype",                       false, 0.02f),
             new("Powers/Player/MoonKnight/Talents/RicochetCharges.prototype",                       false, 0.05f),
             new("Powers/Player/MoonKnight/Talents/SignatureTributeGain.prototype",                  false, 0.02f),
-            new("Powers/Player/MoonKnight/Talents/StaffPBAoEBleed.prototype",                       false, 0.0094f), // 2026-06-05
+            new("Powers/Player/MoonKnight/Talents/StaffPBAoEBleed.prototype",                       false, 0.0325f), // 2026-06-05
             new("Powers/Player/MoonKnight/Traits/DefenseTrait.prototype",                           false, 0.05f),
             new("Powers/Player/MoonKnight/Traits/MechanicTrait.prototype",                          false, 0.05f),
             new("Powers/Player/MoonKnight/Traits/OffenseTrait.prototype",                           false, 0.05f),

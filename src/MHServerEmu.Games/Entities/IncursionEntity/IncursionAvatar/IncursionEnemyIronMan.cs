@@ -63,21 +63,21 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/IronMan/BasicDentingPunch.prototype",                true,  0.1041f), // 2026-06-18
-            new("Powers/Player/IronMan/BasicRepulsorBeam.prototype",                true,  0.0980f), // 2026-06-18
-            new("Powers/Player/IronMan/BrutalStrike.prototype",                     true,  0.0683f), // 2026-06-18
-            new("Powers/Player/IronMan/ChanneledEnergyBeam.prototype",              true,  0.0391f), // 2026-06-18
-            new("Powers/Player/IronMan/DeathFromAbove.prototype",                   true,  0.0681f), // 2026-06-18
-            new("Powers/Player/IronMan/FreonRay.prototype",                         true,  0.0829f), // 2026-06-18
-            new("Powers/Player/IronMan/JetThrustPunch.prototype",                   true,  0.0713f), // 2026-06-18
-            new("Powers/Player/IronMan/Micromissiles.prototype",                    true,  0.0860f), // 2026-06-18
-            new("Powers/Player/IronMan/RainOfMissiles.prototype",                   true,  0.0759f), // 2026-06-18
-            new("Powers/Player/IronMan/RapidFire.prototype",                        true,  0.1621f), // 2026-06-18
-            new("Powers/Player/IronMan/RepulsorBurst.prototype",                    true,  0.1109f), // 2026-06-18
-            new("Powers/Player/IronMan/RepulsorSpray.prototype",                    true,  0.0441f), // 2026-06-17
-            new("Powers/Player/IronMan/ShieldOverload.prototype",                   true,  0.0950f), // 2026-06-13
-            new("Powers/Player/IronMan/Signature.prototype",                        true,  0.0106f), // 2026-06-18
-            new("Powers/Player/IronMan/SpeedRush.prototype",                        true,  0.1774f), // 2026-06-18
+            new("Powers/Player/IronMan/BasicDentingPunch.prototype",                true,  0.1200f), // 2026-06-10
+            new("Powers/Player/IronMan/BasicRepulsorBeam.prototype",                true,  0.1072f), // 2026-06-10
+            new("Powers/Player/IronMan/BrutalStrike.prototype",                     true,  0.0495f), // 2026-07-01
+            new("Powers/Player/IronMan/ChanneledEnergyBeam.prototype",              true,  0.0329f), // 2026-06-10
+            new("Powers/Player/IronMan/DeathFromAbove.prototype",                   true,  0.0599f), // 2026-06-18
+            new("Powers/Player/IronMan/FreonRay.prototype",                         true,  0.1016f), // 2026-06-10
+            new("Powers/Player/IronMan/JetThrustPunch.prototype",                   true,  0.1283f), // 2026-06-10
+            new("Powers/Player/IronMan/Micromissiles.prototype",                    true,  0.1130f), // 2026-06-10
+            new("Powers/Player/IronMan/RainOfMissiles.prototype",                   true,  0.0980f), // 2026-06-10
+            new("Powers/Player/IronMan/RapidFire.prototype",                        true,  0.1985f), // 2026-06-10
+            new("Powers/Player/IronMan/RepulsorBurst.prototype",                    true,  0.1546f), // 2026-06-07
+            new("Powers/Player/IronMan/RepulsorSpray.prototype",                    true,  0.0670f), // 2026-06-10
+            new("Powers/Player/IronMan/ShieldOverload.prototype",                   true,  0.0594f), // 2026-07-01
+            new("Powers/Player/IronMan/Signature.prototype",                        true,  0.0169f), // 2026-06-10
+            new("Powers/Player/IronMan/SpeedRush.prototype",                        true,  0.1683f), // 2026-06-10
             new("Powers/Player/IronMan/Talents/ExtremisHealingNanites.prototype",   false, 0.05f),
             new("Powers/Player/IronMan/Talents/LifeSupport.prototype",              false, 0.05f),
             new("Powers/Player/IronMan/Talents/MissileTargeting.prototype",         false, 0.01f),
@@ -96,9 +96,9 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/IronMan/Traits/DefenseTrait.prototype",              false, 0.05f),
             new("Powers/Player/IronMan/Traits/MechanicTraitSuitPower.prototype",    false, 0.05f),
             new("Powers/Player/IronMan/Traits/OffenseTrait.prototype",              false, 0.05f),
-            new("Powers/Player/IronMan/UltimateSummonSuits.prototype",              true,  0.0264f), // 2026-06-18
+            new("Powers/Player/IronMan/UltimateSummonSuits.prototype",              true,  0.0305f), // 2026-06-10
             new("Powers/Player/IronMan/UniBeam.prototype",                          true,  0.05f),
-            new("Powers/Player/IronMan/WristRocket.prototype",                      true,  0.1121f), // 2026-06-18
+            new("Powers/Player/IronMan/WristRocket.prototype",                      true,  0.0819f), // 2026-06-10
             new("Powers/Player/TravelPower/IronManFlight.prototype",                false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/IronManStolenPower.prototype", false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",          false, 0.05f),

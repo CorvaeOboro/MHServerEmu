@@ -44,27 +44,27 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         private static readonly IncursionPowerEntry[] _powerTable =
         {
             new("Powers/Player/TravelPower/VisionFlight.prototype",                       false, 0.05f),
-            new("Powers/Player/Vision/AtomicFootDive.prototype",                          true,  0.0146f), // 2026-06-19
-            new("Powers/Player/Vision/ControlRobot.prototype",                            true,  0.0530f), // 2026-06-20
-            new("Powers/Player/Vision/ControlRobotHPassiveBuff.prototype",                false, 0.0530f), // 2026-06-20
-            new("Powers/Player/Vision/DeathfromBelow.prototype",                          true,  0.0521f), // 2026-06-19
+            new("Powers/Player/Vision/AtomicFootDive.prototype",                          true,  0.0116f), // 2026-06-11
+            new("Powers/Player/Vision/ControlRobot.prototype",                            true,  0.0450f), // 2026-06-11
+            new("Powers/Player/Vision/ControlRobotHPassiveBuff.prototype",                false, 0.0450f), // 2026-06-11
+            new("Powers/Player/Vision/DeathfromBelow.prototype",                          true,  0.0479f), // 2026-06-19
             new("Powers/Player/Vision/DensityHiddenPassiveController.prototype",          false, 0.05f),
             new("Powers/Player/Vision/EnhanceRobot.prototype",                            true,  0.05f),
-            new("Powers/Player/Vision/FocusBeam.prototype",                               true,  0.0343f), // 2026-06-20
+            new("Powers/Player/Vision/FocusBeam.prototype",                               true,  0.0268f), // 2026-06-11
             new("Powers/Player/Vision/HealingNanites.prototype",                          true,  0.05f),
             new("Powers/Player/Vision/ModeToggle.prototype",                              false, 0.05f),
-            new("Powers/Player/Vision/Phase.prototype",                                   true,  0.0464f), // 2026-06-19
-            new("Powers/Player/Vision/PhaseHand.prototype",                               true,  0.0464f), // 2026-06-19
-            new("Powers/Player/Vision/PhasePunch.prototype",                              true,  0.1337f), // 2026-06-10
-            new("Powers/Player/Vision/ScorchedEarth.prototype",                           true,  0.0592f), // 2026-06-20
-            new("Powers/Player/Vision/SolarBolt.prototype",                               true,  0.1600f), // 2026-06-20
-            new("Powers/Player/Vision/SolarChanneledEnergyBeam.prototype",                true,  0.0682f), // 2026-06-20
-            new("Powers/Player/Vision/SolarCone.prototype",                               true,  0.0850f), // 2026-06-20
-            new("Powers/Player/Vision/SolarOvercharge.prototype",                         true,  0.0275f), // 2026-06-19
-            new("Powers/Player/Vision/SolarOverchargeHiddenPassive.prototype",            false, 0.0275f), // 2026-06-19
+            new("Powers/Player/Vision/Phase.prototype",                                   true,  0.0343f), // 2026-06-10
+            new("Powers/Player/Vision/PhaseHand.prototype",                               true,  0.0343f), // 2026-06-10
+            new("Powers/Player/Vision/PhasePunch.prototype",                              true,  0.1711f), // 2026-06-10
+            new("Powers/Player/Vision/ScorchedEarth.prototype",                           true,  0.0453f), // 2026-06-11
+            new("Powers/Player/Vision/SolarBolt.prototype",                               true,  0.1975f), // 2026-06-11
+            new("Powers/Player/Vision/SolarChanneledEnergyBeam.prototype",                true,  0.1031f), // 2026-06-11
+            new("Powers/Player/Vision/SolarCone.prototype",                               true,  0.0696f), // 2026-06-11
+            new("Powers/Player/Vision/SolarOvercharge.prototype",                         true,  0.0190f), // 2026-06-11
+            new("Powers/Player/Vision/SolarOverchargeHiddenPassive.prototype",            false, 0.0190f), // 2026-06-11
             new("Powers/Player/Vision/StealthToggle.prototype",                           false, 0.05f),
-            new("Powers/Player/Vision/Talents/Talent1PhasePunchDefBuff.prototype",        false, 0.1337f), // 2026-06-10
-            new("Powers/Player/Vision/Talents/Talent1SolarConeBuffMeleeDmg.prototype",    false, 0.0850f), // 2026-06-20
+            new("Powers/Player/Vision/Talents/Talent1PhasePunchDefBuff.prototype",        false, 0.1711f), // 2026-06-10
+            new("Powers/Player/Vision/Talents/Talent1SolarConeBuffMeleeDmg.prototype",    false, 0.0696f), // 2026-06-11
             new("Powers/Player/Vision/Talents/Talent1SolarRateRegenMax.prototype",        false, 0.05f),
             new("Powers/Player/Vision/Talents/Talent2DenseModeBuff.prototype",            false, 0.05f),
             new("Powers/Player/Vision/Talents/Talent2DensityShiftCDRDefBuff.prototype",   false, 0.05f),

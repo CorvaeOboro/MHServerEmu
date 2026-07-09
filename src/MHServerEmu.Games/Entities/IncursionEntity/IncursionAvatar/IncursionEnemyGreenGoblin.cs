@@ -42,38 +42,38 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/GreenGoblin/BombingCircle.prototype",                       true,  0.0153f), // 2026-06-19
-            new("Powers/Player/GreenGoblin/Dash.prototype",                                true,  0.1116f), // 2026-06-19
-            new("Powers/Player/GreenGoblin/DeathFromAboveV2.prototype",                    true,  0.0496f), // 2026-06-19
-            new("Powers/Player/GreenGoblin/ExplosivePumpkinBase.prototype",                true,  0.1308f), // 2026-06-19
+            new("Powers/Player/GreenGoblin/BombingCircle.prototype",                       true,  0.0133f), // 2026-06-10
+            new("Powers/Player/GreenGoblin/Dash.prototype",                                true,  0.1354f), // 2026-06-10
+            new("Powers/Player/GreenGoblin/DeathFromAboveV2.prototype",                    true,  0.0489f), // 2026-07-04
+            new("Powers/Player/GreenGoblin/ExplosivePumpkinBase.prototype",                true,  0.1630f), // 2026-06-10
             new("Powers/Player/GreenGoblin/FlyingFlamethrower.prototype",                  false, 0.05f),
-            new("Powers/Player/GreenGoblin/GasPumpkin.prototype",                          true,  0.0971f), // 2026-06-18
-            new("Powers/Player/GreenGoblin/GhostBomb.prototype",                           true,  0.1182f), // 2026-06-19
-            new("Powers/Player/GreenGoblin/GoblinBlast.prototype",                         true,  0.1028f), // 2026-06-19
-            new("Powers/Player/GreenGoblin/GoblinCannon.prototype",                        true,  0.0076f), // 2026-06-19
-            new("Powers/Player/GreenGoblin/GoblinLaser.prototype",                         true,  0.0764f), // 2026-06-19
-            new("Powers/Player/GreenGoblin/HallucinogenicPumpkin.prototype",               true,  0.0784f), // 2026-06-18
-            new("Powers/Player/GreenGoblin/MachineGuns.prototype",                         true,  0.0366f), // 2026-06-19
-            new("Powers/Player/GreenGoblin/PbAoESpin.prototype",                           true,  0.1224f), // 2026-06-19
-            new("Powers/Player/GreenGoblin/RazorBat.prototype",                            true,  0.1533f), // 2026-06-18
-            new("Powers/Player/GreenGoblin/Rockets.prototype",                             true,  0.1396f), // 2026-06-19
-            new("Powers/Player/GreenGoblin/SonicToads.prototype",                          true,  0.1140f), // 2026-06-19
+            new("Powers/Player/GreenGoblin/GasPumpkin.prototype",                          true,  0.1099f), // 2026-06-10
+            new("Powers/Player/GreenGoblin/GhostBomb.prototype",                           true,  0.1188f), // 2026-07-04
+            new("Powers/Player/GreenGoblin/GoblinBlast.prototype",                         true,  0.1090f), // 2026-06-10
+            new("Powers/Player/GreenGoblin/GoblinCannon.prototype",                        true,  0.0070f), // 2026-06-10
+            new("Powers/Player/GreenGoblin/GoblinLaser.prototype",                         true,  0.0756f), // 2026-06-10
+            new("Powers/Player/GreenGoblin/HallucinogenicPumpkin.prototype",               true,  0.0819f), // 2026-07-04
+            new("Powers/Player/GreenGoblin/MachineGuns.prototype",                         true,  0.0267f), // 2026-06-10
+            new("Powers/Player/GreenGoblin/PbAoESpin.prototype",                           true,  0.1158f), // 2026-06-10
+            new("Powers/Player/GreenGoblin/RazorBat.prototype",                            true,  0.1941f), // 2026-06-10
+            new("Powers/Player/GreenGoblin/Rockets.prototype",                             true,  0.1517f), // 2026-06-10
+            new("Powers/Player/GreenGoblin/SonicToads.prototype",                          true,  0.1191f), // 2026-06-10
             new("Powers/Player/GreenGoblin/Talents/ExplosivePumpkinInnerDamage.prototype", false, 0.05f),
-            new("Powers/Player/GreenGoblin/Talents/GasPumpkinIgniteTalent.prototype",      false, 0.0971f), // 2026-06-18
+            new("Powers/Player/GreenGoblin/Talents/GasPumpkinIgniteTalent.prototype",      false, 0.1099f), // 2026-06-10
             new("Powers/Player/GreenGoblin/Talents/GliderBladeTalent.prototype",           false, 0.05f),
-            new("Powers/Player/GreenGoblin/Talents/GoblinBlastExtraHitTalent.prototype",   false, 0.1028f), // 2026-06-19
-            new("Powers/Player/GreenGoblin/Talents/GoblinLaserDamageMultTalent.prototype", false, 0.0764f), // 2026-06-19
-            new("Powers/Player/GreenGoblin/Talents/HallucinogenicPumpkinTalent.prototype", false, 0.0784f), // 2026-06-18
+            new("Powers/Player/GreenGoblin/Talents/GoblinBlastExtraHitTalent.prototype",   false, 0.1090f), // 2026-06-10
+            new("Powers/Player/GreenGoblin/Talents/GoblinLaserDamageMultTalent.prototype", false, 0.0756f), // 2026-06-10
+            new("Powers/Player/GreenGoblin/Talents/HallucinogenicPumpkinTalent.prototype", false, 0.0819f), // 2026-07-04
             new("Powers/Player/GreenGoblin/Talents/MoreGhostsTalent.prototype",            false, 0.05f),
             new("Powers/Player/GreenGoblin/Talents/MoreToadsTalent.prototype",             false, 0.05f),
             new("Powers/Player/GreenGoblin/Talents/NitrousTalent.prototype",               false, 0.05f),
-            new("Powers/Player/GreenGoblin/Talents/RazorBatsBleed.prototype",              false, 0.1533f), // 2026-06-18
+            new("Powers/Player/GreenGoblin/Talents/RazorBatsBleed.prototype",              false, 0.1941f), // 2026-06-10
             new("Powers/Player/GreenGoblin/Talents/SignatureMovementBuffTalent.prototype", false, 0.02f),
             new("Powers/Player/GreenGoblin/Talents/SignatureResistanceTalent.prototype",   false, 0.02f),
             new("Powers/Player/GreenGoblin/Talents/SignatureRestoreTalent.prototype",      false, 0.02f),
             new("Powers/Player/GreenGoblin/Talents/SuperSpinTalent.prototype",             false, 0.05f),
             new("Powers/Player/GreenGoblin/Talents/TheBigOneBuffTalent.prototype",         false, 0.05f),
-            new("Powers/Player/GreenGoblin/TheBigOneSummon.prototype",                     true,  0.0494f), // 2026-06-19
+            new("Powers/Player/GreenGoblin/TheBigOneSummon.prototype",                     true,  0.0394f), // 2026-06-10
             new("Powers/Player/GreenGoblin/Traits/DefenseTrait.prototype",                 false, 0.05f),
             new("Powers/Player/GreenGoblin/Traits/OffenseTrait.prototype",                 false, 0.05f),
             new("Powers/Player/TravelPower/GreenGoblinFlight.prototype",                   false, 0.05f),

@@ -52,28 +52,28 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         private static readonly IncursionPowerEntry[] _powerTable =
         {
             new("Powers/Player/Cyclops/CallAngelMovement.prototype",                      false, 0.05f),
-            new("Powers/Player/Cyclops/FocusBeamNew.prototype",                           true,  0.0802f), // 2026-06-18
-            new("Powers/Player/Cyclops/Rework/AoEBeam.prototype",                         true,  0.1096f), // 2026-06-18
-            new("Powers/Player/Cyclops/Rework/BasicBeam.prototype",                       true,  0.1213f), // 2026-06-17
-            new("Powers/Player/Cyclops/Rework/BasicBouncingBeam.prototype",               true,  0.1291f), // 2026-06-18
-            new("Powers/Player/Cyclops/Rework/CallBeast.prototype",                       true,  0.0571f), // 2026-06-17
+            new("Powers/Player/Cyclops/FocusBeamNew.prototype",                           true,  0.0922f), // 2026-06-11
+            new("Powers/Player/Cyclops/Rework/AoEBeam.prototype",                         true,  0.1278f), // 2026-06-11
+            new("Powers/Player/Cyclops/Rework/BasicBeam.prototype",                       true,  0.1510f), // 2026-06-11
+            new("Powers/Player/Cyclops/Rework/BasicBouncingBeam.prototype",               true,  0.1067f), // 2026-06-28
+            new("Powers/Player/Cyclops/Rework/CallBeast.prototype",                       true,  0.0726f), // 2026-06-11
             new("Powers/Player/Cyclops/Rework/CallIceman.prototype",                      true,  0.05f),
-            new("Powers/Player/Cyclops/Rework/CallJean.prototype",                        true,  0.1221f), // 2026-06-17
-            new("Powers/Player/Cyclops/Rework/ChanneledBeam.prototype",                   true,  0.0429f), // 2026-06-18
-            new("Powers/Player/Cyclops/Rework/ChargeCone.prototype",                      true,  0.0422f), // 2026-06-18
-            new("Powers/Player/Cyclops/Rework/ConeBeam.prototype",                        true,  0.0224f), // 2026-06-16
+            new("Powers/Player/Cyclops/Rework/CallJean.prototype",                        true,  0.1265f), // 2026-06-28
+            new("Powers/Player/Cyclops/Rework/ChanneledBeam.prototype",                   true,  0.0618f), // 2026-06-11
+            new("Powers/Player/Cyclops/Rework/ChargeCone.prototype",                      true,  0.0623f), // 2026-06-11
+            new("Powers/Player/Cyclops/Rework/ConeBeam.prototype",                        true,  0.0199f), // 2026-06-16
             new("Powers/Player/Cyclops/Rework/DisengagingShot.prototype",                 true,  0.05f),
-            new("Powers/Player/Cyclops/Rework/PrismBeam.prototype",                       true,  0.0363f), // 2026-06-18
-            new("Powers/Player/Cyclops/Rework/SignatureBeam.prototype",                   true,  0.0175f), // 2026-06-18
+            new("Powers/Player/Cyclops/Rework/PrismBeam.prototype",                       true,  0.0589f), // 2026-06-11
+            new("Powers/Player/Cyclops/Rework/SignatureBeam.prototype",                   true,  0.0138f), // 2026-06-11
             new("Powers/Player/Cyclops/Rework/TacticalAnalysis.prototype",                true,  0.05f),
             new("Powers/Player/Cyclops/Rework/Tumble.prototype",                          true,  0.05f),
-            new("Powers/Player/Cyclops/Rework/UltimateHiddenPassiveSigSynergy.prototype", false, 0.0286f), // 2026-06-18
+            new("Powers/Player/Cyclops/Rework/UltimateHiddenPassiveSigSynergy.prototype", false, 0.0179f), // 2026-06-28
             new("Powers/Player/Cyclops/Talents/BeamBleedTalent.prototype",                false, 0.05f),
             new("Powers/Player/Cyclops/Talents/BeamRefractionTalent.prototype",           false, 0.05f),
             new("Powers/Player/Cyclops/Talents/BeamToPunchTalent.prototype",              false, 0.05f),
             new("Powers/Player/Cyclops/Talents/CallinProcTalent.prototype",               false, 0.025f),
-            new("Powers/Player/Cyclops/Talents/ChanneledBeamUpgradeTalent.prototype",     false, 0.0429f), // 2026-06-18
-            new("Powers/Player/Cyclops/Talents/ChargeConeChargeTalent.prototype",         false, 0.0422f), // 2026-06-18
+            new("Powers/Player/Cyclops/Talents/ChanneledBeamUpgradeTalent.prototype",     false, 0.0618f), // 2026-06-11
+            new("Powers/Player/Cyclops/Talents/ChargeConeChargeTalent.prototype",         false, 0.0623f), // 2026-06-11
             new("Powers/Player/Cyclops/Talents/EmmaFrostCallInTalent.prototype",          false, 0.05f),
             new("Powers/Player/Cyclops/Talents/FocusBeamThirdStack.prototype",            false, 0.05f),
             new("Powers/Player/Cyclops/Talents/MagikCallinTalent.prototype",              false, 0.05f),
@@ -86,7 +86,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Cyclops/TeamSteroid.prototype",                            true,  0.05f),
             new("Powers/Player/Cyclops/Traits/DefenseTrait.prototype",                    false, 0.05f),
             new("Powers/Player/Cyclops/Traits/OffenseTrait.prototype",                    false, 0.05f),
-            new("Powers/Player/Cyclops/Ultimate.prototype",                               true,  0.0286f), // 2026-06-18
+            new("Powers/Player/Cyclops/Ultimate.prototype",                               true,  0.0179f), // 2026-06-28
             new("Powers/Player/TravelPower/CyclopsRide.prototype",                        false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/CyclopsStolenPower.prototype",       false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",                false, 0.05f),

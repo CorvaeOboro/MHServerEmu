@@ -55,20 +55,20 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/Hulk/Rework/BasicMeleeUtil.prototype",             true,  0.0914f), // 2026-06-20
+            new("Powers/Player/Hulk/Rework/BasicMeleeUtil.prototype",             true,  0.1014f), // 2026-06-11
             new("Powers/Player/Hulk/Rework/CarFists.prototype",                   true,  0.05f),
-            new("Powers/Player/Hulk/Rework/Clap.prototype",                       true,  0.0207f), // 2026-06-20
-            new("Powers/Player/Hulk/Rework/DashCrash.prototype",                  true,  0.1023f), // 2026-06-20
-            new("Powers/Player/Hulk/Rework/GammaPunch.prototype",                 true,  0.0767f), // 2026-06-18
-            new("Powers/Player/Hulk/Rework/LeapImplode.prototype",                true,  0.0355f), // 2026-06-20
-            new("Powers/Player/Hulk/Rework/LeapQuake.prototype",                  true,  0.0434f), // 2026-06-20
-            new("Powers/Player/Hulk/Rework/Meteor.prototype",                     true,  0.0137f), // 2026-06-20
+            new("Powers/Player/Hulk/Rework/Clap.prototype",                       true,  0.0459f), // 2026-06-09
+            new("Powers/Player/Hulk/Rework/DashCrash.prototype",                  true,  0.1218f), // 2026-07-08
+            new("Powers/Player/Hulk/Rework/GammaPunch.prototype",                 true,  0.0970f), // 2026-06-09
+            new("Powers/Player/Hulk/Rework/LeapImplode.prototype",                true,  0.0311f), // 2026-07-08
+            new("Powers/Player/Hulk/Rework/LeapQuake.prototype",                  true,  0.0369f), // 2026-07-08
+            new("Powers/Player/Hulk/Rework/Meteor.prototype",                     true,  0.0123f), // 2026-06-11
             new("Powers/Player/Hulk/Rework/PBAoESlam.prototype",                  true,  0.03f),
             new("Powers/Player/Hulk/Rework/Rawr.prototype",                       true,  0.05f),
-            new("Powers/Player/Hulk/Rework/Shockwave.prototype",                  true,  0.1417f), // 2026-06-20
-            new("Powers/Player/Hulk/Rework/SmashFace.prototype",                  true,  0.0488f), // 2026-06-18
-            new("Powers/Player/Hulk/Rework/Tantrum.prototype",                    true,  0.0572f), // 2026-06-18
-            new("Powers/Player/Hulk/Rework/ThrowRock.prototype",                  true,  0.0426f), // 2026-06-18
+            new("Powers/Player/Hulk/Rework/Shockwave.prototype",                  true,  0.1584f), // 2026-06-11
+            new("Powers/Player/Hulk/Rework/SmashFace.prototype",                  true,  0.0545f), // 2026-06-27
+            new("Powers/Player/Hulk/Rework/Tantrum.prototype",                    true,  0.0437f), // 2026-07-08
+            new("Powers/Player/Hulk/Rework/ThrowRock.prototype",                  true,  0.0405f), // 2026-07-08
             new("Powers/Player/Hulk/Talents/Talent1AlwaysAngry.prototype",        false, 0.05f),
             new("Powers/Player/Hulk/Talents/Talent1BerserkerHulk.prototype",      false, 0.05f),
             new("Powers/Player/Hulk/Talents/Talent1DoubleAngerBonuses.prototype", false, 0.05f),
@@ -76,19 +76,19 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Hulk/Talents/Talent2DeflectBonus.prototype",       false, 0.05f),
             new("Powers/Player/Hulk/Talents/Talent2HealthBonus.prototype",        false, 0.05f),
             new("Powers/Player/Hulk/Talents/Talent3HulkSmashBonus.prototype",     false, 0.05f),
-            new("Powers/Player/Hulk/Talents/Talent3TantrumBonus.prototype",       false, 0.0572f), // 2026-06-18
-            new("Powers/Player/Hulk/Talents/Talent3ThrowRockBonus.prototype",     false, 0.0426f), // 2026-06-18
+            new("Powers/Player/Hulk/Talents/Talent3TantrumBonus.prototype",       false, 0.0437f), // 2026-07-08
+            new("Powers/Player/Hulk/Talents/Talent3ThrowRockBonus.prototype",     false, 0.0405f), // 2026-07-08
             new("Powers/Player/Hulk/Talents/Talent4CarFistsBonus.prototype",      false, 0.05f),
-            new("Powers/Player/Hulk/Talents/Talent4GammaPunchBonus.prototype",    false, 0.0767f), // 2026-06-18
+            new("Powers/Player/Hulk/Talents/Talent4GammaPunchBonus.prototype",    false, 0.0970f), // 2026-06-09
             new("Powers/Player/Hulk/Talents/Talent4Leaping.prototype",            false, 0.05f),
-            new("Powers/Player/Hulk/Talents/Talent5ClapBonus.prototype",          false, 0.0207f), // 2026-06-20
+            new("Powers/Player/Hulk/Talents/Talent5ClapBonus.prototype",          false, 0.0459f), // 2026-06-09
             new("Powers/Player/Hulk/Talents/Talent5CooldownReduction.prototype",  false, 0.05f),
-            new("Powers/Player/Hulk/Talents/Talent5MeteorBonus.prototype",        false, 0.0137f), // 2026-06-20
+            new("Powers/Player/Hulk/Talents/Talent5MeteorBonus.prototype",        false, 0.0123f), // 2026-06-11
             new("Powers/Player/Hulk/Traits/AngerDecayOutOfCombat.prototype",      false, 0.05f),
             new("Powers/Player/Hulk/Traits/DefenseTrait.prototype",               false, 0.05f),
             new("Powers/Player/Hulk/Traits/MechanicTraitAnger.prototype",         false, 0.05f),
             new("Powers/Player/Hulk/Traits/OffenseTrait.prototype",               false, 0.05f),
-            new("Powers/Player/Hulk/Ultimate.prototype",                          true,  0.0094f), // 2026-06-20
+            new("Powers/Player/Hulk/Ultimate.prototype",                          true,  0.0116f), // 2026-06-09
             new("Powers/Player/TravelPower/HulkSprint.prototype",                 false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/HulkStolenPower.prototype",  false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",        false, 0.05f),

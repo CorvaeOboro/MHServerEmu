@@ -43,23 +43,23 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/Psylocke/AoEDoT.prototype",                                  true,  0.0821f), // 2026-06-20
+            new("Powers/Player/Psylocke/AoEDoT.prototype",                                  true,  0.0812f), // 2026-06-11
             new("Powers/Player/Psylocke/Bow.prototype",                                     true,  0.05f),
             new("Powers/Player/Psylocke/Butterflynado.prototype",                           false, 0.05f),
-            new("Powers/Player/Psylocke/ConeBlast.prototype",                               true,  0.0602f), // 2026-06-20
-            new("Powers/Player/Psylocke/DashBackstab.prototype",                            true,  0.0891f), // 2026-06-18
-            new("Powers/Player/Psylocke/DashStealth.prototype",                             true,  0.1613f), // 2026-06-18
-            new("Powers/Player/Psylocke/Implosion.prototype",                               true,  0.1231f), // 2026-06-18
-            new("Powers/Player/Psylocke/KatanaDoubleStrike.prototype",                      true,  0.0627f), // 2026-06-18
-            new("Powers/Player/Psylocke/KatanaLeapSlashAoE.prototype",                      true,  0.0474f), // 2026-06-20
-            new("Powers/Player/Psylocke/KatanaPBAoE.prototype",                             true,  0.0644f), // 2026-06-17
-            new("Powers/Player/Psylocke/KickPunch.prototype",                               true,  0.1093f), // 2026-06-20
-            new("Powers/Player/Psylocke/Lunge.prototype",                                   true,  0.1603f), // 2026-06-20
+            new("Powers/Player/Psylocke/ConeBlast.prototype",                               true,  0.0787f), // 2026-06-11
+            new("Powers/Player/Psylocke/DashBackstab.prototype",                            true,  0.0865f), // 2026-07-08
+            new("Powers/Player/Psylocke/DashStealth.prototype",                             true,  0.1981f), // 2026-06-11
+            new("Powers/Player/Psylocke/Implosion.prototype",                               true,  0.1317f), // 2026-06-11
+            new("Powers/Player/Psylocke/KatanaDoubleStrike.prototype",                      true,  0.0803f), // 2026-06-11
+            new("Powers/Player/Psylocke/KatanaLeapSlashAoE.prototype",                      true,  0.0445f), // 2026-07-08
+            new("Powers/Player/Psylocke/KatanaPBAoE.prototype",                             true,  0.0746f), // 2026-06-11
+            new("Powers/Player/Psylocke/KickPunch.prototype",                               true,  0.1343f), // 2026-06-11
+            new("Powers/Player/Psylocke/Lunge.prototype",                                   true,  0.1857f), // 2026-06-11
             new("Powers/Player/Psylocke/PassiveDecoys.prototype",                           false, 0.05f),
-            new("Powers/Player/Psylocke/PsiBolt.prototype",                                 true,  0.1311f), // 2026-06-18
-            new("Powers/Player/Psylocke/PsiKatanaCone.prototype",                           true,  0.1012f), // 2026-06-20
-            new("Powers/Player/Psylocke/PsiKnifeTripleStrike.prototype",                    true,  0.0971f), // 2026-06-18
-            new("Powers/Player/Psylocke/SeekerButterflies.prototype",                       true,  0.0213f), // 2026-06-20
+            new("Powers/Player/Psylocke/PsiBolt.prototype",                                 true,  0.1491f), // 2026-06-11
+            new("Powers/Player/Psylocke/PsiKatanaCone.prototype",                           true,  0.1183f), // 2026-06-11
+            new("Powers/Player/Psylocke/PsiKnifeTripleStrike.prototype",                    true,  0.1227f), // 2026-06-11
+            new("Powers/Player/Psylocke/SeekerButterflies.prototype",                       true,  0.0178f), // 2026-06-11
             new("Powers/Player/Psylocke/StealthMechanicHiddenPassive.prototype",            false, 0.05f),
             new("Powers/Player/Psylocke/Talents/Talent1MeleeBuff.prototype",                false, 0.05f),
             new("Powers/Player/Psylocke/Talents/Talent1MentalBuff.prototype",               false, 0.05f),
@@ -73,7 +73,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Psylocke/Talents/Talent4DancingKatana.prototype",            false, 0.05f),
             new("Powers/Player/Psylocke/Talents/Talent4MaxProjections.prototype",           false, 0.05f),
             new("Powers/Player/Psylocke/Talents/Talent4PsionicBow.prototype",               false, 0.05f),
-            new("Powers/Player/Psylocke/Talents/Talent5AoEDoTBuff.prototype",               false, 0.0821f), // 2026-06-20
+            new("Powers/Player/Psylocke/Talents/Talent5AoEDoTBuff.prototype",               false, 0.0812f), // 2026-06-11
             new("Powers/Player/Psylocke/Talents/Talent5AssassinateCDR.prototype",           false, 0.05f),
             new("Powers/Player/Psylocke/Talents/Talent5ProjectionsWeapons.prototype",       false, 0.05f),
             new("Powers/Player/Psylocke/Traits/DefenseTrait.prototype",                     false, 0.05f),

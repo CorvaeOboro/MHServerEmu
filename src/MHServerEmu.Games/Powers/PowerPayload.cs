@@ -1616,7 +1616,47 @@ namespace MHServerEmu.Games.Powers
             if (rankProto == null) return Logger.WarnReturn(false, "CalculateResultDamageDifficultyScaling(): rankProto == null");
 
             difficultyMult = tuningTable.GetDamageMultiplier(IsPlayerPayload, rankProto.Rank, target.RegionLocation.Position);
-            
+
+            // Normalize difficulty multiplier to Red (Hard) tier for IncursionEnemies.
+            // IncursionEnemies are balanced for Hard mode; Cosmic tier's extra damage scaling
+            // makes them vastly too strong. We counteract only the tier-specific portion
+            // (DamageMobToPlayerPct / DamagePlayerToMobPct) by ratioing back to Red tier values.
+            if (Game.IncursionManager != null)
+            {
+                bool isIncursionSource = false;
+                bool isIncursionTarget = false;
+
+                // Outgoing: IncursionEnemy -> player
+                GetIncursionEnemyDamageScale(out WorldEntity invader, out _, out _);
+                if (invader != null && Game.IncursionManager.IsIncursionEntity(invader.Id))
+                    isIncursionSource = true;
+
+                // Incoming: player -> IncursionEnemy
+                if (Game.IncursionManager.IsIncursionEntity(target.Id))
+                    isIncursionTarget = true;
+
+                if (isIncursionSource || isIncursionTarget)
+                {
+                    Region region = target.Region;
+                    if (region != null)
+                    {
+                        DifficultyTierPrototype currentTier = region.DifficultyTierRef.As<DifficultyTierPrototype>();
+                        DifficultyTierPrototype redTier = GameDatabase.GlobalsPrototype?.GetDifficultyTierByEnum(DifficultyTier.Red);
+
+                        if (currentTier != null && redTier != null && currentTier != redTier)
+                        {
+                            float ratio;
+                            if (IsPlayerPayload)
+                                ratio = redTier.DamagePlayerToMobPct / currentTier.DamagePlayerToMobPct;
+                            else
+                                ratio = redTier.DamageMobToPlayerPct / currentTier.DamageMobToPlayerPct;
+
+                            difficultyMult *= ratio;
+                        }
+                    }
+                }
+            }
+
             ApplyDamageMultiplier(results.Properties, difficultyMult);
             return true;
         }

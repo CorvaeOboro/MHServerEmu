@@ -45,29 +45,29 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/IronFist/BlackBlackPoisonTouch.prototype",                           true,  0.0321f), // 2026-06-17
-            new("Powers/Player/IronFist/ChiBlast.prototype",                                        true,  0.0529f), // 2026-06-17
-            new("Powers/Player/IronFist/ChiBurst.prototype",                                        true,  0.0950f), // 2026-06-17
+            new("Powers/Player/IronFist/BlackBlackPoisonTouch.prototype",                           true,  0.0240f), // 2026-07-02
+            new("Powers/Player/IronFist/ChiBlast.prototype",                                        true,  0.0526f), // 2026-07-02
+            new("Powers/Player/IronFist/ChiBurst.prototype",                                        true,  0.0805f), // 2026-07-02
             new("Powers/Player/IronFist/ChiMastery.prototype",                                      true,  0.05f),
             new("Powers/Player/IronFist/CraneStance.prototype",                                     false, 0.05f),
             new("Powers/Player/IronFist/DragonSliceStance.prototype",                               false, 0.05f),
             new("Powers/Player/IronFist/FlyingKick.prototype",                                      false, 0.05f),
-            new("Powers/Player/IronFist/IronFistPunchStartMove.prototype",                          true,  0.0139f), // 2026-06-17
-            new("Powers/Player/IronFist/KunlunStrike.prototype",                                    true,  0.1386f), // 2026-06-13
+            new("Powers/Player/IronFist/IronFistPunchStartMove.prototype",                          true,  0.0119f), // 2026-07-02
+            new("Powers/Player/IronFist/KunlunStrike.prototype",                                    true,  0.1400f), // 2026-07-02
             new("Powers/Player/IronFist/LeopardSlashStance.prototype",                              false, 0.05f),
-            new("Powers/Player/IronFist/NinjutsuDash.prototype",                                    true,  0.1373f), // 2026-06-17
-            new("Powers/Player/IronFist/Pummel.prototype",                                          true,  0.1220f), // 2026-06-13
-            new("Powers/Player/IronFist/SevenSidedStrike.prototype",                                true,  0.0212f), // 2026-06-17
-            new("Powers/Player/IronFist/ShaolinStrike.prototype",                                   true,  0.0854f), // 2026-06-17
+            new("Powers/Player/IronFist/NinjutsuDash.prototype",                                    true,  0.1214f), // 2026-07-02
+            new("Powers/Player/IronFist/Pummel.prototype",                                          true,  0.0815f), // 2026-07-02
+            new("Powers/Player/IronFist/SevenSidedStrike.prototype",                                true,  0.0340f), // 2026-07-02
+            new("Powers/Player/IronFist/ShaolinStrike.prototype",                                   true,  0.0944f), // 2026-06-30
             new("Powers/Player/IronFist/SnakeStance.prototype",                                     false, 0.05f),
             new("Powers/Player/IronFist/Talents/Talent1OpenerCDR.prototype",                        false, 0.05f),
             new("Powers/Player/IronFist/Talents/Talent1OpenerDamageMult.prototype",                 false, 0.05f),
             new("Powers/Player/IronFist/Talents/Talent1StancePassiveBoost.prototype",               false, 0.05f),
-            new("Powers/Player/IronFist/Talents/Talent2ComboChiBurst.prototype",                    false, 0.0950f), // 2026-06-17
+            new("Powers/Player/IronFist/Talents/Talent2ComboChiBurst.prototype",                    false, 0.0805f), // 2026-07-02
             new("Powers/Player/IronFist/Talents/Talent2ComboFlow.prototype",                        false, 0.025f),
-            new("Powers/Player/IronFist/Talents/Talent2PummelDamageMult.prototype",                 false, 0.05f),
-            new("Powers/Player/IronFist/Talents/Talent3OpenerChiBurstCombo.prototype",              false, 0.0950f), // 2026-06-17
-            new("Powers/Player/IronFist/Talents/Talent3ShaolinStrikeBonusDamageIncrease.prototype", false, 0.0854f), // 2026-06-17
+            new("Powers/Player/IronFist/Talents/Talent2PummelDamageMult.prototype",                 false, 0.0815f), // 2026-07-02
+            new("Powers/Player/IronFist/Talents/Talent3OpenerChiBurstCombo.prototype",              false, 0.0805f), // 2026-07-02
+            new("Powers/Player/IronFist/Talents/Talent3ShaolinStrikeBonusDamageIncrease.prototype", false, 0.0944f), // 2026-06-30
             new("Powers/Player/IronFist/Talents/Talent3StanceComboMult.prototype",                  false, 0.025f),
             new("Powers/Player/IronFist/Talents/Talent4ChiOverload.prototype",                      false, 0.05f),
             new("Powers/Player/IronFist/Talents/Talent4ChiPunch.prototype",                         false, 0.05f),
@@ -79,7 +79,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/IronFist/Traits/DefenseTrait.prototype",                             false, 0.05f),
             new("Powers/Player/IronFist/Traits/MechanicTraitChi.prototype",                         false, 0.05f),
             new("Powers/Player/IronFist/Traits/OffenseTrait.prototype",                             false, 0.05f),
-            new("Powers/Player/IronFist/Ultimate.prototype",                                        true,  0.0085f), // 2026-06-17
+            new("Powers/Player/IronFist/Ultimate.prototype",                                        true,  0.0160f), // 2026-06-03
             new("Powers/Player/TravelPower/IronFistSprint.prototype",                               false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/IronFistStolenPower.prototype",                false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",                          false, 0.05f),

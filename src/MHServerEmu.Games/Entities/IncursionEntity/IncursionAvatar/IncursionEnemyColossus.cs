@@ -48,20 +48,20 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/Colossus/ArmoringPunch.prototype",                                  true,  0.0242f), // 2026-06-17
-            new("Powers/Player/Colossus/CallKittyAoE.prototype",                                   true,  0.0229f), // 2026-06-18
-            new("Powers/Player/Colossus/CallNightcrawler.prototype",                               true,  0.0247f), // 2026-06-18
-            new("Powers/Player/Colossus/DeathFromAbove.prototype",                                 true,  0.0226f), // 2026-06-18
-            new("Powers/Player/Colossus/FastballSpecial.prototype",                                true,  0.1205f), // 2026-06-18
-            new("Powers/Player/Colossus/GroundStomp.prototype",                                    true,  0.0591f), // 2026-06-18
+            new("Powers/Player/Colossus/ArmoringPunch.prototype",                                  true,  0.0499f), // 2026-06-11
+            new("Powers/Player/Colossus/CallKittyAoE.prototype",                                   true,  0.0475f), // 2026-06-10
+            new("Powers/Player/Colossus/CallNightcrawler.prototype",                               true,  0.0229f), // 2026-06-10
+            new("Powers/Player/Colossus/DeathFromAbove.prototype",                                 true,  0.0157f), // 2026-06-18
+            new("Powers/Player/Colossus/FastballSpecial.prototype",                                true,  0.1115f), // 2026-06-10
+            new("Powers/Player/Colossus/GroundStomp.prototype",                                    true,  0.0861f), // 2026-06-10
             new("Powers/Player/Colossus/GroupTaunt.prototype",                                     true,  0.05f),
             new("Powers/Player/Colossus/MagikEldritchArmor.prototype",                             true,  0.05f),
-            new("Powers/Player/Colossus/MetalCharge.prototype",                                    true,  0.1599f), // 2026-06-18
-            new("Powers/Player/Colossus/MetalRegeneration.prototype",                              true,  0.0091f), // 2026-06-18
+            new("Powers/Player/Colossus/MetalCharge.prototype",                                    true,  0.1974f), // 2026-06-10
+            new("Powers/Player/Colossus/MetalRegeneration.prototype",                              true,  0.0074f), // 2026-06-18
             new("Powers/Player/Colossus/MovementSpin.prototype",                                   false, 0.05f),
             new("Powers/Player/Colossus/PickUpTerrain.prototype",                                  true,  0.05f),
-            new("Powers/Player/Colossus/Punch.prototype",                                          true,  0.0249f), // 2026-06-18
-            new("Powers/Player/Colossus/Shockwave.prototype",                                      true,  0.0590f), // 2026-06-18
+            new("Powers/Player/Colossus/Punch.prototype",                                          true,  0.0221f), // 2026-06-11
+            new("Powers/Player/Colossus/Shockwave.prototype",                                      true,  0.0977f), // 2026-06-11
             new("Powers/Player/Colossus/Talents/Talent1DamageMultWithNoArmor.prototype",           false, 0.05f),
             new("Powers/Player/Colossus/Talents/Talent1HealthToArmorConversionInCombat.prototype", false, 0.05f),
             new("Powers/Player/Colossus/Talents/Talent1RegenArmor.prototype",                      false, 0.05f),
@@ -69,8 +69,8 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Colossus/Talents/Talent2NoCallinSpec.prototype",                    false, 0.05f),
             new("Powers/Player/Colossus/Talents/Talent2TauntBuff.prototype",                       false, 0.05f),
             new("Powers/Player/Colossus/Talents/Talent3CallinSharedCooldown.prototype",            false, 0.05f),
-            new("Powers/Player/Colossus/Talents/Talent3DeathFromAboveArmorSpend.prototype",        false, 0.0226f), // 2026-06-18
-            new("Powers/Player/Colossus/Talents/Talent3GroundStompFissureLayers.prototype",        false, 0.0591f), // 2026-06-18
+            new("Powers/Player/Colossus/Talents/Talent3DeathFromAboveArmorSpend.prototype",        false, 0.0157f), // 2026-06-18
+            new("Powers/Player/Colossus/Talents/Talent3GroundStompFissureLayers.prototype",        false, 0.0861f), // 2026-06-10
             new("Powers/Player/Colossus/Talents/Talent4CallInBuffs.prototype",                     false, 0.05f),
             new("Powers/Player/Colossus/Talents/Talent4DamageBasedOnArmor.prototype",              false, 0.05f),
             new("Powers/Player/Colossus/Talents/Talent4MovementBuildBuffs.prototype",              false, 0.05f),
@@ -80,7 +80,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Colossus/Traits/DefenseTrait.prototype",                            false, 0.05f),
             new("Powers/Player/Colossus/Traits/MechanicTraitArmor.prototype",                      false, 0.05f),
             new("Powers/Player/Colossus/Traits/OffenseTrait.prototype",                            false, 0.05f),
-            new("Powers/Player/Colossus/TroyPunch.prototype",                                      true,  0.0291f), // 2026-06-17
+            new("Powers/Player/Colossus/TroyPunch.prototype",                                      true,  0.0220f), // 2026-06-17
             new("Powers/Player/Colossus/Ultimate.prototype",                                       true,  0.006f),
             new("Powers/Player/TravelPower/ColossusSprint.prototype",                              false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/ColossusStolenPower.prototype",               false, 0.05f),

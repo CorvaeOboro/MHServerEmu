@@ -53,41 +53,41 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         private static readonly IncursionPowerEntry[] _powerTable =
         {
             new("Powers/Player/Hawkeye/AdamantiumArrow.prototype",                     true,  0.05f),
-            new("Powers/Player/Hawkeye/BasicArrow.prototype",                          true,  0.1813f), // 2026-06-20
-            new("Powers/Player/Hawkeye/DisengagingShot.prototype",                     true,  0.2192f), // 2026-06-18
-            new("Powers/Player/Hawkeye/ExplosiveArrow.prototype",                      true,  0.1680f), // 2026-06-18
+            new("Powers/Player/Hawkeye/BasicArrow.prototype",                          true,  0.1715f), // 2026-06-11
+            new("Powers/Player/Hawkeye/DisengagingShot.prototype",                     true,  0.2076f), // 2026-06-11
+            new("Powers/Player/Hawkeye/ExplosiveArrow.prototype",                      true,  0.1827f), // 2026-06-11
             new("Powers/Player/Hawkeye/FlashBomb.prototype",                           true,  0.05f),
-            new("Powers/Player/Hawkeye/FreezeArrow.prototype",                         true,  0.1656f), // 2026-06-18
+            new("Powers/Player/Hawkeye/FreezeArrow.prototype",                         true,  0.1646f), // 2026-06-11
             new("Powers/Player/Hawkeye/NullifierArrow.prototype",                      true,  0.05f),
-            new("Powers/Player/Hawkeye/PinningShot.prototype",                         true,  0.0856f), // 2026-06-18
-            new("Powers/Player/Hawkeye/PoisonGasBomb.prototype",                       true,  0.0892f), // 2026-06-18
-            new("Powers/Player/Hawkeye/ShriekingArrow.prototype",                      true,  0.0930f), // 2026-06-18
+            new("Powers/Player/Hawkeye/PinningShot.prototype",                         true,  0.0982f), // 2026-06-11
+            new("Powers/Player/Hawkeye/PoisonGasBomb.prototype",                       true,  0.1070f), // 2026-06-11
+            new("Powers/Player/Hawkeye/ShriekingArrow.prototype",                      true,  0.1117f), // 2026-06-11
             new("Powers/Player/Hawkeye/Talents/AutoTrickArrows.prototype",             false, 0.05f),
             new("Powers/Player/Hawkeye/Talents/DisengagingShotTalent.prototype",       false, 0.05f),
             new("Powers/Player/Hawkeye/Talents/FlashBombTalent.prototype",             false, 0.05f),
             new("Powers/Player/Hawkeye/Talents/MeleeHawkeyeTalent.prototype",          false, 0.05f),
-            new("Powers/Player/Hawkeye/Talents/PinningShotTalent.prototype",           false, 0.0856f), // 2026-06-18
+            new("Powers/Player/Hawkeye/Talents/PinningShotTalent.prototype",           false, 0.0982f), // 2026-06-11
             new("Powers/Player/Hawkeye/Talents/PymArrowheadsTalent.prototype",         false, 0.05f),
             new("Powers/Player/Hawkeye/Talents/SerratedArrowheadsTalent.prototype",    false, 0.05f),
             new("Powers/Player/Hawkeye/Talents/ShriekingArrowTalent.prototype",        false, 0.05f),
             new("Powers/Player/Hawkeye/Talents/SpeedLoaderPiercingTalent.prototype",   false, 0.05f),
             new("Powers/Player/Hawkeye/Talents/ThreeRoundBurstBonusCharge.prototype",  false, 0.05f),
             new("Powers/Player/Hawkeye/Talents/TrickDmgMultTalent.prototype",          false, 0.05f),
-            new("Powers/Player/Hawkeye/Talents/TrickVolleyTalent.prototype",           false, 0.1308f), // 2026-06-18
+            new("Powers/Player/Hawkeye/Talents/TrickVolleyTalent.prototype",           false, 0.1634f), // 2026-06-11
             new("Powers/Player/Hawkeye/Talents/TridentArrowheadsTalent.prototype",     false, 0.05f),
-            new("Powers/Player/Hawkeye/Talents/TurretArrowBonusArrowTalent.prototype", false, 0.0135f), // 2026-06-18
-            new("Powers/Player/Hawkeye/Talents/TurretArrowCooldownTalent.prototype",   false, 0.0135f), // 2026-06-18
-            new("Powers/Player/Hawkeye/TaserArrow.prototype",                          true,  0.3680f), // 2026-06-17
-            new("Powers/Player/Hawkeye/TenArrowSpeedLoader.prototype",                 true,  0.0982f), // 2026-06-18
-            new("Powers/Player/Hawkeye/ThreeRoundBurst.prototype",                     true,  0.1694f), // 2026-06-18
+            new("Powers/Player/Hawkeye/Talents/TurretArrowBonusArrowTalent.prototype", false, 0.0403f), // 2026-06-11
+            new("Powers/Player/Hawkeye/Talents/TurretArrowCooldownTalent.prototype",   false, 0.0403f), // 2026-06-11
+            new("Powers/Player/Hawkeye/TaserArrow.prototype",                          true,  0.3198f), // 2026-06-11
+            new("Powers/Player/Hawkeye/TenArrowSpeedLoader.prototype",                 true,  0.0885f), // 2026-06-11
+            new("Powers/Player/Hawkeye/ThreeRoundBurst.prototype",                     true,  0.1704f), // 2026-06-11
             new("Powers/Player/Hawkeye/Traits/DefenseTrait.prototype",                 false, 0.05f),
             new("Powers/Player/Hawkeye/Traits/OffenseTrait.prototype",                 false, 0.05f),
             new("Powers/Player/Hawkeye/Traits/TrickQuiverMechanicTrait.prototype",     false, 0.05f),
             new("Powers/Player/Hawkeye/Tumble.prototype",                              true,  0.05f),
-            new("Powers/Player/Hawkeye/TurretArrow.prototype",                         true,  0.0135f), // 2026-06-18
-            new("Powers/Player/Hawkeye/Ultimate.prototype",                            true,  0.0082f), // 2026-06-18
-            new("Powers/Player/Hawkeye/UltimateHiddenPassive.prototype",               false, 0.0082f), // 2026-06-18
-            new("Powers/Player/Hawkeye/Volley.prototype",                              true,  0.1308f), // 2026-06-18
+            new("Powers/Player/Hawkeye/TurretArrow.prototype",                         true,  0.0403f), // 2026-06-11
+            new("Powers/Player/Hawkeye/Ultimate.prototype",                            true,  0.0109f), // 2026-06-11
+            new("Powers/Player/Hawkeye/UltimateHiddenPassive.prototype",               false, 0.0109f), // 2026-06-11
+            new("Powers/Player/Hawkeye/Volley.prototype",                              true,  0.1634f), // 2026-06-11
             new("Powers/Player/TravelPower/HawkeyeFlight.prototype",                   false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/HawkeyeStolenPower.prototype",    false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",             false, 0.05f),

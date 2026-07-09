@@ -47,21 +47,21 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/AntMan/AntPunch.prototype",                                true,  0.05f),
             new("Powers/Player/AntMan/AntStampede.prototype",                             true,  0.05f),
             new("Powers/Player/AntMan/AntWall.prototype",                                 true,  0.05f),
-            new("Powers/Player/AntMan/AnthillActive.prototype",                           true,  0.1116f), // 2026-06-20
+            new("Powers/Player/AntMan/AnthillActive.prototype",                           true,  0.1164f), // 2026-06-11
             new("Powers/Player/AntMan/AnthillPassive.prototype",                          false, 0.05f),
-            new("Powers/Player/AntMan/AntnadoMovementPower.prototype",                    false,  0.0085f), // 2026-06-16
-            new("Powers/Player/AntMan/BioElectricBlast.prototype",                        true,  0.1356f), // 2026-06-20
-            new("Powers/Player/AntMan/BounceDash.prototype",                              true,  0.1483f), // 2026-06-20
-            new("Powers/Player/AntMan/DisruptorBlast.prototype",                          true,  0.0621f), // 2026-06-20
+            new("Powers/Player/AntMan/AntnadoMovementPower.prototype",                    false,  0.0075f), // 2026-06-11
+            new("Powers/Player/AntMan/BioElectricBlast.prototype",                        true,  0.1716f), // 2026-06-11
+            new("Powers/Player/AntMan/BounceDash.prototype",                              true,  0.1690f), // 2026-06-11
+            new("Powers/Player/AntMan/DisruptorBlast.prototype",                          true,  0.0764f), // 2026-06-11
             new("Powers/Player/AntMan/FireAntAttack.prototype",                           true,  0.05f),
             new("Powers/Player/AntMan/FlyingAntSwarm.prototype",                          true,  0.05f),
-            new("Powers/Player/AntMan/GiantManFoot.prototype",                            true,  0.0102f), // 2026-06-17
+            new("Powers/Player/AntMan/GiantManFoot.prototype",                            true,  0.0098f), // 2026-06-11
             new("Powers/Player/AntMan/InsectDecoy.prototype",                             true,  0.05f),
-            new("Powers/Player/AntMan/MultiStrike.prototype",                             true,  0.0883f), // 2026-06-20
-            new("Powers/Player/AntMan/NotSoBigPunch.prototype",                           true,  0.0407f), // 2026-06-20
+            new("Powers/Player/AntMan/MultiStrike.prototype",                             true,  0.0850f), // 2026-06-11
+            new("Powers/Player/AntMan/NotSoBigPunch.prototype",                           true,  0.0328f), // 2026-06-20
             new("Powers/Player/AntMan/PymSuit.prototype",                                 true,  0.05f),
-            new("Powers/Player/AntMan/RapidShrinkStrike.prototype",                       true,  0.1359f), // 2026-06-17
-            new("Powers/Player/AntMan/ShrinkingStrike.prototype",                         true,  0.0939f), // 2026-06-20
+            new("Powers/Player/AntMan/RapidShrinkStrike.prototype",                       true,  0.1386f), // 2026-06-17
+            new("Powers/Player/AntMan/ShrinkingStrike.prototype",                         true,  0.1142f), // 2026-06-20
             new("Powers/Player/AntMan/Talents/AntDecoyTalent.prototype",                  false, 0.05f),
             new("Powers/Player/AntMan/Talents/AntRespawnTalent.prototype",                false, 0.05f),
             new("Powers/Player/AntMan/Talents/AntUseSpiritTalent.prototype",              false, 0.05f),
@@ -77,7 +77,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/AntMan/Talents/STSSBonusDamageTalent.prototype",           false, 0.05f),
             new("Powers/Player/AntMan/Talents/STSSExtraDoT.prototype",                    false, 0.05f),
             new("Powers/Player/AntMan/Talents/TankerThrowTalent.prototype",               false, 0.05f),
-            new("Powers/Player/AntMan/ThrowCar.prototype",                                true,  0.0628f), // 2026-06-20
+            new("Powers/Player/AntMan/ThrowCar.prototype",                                true,  0.0556f), // 2026-06-11
             new("Powers/Player/AntMan/Traits/DefenseTrait.prototype",                     false, 0.05f),
             new("Powers/Player/AntMan/Traits/MechanicTraitAnts.prototype",                false, 0.05f),
             new("Powers/Player/AntMan/Traits/OffenseTrait.prototype",                     false, 0.05f),

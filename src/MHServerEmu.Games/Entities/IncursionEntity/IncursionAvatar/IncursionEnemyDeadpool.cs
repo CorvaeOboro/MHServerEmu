@@ -53,32 +53,32 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/Deadpool/Rework/ArmorBuster.prototype",                 true,  0.0285f), // 2026-06-17
+            new("Powers/Player/Deadpool/Rework/ArmorBuster.prototype",                 true,  0.0533f), // 2026-06-06
             new("Powers/Player/Deadpool/Rework/AwesomeHiddenPassive.prototype",        false, 0.05f),
             new("Powers/Player/Deadpool/Rework/BangBang.prototype",                    true,  0.05f),
-            new("Powers/Player/Deadpool/Rework/BasicBleed.prototype",                  true,  0.1159f), // 2026-06-18
-            new("Powers/Player/Deadpool/Rework/Bazooka.prototype",                     true,  0.0367f), // 2026-06-20
-            new("Powers/Player/Deadpool/Rework/CaltropsRework.prototype",              true,  0.0827f), // 2026-06-20
-            new("Powers/Player/Deadpool/Rework/DeadlyBarrage.prototype",               true,  0.0318f), // 2026-06-20
-            new("Powers/Player/Deadpool/Rework/Deadpoolnado.prototype",                true,  0.0206f), // 2026-06-20
-            new("Powers/Player/Deadpool/Rework/GiantMallet.prototype",                 true,  0.0728f), // 2026-06-17
-            new("Powers/Player/Deadpool/Rework/HulkHandArrow.prototype",               true,  0.0812f), // 2026-06-18
+            new("Powers/Player/Deadpool/Rework/BasicBleed.prototype",                  true,  0.1170f), // 2026-07-07
+            new("Powers/Player/Deadpool/Rework/Bazooka.prototype",                     true,  0.0795f), // 2026-06-06
+            new("Powers/Player/Deadpool/Rework/CaltropsRework.prototype",              true,  0.1000f), // 2026-06-06
+            new("Powers/Player/Deadpool/Rework/DeadlyBarrage.prototype",               true,  0.0254f), // 2026-06-06
+            new("Powers/Player/Deadpool/Rework/Deadpoolnado.prototype",                true,  0.0129f), // 2026-07-07
+            new("Powers/Player/Deadpool/Rework/GiantMallet.prototype",                 true,  0.1117f), // 2026-06-06
+            new("Powers/Player/Deadpool/Rework/HulkHandArrow.prototype",               true,  0.0806f), // 2026-06-30
             new("Powers/Player/Deadpool/Rework/LilDeadpool.prototype",                 true,  0.05f),
             new("Powers/Player/Deadpool/Rework/Lunge.prototype",                       true,  0.05f),
             new("Powers/Player/Deadpool/Rework/MercWithaMouth.prototype",              true,  0.05f),
             new("Powers/Player/Deadpool/Rework/Minigun.prototype",                     true,  0.05f),
-            new("Powers/Player/Deadpool/Rework/OmnislashTeleport.prototype",           true,  0.0438f), // 2026-06-16
-            new("Powers/Player/Deadpool/Rework/SaiAssault.prototype",                  true,  0.1335f), // 2026-06-20
-            new("Powers/Player/Deadpool/Rework/ServerLag.prototype",                   true,  0.0411f), // 2026-06-20
-            new("Powers/Player/Deadpool/Rework/StabbyFlip.prototype",                  true,  0.0608f), // 2026-06-18
-            new("Powers/Player/Deadpool/Rework/Strafe.prototype",                      true,  0.0636f), // 2026-06-20
+            new("Powers/Player/Deadpool/Rework/OmnislashTeleport.prototype",           true,  0.0624f), // 2026-06-06
+            new("Powers/Player/Deadpool/Rework/SaiAssault.prototype",                  true,  0.1367f), // 2026-07-07
+            new("Powers/Player/Deadpool/Rework/ServerLag.prototype",                   true,  0.0257f), // 2026-06-30
+            new("Powers/Player/Deadpool/Rework/StabbyFlip.prototype",                  true,  0.0698f), // 2026-06-30
+            new("Powers/Player/Deadpool/Rework/Strafe.prototype",                      true,  0.0625f), // 2026-07-07
             new("Powers/Player/Deadpool/Rework/SuperiorHealingFactor.prototype",       true,  0.05f),
             new("Powers/Player/Deadpool/Rework/Teleport.prototype",                    true,  0.05f),
-            new("Powers/Player/Deadpool/Talents/BazookaTalent.prototype",              false, 0.0367f), // 2026-06-20
+            new("Powers/Player/Deadpool/Talents/BazookaTalent.prototype",              false, 0.0795f), // 2026-06-06
             new("Powers/Player/Deadpool/Talents/BleedEmDryTalent.prototype",           false, 0.05f),
             new("Powers/Player/Deadpool/Talents/GodModeTalent.prototype",              false, 0.05f),
             new("Powers/Player/Deadpool/Talents/GunsGloriousGunsTalent.prototype",     false, 0.05f),
-            new("Powers/Player/Deadpool/Talents/HulkHandArrowNapalmTalent.prototype",  false, 0.0812f), // 2026-06-18
+            new("Powers/Player/Deadpool/Talents/HulkHandArrowNapalmTalent.prototype",  false, 0.0806f), // 2026-06-30
             new("Powers/Player/Deadpool/Talents/LilDeadpoolTalent.prototype",          false, 0.05f),
             new("Powers/Player/Deadpool/Talents/MinibossTalent.prototype",             false, 0.05f),
             new("Powers/Player/Deadpool/Talents/MultiplayerTalent.prototype",          false, 0.05f),
@@ -86,8 +86,8 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Deadpool/Talents/PowerUpsTalent.prototype",             false, 0.05f),
             new("Powers/Player/Deadpool/Talents/SelfDestructBangBangTalent.prototype", false, 0.05f),
             new("Powers/Player/Deadpool/Talents/SmellsLikeVictoryTalent.prototype",    false, 0.05f),
-            new("Powers/Player/Deadpool/Talents/StrafeExtraDefenseTalent.prototype",   false, 0.0636f), // 2026-06-20
-            new("Powers/Player/Deadpool/Talents/StrafeSlamExplosionsTalent.prototype", false, 0.0636f), // 2026-06-20
+            new("Powers/Player/Deadpool/Talents/StrafeExtraDefenseTalent.prototype",   false, 0.0625f), // 2026-07-07
+            new("Powers/Player/Deadpool/Talents/StrafeSlamExplosionsTalent.prototype", false, 0.0625f), // 2026-07-07
             new("Powers/Player/Deadpool/Talents/TenTonHammerTalent.prototype",         false, 0.05f),
             new("Powers/Player/Deadpool/Traits/DefenseTrait.prototype",                false, 0.05f),
             new("Powers/Player/Deadpool/Traits/MechanicTraitAwesome.prototype",        false, 0.05f),

@@ -42,42 +42,42 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/Iceman/AbsoluteZero.prototype",                          true,  0.0136f), // 2026-06-18
-            new("Powers/Player/Iceman/BasicBeam.prototype",                             true,  0.1231f), // 2026-06-18
-            new("Powers/Player/Iceman/ChanneledBeam.prototype",                         true,  0.0806f), // 2026-06-18
-            new("Powers/Player/Iceman/DeathFromAbove.prototype",                        true,  0.0373f), // 2026-06-18
-            new("Powers/Player/Iceman/FocusBeam.prototype",                             true,  0.0884f), // 2026-06-18
+            new("Powers/Player/Iceman/AbsoluteZero.prototype",                          true,  0.0091f), // 2026-06-18
+            new("Powers/Player/Iceman/BasicBeam.prototype",                             true,  0.1236f), // 2026-06-10
+            new("Powers/Player/Iceman/ChanneledBeam.prototype",                         true,  0.0695f), // 2026-06-10
+            new("Powers/Player/Iceman/DeathFromAbove.prototype",                        true,  0.0344f), // 2026-06-18
+            new("Powers/Player/Iceman/FocusBeam.prototype",                             true,  0.1022f), // 2026-06-09
             new("Powers/Player/Iceman/FrostWedgeNoMovement.prototype",                  false, 0.05f),
-            new("Powers/Player/Iceman/FrozenOrb.prototype",                             true,  0.0601f), // 2026-06-18
-            new("Powers/Player/Iceman/FuriousLunge.prototype",                          true,  0.1421f), // 2026-06-18
-            new("Powers/Player/Iceman/HotspotBeam.prototype",                           true,  0.1008f), // 2026-06-18
+            new("Powers/Player/Iceman/FrozenOrb.prototype",                             true,  0.0750f), // 2026-06-10
+            new("Powers/Player/Iceman/FuriousLunge.prototype",                          true,  0.1885f), // 2026-06-10
+            new("Powers/Player/Iceman/HotspotBeam.prototype",                           true,  0.0998f), // 2026-06-10
             new("Powers/Player/Iceman/IceBlock.prototype",                              true,  0.05f),
-            new("Powers/Player/Iceman/IceGolem.prototype",                              true,  0.0555f), // 2026-06-18
+            new("Powers/Player/Iceman/IceGolem.prototype",                              true,  0.0529f), // 2026-06-18
             new("Powers/Player/Iceman/Icewall.prototype",                               true,  0.05f),
-            new("Powers/Player/Iceman/Icicle.prototype",                                true,  0.0482f), // 2026-06-18
-            new("Powers/Player/Iceman/RapidFire.prototype",                             true,  0.4710f), // 2026-06-18
-            new("Powers/Player/Iceman/ShowOff.prototype",                               true,  0.0386f), // 2026-06-18
-            new("Powers/Player/Iceman/SpikePunch.prototype",                            true,  0.0609f), // 2026-06-18
+            new("Powers/Player/Iceman/Icicle.prototype",                                true,  0.0676f), // 2026-06-09
+            new("Powers/Player/Iceman/RapidFire.prototype",                             true,  0.4392f), // 2026-06-10
+            new("Powers/Player/Iceman/ShowOff.prototype",                               true,  0.0376f), // 2026-06-10
+            new("Powers/Player/Iceman/SpikePunch.prototype",                            true,  0.0604f), // 2026-06-10
             new("Powers/Player/Iceman/Talents/BeamSpec.prototype",                      false, 0.05f),
             new("Powers/Player/Iceman/Talents/ChillFreezePotency.prototype",            false, 0.05f),
             new("Powers/Player/Iceman/Talents/ChilledDoT.prototype",                    false, 0.05f),
             new("Powers/Player/Iceman/Talents/DFAArmorSpend.prototype",                 false, 0.05f),
-            new("Powers/Player/Iceman/Talents/FocusBeamToFrostNova.prototype",          false, 0.0884f), // 2026-06-18
-            new("Powers/Player/Iceman/Talents/FrozenOrbSummon.prototype",               false, 0.0601f), // 2026-06-18
-            new("Powers/Player/Iceman/Talents/HailBallIcicleBall.prototype",            false, 0.0482f), // 2026-06-18
-            new("Powers/Player/Iceman/Talents/HotspotBeamHealing.prototype",            false, 0.1008f), // 2026-06-18
+            new("Powers/Player/Iceman/Talents/FocusBeamToFrostNova.prototype",          false, 0.1022f), // 2026-06-09
+            new("Powers/Player/Iceman/Talents/FrozenOrbSummon.prototype",               false, 0.0750f), // 2026-06-10
+            new("Powers/Player/Iceman/Talents/HailBallIcicleBall.prototype",            false, 0.0676f), // 2026-06-09
+            new("Powers/Player/Iceman/Talents/HotspotBeamHealing.prototype",            false, 0.0998f), // 2026-06-10
             new("Powers/Player/Iceman/Talents/IceBlockCDDefensiveBuff.prototype",       false, 0.05f),
-            new("Powers/Player/Iceman/Talents/IceGolemBuff.prototype",                  false, 0.0555f), // 2026-06-18
+            new("Powers/Player/Iceman/Talents/IceGolemBuff.prototype",                  false, 0.0529f), // 2026-06-18
             new("Powers/Player/Iceman/Talents/IcemanClones.prototype",                  false, 0.05f),
             new("Powers/Player/Iceman/Talents/MeleeWeapons.prototype",                  false, 0.05f),
             new("Powers/Player/Iceman/Talents/ShatterBonus.prototype",                  false, 0.05f),
-            new("Powers/Player/Iceman/Talents/ShowOffIceWallFreeHotspotBeam.prototype", false, 0.1008f), // 2026-06-18
-            new("Powers/Player/Iceman/Talents/SignatureIceGolemBuff.prototype",         false, 0.0555f), // 2026-06-18
+            new("Powers/Player/Iceman/Talents/ShowOffIceWallFreeHotspotBeam.prototype", false, 0.0998f), // 2026-06-10
+            new("Powers/Player/Iceman/Talents/SignatureIceGolemBuff.prototype",         false, 0.0529f), // 2026-06-18
             new("Powers/Player/Iceman/Traits/DefenseTrait.prototype",                   false, 0.05f),
             new("Powers/Player/Iceman/Traits/MechanicTraitChillShatter.prototype",      false, 0.05f),
             new("Powers/Player/Iceman/Traits/OffenseTrait.prototype",                   false, 0.05f),
             new("Powers/Player/Iceman/UltimateHiddenPassive.prototype",                 false, 0.006f),
-            new("Powers/Player/Iceman/UltimateStart.prototype",                         true,  0.0178f), // 2026-06-10
+            new("Powers/Player/Iceman/UltimateStart.prototype",                         true,  0.0262f), // 2026-06-10
             new("Powers/Player/TravelPower/IcemanFlight.prototype",                     false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/IcemanStolenPower.prototype",      false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",              false, 0.05f),

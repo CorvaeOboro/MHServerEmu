@@ -47,46 +47,46 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/Cable/ConcussionBlast.prototype",                  true,  0.0803f), // 2026-06-17
-            new("Powers/Player/Cable/EnergyPulse.prototype",                      true,  0.2037f), // 2026-06-17
+            new("Powers/Player/Cable/ConcussionBlast.prototype",                  true,  0.1006f), // 2026-06-11
+            new("Powers/Player/Cable/EnergyPulse.prototype",                      true,  0.2376f), // 2026-06-11
             new("Powers/Player/Cable/EyeForWeakness.prototype",                   true,  0.05f),
-            new("Powers/Player/Cable/FutureBomb.prototype",                       true,  0.0397f), // 2026-06-10
+            new("Powers/Player/Cable/FutureBomb.prototype",                       true,  0.0298f), // 2026-06-11
             new("Powers/Player/Cable/KineticBarrier.prototype",                   true,  0.05f),
-            new("Powers/Player/Cable/ParticleAccelerator.prototype",              true,  0.1017f), // 2026-06-17
-            new("Powers/Player/Cable/PlasmaBarrage.prototype",                    true,  0.0620f), // 2026-06-17
-            new("Powers/Player/Cable/PsimitarCyclone.prototype",                  true,  0.0861f), // 2026-06-17
-            new("Powers/Player/Cable/PsimitarImpale.prototype",                   true,  0.0493f), // 2026-06-17
-            new("Powers/Player/Cable/PsimitarLunge.prototype",                    true,  0.1409f), // 2026-06-17
-            new("Powers/Player/Cable/PsimitarLungeHiddenPassive.prototype",       false, 0.1409f), // 2026-06-17
-            new("Powers/Player/Cable/PsimitarWaves.prototype",                    true,  0.0739f), // 2026-06-16
-            new("Powers/Player/Cable/PsychicBullets.prototype",                   true,  0.1689f), // 2026-06-16
-            new("Powers/Player/Cable/PsychicHaze.prototype",                      true,  0.1009f), // 2026-06-17
-            new("Powers/Player/Cable/PulseBolt.prototype",                        true,  0.1313f), // 2026-06-17
-            new("Powers/Player/Cable/TKOverload.prototype",                       true,  0.0724f), // 2026-06-17
-            new("Powers/Player/Cable/TKSpearSlam.prototype",                      true,  0.0345f), // 2026-06-17
-            new("Powers/Player/Cable/Talents/ConcussionBlastLayer.prototype",     false, 0.0803f), // 2026-06-17
+            new("Powers/Player/Cable/ParticleAccelerator.prototype",              true,  0.1089f), // 2026-06-11
+            new("Powers/Player/Cable/PlasmaBarrage.prototype",                    true,  0.0613f), // 2026-06-11
+            new("Powers/Player/Cable/PsimitarCyclone.prototype",                  true,  0.1009f), // 2026-06-11
+            new("Powers/Player/Cable/PsimitarImpale.prototype",                   true,  0.0806f), // 2026-06-10
+            new("Powers/Player/Cable/PsimitarLunge.prototype",                    true,  0.1276f), // 2026-07-08
+            new("Powers/Player/Cable/PsimitarLungeHiddenPassive.prototype",       false, 0.1276f), // 2026-07-08
+            new("Powers/Player/Cable/PsimitarWaves.prototype",                    true,  0.0881f), // 2026-06-10
+            new("Powers/Player/Cable/PsychicBullets.prototype",                   true,  0.1898f), // 2026-06-11
+            new("Powers/Player/Cable/PsychicHaze.prototype",                      true,  0.1066f), // 2026-06-11
+            new("Powers/Player/Cable/PulseBolt.prototype",                        true,  0.1831f), // 2026-06-11
+            new("Powers/Player/Cable/TKOverload.prototype",                       true,  0.0453f), // 2026-07-08
+            new("Powers/Player/Cable/TKSpearSlam.prototype",                      true,  0.0344f), // 2026-06-11
+            new("Powers/Player/Cable/Talents/ConcussionBlastLayer.prototype",     false, 0.1006f), // 2026-06-11
             new("Powers/Player/Cable/Talents/IllusionLayer.prototype",            false, 0.05f),
             new("Powers/Player/Cable/Talents/ImpaleLayer.prototype",              false, 0.05f),
             new("Powers/Player/Cable/Talents/KineticRepulsion.prototype",         false, 0.05f),
             new("Powers/Player/Cable/Talents/MindBarrierLayer.prototype",         false, 0.05f),
-            new("Powers/Player/Cable/Talents/ParticleAcceleratorBuff.prototype",  false, 0.1017f), // 2026-06-17
-            new("Powers/Player/Cable/Talents/PsychicHazeLayer.prototype",         false, 0.1009f), // 2026-06-17
+            new("Powers/Player/Cable/Talents/ParticleAcceleratorBuff.prototype",  false, 0.1089f), // 2026-06-11
+            new("Powers/Player/Cable/Talents/PsychicHazeLayer.prototype",         false, 0.1066f), // 2026-06-11
             new("Powers/Player/Cable/Talents/SweepLayer.prototype",               false, 0.05f),
             new("Powers/Player/Cable/Talents/SwiftLungeLayer.prototype",          false, 0.05f),
-            new("Powers/Player/Cable/Talents/TKOverloadBuff.prototype",           false, 0.0724f), // 2026-06-17
-            new("Powers/Player/Cable/Talents/TKSpearSlamBuff.prototype",          false, 0.0345f), // 2026-06-17
+            new("Powers/Player/Cable/Talents/TKOverloadBuff.prototype",           false, 0.0453f), // 2026-07-08
+            new("Powers/Player/Cable/Talents/TKSpearSlamBuff.prototype",          false, 0.0344f), // 2026-06-11
             new("Powers/Player/Cable/Talents/TechnoOrganicInterface.prototype",   false, 0.05f),
             new("Powers/Player/Cable/Talents/TechnoOrganicSoldier.prototype",     false, 0.05f),
-            new("Powers/Player/Cable/Talents/ViperBeamLayer.prototype",           false, 0.0293f), // 2026-06-16
-            new("Powers/Player/Cable/Talents/VortexGrenadeLayer.prototype",       false, 0.0698f), // 2026-06-16
+            new("Powers/Player/Cable/Talents/ViperBeamLayer.prototype",           false, 0.0560f), // 2026-06-11
+            new("Powers/Player/Cable/Talents/VortexGrenadeLayer.prototype",       false, 0.1045f), // 2026-06-11
             new("Powers/Player/Cable/TelepathicIllusion.prototype",               true,  0.05f),
             new("Powers/Player/Cable/Teleport.prototype",                         true,  0.05f),
             new("Powers/Player/Cable/Traits/DefenseTrait.prototype",              false, 0.05f),
             new("Powers/Player/Cable/Traits/OffenseTrait.prototype",              false, 0.05f),
             new("Powers/Player/Cable/Ultimate.prototype",                         true,  0.006f),
             new("Powers/Player/Cable/UltimateHiddenPassive.prototype",            false, 0.006f),
-            new("Powers/Player/Cable/ViperBeam.prototype",                        true,  0.0293f), // 2026-06-16
-            new("Powers/Player/Cable/VortexGrenade.prototype",                    true,  0.0698f), // 2026-06-16
+            new("Powers/Player/Cable/ViperBeam.prototype",                        true,  0.0560f), // 2026-06-11
+            new("Powers/Player/Cable/VortexGrenade.prototype",                    true,  0.1045f), // 2026-06-11
             new("Powers/Player/TravelPower/CableSprint.prototype",                false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/CableStolenPower.prototype", false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",        false, 0.05f),

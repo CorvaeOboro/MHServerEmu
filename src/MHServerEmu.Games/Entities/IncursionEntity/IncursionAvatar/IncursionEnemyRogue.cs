@@ -44,16 +44,16 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         private static readonly IncursionPowerEntry[] _powerTable =
         {
             new("Powers/Player/Rogue/Charge.prototype",                                        true,  0.05f),
-            new("Powers/Player/Rogue/DiveBomb.prototype",                                      true,  0.0480f), // 2026-06-20
-            new("Powers/Player/Rogue/DrainLife.prototype",                                     true,  0.0291f), // 2026-06-17
-            new("Powers/Player/Rogue/DrainPunch.prototype",                                    true,  0.1095f), // 2026-06-09
-            new("Powers/Player/Rogue/ExtremeDrain.prototype",                                  true,  0.0417f), // 2026-06-10
+            new("Powers/Player/Rogue/DiveBomb.prototype",                                      true,  0.0402f), // 2026-06-20
+            new("Powers/Player/Rogue/DrainLife.prototype",                                     true,  0.0269f), // 2026-06-17
+            new("Powers/Player/Rogue/DrainPunch.prototype",                                    true,  0.1335f), // 2026-06-09
+            new("Powers/Player/Rogue/ExtremeDrain.prototype",                                  true,  0.0375f), // 2026-06-10
             new("Powers/Player/Rogue/GlovesOff.prototype",                                     true,  0.05f),
-            new("Powers/Player/Rogue/Haymaker.prototype",                                      true,  0.0858f), // 2026-06-17
-            new("Powers/Player/Rogue/RapidPunchDash.prototype",                                true,  0.0328f), // 2026-06-18
-            new("Powers/Player/Rogue/RecallOverload.prototype",                                true,  0.0209f), // 2026-06-17
-            new("Powers/Player/Rogue/RecallOverloadMental.prototype",                          true,  0.0249f), // 2026-06-20
-            new("Powers/Player/Rogue/RecallOverloadPhysical.prototype",                        true,  0.0426f), // 2026-06-17
+            new("Powers/Player/Rogue/Haymaker.prototype",                                      true,  0.0900f), // 2026-06-17
+            new("Powers/Player/Rogue/RapidPunchDash.prototype",                                true,  0.0321f), // 2026-06-18
+            new("Powers/Player/Rogue/RecallOverload.prototype",                                true,  0.0178f), // 2026-06-10
+            new("Powers/Player/Rogue/RecallOverloadMental.prototype",                          true,  0.0462f), // 2026-06-10
+            new("Powers/Player/Rogue/RecallOverloadPhysical.prototype",                        true,  0.0149f), // 2026-06-10
             new("Powers/Player/Rogue/StolenPowerLibrarySlot1.prototype",                       true,  0.05f),
             new("Powers/Player/Rogue/StolenPowerLibrarySlot2.prototype",                       true,  0.05f),
             new("Powers/Player/Rogue/StolenPowerLibrarySlot3.prototype",                       true,  0.05f),
@@ -62,43 +62,43 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Rogue/StolenPowerLibrarySlot6.prototype",                       true,  0.05f),
             new("Powers/Player/Rogue/StolenPowerLibrarySlot7.prototype",                       true,  0.05f),
             new("Powers/Player/Rogue/StolenPowerLibrarySlot8.prototype",                       true,  0.05f),
-            new("Powers/Player/Rogue/StolenPowers/AngelDeathFromAbove.prototype",              true,  0.0424f), // 2026-06-20
+            new("Powers/Player/Rogue/StolenPowers/AngelDeathFromAbove.prototype",              true,  0.0386f), // 2026-06-20
             new("Powers/Player/Rogue/StolenPowers/ArachneBouncingWeb.prototype",               true,  0.05f),
-            new("Powers/Player/Rogue/StolenPowers/BetaRayBillLightningBarrage.prototype",      true,  0.0372f), // 2026-06-17
-            new("Powers/Player/Rogue/StolenPowers/BigLimboDemonShockwave.prototype",           true,  0.0545f), // 2026-06-17
-            new("Powers/Player/Rogue/StolenPowers/BlackBoltWhisper.prototype",                 true,  0.0393f), // 2026-06-17
-            new("Powers/Player/Rogue/StolenPowers/BlackPantherSweepingKick.prototype",         true,  0.0427f), // 2026-06-10
+            new("Powers/Player/Rogue/StolenPowers/BetaRayBillLightningBarrage.prototype",      true,  0.0405f), // 2026-06-10
+            new("Powers/Player/Rogue/StolenPowers/BigLimboDemonShockwave.prototype",           true,  0.0664f), // 2026-06-10
+            new("Powers/Player/Rogue/StolenPowers/BlackBoltWhisper.prototype",                 true,  0.0682f), // 2026-06-10
+            new("Powers/Player/Rogue/StolenPowers/BlackPantherSweepingKick.prototype",         true,  0.0390f), // 2026-06-10
             new("Powers/Player/Rogue/StolenPowers/BlackWidowTumble.prototype",                 true,  0.05f),
             new("Powers/Player/Rogue/StolenPowers/BladeBloodlust.prototype",                   true,  0.05f),
-            new("Powers/Player/Rogue/StolenPowers/BlobBellyFlop.prototype",                    true,  0.0420f), // 2026-06-17
+            new("Powers/Player/Rogue/StolenPowers/BlobBellyFlop.prototype",                    true,  0.0407f), // 2026-06-17
             new("Powers/Player/Rogue/StolenPowers/BrevikCowbell.prototype",                    true,  0.05f),
-            new("Powers/Player/Rogue/StolenPowers/BrimstoneMeteorStrike.prototype",            true,  0.0437f), // 2026-06-17
-            new("Powers/Player/Rogue/StolenPowers/CableKineticBarrier.prototype",              true,  0.1023f), // 2026-06-20
+            new("Powers/Player/Rogue/StolenPowers/BrimstoneMeteorStrike.prototype",            true,  0.0316f), // 2026-06-10
+            new("Powers/Player/Rogue/StolenPowers/CableKineticBarrier.prototype",              true,  0.1218f), // 2026-06-20
             new("Powers/Player/Rogue/StolenPowers/CleaSummonFlames.prototype",                 true,  0.05f),
             new("Powers/Player/Rogue/StolenPowers/ColossusMetalSkin.prototype",                true,  0.05f),
-            new("Powers/Player/Rogue/StolenPowers/CyclopsBouncingBeam.prototype",              true,  0.0811f), // 2026-06-20
+            new("Powers/Player/Rogue/StolenPowers/CyclopsBouncingBeam.prototype",              true,  0.0950f), // 2026-06-20
             new("Powers/Player/Rogue/StolenPowers/DoctorStrangeFangNuke.prototype",            true,  0.05f),
             new("Powers/Player/Rogue/StolenPowers/DoctorStrangeFangNukeHiddenPassi.prototype", true,  0.05f),
             new("Powers/Player/Rogue/StolenPowers/DrDoomBallLightning.prototype",              true,  0.05f),
             new("Powers/Player/Rogue/StolenPowers/ElectroElementalStorm.prototype",            true,  0.03f),
-            new("Powers/Player/Rogue/StolenPowers/ElektraShadowStrike.prototype",              true,  0.05f),
-            new("Powers/Player/Rogue/StolenPowers/ElektraShadowStrikeHiddenPassi.prototype",   true,  0.05f),
+            new("Powers/Player/Rogue/StolenPowers/ElektraShadowStrike.prototype",              true,  0.0442f), // 2026-06-30
+            new("Powers/Player/Rogue/StolenPowers/ElektraShadowStrikeHiddenPassi.prototype",   true,  0.0442f), // 2026-06-30
             new("Powers/Player/Rogue/StolenPowers/EmmaFrostControlMob.prototype",              true,  0.05f),
             new("Powers/Player/Rogue/StolenPowers/FireGiantBossExplosion.prototype",           true,  0.01f),
             new("Powers/Player/Rogue/StolenPowers/FirestarEnergyRainStart.prototype",          true,  0.05f),
-            new("Powers/Player/Rogue/StolenPowers/FlametosserBossFireBreath.prototype",        true,  0.1362f), // 2026-06-09
+            new("Powers/Player/Rogue/StolenPowers/FlametosserBossFireBreath.prototype",        true,  0.1736f), // 2026-06-09
             new("Powers/Player/Rogue/StolenPowers/FrostGiantFrostNova.prototype",              true,  0.01f),
             new("Powers/Player/Rogue/StolenPowers/GambitRaginCajun.prototype",                 true,  0.05f),
             new("Powers/Player/Rogue/StolenPowers/GambitRaginCajunHiddenPassive.prototype",    false, 0.05f),
             new("Powers/Player/Rogue/StolenPowers/GhostRiderFireBreath.prototype",             true,  0.05f),
             new("Powers/Player/Rogue/StolenPowers/GorgonStoneGaze.prototype",                  true,  0.05f),
-            new("Powers/Player/Rogue/StolenPowers/GrimReaperEnergyBlast.prototype",            true,  0.137f), // 2026-06-09
+            new("Powers/Player/Rogue/StolenPowers/GrimReaperEnergyBlast.prototype",            true,  0.1748f), // 2026-06-09
             new("Powers/Player/Rogue/StolenPowers/GrootOut.prototype",                         true,  0.05f),
-            new("Powers/Player/Rogue/StolenPowers/HavokConeShot.prototype",                    true,  0.0658f), // 2026-06-20
+            new("Powers/Player/Rogue/StolenPowers/HavokConeShot.prototype",                    true,  0.0720f), // 2026-06-20
             new("Powers/Player/Rogue/StolenPowers/HellfireDoTAura.prototype",                  false, 0.05f),
-            new("Powers/Player/Rogue/StolenPowers/HowardTheDuckDeathPunch.prototype",          true,  0.0434f), // 2026-06-20
+            new("Powers/Player/Rogue/StolenPowers/HowardTheDuckDeathPunch.prototype",          true,  0.0401f), // 2026-06-20
             new("Powers/Player/Rogue/StolenPowers/HulkSmash.prototype",                        true,  0.05f),
-            new("Powers/Player/Rogue/StolenPowers/HumanTorchNovaBurst.prototype",              true,  0.0727f), // 2026-06-20
+            new("Powers/Player/Rogue/StolenPowers/HumanTorchNovaBurst.prototype",              true,  0.1009f), // 2026-06-20
             new("Powers/Player/Rogue/StolenPowers/HydeDirectedShockwave.prototype",            true,  0.03f),
             new("Powers/Player/Rogue/StolenPowers/IcemanIceGolem.prototype",                   true,  0.05f),
             new("Powers/Player/Rogue/StolenPowers/InvisibleWomanInvisibility.prototype",       true,  0.05f),
@@ -114,23 +114,23 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Rogue/StolenPowers/LimboDemonBossTeleport.prototype",           true,  0.05f),
             new("Powers/Player/Rogue/StolenPowers/LivingLaserLaserBlast.prototype",            true,  0.05f),
             new("Powers/Player/Rogue/StolenPowers/LokiIllusionRush.prototype",                 true,  0.05f),
-            new("Powers/Player/Rogue/StolenPowers/LukeCagePummel.prototype",                   true,  0.0597f), // 2026-06-20
+            new("Powers/Player/Rogue/StolenPowers/LukeCagePummel.prototype",                   true,  0.0629f), // 2026-06-20
             new("Powers/Player/Rogue/StolenPowers/MODOKPsychicShockwave.prototype",            true,  0.03f),
             new("Powers/Player/Rogue/StolenPowers/MagikSummonDemons.prototype",                true,  0.05f),
-            new("Powers/Player/Rogue/StolenPowers/MagnetoAllIn.prototype",                     true,  0.0456f), // 2026-06-20
-            new("Powers/Player/Rogue/StolenPowers/MalekithDarkBeam.prototype",                 true,  0.0254f), // 2026-06-18
+            new("Powers/Player/Rogue/StolenPowers/MagnetoAllIn.prototype",                     true,  0.0434f), // 2026-06-20
+            new("Powers/Player/Rogue/StolenPowers/MalekithDarkBeam.prototype",                 true,  0.0499f), // 2026-06-09
             new("Powers/Player/Rogue/StolenPowers/ManApeBeatChest.prototype",                  true,  0.05f),
             new("Powers/Player/Rogue/StolenPowers/MandarinElectricStorm.prototype",            true,  0.03f),
-            new("Powers/Player/Rogue/StolenPowers/MedusaAutoSlap.prototype",                   true,  0.0850f), // 2026-06-20
+            new("Powers/Player/Rogue/StolenPowers/MedusaAutoSlap.prototype",                   true,  0.0879f), // 2026-06-30
             new("Powers/Player/Rogue/StolenPowers/MilesMoralesInvisSteroid.prototype",         true,  0.05f),
             new("Powers/Player/Rogue/StolenPowers/MindlessOneBeam.prototype",                  true,  0.05f),
-            new("Powers/Player/Rogue/StolenPowers/MistressOfMagmaMentalBlast.prototype",       true,  0.0746f), // 2026-06-09
+            new("Powers/Player/Rogue/StolenPowers/MistressOfMagmaMentalBlast.prototype",       true,  0.0663f), // 2026-06-09
             new("Powers/Player/Rogue/StolenPowers/MoleManSummonMoloids.prototype",             true,  0.05f),
-            new("Powers/Player/Rogue/StolenPowers/MordoMistsDoT.prototype",                    true,  0.0631f), // 2026-06-20
+            new("Powers/Player/Rogue/StolenPowers/MordoMistsDoT.prototype",                    true,  0.0680f), // 2026-06-20
             new("Powers/Player/Rogue/StolenPowers/MrFantasticConeRapidPunch.prototype",        true,  0.05f),
             new("Powers/Player/Rogue/StolenPowers/MrSinisterAstralProjection.prototype",       true,  0.05f),
             new("Powers/Player/Rogue/StolenPowers/MsMarvelConeRapidPunch.prototype",           true,  0.05f),
-            new("Powers/Player/Rogue/StolenPowers/MsMarvelPhotonicWave.prototype",             true,  0.1120f), // 2026-06-20
+            new("Powers/Player/Rogue/StolenPowers/MsMarvelPhotonicWave.prototype",             true,  0.1127f), // 2026-06-20
             new("Powers/Player/Rogue/StolenPowers/NastirhHealingShield.prototype",             true,  0.05f),
             new("Powers/Player/Rogue/StolenPowers/NickFuryPetSteroid.prototype",               true,  0.02f),
             new("Powers/Player/Rogue/StolenPowers/NightcrawlerValiantLeap.prototype",          true,  0.05f),
@@ -187,7 +187,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Rogue/StolenPowers/PassiveWizard.prototype",                    false, 0.05f),
             new("Powers/Player/Rogue/StolenPowers/PsylockeLunge.prototype",                    true,  0.05f),
             new("Powers/Player/Rogue/StolenPowers/QuakeBeam.prototype",                        true,  0.03f),
-            new("Powers/Player/Rogue/StolenPowers/QuicksilverSuperSonicCyclone.prototype",     true,  0.1063f), // 2026-06-09
+            new("Powers/Player/Rogue/StolenPowers/QuicksilverSuperSonicCyclone.prototype",     true,  0.1287f), // 2026-06-09
             new("Powers/Player/Rogue/StolenPowers/RhinoBigCharge.prototype",                   true,  0.05f),
             new("Powers/Player/Rogue/StolenPowers/RobbieReyesDriveBy.prototype",               true,  0.05f),
             new("Powers/Player/Rogue/StolenPowers/SauronSwoopingFlames.prototype",             true,  0.05f),
@@ -197,22 +197,22 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Rogue/StolenPowers/SlagFireMeteor.prototype",                   true,  0.01f),
             new("Powers/Player/Rogue/StolenPowers/SpiderwomanVenomBlast.prototype",            true,  0.05f),
             new("Powers/Player/Rogue/StolenPowers/SquirrelGirlSquirrelPets.prototype",         true,  0.05f),
-            new("Powers/Player/Rogue/StolenPowers/StormHailstorm.prototype",                   true,  0.0569f), // 2026-06-18
+            new("Powers/Player/Rogue/StolenPowers/StormHailstorm.prototype",                   true,  0.0673f), // 2026-06-18
             new("Powers/Player/Rogue/StolenPowers/SunspotPunch.prototype",                     true,  0.05f),
             new("Powers/Player/Rogue/StolenPowers/SuperSkrullWhirlwind.prototype",             true,  0.05f),
             new("Powers/Player/Rogue/StolenPowers/SurturSwordAttack.prototype",                true,  0.05f),
-            new("Powers/Player/Rogue/StolenPowers/ThorGodlyValor.prototype",                   true,  0.0467f), // 2026-06-20
-            new("Powers/Player/Rogue/StolenPowers/ToadTongueYank.prototype",                   true,  0.05f),
+            new("Powers/Player/Rogue/StolenPowers/ThorGodlyValor.prototype",                   true,  0.0450f), // 2026-06-20
+            new("Powers/Player/Rogue/StolenPowers/ToadTongueYank.prototype",                   true,  0.0638f), // 2026-06-20
             new("Powers/Player/Rogue/StolenPowers/WaspBiospray.prototype",                     true,  0.05f),
             new("Powers/Player/Rogue/StolenPowers/WolverineBasicRonin.prototype",              true,  0.05f),
             new("Powers/Player/Rogue/StolenPowers/X23CrimsonCircle.prototype",                 true,  0.05f),
             new("Powers/Player/Rogue/Talents/GlovesOffAuto.prototype",                         false, 0.05f),
             new("Powers/Player/Rogue/Talents/HealthDefenseBuff.prototype",                     false, 0.05f),
             new("Powers/Player/Rogue/Talents/NonStolenPowersBuff.prototype",                   false, 0.05f),
-            new("Powers/Player/Rogue/Talents/RapidPunchDashCharges.prototype",                 false, 0.0328f), // 2026-06-18
-            new("Powers/Player/Rogue/Talents/RecallOverloadCooldown.prototype",                false, 0.0209f), // 2026-06-17
-            new("Powers/Player/Rogue/Talents/RecallOverloadMental.prototype",                  false, 0.0209f), // 2026-06-17
-            new("Powers/Player/Rogue/Talents/RecallOverloadPhysical.prototype",                false, 0.0209f), // 2026-06-17
+            new("Powers/Player/Rogue/Talents/RapidPunchDashCharges.prototype",                 false, 0.0321f), // 2026-06-18
+            new("Powers/Player/Rogue/Talents/RecallOverloadCooldown.prototype",                false, 0.0178f), // 2026-06-10
+            new("Powers/Player/Rogue/Talents/RecallOverloadMental.prototype",                  false, 0.0178f), // 2026-06-10
+            new("Powers/Player/Rogue/Talents/RecallOverloadPhysical.prototype",                false, 0.0178f), // 2026-06-10
             new("Powers/Player/Rogue/Talents/StolenPowersBuff.prototype",                      false, 0.05f),
             new("Powers/Player/Rogue/Talents/SuperDrains.prototype",                           false, 0.05f),
             new("Powers/Player/Rogue/Taunt.prototype",                                         true,  0.05f),
@@ -222,15 +222,15 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Rogue/Traits/StolenPassivePowerSlot2.prototype",                false, 0.05f),
             new("Powers/Player/Rogue/Traits/StolenPassivePowerSlot3.prototype",                false, 0.05f),
             new("Powers/Player/Rogue/UltimateBamf.prototype",                                  true,  0.006f),
-            new("Powers/Player/Rogue/UltimateBasicSlash.prototype",                            true,  0.006f),
+            new("Powers/Player/Rogue/UltimateBasicSlash.prototype",                            true,  0.0147f), // 2026-06-30
             new("Powers/Player/Rogue/UltimateDashSlash.prototype",                             true,  0.006f),
-            new("Powers/Player/Rogue/UltimateMetalRegeneration.prototype",                     true,  0.006f),
+            new("Powers/Player/Rogue/UltimateMetalRegeneration.prototype",                     true,  0.0203f), // 2026-06-10
             new("Powers/Player/Rogue/UltimateRaginCajunTooltip.prototype",                     true,  0.006f),
-            new("Powers/Player/Rogue/UltimateSeekerButterflies.prototype",                     true,  0.0158f), // 2026-06-18
-            new("Powers/Player/Rogue/UltimateSignatureBamf.prototype",                         true,  0.0217f), // 2026-06-20
+            new("Powers/Player/Rogue/UltimateSeekerButterflies.prototype",                     true,  0.0196f), // 2026-06-18
+            new("Powers/Player/Rogue/UltimateSignatureBamf.prototype",                         true,  0.0226f), // 2026-06-20
             new("Powers/Player/Rogue/UltimateSwordFlurryStart.prototype",                      true,  0.006f),
             new("Powers/Player/Rogue/UltimateTransform.prototype",                             true,  0.006f),
-            new("Powers/Player/Rogue/Uppercut.prototype",                                      true,  0.1023f), // 2026-06-20
+            new("Powers/Player/Rogue/Uppercut.prototype",                                      true,  0.1218f), // 2026-06-20
             new("Powers/Player/TravelPower/RogueFlight.prototype",                             false, 0.05f),
             new("Powers/SynergyPowers/SynergyRogueSpiritOnHit.prototype",                      true,  0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",                     false, 0.05f),

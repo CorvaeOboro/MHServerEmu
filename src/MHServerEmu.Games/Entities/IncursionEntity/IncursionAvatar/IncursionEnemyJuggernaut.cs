@@ -45,38 +45,38 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Juggernaut/AvatarOfCyttorak.prototype",                     true,  0.05f),
             new("Powers/Player/Juggernaut/BigCharge.prototype",                            true,  0.05f),
             new("Powers/Player/Juggernaut/BonusMoveSpeedBasedOnMomentum.prototype",        true,  0.05f),
-            new("Powers/Player/Juggernaut/ClotheslinePunch.prototype",                     true,  0.1531f), // 2026-06-18
-            new("Powers/Player/Juggernaut/EarthquakeLeap.prototype",                       true,  0.0528f), // 2026-06-18
-            new("Powers/Player/Juggernaut/HandClap.prototype",                             true,  0.1280f), // 2026-06-18
-            new("Powers/Player/Juggernaut/Headbutt.prototype",                             true,  0.0598f), // 2026-06-18
+            new("Powers/Player/Juggernaut/ClotheslinePunch.prototype",                     true,  0.1789f), // 2026-06-10
+            new("Powers/Player/Juggernaut/EarthquakeLeap.prototype",                       true,  0.0461f), // 2026-06-27
+            new("Powers/Player/Juggernaut/HandClap.prototype",                             true,  0.1151f), // 2026-06-27
+            new("Powers/Player/Juggernaut/Headbutt.prototype",                             true,  0.0804f), // 2026-06-10
             new("Powers/Player/Juggernaut/ImInvulnerable.prototype",                       true,  0.05f),
-            new("Powers/Player/Juggernaut/MomentumPunch.prototype",                        true,  0.0907f), // 2026-06-18
-            new("Powers/Player/Juggernaut/PeoplesElbow.prototype",                         true,  0.0865f), // 2026-06-18
-            new("Powers/Player/Juggernaut/Shockwave.prototype",                            true,  0.0828f), // 2026-06-18
-            new("Powers/Player/Juggernaut/SundayPunch.prototype",                          true,  0.0439f), // 2026-06-18
+            new("Powers/Player/Juggernaut/MomentumPunch.prototype",                        true,  0.1091f), // 2026-06-07
+            new("Powers/Player/Juggernaut/PeoplesElbow.prototype",                         true,  0.0880f), // 2026-06-27
+            new("Powers/Player/Juggernaut/Shockwave.prototype",                            true,  0.1046f), // 2026-06-07
+            new("Powers/Player/Juggernaut/SundayPunch.prototype",                          true,  0.0671f), // 2026-06-07
             new("Powers/Player/Juggernaut/Talents/AlternatingMomentumFinishers.prototype", false, 0.05f),
             new("Powers/Player/Juggernaut/Talents/AutoAvatarOfCyttorak.prototype",         false, 0.05f),
             new("Powers/Player/Juggernaut/Talents/BigChargeInstagib.prototype",            false, 0.05f),
             new("Powers/Player/Juggernaut/Talents/CrimsonForceFieldTeamBuff.prototype",    false, 0.05f),
             new("Powers/Player/Juggernaut/Talents/CyttorakPowersShareCD.prototype",        false, 0.05f),
             new("Powers/Player/Juggernaut/Talents/DefenseDeflectTalent.prototype",         false, 0.05f),
-            new("Powers/Player/Juggernaut/Talents/HandClapFullMomentumSpender.prototype",  false, 0.1280f), // 2026-06-18
-            new("Powers/Player/Juggernaut/Talents/HeadbuttBarroomBrawlingBuff.prototype",  false, 0.0598f), // 2026-06-18
-            new("Powers/Player/Juggernaut/Talents/MeleePowersSundayPunchBuff.prototype",   false, 0.0439f), // 2026-06-18
+            new("Powers/Player/Juggernaut/Talents/HandClapFullMomentumSpender.prototype",  false, 0.1151f), // 2026-06-27
+            new("Powers/Player/Juggernaut/Talents/HeadbuttBarroomBrawlingBuff.prototype",  false, 0.0804f), // 2026-06-10
+            new("Powers/Player/Juggernaut/Talents/MeleePowersSundayPunchBuff.prototype",   false, 0.0671f), // 2026-06-07
             new("Powers/Player/Juggernaut/Talents/MomentumAlwaysGenerates.prototype",      false, 0.05f),
             new("Powers/Player/Juggernaut/Talents/MovementPowersElbowDropBuff.prototype",  false, 0.05f),
             new("Powers/Player/Juggernaut/Talents/RenounceCyttorak.prototype",             false, 0.05f),
-            new("Powers/Player/Juggernaut/Talents/UnstoppableChargeCDR.prototype",         false, 0.0127f), // 2026-06-18
-            new("Powers/Player/Juggernaut/Talents/UnstoppableChargeInfinite.prototype",    false, 0.0127f), // 2026-06-18
-            new("Powers/Player/Juggernaut/Talents/UnstoppableChargeShorter.prototype",     false, 0.0127f), // 2026-06-18
+            new("Powers/Player/Juggernaut/Talents/UnstoppableChargeCDR.prototype",         false, 0.0124f), // 2026-06-27
+            new("Powers/Player/Juggernaut/Talents/UnstoppableChargeInfinite.prototype",    false, 0.0124f), // 2026-06-27
+            new("Powers/Player/Juggernaut/Talents/UnstoppableChargeShorter.prototype",     false, 0.0124f), // 2026-06-27
             new("Powers/Player/Juggernaut/Traits/DefenseTrait.prototype",                  false, 0.05f),
             new("Powers/Player/Juggernaut/Traits/MechanicTrait.prototype",                 false, 0.05f),
             new("Powers/Player/Juggernaut/Traits/OffenseTrait.prototype",                  false, 0.05f),
-            new("Powers/Player/Juggernaut/TriplePunch.prototype",                          true,  0.0895f), // 2026-06-17
-            new("Powers/Player/Juggernaut/Ultimate.prototype",                             true,  0.0122f), // 2026-06-18
-            new("Powers/Player/Juggernaut/UltimateHiddenPassive.prototype",                false, 0.0122f), // 2026-06-18
-            new("Powers/Player/Juggernaut/UnstoppableCharge.prototype",                    true,  0.0127f), // 2026-06-18
-            new("Powers/Player/Juggernaut/WrathOfCyttorak.prototype",                      true,  0.0295f), // 2026-06-18
+            new("Powers/Player/Juggernaut/TriplePunch.prototype",                          true,  0.1360f), // 2026-06-08
+            new("Powers/Player/Juggernaut/Ultimate.prototype",                             true,  0.0119f), // 2026-06-27
+            new("Powers/Player/Juggernaut/UltimateHiddenPassive.prototype",                false, 0.0119f), // 2026-06-27
+            new("Powers/Player/Juggernaut/UnstoppableCharge.prototype",                    true,  0.0124f), // 2026-06-27
+            new("Powers/Player/Juggernaut/WrathOfCyttorak.prototype",                      true,  0.0519f), // 2026-06-08
             new("Powers/Player/TravelPower/JuggernautSprint.prototype",                    false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/JuggernautStolenPower.prototype",     false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",                 false, 0.05f),

@@ -41,23 +41,23 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/KittyPryde/BasicMelee.prototype",                              true,  0.1387f), // 2026-06-20
+            new("Powers/Player/KittyPryde/BasicMelee.prototype",                              true,  0.1557f), // 2026-06-10
             new("Powers/Player/KittyPryde/BuddySystem.prototype",                             true,  0.05f),
-            new("Powers/Player/KittyPryde/DeathFromBelow.prototype",                          true,  0.0410f), // 2026-06-20
-            new("Powers/Player/KittyPryde/Execute.prototype",                                 true,  0.0525f), // 2026-06-18
-            new("Powers/Player/KittyPryde/HeartCrush.prototype",                              true,  0.0441f), // 2026-06-18
-            new("Powers/Player/KittyPryde/LockheedChannelFire.prototype",                     true,  0.0299f), // 2026-06-20
-            new("Powers/Player/KittyPryde/LockheedCharge.prototype",                          true,  0.0450f), // 2026-06-18
-            new("Powers/Player/KittyPryde/LockheedFireBreath.prototype",                      true,  0.0701f), // 2026-06-20
-            new("Powers/Player/KittyPryde/LockheedFireball.prototype",                        true,  0.0729f), // 2026-06-20
+            new("Powers/Player/KittyPryde/DeathFromBelow.prototype",                          true,  0.0310f), // 2026-07-08
+            new("Powers/Player/KittyPryde/Execute.prototype",                                 true,  0.0620f), // 2026-07-08
+            new("Powers/Player/KittyPryde/HeartCrush.prototype",                              true,  0.0351f), // 2026-07-08
+            new("Powers/Player/KittyPryde/LockheedChannelFire.prototype",                     true,  0.0226f), // 2026-06-10
+            new("Powers/Player/KittyPryde/LockheedCharge.prototype",                          true,  0.0431f), // 2026-06-10
+            new("Powers/Player/KittyPryde/LockheedFireBreath.prototype",                      true,  0.0576f), // 2026-06-10
+            new("Powers/Player/KittyPryde/LockheedFireball.prototype",                        true,  0.1041f), // 2026-06-10
             new("Powers/Player/KittyPryde/LockheedToggleHiddenPassive.prototype",             false, 0.05f),
             new("Powers/Player/KittyPryde/NoCollisionPassive.prototype",                      false, 0.05f),
-            new("Powers/Player/KittyPryde/PhaseAoE.prototype",                                true,  0.0151f), // 2026-06-20
-            new("Powers/Player/KittyPryde/PhaseDash.prototype",                               true,  0.1331f), // 2026-06-20
+            new("Powers/Player/KittyPryde/PhaseAoE.prototype",                                true,  0.0141f), // 2026-06-10
+            new("Powers/Player/KittyPryde/PhaseDash.prototype",                               true,  0.1746f), // 2026-06-08
             new("Powers/Player/KittyPryde/PhaseOut.prototype",                                true,  0.05f),
-            new("Powers/Player/KittyPryde/PullUnderStart.prototype",                          true,  0.0386f), // 2026-06-20
-            new("Powers/Player/KittyPryde/Signature.prototype",                               true,  0.0057f), // 2026-06-20
-            new("Powers/Player/KittyPryde/TagTeam.prototype",                                 true,  0.0541f), // 2026-06-20
+            new("Powers/Player/KittyPryde/PullUnderStart.prototype",                          true,  0.0281f), // 2026-07-08
+            new("Powers/Player/KittyPryde/Signature.prototype",                               true,  0.0037f), // 2026-07-08
+            new("Powers/Player/KittyPryde/TagTeam.prototype",                                 true,  0.0442f), // 2026-06-10
             new("Powers/Player/KittyPryde/Talents/Talent1LockheedActive.prototype",           false, 0.05f),
             new("Powers/Player/KittyPryde/Talents/Talent1LockheedPassive.prototype",          false, 0.05f),
             new("Powers/Player/KittyPryde/Talents/Talent1NoLockheed.prototype",               false, 0.05f),
@@ -65,18 +65,18 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/KittyPryde/Talents/Talent2PhaseDashDoT.prototype",             false, 0.05f),
             new("Powers/Player/KittyPryde/Talents/Talent2SwordRemapping.prototype",           false, 0.05f),
             new("Powers/Player/KittyPryde/Talents/Talent3DFACritIncrease.prototype",          false, 0.05f),
-            new("Powers/Player/KittyPryde/Talents/Talent3ExecuteAlwaysBrutal.prototype",      false, 0.0525f), // 2026-06-18
+            new("Powers/Player/KittyPryde/Talents/Talent3ExecuteAlwaysBrutal.prototype",      false, 0.0620f), // 2026-07-08
             new("Powers/Player/KittyPryde/Talents/Talent3LockheedAutoAoE.prototype",          false, 0.03f),
             new("Powers/Player/KittyPryde/Talents/Talent4LockheedSuperCharge.prototype",      false, 0.05f),
             new("Powers/Player/KittyPryde/Talents/Talent4MultVsLockheedDoTs.prototype",       false, 0.05f),
             new("Powers/Player/KittyPryde/Talents/Talent4PhaseThroughEnemies.prototype",      false, 0.05f),
             new("Powers/Player/KittyPryde/Talents/Talent5AoeCooldowns.prototype",             false, 0.03f),
             new("Powers/Player/KittyPryde/Talents/Talent5PhaseOutDurationIncrease.prototype", false, 0.05f),
-            new("Powers/Player/KittyPryde/Talents/Talent5SignatureMoreHits.prototype",        false, 0.0057f), // 2026-06-20
+            new("Powers/Player/KittyPryde/Talents/Talent5SignatureMoreHits.prototype",        false, 0.0037f), // 2026-07-08
             new("Powers/Player/KittyPryde/Traits/DefenseTrait.prototype",                     false, 0.05f),
             new("Powers/Player/KittyPryde/Traits/MechanicTraitLockheedEnergy.prototype",      false, 0.05f),
             new("Powers/Player/KittyPryde/Traits/OffenseTrait.prototype",                     false, 0.05f),
-            new("Powers/Player/KittyPryde/Ultimate.prototype",                                true,  0.0102f), // 2026-06-20
+            new("Powers/Player/KittyPryde/Ultimate.prototype",                                true,  0.0122f), // 2026-07-08
             new("Powers/Player/TravelPower/KittyPrydeFlight.prototype",                       false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/KittyPrydeStolenPower.prototype",        false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",                    false, 0.05f),

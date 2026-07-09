@@ -61,36 +61,36 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         private static readonly IncursionPowerEntry[] _powerTable =
         {
             new("Powers/Player/TravelPower/WolverineRide.prototype",                           false, 0.05f),
-            new("Powers/Player/Wolverine/BasicRonin.prototype",                                true,  0.1373f), // 2026-06-20
-            new("Powers/Player/Wolverine/BerserkerBarrage.prototype",                          true,  0.0392f), // 2026-06-20
+            new("Powers/Player/Wolverine/BasicRonin.prototype",                                true,  0.1573f), // 2026-06-10
+            new("Powers/Player/Wolverine/BerserkerBarrage.prototype",                          true,  0.0420f), // 2026-06-20
             new("Powers/Player/Wolverine/BloodySteroid.prototype",                             true,  0.05f),
-            new("Powers/Player/Wolverine/Dunk.prototype",                                      true,  0.0368f), // 2026-06-20
+            new("Powers/Player/Wolverine/Dunk.prototype",                                      true,  0.0341f), // 2026-06-10
             new("Powers/Player/Wolverine/FlyingBleed.prototype",                               false, 0.05f),
-            new("Powers/Player/Wolverine/Frenzy.prototype",                                    true,  0.0547f), // 2026-06-20
+            new("Powers/Player/Wolverine/Frenzy.prototype",                                    true,  0.0573f), // 2026-06-10
             new("Powers/Player/Wolverine/Impale.prototype",                                    true,  0.05f),
-            new("Powers/Player/Wolverine/Lunge.prototype",                                     true,  0.1114f), // 2026-06-20
-            new("Powers/Player/Wolverine/PBAoE.prototype",                                     true,  0.0867f), // 2026-06-20
+            new("Powers/Player/Wolverine/Lunge.prototype",                                     true,  0.1353f), // 2026-06-10
+            new("Powers/Player/Wolverine/PBAoE.prototype",                                     true,  0.1081f), // 2026-06-07
             new("Powers/Player/Wolverine/RapidRegeneration.prototype",                         true,  0.05f),
             new("Powers/Player/Wolverine/Rawr.prototype",                                      true,  0.05f),
-            new("Powers/Player/Wolverine/RunThrough.prototype",                                true,  0.0313f), // 2026-06-20
-            new("Powers/Player/Wolverine/SignatureDashSlash.prototype",                        true,  0.0497f), // 2026-06-20
-            new("Powers/Player/Wolverine/SliceNDice.prototype",                                true,  0.1004f), // 2026-06-20
+            new("Powers/Player/Wolverine/RunThrough.prototype",                                true,  0.0293f), // 2026-06-10
+            new("Powers/Player/Wolverine/SignatureDashSlash.prototype",                        true,  0.0548f), // 2026-06-10
+            new("Powers/Player/Wolverine/SliceNDice.prototype",                                true,  0.1208f), // 2026-06-10
             new("Powers/Player/Wolverine/Talents/Talent1FuryGenSpenderDmg.prototype",          false, 0.02f),
             new("Powers/Player/Wolverine/Talents/Talent1GreivousWoundsFuryBleedDmg.prototype", false, 0.02f),
             new("Powers/Player/Wolverine/Talents/Talent1PassiveCombatFury.prototype",          false, 0.02f),
             new("Powers/Player/Wolverine/Talents/Talent2ImpaleBrut.prototype",                 false, 0.05f),
-            new("Powers/Player/Wolverine/Talents/Talent2PBAoEAddBleed.prototype",              false, 0.0867f), // 2026-06-20
-            new("Powers/Player/Wolverine/Talents/Talent2TornadoClawCharges.prototype",         false, 0.0280f), // 2026-06-20
-            new("Powers/Player/Wolverine/Talents/Talent3DunkBleedDmg.prototype",               false, 0.0368f), // 2026-06-20
+            new("Powers/Player/Wolverine/Talents/Talent2PBAoEAddBleed.prototype",              false, 0.1081f), // 2026-06-07
+            new("Powers/Player/Wolverine/Talents/Talent2TornadoClawCharges.prototype",         false, 0.0270f), // 2026-06-20
+            new("Powers/Player/Wolverine/Talents/Talent3DunkBleedDmg.prototype",               false, 0.0341f), // 2026-06-10
             new("Powers/Player/Wolverine/Talents/Talent3PassiveDmg.prototype",                 false, 0.05f),
             new("Powers/Player/Wolverine/Talents/Talent3RampageBuffs.prototype",               false, 0.02f),
             new("Powers/Player/Wolverine/Talents/Talent4BasicBleedVuln.prototype",             false, 0.05f),
-            new("Powers/Player/Wolverine/Talents/Talent4PBAoEDmgCDCrit.prototype",             false, 0.0867f), // 2026-06-20
-            new("Powers/Player/Wolverine/Talents/Talent4RunThroughFuryDmg.prototype",          false, 0.0313f), // 2026-06-20
+            new("Powers/Player/Wolverine/Talents/Talent4PBAoEDmgCDCrit.prototype",             false, 0.1081f), // 2026-06-07
+            new("Powers/Player/Wolverine/Talents/Talent4RunThroughFuryDmg.prototype",          false, 0.0293f), // 2026-06-10
             new("Powers/Player/Wolverine/Talents/Talent5AutoWetwork.prototype",                false, 0.05f),
             new("Powers/Player/Wolverine/Talents/Talent5CantKeepMeDown.prototype",             false, 0.05f),
             new("Powers/Player/Wolverine/Talents/Talent5FeralRoarRapidRegen.prototype",        false, 0.05f),
-            new("Powers/Player/Wolverine/TornadoClaw.prototype",                               true,  0.0280f), // 2026-06-20
+            new("Powers/Player/Wolverine/TornadoClaw.prototype",                               true,  0.0270f), // 2026-06-20
             new("Powers/Player/Wolverine/Traits/DefenseTrait.prototype",                       false, 0.05f),
             new("Powers/Player/Wolverine/Traits/MechanicTrait.prototype",                      false, 0.05f),
             new("Powers/Player/Wolverine/Traits/OffenseTrait.prototype",                       false, 0.05f),

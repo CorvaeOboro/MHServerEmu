@@ -46,28 +46,28 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/SquirrelGirl/AcornMeteor.prototype",                      true,  0.1069f), // 2026-06-20
+            new("Powers/Player/SquirrelGirl/AcornMeteor.prototype",                      true,  0.1190f), // 2026-06-05
             new("Powers/Player/SquirrelGirl/BafflingDialogue.prototype",                 true,  0.05f),
-            new("Powers/Player/SquirrelGirl/BasicMelee.prototype",                       true,  0.1153f), // 2026-06-20
-            new("Powers/Player/SquirrelGirl/BasicMeleeSquirrelBonus.prototype",          true,  0.1125f), // 2026-06-20
-            new("Powers/Player/SquirrelGirl/BasicRangedSquirrelPiercing.prototype",      true,  0.1576f), // 2026-06-20
+            new("Powers/Player/SquirrelGirl/BasicMelee.prototype",                       true,  0.1108f), // 2026-06-20
+            new("Powers/Player/SquirrelGirl/BasicMeleeSquirrelBonus.prototype",          true,  0.1350f), // 2026-06-05
+            new("Powers/Player/SquirrelGirl/BasicRangedSquirrelPiercing.prototype",      true,  0.1921f), // 2026-06-05
             new("Powers/Player/SquirrelGirl/BasicTripleSquirrel.prototype",              true,  0.05f),
-            new("Powers/Player/SquirrelGirl/DiveBomb.prototype",                         true,  0.0830f), // 2026-06-20
-            new("Powers/Player/SquirrelGirl/DoubleStrike.prototype",                     true,  0.0338f), // 2026-06-20
-            new("Powers/Player/SquirrelGirl/GoForTheEyes.prototype",                     true,  0.1221f), // 2026-06-20
-            new("Powers/Player/SquirrelGirl/MeleeSquirrelCone.prototype",                true,  0.0818f), // 2026-06-20
-            new("Powers/Player/SquirrelGirl/PBAoEKnockdown.prototype",                   true,  0.0775f), // 2026-06-20
+            new("Powers/Player/SquirrelGirl/DiveBomb.prototype",                         true,  0.0806f), // 2026-06-20
+            new("Powers/Player/SquirrelGirl/DoubleStrike.prototype",                     true,  0.0309f), // 2026-06-20
+            new("Powers/Player/SquirrelGirl/GoForTheEyes.prototype",                     true,  0.1681f), // 2026-06-05
+            new("Powers/Player/SquirrelGirl/MeleeSquirrelCone.prototype",                true,  0.0925f), // 2026-06-05
+            new("Powers/Player/SquirrelGirl/PBAoEKnockdown.prototype",                   true,  0.0779f), // 2026-06-20
             new("Powers/Player/SquirrelGirl/RangedSquirrelAoEVisual.prototype",          true,  0.03f),
             new("Powers/Player/SquirrelGirl/SquirrelAttack.prototype",                   true,  0.05f),
             new("Powers/Player/SquirrelGirl/SquirrelBombs.prototype",                    true,  0.05f),
             new("Powers/Player/SquirrelGirl/SquirrelBuffsHiddenPassive.prototype",       false, 0.05f),
-            new("Powers/Player/SquirrelGirl/SquirrelRapidFire.prototype",                true,  0.1843f), // 2026-06-20
-            new("Powers/Player/SquirrelGirl/Talents/AcornMeteorBonus.prototype",         false, 0.1069f), // 2026-06-20
+            new("Powers/Player/SquirrelGirl/SquirrelRapidFire.prototype",                true,  0.1948f), // 2026-06-20
+            new("Powers/Player/SquirrelGirl/Talents/AcornMeteorBonus.prototype",         false, 0.1190f), // 2026-06-05
             new("Powers/Player/SquirrelGirl/Talents/ClawSpec.prototype",                 false, 0.05f),
-            new("Powers/Player/SquirrelGirl/Talents/DoubleStrikeBonus.prototype",        false, 0.0338f), // 2026-06-20
+            new("Powers/Player/SquirrelGirl/Talents/DoubleStrikeBonus.prototype",        false, 0.0309f), // 2026-06-20
             new("Powers/Player/SquirrelGirl/Talents/ForMonkeyJoe.prototype",             false, 0.05f),
             new("Powers/Player/SquirrelGirl/Talents/HulkbusterSquirrels.prototype",      false, 0.05f),
-            new("Powers/Player/SquirrelGirl/Talents/MeleeSquirrelConeBonus.prototype",   false, 0.0818f), // 2026-06-20
+            new("Powers/Player/SquirrelGirl/Talents/MeleeSquirrelConeBonus.prototype",   false, 0.0925f), // 2026-06-05
             new("Powers/Player/SquirrelGirl/Talents/RangedSpec.prototype",               false, 0.05f),
             new("Powers/Player/SquirrelGirl/Talents/SignatureCooldown.prototype",        false, 0.02f),
             new("Powers/Player/SquirrelGirl/Talents/SpecialForcesSquirrels.prototype",   false, 0.05f),
@@ -81,7 +81,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/SquirrelGirl/Traits/MechanicTraitSquirrels.prototype",    false, 0.05f),
             new("Powers/Player/SquirrelGirl/Traits/OffenseTrait.prototype",              false, 0.05f),
             new("Powers/Player/SquirrelGirl/Tumble.prototype",                           true,  0.05f),
-            new("Powers/Player/SquirrelGirl/Ultimate.prototype",                         false,  0.0182f), // 2026-06-20
+            new("Powers/Player/SquirrelGirl/Ultimate.prototype",                         false,  0.0186f), // 2026-06-05
             new("Powers/Player/TravelPower/SquirrelGirlSprint.prototype",                false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/SquirrelGirlStolenPower.prototype", false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",               false, 0.05f),

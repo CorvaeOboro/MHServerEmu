@@ -268,6 +268,15 @@ namespace MHServerEmu.Games.Populations
         }
 
         /// <summary>
+        /// Returns true if the given entity id is a live incursion enemy.
+        /// </summary>
+        public bool IsIncursionEntity(ulong entityId)
+        {
+            return _controllersByEntity.TryGetValue(entityId, out IncursionEnemyController controller)
+                && controller.IsFinished == false;
+        }
+
+        /// <summary>
         /// Damage scale for the given invader entity and root power, or 1.0 if not a live invader.
         /// Queried by <see cref="Powers.PowerPayload"/>.
         /// </summary>

@@ -40,21 +40,21 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/NickFury/BasicPistol.prototype",                                   true,  0.3121f), // 2026-06-17
-            new("Powers/Player/NickFury/BulletSpray.prototype",                                   true,  0.0338f), // 2026-06-17
-            new("Powers/Player/NickFury/ChanneledBeam.prototype",                                 true,  0.0106f), // 2026-06-17
+            new("Powers/Player/NickFury/BasicPistol.prototype",                                   true,  0.2828f), // 2026-06-10
+            new("Powers/Player/NickFury/BulletSpray.prototype",                                   true,  0.0296f), // 2026-06-07
+            new("Powers/Player/NickFury/ChanneledBeam.prototype",                                 true,  0.0080f), // 2026-06-10
             new("Powers/Player/NickFury/CommandingShout.prototype",                               true,  0.05f),
-            new("Powers/Player/NickFury/DangerClose.prototype",                                   true,  0.0417f), // 2026-06-17
-            new("Powers/Player/NickFury/DriveByAnimStart.prototype",                              true,  0.0443f), // 2026-06-17
-            new("Powers/Player/NickFury/Execute.prototype",                                       true,  0.0203f), // 2026-06-20
-            new("Powers/Player/NickFury/EyesEverywhere.prototype",                                true,  0.0120f), // 2026-06-13
-            new("Powers/Player/NickFury/HeadsDownRanged.prototype",                               true,  0.0643f), // 2026-06-17
-            new("Powers/Player/NickFury/Microdrones.prototype",                                   true,  0.0681f), // 2026-06-17
-            new("Powers/Player/NickFury/MolecularGrenade.prototype",                              true,  0.0898f), // 2026-06-20
-            new("Powers/Player/NickFury/RapidFire.prototype",                                     true,  0.1554f), // 2026-06-17
+            new("Powers/Player/NickFury/DangerClose.prototype",                                   true,  0.0701f), // 2026-06-07
+            new("Powers/Player/NickFury/DriveByAnimStart.prototype",                              true,  0.0335f), // 2026-07-08
+            new("Powers/Player/NickFury/Execute.prototype",                                       true,  0.0179f), // 2026-07-08
+            new("Powers/Player/NickFury/EyesEverywhere.prototype",                                true,  0.0075f), // 2026-07-08
+            new("Powers/Player/NickFury/HeadsDownRanged.prototype",                               true,  0.0570f), // 2026-06-07
+            new("Powers/Player/NickFury/Microdrones.prototype",                                   true,  0.0452f), // 2026-07-08
+            new("Powers/Player/NickFury/MolecularGrenade.prototype",                              true,  0.0671f), // 2026-06-07
+            new("Powers/Player/NickFury/RapidFire.prototype",                                     true,  0.1952f), // 2026-06-07
             new("Powers/Player/NickFury/Reload.prototype",                                        true,  0.05f),
-            new("Powers/Player/NickFury/RocketLauncher.prototype",                                true,  0.0529f), // 2026-06-20
-            new("Powers/Player/NickFury/SniperShot.prototype",                                    true,  0.0672f), // 2026-06-20
+            new("Powers/Player/NickFury/RocketLauncher.prototype",                                true,  0.0512f), // 2026-06-07
+            new("Powers/Player/NickFury/SniperShot.prototype",                                    true,  0.0633f), // 2026-06-07
             new("Powers/Player/NickFury/Talents/Talent1CommandingShoutRemap.prototype",           false, 0.05f),
             new("Powers/Player/NickFury/Talents/Talent1FireteamRifles.prototype",                 false, 0.05f),
             new("Powers/Player/NickFury/Talents/Talent1LifeModelDecoy.prototype",                 false, 0.05f),
@@ -63,10 +63,10 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/NickFury/Talents/Talent2TumbleCharges.prototype",                  false, 0.05f),
             new("Powers/Player/NickFury/Talents/Talent3Bandolier.prototype",                      false, 0.05f),
             new("Powers/Player/NickFury/Talents/Talent3FireteamMedic.prototype",                  false, 0.05f),
-            new("Powers/Player/NickFury/Talents/Talent3RocketLauncherRemap.prototype",            false, 0.0529f), // 2026-06-20
-            new("Powers/Player/NickFury/Talents/Talent4ExecuteCooldownReset.prototype",           false, 0.0203f), // 2026-06-20
+            new("Powers/Player/NickFury/Talents/Talent3RocketLauncherRemap.prototype",            false, 0.0512f), // 2026-06-07
+            new("Powers/Player/NickFury/Talents/Talent4ExecuteCooldownReset.prototype",           false, 0.0179f), // 2026-07-08
             new("Powers/Player/NickFury/Talents/Talent4FireteamMinigun.prototype",                false, 0.05f),
-            new("Powers/Player/NickFury/Talents/Talent4HeadsDownRangedRemap.prototype",           false, 0.0643f), // 2026-06-17
+            new("Powers/Player/NickFury/Talents/Talent4HeadsDownRangedRemap.prototype",           false, 0.0570f), // 2026-06-07
             new("Powers/Player/NickFury/Talents/Talent5SigCooldownResets.prototype",              false, 0.05f),
             new("Powers/Player/NickFury/Talents/Talent5SignatureDangerCloseExtraShots.prototype", false, 0.02f),
             new("Powers/Player/NickFury/Talents/Talent5SignatureFireteamSteroid.prototype",       false, 0.02f),
