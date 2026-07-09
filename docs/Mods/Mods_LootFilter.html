@@ -39,57 +39,51 @@ footer { text-align:center; padding:1.2rem 1rem; color:var(--muted); font-size:0
     <div class="content">
 <header>
     <h1>Loot Filter</h1>
-    <p>Per-player, server-side rarity filtering for unwanted drops</p>
+    <p>item filtering expanded</p>
 </header>
 <div class="container">
 
-<p>The loot filter deletes unwanted item drops , expanding the in-game filter to additonal item types . set with commands by the player , globally or per hero . Settings are saved per player in <code>MHServerEmu/Data/PlayerLootFilters/&lt;playerId&gt;.json</code></p>
+<p>adds rarity-based item filtering for additional item types , per-player character settings , set via chat commands.</p>
 
 <img src="marvel_heroes_omega_mod_loot_filter.png" alt="Loot Filter" style="display:block; max-width:480px; width:100%; margin:0 auto 1.5rem; border-radius:6px; border:1px solid var(--border);">
 
-
-<h2>  Filters</h2>
-<table>
-<tr><th>Type</th><th>Filter Mode</th></tr>
-<tr><td>Ring</td><td>Rarity threshold</td></tr>
-<tr><td>Medal</td><td>Rarity threshold</td></tr>
-<tr><td>Insignia</td><td>Rarity threshold</td></tr>
-<tr><td>Team-Up Gear</td><td>Rarity threshold</td></tr>
-<tr><td>Catalyst</td><td>Rarity threshold</td></tr>
-<tr><td>Uru-Forged</td><td>On / Off toggle</td></tr>
-</table>
-
-<p>Items at or below the configured rarity are discarded.</p>
-
-<h2>Character-Specific Mode</h2>
-<p>With <code>LootFilterCharacterSpecificEnable=true</code>, hero-specific gear for other characters is also filtered out. You only see drops meant for your current hero plus any-hero items. this is prefered for a self-found-ish experience where you only progress hero-specific uniques by playing that hero. </p>
+<h2>Filtered Item Types</h2>
+Ring , Medal , Insignia , Team-Up Gear , Catalyst , Uru-Forged
+<p>Items at or below the configured rarity are discarded ( unlike vaporizer , no credits, no Pet XP ).</p>
 
 <h2>Commands</h2>
-<p>Use the <code>!filter</code> command group in-game:</p>
 <table>
 <tr><th>Command</th><th>Description</th></tr>
 <tr><td><code>!filter list</code></td><td>Show current thresholds for your character</td></tr>
-<tr><td><code>!filter set &lt;type&gt; &lt;rarity|on/off&gt;</code></td><td>Set a filter globally</td></tr>
-<tr><td><code>!filter set &lt;type&gt; &lt;rarity|on/off&gt; me</code></td><td>Set a filter for your current character only</td></tr>
-<tr><td><code>!filter clear &lt;type&gt;</code></td><td>Remove a filter setting</td></tr>
+<tr><td><code>!filter set &lt;type&gt; &lt;rarity|on/off&gt; [global|me|&lt;character&gt;]</code></td><td>Set a filter</td></tr>
+<tr><td><code>!filter clear &lt;type&gt; [global|me|&lt;character&gt;]</code></td><td>Remove a filter setting</td></tr>
 <tr><td><code>!filter clearall</code></td><td>Remove all settings</td></tr>
-<tr><td><code>!filter rarities</code></td><td>List valid rarity names</td></tr>
+<tr><td><code>!filter rarities</code></td><td>List valid rarity names ( common , uncommon , rare , epic , cosmic )</td></tr>
 </table>
 
 <h3>Examples</h3>
-<pre>
-!filter set teamup epic           ; stop team-up drops at epic or below
-!filter set ring epic me          ; ring filter for current character only
-!filter set uruforged off         ; stop all uru-forged drops
-!filter clear ring global         ; remove the global ring threshold
-</pre>
+<table>
+<tr><th>Command</th><th>Description</th></tr>
+<tr><td><code>!filter set teamup epic</code></td><td>discards team-up drops at epic or below , across all characters</td></tr>
+<tr><td><code>!filter set ring uncommon me</code></td><td>discards ring drops at uncommon or below , for the current character only</td></tr>
+<tr><td><code>!filter set uruforged on</code></td><td>discards all uru-forged drops , across all characters</td></tr>
+<tr><td><code>!filter clear ring global</code></td><td>remove the global ring threshold</td></tr>
+</table>
+since teamup gear is always lvl1 , it makes since to set a global filter , for most other items its better to set character specific filters using "me" as the target if currently playing them or by name . this way when you switch to playing a lower level character you can iterate up the rarity filter on them . most uruforged items may be purchased in avengers hub so setting the filter to "on" to discard them all .
+
+<h2>Character-Specific Mode</h2>
+<p>With <code>LootFilterCharacterSpecificEnable=true</code> , hero-specific gear for OTHER characters is filtered out . so only see drops meant for your current hero plus any-hero items . this is prefered for a Self-found like experience , where you only progress character specific uniques when playing that character.</p>
+
+<h2>Saved Settings</h2>
+<p>Settings are saved per player to server in <code>Data/PlayerLootFilters/&lt;playerId&gt;.json</code> , so that they are easily human editable , and potential for editing externally thru a tool if the LootFilter becomes more specific  </p>
+
 
 <h2>Config Options</h2>
 <table>
 <tr><th>Option</th><th>Default</th><th>Description</th></tr>
 <tr><td><code>LootFilterEnable</code></td><td>true</td><td>Master switch</td></tr>
-<tr><td><code>LootFilterCharacterSpecificEnable</code></td><td>true</td><td>Filter gear for other heroes</td></tr>
-<tr><td><code>LootFilterLoggingEnable</code></td><td>false</td><td>Log filter decisions</td></tr>
+<tr><td><code>LootFilterCharacterSpecificEnable</code></td><td>true</td><td>Filter gear bound to other heroes</td></tr>
+<tr><td><code>LootFilterLoggingEnable</code></td><td>false</td><td>Log filter decisions to per-player files for debugging</td></tr>
 </table>
 
 </div>
