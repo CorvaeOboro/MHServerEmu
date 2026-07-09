@@ -297,7 +297,7 @@ namespace MHServerEmu.Games.Loot
                 filterKey = slot.ToString().ToLowerInvariant();
             }
 
-            // 2. Type-based check (TeamUpGear, Catalyst)
+            // 2. Type-based check (TeamUpGear, Catalyst, UruForged slot)
             if (filterKey == null)
             {
                 if (itemProto is TeamUpGearPrototype)
@@ -306,11 +306,15 @@ namespace MHServerEmu.Games.Loot
                     filterKey = "catalyst";
             }
 
+            // 3. Uru-Forged slot check (boolean toggle, identified by equipment slot)
+            if (filterKey == null && slot == EquipmentInvUISlot.UruForged)
+                filterKey = "uruforged";
+
             if (filterKey == null)
             {
                 if (lootFilterLogging)
                 {
-                    string msg = $"[LootFilter] Unmatched item [{itemProto.GetType().Name}] protoName=[{itemProto.DataRef.GetName()}]";
+                    string msg = $"[LootFilter] Unmatched item [{itemProto.GetType().Name}] slot=[{slot}] protoName=[{itemProto.DataRef.GetName()}]";
                     Logger.Trace(msg);
                     ModLootFilterLogCollator.WriteLine(playerId, msg);
                 }
@@ -323,13 +327,8 @@ namespace MHServerEmu.Games.Loot
                 if (GetEffectiveBoolean(filter, filterKey, avatarName) == false)
                     return false;
 
-                if (filterKey == "uruforged" && itemSpec.RarityProtoRef == GameDatabase.LootGlobalsPrototype.RarityUruForged)
-                {
-                    reason = "uruforged boolean filter";
-                    return true;
-                }
-
-                return false;
+                reason = $"{filterKey} boolean filter (ON)";
+                return true;
             }
 
             // Effective threshold = HIGHER rarity tier of global vs the active character's override.

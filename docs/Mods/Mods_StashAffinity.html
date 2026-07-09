@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MHServerEmu - Stash Affinity</title>
+<style>
+:root { --bg:#0d0d0d; --surface:#141414; --border:#2a2a2a; --text:#e0e0e0; --muted:#999; --accent:#4a7fb5; --link:#64b5f6; --code:#1e1e1e; }
+* { box-sizing:border-box; }
+html,body { margin:0; height:100%; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+.page { display:flex; height:100vh; }
+.sidebar { width:12%; min-width:160px; border-right:1px solid var(--border); background:var(--bg); }
+.sidebar iframe { width:100%; height:100%; border:none; }
+.content { flex:1; overflow-y:auto; }
+header { background:linear-gradient(90deg,#0a1520 0%,#0d0d0d 100%); border-bottom:2px solid var(--accent); padding:1.2rem 1rem; text-align:center; }
+header h1 { margin:0; font-size:2rem; color:#fff; }
+header p { margin:0.5rem 0 0; color:var(--muted); }
+.container { max-width:1000px; margin:0 auto; padding:2rem 1.5rem; }
+h2 { color:#fff; border-bottom:1px solid var(--border); padding-bottom:0.5rem; margin-top:2.5rem; font-size:1.4rem; }
+h3 { color:#fff; margin-top:1.5rem; font-size:1.1rem; }
+a { color:var(--link); text-decoration:none; }
+a:hover { text-decoration:underline; }
+ul,ol { padding-left:1.4rem; }
+li { margin-bottom:0.4rem; }
+table { width:100%; border-collapse:collapse; margin:1rem 0; font-size:0.95rem; }
+th,td { border:1px solid var(--border); padding:0.5rem 0.7rem; text-align:left; }
+th { background:var(--surface); color:#fff; }
+td { background:#111; }
+code,pre { background:var(--code); border:1px solid var(--border); border-radius:4px; font-family:Consolas,Monaco,'Courier New',monospace; font-size:0.9rem; }
+code { padding:0.15rem 0.35rem; }
+pre { padding:0.8rem; overflow-x:auto; }
+.note { border-left:3px solid var(--accent); background:var(--surface); padding:0.8rem 1rem; margin:1rem 0; border-radius:0 6px 6px 0; }
+footer { text-align:center; padding:1.2rem 1rem; color:var(--muted); font-size:0.9rem; border-top:1px solid var(--border); margin-top:3rem; }
+</style>
+</head>
+<body>
+<div class="page">
+    <div class="sidebar"><iframe src="../marvel_heroes_menu.htm"></iframe></div>
+    <div class="content">
+<header>
+    <h1>Stash Affinity</h1>
+    <p>items sort into named stash tabs </p>
+</header>
+<div class="container">
+
+<p>When you right-click an item in your inventory while a stash is open , the server normally drops it into the currently viewed tab . the vanilla game already has Affinity for character stash tabs , this mod adds more affinities per item types , based on the name of the stash tab . </p>
+
+<ul>
+<li>Character-bound and avatar-restricted items go to that hero's personal stash first.</li>
+<li>If the item is not character-specific, it is matched by type to a tab whose custom name contains the affinity keyword.</li>
+<li>If the matching tab is missing, full, or cannot accept the item, it falls back to the tab the client originally requested.</li>
+</ul>
+
+<h2>Affinity Keywords</h2>
+<p>Rename stash tabs to include these keywords. Matching is case-insensitive  </p>
+<table>
+<tr><th>Item Type</th><th>Tab Name Match</th></tr>
+<tr><td>Ring</td><td><code>ring</code>, <code>rings</code></td></tr>
+<tr><td>Artifact</td><td><code>artifact</code>, <code>artifacts</code></td></tr>
+<tr><td>Rune</td><td><code>rune</code>, <code>runes</code></td></tr>
+<tr><td>Relic</td><td><code>relic</code>, <code>relics</code></td></tr>
+<tr><td>Any-Hero Unique</td><td><code>unique</code>, <code>uniques</code></td></tr>
+<tr><td>Medal</td><td><code>medal</code>, <code>medals</code>, <code>medallion</code>, <code>medallions</code></td></tr>
+<tr><td>Insignia</td><td><code>insignia</code></td></tr>
+<tr><td>Catalyst </td><td><code>catalyst</code>, <code>core</code></td></tr>
+<tr><td>Team-Up Gear</td><td><code>teamup</code>, <code>team-up</code></td></tr>
+<tr><td>Crafting Ingredients</td><td><code>crafting</code>, <code>craft</code></td></tr>
+<tr><td>Danger Room Scenarios</td><td><code>maps</code>, <code>danger</code>, <code>dangerroom</code>, <code>scenario</code></td></tr>
+</table>
+
+<h2>Config Options</h2>
+<table>
+<tr><th>Option</th><th>Default</th><th>Description</th></tr>
+<tr><td><code>StashAffinityEnable</code></td><td>true</td><td>Master switch</td></tr>
+<tr><td><code>StashAffinityLoggingEnable</code></td><td>false</td><td> log for debug , shows decision tree</td></tr>
+</table>
+
+
+</div>
+<footer><p> </p></footer>
+    </div>
+</div>
+</body>
+</html>

@@ -6,10 +6,12 @@ MHServerEmu is a server emulator for Marvel Heroes.
 | [DOWNLOAD](https://github.com/CorvaeOboro/MHServerEmu/archive/refs/heads/master.zip) | [VIEW MOD WEBSITE](https://corvaeoboro.github.io/MHServerEmu/) | 
 
 ## MODS
+[LootFilter](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_LootFilter.html) | [StashAffinity](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_StashAffinity.html) | [ItemAutoPickup](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_ItemAutoPickup.html) | [OrbPickupRadius](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_OrbPickupRadius.html) | [ChestAutoOpen](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_ChestAutoOpen.html) | [ThrowableDisable](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_ThrowableDisable.html) | [InteractNearbyAuto](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_InteractNearbyAuto.html) | [DangerRoomCombine](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_DangerRoomCombine.html) | [Incursion](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_Incursion.html) | [CharactersAdditional](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_CharactersAdditional.html)
 
 **Server Mods**
 - [Loot Filter](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_LootFilter.html) - Per-player rarity filtering for unwanted drops for additional item types (ring, medal, insignia, team-up, catalyst, etc.). Set globally or per-hero via commands.
 - [![Loot Filter](docs/Mods/marvel_heroes_omega_mod_loot_filter.png)](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_LootFilter.html)
+- [Stash Affinity](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_StashAffinity.html) - items sort into named stash tabs .
 - [Item Auto-Pickup](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_ItemAutoPickup.html) - Automatically picks up currency, crafting ingredients, relics, and runes from the ground.
 - [![Item Auto-Pickup](docs/Mods/marvel_heroes_omega_mod_item_pickup_auto.png)](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_ItemAutoPickup.html)
 - [Orb Pickup Radius](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_OrbPickupRadius.html) - Widens the auto-magnet range for XP, credits, health, and endurance orbs .
@@ -22,6 +24,9 @@ MHServerEmu is a server emulator for Marvel Heroes.
 - [![DangerRoom Combine](docs/Mods/marvel_heroes_omega_mod_dangerroom_combine.webp)](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_DangerRoomCombine.html)
 - [Incursion](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_Incursion.html) - Spawns hostile Hero Variant invaders that hunt players in combat regions.
 - [![Incursion](docs/Mods/marvel_heroes_omega_mod_incursion_title_wide.png)](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_Incursion.html)
+- [CharactersAdditional](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_CharactersAdditional.html) - Swap your hero into playable Team-Up characters
+- [![CharactersAdditional](docs/Mods/marvel_heroes_omega_mod_playas_jubilee.webp)](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_CharactersAdditional.html)
+
 
 **Client Mods**
 - [Display Message Removal](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_DisplayMessageRemoval.html) - Suppresses on-screen power failure messages (e.g. "Power Not Ready")

@@ -105,5 +105,9 @@ namespace MHServerEmu.Games
 
         // DANGER ROOM COMBINE COMMAND = combines lower-rarity scenarios into higher-rarity ones
         public bool DangerRoomCombineCommandEnable { get; private set; } = true;
+
+        // STASH AFFINITY = redirects items to stash tabs whose custom names match item type
+        public bool StashAffinityEnable { get; private set; } = true;
+        public bool StashAffinityLoggingEnable { get; private set; } = false;
     }
 }

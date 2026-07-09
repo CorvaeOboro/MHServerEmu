@@ -224,6 +224,8 @@ namespace MHServerEmu.Games.Entities
             MatchQueueStatus.SetOwner(this);
             ModLootFilterLogCollator.BeginSession(Id, GetName());      // MOD LootFilter
             InteractObjectAutomaticLogCollator.BeginSession(Id, GetName());
+            StashAffinityLogCollator.Enabled = Game.CustomGameOptions.StashAffinityLoggingEnable;
+            StashAffinityLogCollator.BeginSession(Id, GetName());      // MOD StashAffinity
 
             // Perma buff properties are attached as child to avatar properties because avatar properties are persistent, while perma buffs are not.
             _avatarProperties.AddChildCollection(_permaBuffProperties);
@@ -561,6 +563,7 @@ namespace MHServerEmu.Games.Entities
             Game.EntityManager.RemovePlayer(this);
             ModLootFilterLogCollator.EndSession(Id);                  // MOD LootFilter
             InteractObjectAutomaticLogCollator.EndSession(Id);
+            StashAffinityLogCollator.EndSession(Id);                  // MOD StashAffinity
             // TerminalCubeShardLogCollator.EndSession is called in PlayerConnection.OnDisconnect
             // to keep the session continuous across region transfers (which destroy/recreate player entities).
             base.OnDeallocate();
@@ -1151,6 +1154,14 @@ namespace MHServerEmu.Games.Entities
 
             if (!Verify.IsTrue(itemOwner == this || containerOwner == this, $"Player [{this}] is attempting to move item [{item}] to container [{container}], and neither of them is owned by this player"))
                 return false;
+
+            // Stash affinity interception: redirect the item to the best-matching stash tab
+            PrototypeId affinityStashRef = ResolveStashAffinity(item, inventoryProtoRef);
+            if (affinityStashRef != inventoryProtoRef)
+            {
+                inventoryProtoRef = affinityStashRef;
+                slot = Inventory.InvalidSlot; // Find a free slot in the redirected stash
+            }
 
             // Validate inventory
             Inventory inventory = container.GetInventoryByRef(inventoryProtoRef);
