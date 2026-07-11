@@ -1,12 +1,12 @@
 using MHServerEmu.Core.Logging;
 
-namespace MHServerEmu.Games.Entities
+namespace MHServerEmu.Games.Logging
 {
     /// <summary>
-    /// Per-player log collator for the StashAffinity mod.
+    /// Per-player log collator for the ModStashAffinity mod.
     /// Records the decision tree for every redirected stash move for debugging
     /// </summary>
-    public static class StashAffinityLogCollator
+    public static class ModStashAffinityLogCollator
     {
         private static readonly Logger Logger = LogManager.CreateLogger();
         private static readonly Dictionary<ulong, Session> _sessions = new();
@@ -72,17 +72,17 @@ namespace MHServerEmu.Games.Entities
             if (session.HasContent == false) return;
             try
             {
-                string dir = Path.Combine("Logs", "StashAffinity");
+                string dir = Path.Combine("Logs", "ModStashAffinity");
                 Directory.CreateDirectory(dir);
                 string safeName = string.Join("_", session.PlayerName.Split(Path.GetInvalidFileNameChars()));
-                string fileName = $"StashAffinity_{safeName}_{session.StartTime:yyyyMMdd_HHmmss}_{session.PlayerId}.log";
+                string fileName = $"ModStashAffinity_{safeName}_{session.StartTime:yyyyMMdd_HHmmss}_{session.PlayerId}.log";
                 string path = Path.Combine(dir, fileName);
                 File.WriteAllText(path, session.Buffer.ToString());
-                Logger.Info($"[StashAffinityCollator] Wrote {session.Buffer.Length} chars to '{path}'.");
+                Logger.Info($"[ModStashAffinityCollator] Wrote {session.Buffer.Length} chars to '{path}'.");
             }
             catch (Exception ex)
             {
-                Logger.Warn($"[StashAffinityCollator] Flush failed for {session.PlayerName}#{playerId}: {ex.Message}");
+                Logger.Warn($"[ModStashAffinityCollator] Flush failed for {session.PlayerName}#{playerId}: {ex.Message}");
             }
         }
     }

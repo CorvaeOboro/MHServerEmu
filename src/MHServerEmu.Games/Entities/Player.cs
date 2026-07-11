@@ -16,7 +16,7 @@ using MHServerEmu.Core.VectorMath;
 using MHServerEmu.Games.Achievements;
 using MHServerEmu.Games.Common;
 using MHServerEmu.Games.Dialog;
-using MHServerEmu.Games.Entities.InteractNearbyAuto;
+using MHServerEmu.Games.Logging;
 using MHServerEmu.Games.Entities.Avatars;
 using MHServerEmu.Games.Entities.Inventories;
 using MHServerEmu.Games.Entities.Items;
@@ -223,9 +223,9 @@ namespace MHServerEmu.Games.Entities
             Game.EntityManager.AddPlayer(this);
             MatchQueueStatus.SetOwner(this);
             ModLootFilterLogCollator.BeginSession(Id, GetName());      // MOD LootFilter
-            InteractObjectAutomaticLogCollator.BeginSession(Id, GetName());
-            StashAffinityLogCollator.Enabled = Game.CustomGameOptions.StashAffinityLoggingEnable;
-            StashAffinityLogCollator.BeginSession(Id, GetName());      // MOD StashAffinity
+            ModInteractNearbyAutoLogCollator.BeginSession(Id, GetName());
+            ModStashAffinityLogCollator.Enabled = Game.CustomGameOptions.ModStashAffinityLoggingEnable;
+            ModStashAffinityLogCollator.BeginSession(Id, GetName());      // MOD ModStashAffinity
 
             // Perma buff properties are attached as child to avatar properties because avatar properties are persistent, while perma buffs are not.
             _avatarProperties.AddChildCollection(_permaBuffProperties);
@@ -513,9 +513,9 @@ namespace MHServerEmu.Games.Entities
             InitializeVendors();
             ScheduleAutosave();
             ScheduleCheckHoursPlayedEvent();
-            ScheduleItemAutoPickupEvent();
-            ScheduleInteractNearbyAutoEvent();
-            ScheduleChestAutoOpenEvent();
+            ScheduleModItemPickupAutoEvent();
+            ScheduleModInteractNearbyAutoEvent();
+            ScheduleModChestOpenAutoEvent();
             LootFilter = ModLootFilterStorage.Load(DatabaseUniqueId);   // MOD LootFilter
             UpdateUISystemLocks();
 
@@ -562,8 +562,8 @@ namespace MHServerEmu.Games.Entities
             AchievementManager.Deallocate();
             Game.EntityManager.RemovePlayer(this);
             ModLootFilterLogCollator.EndSession(Id);                  // MOD LootFilter
-            InteractObjectAutomaticLogCollator.EndSession(Id);
-            StashAffinityLogCollator.EndSession(Id);                  // MOD StashAffinity
+            ModInteractNearbyAutoLogCollator.EndSession(Id);
+            ModStashAffinityLogCollator.EndSession(Id);                  // MOD ModStashAffinity
             // TerminalCubeShardLogCollator.EndSession is called in PlayerConnection.OnDisconnect
             // to keep the session continuous across region transfers (which destroy/recreate player entities).
             base.OnDeallocate();
@@ -1156,7 +1156,7 @@ namespace MHServerEmu.Games.Entities
                 return false;
 
             // Stash affinity interception: redirect the item to the best-matching stash tab
-            PrototypeId affinityStashRef = ResolveStashAffinity(item, inventoryProtoRef);
+            PrototypeId affinityStashRef = ResolveModStashAffinity(item, inventoryProtoRef);
             if (affinityStashRef != inventoryProtoRef)
             {
                 inventoryProtoRef = affinityStashRef;

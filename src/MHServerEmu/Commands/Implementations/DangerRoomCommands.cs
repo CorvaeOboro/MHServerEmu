@@ -92,7 +92,7 @@ namespace MHServerEmu.Commands.Implementations
                 maxTier = rarityProto.Tier;
             }
 
-            return player.CombineDangerRoomScenarios(maxTier);
+            return player.CombineModDangerRoomScenarios(maxTier);
         }
     }
 }

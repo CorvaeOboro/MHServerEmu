@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MHServerEmu - Item Auto-Pickup</title>
+<title>MHServerEmu - Chest Open Auto</title>
 <style>
 :root { --bg:#0d0d0d; --surface:#141414; --border:#2a2a2a; --text:#e0e0e0; --muted:#999; --accent:#4a7fb5; --link:#64b5f6; --code:#1e1e1e; }
 * { box-sizing:border-box; }
@@ -38,37 +38,22 @@ footer { text-align:center; padding:1.2rem 1rem; color:var(--muted); font-size:0
     <div class="sidebar"><iframe src="../marvel_heroes_menu.htm"></iframe></div>
     <div class="content">
 <header>
-    <h1>Item Auto-Pickup</h1>
-    <p>Automatically collect nearby ground items on a repeating loop</p>
+    <h1>Chest Open Auto</h1>
+    <p>Automatically opens chests and boxes in your inventory</p>
 </header>
 <div class="container">
 
-<p>A server-side loop that picks up ground items near your avatar automatically. </p>
+<p>A server-side loop that automatically opens chest-type items sitting in your general inventory. </p>
 
-<img src="marvel_heroes_omega_mod_item_pickup_auto.png" alt="Item Auto-Pickup" style="display:block; max-width:480px; width:100%; margin:0 auto 1.5rem; border-radius:6px; border:1px solid var(--border);">
-
-<h2>What Gets Picked Up</h2>
-<table>
-<tr><th>Category</th><th>Examples</th><th>Optional Stash</th></tr>
-<tr><td>Currency</td><td>Eternity Splinters, Cosmic Shards, Marks, Runestones</td><td>No</td></tr>
-<tr><td>Crafting Ingredients</td><td>Elements , Misc Collectibles</td><td>Yes</td></tr>
-<tr><td>Relics</td><td>All relics </td><td>Yes, and auto-equip merge</td></tr>
-<tr><td>Runes</td><td>Runeword glyphs</td><td>Yes</td></tr>
-</table>
+<p>Every few seconds the server scans your general inventory for items matching the whitelist. Matching items are opened automatically on a cooldown.</p>
 
 <h2>Config Options</h2>
 <table>
 <tr><th>Option</th><th>Default</th><th>Description</th></tr>
-<tr><td><code>ItemAutoPickupEnable</code></td><td>true</td><td>Master switch</td></tr>
-<tr><td><code>ItemAutoPickupRadius</code></td><td>1400</td><td>Scan radius in world units</td></tr>
-<tr><td><code>ItemAutoPickupIntervalMs</code></td><td>2100</td><td>Scan interval in milliseconds</td></tr>
-<tr><td><code>ItemAutoPickupCraftingIngredientEnable</code></td><td>true</td><td>Pick up crafting mats</td></tr>
-<tr><td><code>ItemAutoPickupCraftingIngredientToStash</code></td><td>true</td><td>Send mats to stash</td></tr>
-<tr><td><code>ItemAutoPickupRelicEnable</code></td><td>true</td><td>Pick up relics</td></tr>
-<tr><td><code>ItemAutoPickupRelicToStash</code></td><td>true</td><td>Send relics to stash</td></tr>
-<tr><td><code>ItemAutoPickupRelicEquipIfSameTypeEquippedEnable</code></td><td>true</td><td>Merge into equipped relic if same type</td></tr>
-<tr><td><code>ItemAutoPickupRuneEnable</code></td><td>true</td><td>Pick up runes</td></tr>
-<tr><td><code>ItemAutoPickupRuneToStash</code></td><td>true</td><td>Send runes to stash</td></tr>
+<tr><td><code>ModChestOpenAutoEnable</code></td><td>true</td><td>Master switch</td></tr>
+<tr><td><code>ModChestOpenAutoCooldownMs</code></td><td>1100</td><td>Milliseconds between opens (min 500)</td></tr>
+<tr><td><code>ModChestOpenAutoWhitelist</code></td><td>Chest,Crate,LootBox,Giftbox,GiftBox</td><td>Comma-separated name patterns to open</td></tr>
+<tr><td><code>ModChestOpenAutoLoggingEnable</code></td><td>false</td><td>Debug logging</td></tr>
 </table>
 
 </div>

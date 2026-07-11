@@ -25,8 +25,8 @@ namespace MHServerEmu.Games
 
 
         // ==============================================================================
-        // MODDED FEATURES = LootFilter, AutoPickup, ThrowableDisable, ItemChestAutoOpen,
-        //                   Incursion, TerminalDailyCompleteAnyDifficulty, InteractNearbyAuto
+        // MODDED FEATURES = LootFilter, ModItemPickupAuto, ThrowableDisable, ModChestOpenAuto,
+        //                   Incursion, TerminalDailyCompleteAnyDifficulty, ModInteractNearbyAuto
         // ==============================================================================
 
         // LOOT FILTER
@@ -34,34 +34,34 @@ namespace MHServerEmu.Games
         public bool LootFilterCharacterSpecificEnable { get; private set; } = true;
         public bool LootFilterLoggingEnable { get; private set; } = false;
 
-        // ITEM AUTO PICKUP to STASH = currency, crafting, relics, runes
-        public bool ItemAutoPickupEnable { get; private set; } = true;
-        public float ItemAutoPickupRadius { get; private set; } = 1400f;
-        public int ItemAutoPickupIntervalMs { get; private set; } = 2100;
+        // MOD ITEM PICKUP AUTO to STASH = currency, crafting, relics, runes
+        public bool ModItemPickupAutoEnable { get; private set; } = true;
+        public float ModItemPickupAutoRadius { get; private set; } = 1400f;
+        public int ModItemPickupAutoIntervalMs { get; private set; } = 2100;
         // - crafting
-        public bool ItemAutoPickupCraftingIngredientEnable { get; private set; } = true;
-        public bool ItemAutoPickupCraftingIngredientToStash { get; private set; } = true;
-        public bool ItemAutoPickupCraftingIngredientLoggingEnable { get; private set; } = false;
+        public bool ModItemPickupAutoCraftingIngredientEnable { get; private set; } = true;
+        public bool ModItemPickupAutoCraftingIngredientToStash { get; private set; } = true;
+        public bool ModItemPickupAutoCraftingIngredientLoggingEnable { get; private set; } = false;
         // - relics
-        public bool ItemAutoPickupRelicEnable { get; private set; } = true;
-        public bool ItemAutoPickupRelicToStash { get; private set; } = true;
-        public bool ItemAutoPickupRelicEquipIfSameTypeEquippedEnable { get; private set; } = true;
-        public bool ItemAutoPickupRelicLoggingEnable { get; private set; } = false;
+        public bool ModItemPickupAutoRelicEnable { get; private set; } = true;
+        public bool ModItemPickupAutoRelicToStash { get; private set; } = true;
+        public bool ModItemPickupAutoRelicEquipIfSameTypeEquippedEnable { get; private set; } = true;
+        public bool ModItemPickupAutoRelicLoggingEnable { get; private set; } = false;
         // - runes
-        public bool ItemAutoPickupRuneEnable { get; private set; } = true;
-        public bool ItemAutoPickupRuneToStash { get; private set; } = true;
-        public bool ItemAutoPickupRuneLoggingEnable { get; private set; } = false;
+        public bool ModItemPickupAutoRuneEnable { get; private set; } = true;
+        public bool ModItemPickupAutoRuneToStash { get; private set; } = true;
+        public bool ModItemPickupAutoRuneLoggingEnable { get; private set; } = false;
 
         // THROWABLE DISABLE = preference to not throw, don't get animlocked by throwing
         public bool ThrowableDisableInteractive { get; private set; } = true;
         public bool ThrowableAutoCancelOnPowerUse { get; private set; } = true;
         public bool ThrowableAutoThrowOnMovementPower { get; private set; } = true;
 
-        // ITEM CHEST AUTO OPEN = opens chests and giftboxes in player inventory
-        public bool ItemChestAutoOpenEnable { get; private set; } = true;
-        public int ItemChestAutoOpenCooldownMs { get; private set; } = 1100;
-        public string ItemChestAutoOpenWhitelist { get; private set; } = "Chest,Crate,LootBox,Giftbox,GiftBox";
-        public bool ItemChestAutoOpenLoggingEnable { get; private set; } = false;
+        // MOD CHEST OPEN AUTO = opens chests and giftboxes in player inventory
+        public bool ModChestOpenAutoEnable { get; private set; } = true;
+        public int ModChestOpenAutoCooldownMs { get; private set; } = 1100;
+        public string ModChestOpenAutoWhitelist { get; private set; } = "Chest,Crate,LootBox,Giftbox,GiftBox";
+        public bool ModChestOpenAutoLoggingEnable { get; private set; } = false;
 
         // INCURSION = spawns random Hero Variant minibosses at random intervals - EXPERIMENTAL
         public bool IncursionEnable { get; private set; } = true;
@@ -96,18 +96,18 @@ namespace MHServerEmu.Games
         public bool MissionTrackerHideCompletedSharedQuestsEnable { get; private set; } = false;
         public bool MissionTrackerHideCompletedSharedQuestsLoggingEnable { get; private set; } = false;
 
-        // INTERACT NEARBY AUTO = mission objectives, civilians, chests
-        public bool InteractNearbyAutoEnable { get; private set; } = true;
-        public int InteractNearbyAutoIntervalMs { get; private set; } = 250;
-        public bool InteractNearbyAutoLoggingEnable { get; private set; } = false;
-        public string InteractNearbyAutoWhitelist { get; private set; } = "DoombotFactoryCommandConsole,HeroCommendationReward,BoxcarMutantDesirae,";
-        public string InteractNearbyAutoBlacklist { get; private set; } = "StanLee,Stash,Vendor,Waypoint,GLFSupplyOfficer,Trans,Transition,EGPVEManhattan,EGPVESubterranea,Elevator,Door,Floor,Portal,DefaultEND,ReturnToLastBase,XMansionToHeli,";
+        // MOD INTERACT NEARBY AUTO = mission objectives, civilians, chests
+        public bool ModInteractNearbyAutoEnable { get; private set; } = true;
+        public int ModInteractNearbyAutoIntervalMs { get; private set; } = 250;
+        public bool ModInteractNearbyAutoLoggingEnable { get; private set; } = false;
+        public string ModInteractNearbyAutoWhitelist { get; private set; } = "DoombotFactoryCommandConsole,HeroCommendationReward,BoxcarMutantDesirae,";
+        public string ModInteractNearbyAutoBlacklist { get; private set; } = "StanLee,Stash,Vendor,Waypoint,GLFSupplyOfficer,Trans,Transition,EGPVEManhattan,EGPVESubterranea,Elevator,Door,Floor,Portal,DefaultEND,ReturnToLastBase,XMansionToHeli,";
 
-        // DANGER ROOM COMBINE COMMAND = combines lower-rarity scenarios into higher-rarity ones
-        public bool DangerRoomCombineCommandEnable { get; private set; } = true;
+        // MOD DANGER ROOM COMBINE COMMAND = combines lower-rarity scenarios into higher-rarity ones
+        public bool ModDangerRoomCombineCommandEnable { get; private set; } = true;
 
-        // STASH AFFINITY = redirects items to stash tabs whose custom names match item type
-        public bool StashAffinityEnable { get; private set; } = true;
-        public bool StashAffinityLoggingEnable { get; private set; } = false;
+        // MOD STASH AFFINITY = redirects items to stash tabs whose custom names match item type
+        public bool ModStashAffinityEnable { get; private set; } = true;
+        public bool ModStashAffinityLoggingEnable { get; private set; } = false;
     }
 }

@@ -1,3 +1,19 @@
+#region DangerRoom Combine
+// =============================================================================
+// MOD Danger Room Combine
+// =============================================================================
+//   combines lower-rarity Danger Room scenario portal items into higher-rarity
+//   ones via the "!dangerroom combine" chat command. batch crafting the vanilla recipe in game 
+//
+//   Random Theme portals combine with Random Theme portals.
+//   Named Scenario portals combine with Named Scenario portals.
+//   Static Challenge portals ( special ) are never combined.
+//
+//   Results go into the player's general inventory.
+//
+//  VERSION:: 20260711
+// =============================================================================
+
 using MHServerEmu.Core.Extensions;
 using MHServerEmu.Core.Logging;
 using MHServerEmu.Core.Memory;
@@ -21,7 +37,7 @@ using MHServerEmu.Games.Properties;
     Entity/Items/Consumables/Prototypes/DangerRoom/PortalToDangerRoomRandomThemeNoAffixesGreen.prototype   (Uncommon)
     Entity/Items/Consumables/Prototypes/DangerRoom/PortalToDangerRoomRandomThemeNoAffixesBlue.prototype    (Rare)
     Entity/Items/Consumables/Prototypes/DangerRoom/PortalToDangerRoomRandomThemeNoAffixesPurple.prototype  (Epic)
-    Entity/Items/Consumables/Prototypes/DangerRoom/PortalToDangerRoomRandomThemeNoAffixesYellow.prototype (Legendary)
+    Entity/Items/Consumables/Prototypes/DangerRoom/PortalToDangerRoomRandomThemeNoAffixesYellow.prototype (Cosmic)
 
     --- Named Scenario Portals (combinable, result of all combines) ---
     Entity/Items/Consumables/Prototypes/DangerRoom/PortalToDangerRoomScenarioAIMFacility.prototype
@@ -68,6 +84,7 @@ namespace MHServerEmu.Games.Entities
         private static Dictionary<int, PrototypeId> _rarityProtoByTier;
         private static List<PrototypeId> _namedScenarioProtos;
 
+
         private enum DangerRoomCategory
         {
             None,
@@ -76,9 +93,11 @@ namespace MHServerEmu.Games.Entities
             Static
         }
 
-        public string CombineDangerRoomScenarios(int maxTier)
+        #region Command
+
+        public string CombineModDangerRoomScenarios(int maxTier)
         {
-            if (Game.CustomGameOptions.DangerRoomCombineCommandEnable == false)
+            if (Game.CustomGameOptions.ModDangerRoomCombineCommandEnable == false)
                 return "Danger Room auto-combine is disabled by server settings.";
 
             BuildRarityCache();
@@ -86,6 +105,10 @@ namespace MHServerEmu.Games.Entities
             Inventory generalInv = GetInventory(InventoryConvenienceLabel.General);
             if (generalInv == null)
                 return "General inventory not found.";
+
+            // Cosmic is the highest Danger Room rarity; there is nothing to combine it into.
+            RarityPrototype cosmicRarity = GameDatabase.GetPrototype<RarityPrototype>(GameDatabase.LootGlobalsPrototype.RarityCosmic);
+            int cosmicTier = cosmicRarity?.Tier ?? int.MaxValue;
 
             EntityManager em = Game.EntityManager;
             // Group by (category, tier) so Random and Named items each combine within their own group
@@ -124,6 +147,10 @@ namespace MHServerEmu.Games.Entities
                 if (maxTier > 0 && tier >= maxTier)
                     continue;
 
+                // Never combine the highest (Cosmic) tier since there is no rarity above it.
+                if (tier >= cosmicTier)
+                    continue;
+
                 if (!_rarityProtoByTier.TryGetValue(tier + 1, out PrototypeId nextRarityRef))
                     continue;
 
@@ -142,7 +169,7 @@ namespace MHServerEmu.Games.Entities
 
                     if (!TryCreateScenarioItem(nextProtoRef, nextRarityRef, out Item newItem))
                     {
-                        DangerRoomLogger.Warn($"CombineDangerRoomScenarios(): Failed to create item {nextProtoRef.GetName()} with rarity {nextRarityRef.GetName()} for player {this}");
+                        DangerRoomLogger.Warn($"CombineModDangerRoomScenarios(): Failed to create item {nextProtoRef.GetName()} with rarity {nextRarityRef.GetName()} for player {this}");
                         break;
                     }
 
@@ -166,6 +193,10 @@ namespace MHServerEmu.Games.Entities
 
             return $"Combined {combined} Danger Room scenario pair(s).";
         }
+
+        #endregion
+
+        #region Caching
 
         private static void BuildRarityCache()
         {
@@ -211,6 +242,10 @@ namespace MHServerEmu.Games.Entities
                 DangerRoomLogger.Info($"Built rarity cache: {_rarityProtoByTier.Count} tier(s), {_namedScenarioProtos.Count} named scenario(s).");
             }
         }
+
+        #endregion
+
+        #region Creation
 
         private bool TryCreateScenarioItem(PrototypeId itemProtoRef, PrototypeId rarityProtoRef, out Item item)
         {
@@ -270,6 +305,10 @@ namespace MHServerEmu.Games.Entities
             return true;
         }
 
+        #endregion
+
+        #region Categorization
+
         private static DangerRoomCategory TryGetDangerRoomCategory(Item item)
         {
             if (item?.ItemPrototype == null) return DangerRoomCategory.None;
@@ -301,5 +340,9 @@ namespace MHServerEmu.Games.Entities
 
             return DangerRoomCategory.Named;
         }
+
+        #endregion
+
+        #endregion
     }
 }

@@ -12,7 +12,7 @@ using MHServerEmu.Core.System.Time;
 using MHServerEmu.Core.VectorMath;
 using MHServerEmu.Games.Common;
 using MHServerEmu.Games.Dialog;
-using MHServerEmu.Games.Entities.InteractNearbyAuto;
+using MHServerEmu.Games.Logging;
 using MHServerEmu.Games.Entities.Inventories;
 using MHServerEmu.Games.Entities.Items;
 using MHServerEmu.Games.Entities.PowerCollections;
@@ -4199,15 +4199,15 @@ namespace MHServerEmu.Games.Entities.Avatars
             WorldEntity interactableObject = Game.EntityManager.GetEntity<WorldEntity>(entityId);
             string targetName = interactableObject != null ? GameDatabase.GetFormattedPrototypeName(interactableObject.PrototypeDataRef) : "null";
             var customOptions = Game?.CustomGameOptions;
-            bool logging = customOptions?.InteractNearbyAutoLoggingEnable ?? false;
+            bool logging = customOptions?.ModInteractNearbyAutoLoggingEnable ?? false;
 
             if (interactableObject == null || CanInteract(player, interactableObject) == false)
             {
                 string failReason = interactableObject == null ? "entity null" : "CanInteract=false";
                 if (logging)
                 {
-                    Logger.Trace($"[InteractNearbyAuto] UseInteractableObject FAILED for [{player}] target=[{targetName}#{entityId}] reason={failReason} missionRef={missionRef}");
-                    InteractObjectAutomaticLogCollator.WriteLine(player.Id, $"[InteractNearbyAuto_USE] FAILED target=[{targetName}#{entityId}] reason={failReason} missionRef={missionRef}");
+                    Logger.Trace($"[ModInteractNearbyAuto] UseInteractableObject FAILED for [{player}] target=[{targetName}#{entityId}] reason={failReason} missionRef={missionRef}");
+                    ModInteractNearbyAutoLogCollator.WriteLine(player.Id, $"[ModInteractNearbyAuto_USE] FAILED target=[{targetName}#{entityId}] reason={failReason} missionRef={missionRef}");
                 }
                 player.MissionInteractRelease(this, missionRef);
                 return false;
@@ -4222,8 +4222,8 @@ namespace MHServerEmu.Games.Entities.Avatars
                 {
                     if (logging)
                     {
-                        Logger.Trace($"[InteractNearbyAuto] UseInteractableObject FAILED for [{player}] target=[{targetName}#{entityId}] reason=PreInteractPower target mismatch (expected {targetId})");
-                        InteractObjectAutomaticLogCollator.WriteLine(player.Id, $"[InteractNearbyAuto_USE] FAILED target=[{targetName}#{entityId}] reason=PreInteractPower mismatch expected={targetId}");
+                        Logger.Trace($"[ModInteractNearbyAuto] UseInteractableObject FAILED for [{player}] target=[{targetName}#{entityId}] reason=PreInteractPower target mismatch (expected {targetId})");
+                        ModInteractNearbyAutoLogCollator.WriteLine(player.Id, $"[ModInteractNearbyAuto_USE] FAILED target=[{targetName}#{entityId}] reason=PreInteractPower mismatch expected={targetId}");
                     }
                     return false;
                 }
@@ -4231,8 +4231,8 @@ namespace MHServerEmu.Games.Entities.Avatars
 
             if (logging)
             {
-                Logger.Trace($"[InteractNearbyAuto] UseInteractableObject SUCCESS for [{player}] target=[{targetName}#{entityId}] type={interactableObject.GetType().Name} missionRef={missionRef} isMission={interactableObject.MissionPrototype != PrototypeId.Invalid}");
-                InteractObjectAutomaticLogCollator.WriteLine(player.Id, $"[InteractNearbyAuto_USE] SUCCESS target=[{targetName}#{entityId}] type={interactableObject.GetType().Name} missionRef={missionRef} isMission={interactableObject.MissionPrototype != PrototypeId.Invalid}");
+                Logger.Trace($"[ModInteractNearbyAuto] UseInteractableObject SUCCESS for [{player}] target=[{targetName}#{entityId}] type={interactableObject.GetType().Name} missionRef={missionRef} isMission={interactableObject.MissionPrototype != PrototypeId.Invalid}");
+                ModInteractNearbyAutoLogCollator.WriteLine(player.Id, $"[ModInteractNearbyAuto_USE] SUCCESS target=[{targetName}#{entityId}] type={interactableObject.GetType().Name} missionRef={missionRef} isMission={interactableObject.MissionPrototype != PrototypeId.Invalid}");
             }
 
             if (interactableObject.IsInWorld == false && interactableObject is Item item)

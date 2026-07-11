@@ -1,9 +1,9 @@
 using MHServerEmu.Core.Logging;
 
-namespace MHServerEmu.Games.Entities.InteractNearbyAuto
+namespace MHServerEmu.Games.Logging
 {
     /// <summary>
-    /// Accumulates InteractNearbyAuto log lines per player session and saves them to
+    /// Accumulates ModInteractNearbyAuto log lines per player session and saves them to
     /// a file when the session ends , logout, disconnect, or deallocate
     ///
     /// an in-memory buffer (StringBuilder per player) with a single
@@ -13,7 +13,7 @@ namespace MHServerEmu.Games.Entities.InteractNearbyAuto
     /// ( player clicks) so they can be compared
     /// Config.ini options , default is off , this is for debugging
     /// </summary>
-    public static class InteractObjectAutomaticLogCollator
+    public static class ModInteractNearbyAutoLogCollator
     {
         private static readonly Logger Logger = LogManager.CreateLogger();
 
@@ -105,19 +105,19 @@ namespace MHServerEmu.Games.Entities.InteractNearbyAuto
 
             try
             {
-                string dir = Path.Combine("Logs", "InteractNearbyAuto");
+                string dir = Path.Combine("Logs", "ModInteractNearbyAuto");
                 Directory.CreateDirectory(dir);
 
                 string safeName = string.Join("_", session.PlayerName.Split(Path.GetInvalidFileNameChars()));
-                string fileName = $"InteractNearbyAuto_{safeName}_{session.StartTime:yyyyMMdd_HHmmss}_{session.PlayerId}.log";
+                string fileName = $"ModInteractNearbyAuto_{safeName}_{session.StartTime:yyyyMMdd_HHmmss}_{session.PlayerId}.log";
                 string path = Path.Combine(dir, fileName);
 
                 File.WriteAllText(path, session.Buffer.ToString());
-                Logger.Info($"[InteractObjectAutomaticLogCollator] Wrote {session.Buffer.Length} chars to '{path}'.");
+                Logger.Info($"[ModInteractNearbyAutoLogCollator] Wrote {session.Buffer.Length} chars to '{path}'.");
             }
             catch (Exception ex)
             {
-                Logger.Warn($"[InteractObjectAutomaticLogCollator] Failed to flush session for {session.PlayerName}#{playerId}: {ex.Message}");
+                Logger.Warn($"[ModInteractNearbyAutoLogCollator] Failed to flush session for {session.PlayerName}#{playerId}: {ex.Message}");
             }
         }
     }

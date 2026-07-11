@@ -1,8 +1,37 @@
+#region Stash Affinity
+// =============================================================================
+// MOD Stash Affinity
+// =============================================================================
+//   items sort into named stash tabs
+//
+//   vanilla: affinity for Character-specific stash for bound or avatar-restricted items.
+//   MOD: Type-based affinity for other items such as gear and crafting materials.
+//
+//   Supported stash tab affinity names:
+//     Ring                     | ring, rings
+//     Artifact                 | artifact, artifacts
+//     Rune                     | rune, runes
+//     Relic                    | relic, relics
+//     Any-Hero Unique          | unique, uniques
+//     Medal                    | medal, medals, medallion, medallions
+//     Insignia                 | insignia
+//     Catalyst                 | catalyst, core
+//     Team-Up Gear             | teamup, team-up
+//     Crafting Ingredients     | crafting, craft
+//     Danger Room Scenarios    | maps, danger, dangerroom, scenario
+//
+//   Applied automatically during inventory moves to stash from non-stash sources.
+//   Falls back to the originally requested stash tab when no affinity matches.
+//
+//  VERSION:: 20260711
+// =============================================================================
+
 using System;
 using System.Collections.Generic;
 using System.Text;
 using MHServerEmu.Core.Logging;
 using MHServerEmu.Core.Memory;
+using MHServerEmu.Games.Logging;
 using MHServerEmu.Games.Entities.Inventories;
 using MHServerEmu.Games.Entities.Items;
 using MHServerEmu.Games.Entities.Options;
@@ -14,20 +43,22 @@ namespace MHServerEmu.Games.Entities
 {
     public partial class Player
     {
-        private static readonly Logger StashAffinityLogger = LogManager.CreateLogger();
+        private static readonly Logger ModStashAffinityLogger = LogManager.CreateLogger();
+
+        #region Resolution
 
         /// <summary>
         /// Resolves the best stash tab for an item based on affinity rules.
         /// Returns <paramref name="requestedStashRef"/> if no better match is found.
         /// </summary>
-        private PrototypeId ResolveStashAffinity(Item item, PrototypeId requestedStashRef)
+        private PrototypeId ResolveModStashAffinity(Item item, PrototypeId requestedStashRef)
         {
-            bool loggingEnabled = Game.CustomGameOptions.StashAffinityLoggingEnable;
+            bool loggingEnabled = Game.CustomGameOptions.ModStashAffinityLoggingEnable;
             StringBuilder report = loggingEnabled ? new StringBuilder() : null;
 
             AppendHeader(report, item, requestedStashRef);
 
-            if (Game.CustomGameOptions.StashAffinityEnable == false)
+            if (Game.CustomGameOptions.ModStashAffinityEnable == false)
             {
                 AppendDecision(report, requestedStashRef, "feature disabled");
                 FlushReport(report);
@@ -53,7 +84,7 @@ namespace MHServerEmu.Games.Entities
             AppendAvailableStashes(report);
 
             // First: character-specific stash for bound / avatar-restricted items
-            PrototypeId characterStashRef = ResolveCharacterStashAffinity(item, requestedStashRef, report, out bool requestedIsCharacterStash);
+            PrototypeId characterStashRef = ResolveCharacterModStashAffinity(item, requestedStashRef, report, out bool requestedIsCharacterStash);
 
             // If the player already opened the correct character stash, keep it and do not override with type affinity
             if (requestedIsCharacterStash)
@@ -71,10 +102,10 @@ namespace MHServerEmu.Games.Entities
             }
 
             // Then: type-based affinity (applies to any-hero uniques too, but only if no character stash matched)
-            PrototypeId typeStashRef = ResolveTypeStashAffinity(item, requestedStashRef, report);
+            PrototypeId typeStashRef = ResolveTypeModStashAffinity(item, requestedStashRef, report);
             if (typeStashRef != requestedStashRef)
             {
-                LogAffinity(item, requestedStashRef, typeStashRef, string.Join("/", GetStashAffinityKeys(item)));
+                LogAffinity(item, requestedStashRef, typeStashRef, string.Join("/", GetModStashAffinityKeys(item)));
                 FlushReport(report);
                 return typeStashRef;
             }
@@ -83,6 +114,10 @@ namespace MHServerEmu.Games.Entities
             FlushReport(report);
             return requestedStashRef;
         }
+
+        #endregion
+
+        #region Character Affinity
 
         /// <summary>
         /// Returns the prototype id of the character this item is intended for, or Invalid if it is any-hero gear.
@@ -102,7 +137,7 @@ namespace MHServerEmu.Games.Entities
         /// <summary>
         /// Returns the character-specific stash for an item bound/restricted to a character, if one exists and has space.
         /// </summary>
-        private PrototypeId ResolveCharacterStashAffinity(Item item, PrototypeId requestedStashRef, StringBuilder report, out bool requestedIsCharacterStash)
+        private PrototypeId ResolveCharacterModStashAffinity(Item item, PrototypeId requestedStashRef, StringBuilder report, out bool requestedIsCharacterStash)
         {
             requestedIsCharacterStash = false;
 
@@ -232,12 +267,16 @@ namespace MHServerEmu.Games.Entities
             return name;
         }
 
+        #endregion
+
+        #region Type Affinity
+
         /// <summary>
         /// Returns a stash tab whose custom display name matches the item's affinity key, if one exists and has space.
         /// </summary>
-        private PrototypeId ResolveTypeStashAffinity(Item item, PrototypeId requestedStashRef, StringBuilder report)
+        private PrototypeId ResolveTypeModStashAffinity(Item item, PrototypeId requestedStashRef, StringBuilder report)
         {
-            string[] itemKeys = GetStashAffinityKeys(item);
+            string[] itemKeys = GetModStashAffinityKeys(item);
             string keysLabel = itemKeys.Length > 0 ? string.Join("/", itemKeys) : "(none)";
             report?.AppendLine($"  TypeAffinityKeys: {keysLabel}");
 
@@ -259,7 +298,7 @@ namespace MHServerEmu.Games.Entities
                 if (stashRef == requestedStashRef)
                     continue;
 
-                // Skip character-specific stashes - they are handled by ResolveCharacterStashAffinity
+                // Skip character-specific stashes - they are handled by ResolveCharacterModStashAffinity
                 PlayerStashInventoryPrototype stashProto = GameDatabase.GetPrototype<PlayerStashInventoryPrototype>(stashRef);
                 if (stashProto?.ForAvatar != PrototypeId.Invalid)
                     continue;
@@ -315,14 +354,14 @@ namespace MHServerEmu.Games.Entities
         /// Returns the affinity keywords for an item (e.g. "ring", "artifact", "unique").
         /// Returns an empty array if the item has no affinity mapping.
         /// </summary>
-        private static string[] GetStashAffinityKeys(Item item)
+        private static string[] GetModStashAffinityKeys(Item item)
         {
             ItemPrototype itemProto = item.ItemPrototype;
             if (itemProto == null)
                 return Array.Empty<string>();
 
             // Unique (any-hero) -> unique stash
-            // Character-specific uniques are handled by ResolveCharacterStashAffinity before this
+            // Character-specific uniques are handled by ResolveCharacterModStashAffinity before this
             RarityPrototype rarityProto = item.RarityPrototype;
             if (rarityProto != null && rarityProto.DataRef == GameDatabase.LootGlobalsPrototype.RarityUnique)
                 return new[] { "unique" };
@@ -330,7 +369,7 @@ namespace MHServerEmu.Games.Entities
             string protoName = GameDatabase.GetPrototypeName(itemProto.DataRef);
 
             // Danger Room scenario portals -> maps/danger/dangerroom/scenario stash
-            // Same detection logic as DangerRoomCombine: contains "DangerRoom" + "PortalTo", excludes recipes/crates/relics/etc.
+            // Same detection logic as ModDangerRoomCombine: contains "DangerRoom" + "PortalTo", excludes recipes/crates/relics/etc.
             if (string.IsNullOrEmpty(protoName) == false &&
                 protoName.Contains("DangerRoom", StringComparison.OrdinalIgnoreCase) &&
                 protoName.Contains("PortalTo", StringComparison.OrdinalIgnoreCase))
@@ -382,6 +421,10 @@ namespace MHServerEmu.Games.Entities
             return Array.Empty<string>();
         }
 
+        #endregion
+
+        #region Stash Helpers
+
         private string GetStashDisplayName(PrototypeId stashRef)
         {
             if (_stashTabOptionsDict.TryGetValue(stashRef, out StashTabOptions options) &&
@@ -391,12 +434,16 @@ namespace MHServerEmu.Games.Entities
             return GameDatabase.GetPrototypeName(stashRef);
         }
 
+        #endregion
+
+        #region Logging Helpers
+
         private void AppendHeader(StringBuilder report, Item item, PrototypeId requestedStashRef)
         {
             if (report == null) return;
 
             report.AppendLine();
-            report.AppendLine($"[StashAffinity Decision] Player={this} Item={item}");
+            report.AppendLine($"[ModStashAffinity Decision] Player={this} Item={item}");
             report.AppendLine($"  ItemProto: {GameDatabase.GetPrototypeName(item.ItemPrototype?.DataRef ?? PrototypeId.Invalid)}");
             report.AppendLine($"  Rarity: {GameDatabase.GetPrototypeName(item.RarityPrototype?.DataRef ?? PrototypeId.Invalid)}");
             report.AppendLine($"  IsBoundToCharacter: {item.IsBoundToCharacter}");
@@ -438,15 +485,19 @@ namespace MHServerEmu.Games.Entities
         private void FlushReport(StringBuilder report)
         {
             if (report == null || report.Length == 0) return;
-            StashAffinityLogCollator.WriteLine(Id, report.ToString());
+            ModStashAffinityLogCollator.WriteLine(Id, report.ToString());
         }
 
         private void LogAffinity(Item item, PrototypeId fromRef, PrototypeId toRef, string reason)
         {
-            if (Game.CustomGameOptions.StashAffinityLoggingEnable == false)
+            if (Game.CustomGameOptions.ModStashAffinityLoggingEnable == false)
                 return;
 
-            StashAffinityLogger.Info($"[StashAffinity] Player [{this}] moving item [{item}] (reason={reason}) from [{GameDatabase.GetPrototypeName(fromRef)}] to [{GameDatabase.GetPrototypeName(toRef)}]");
+            ModStashAffinityLogger.Info($"[ModStashAffinity] Player [{this}] moving item [{item}] (reason={reason}) from [{GameDatabase.GetPrototypeName(fromRef)}] to [{GameDatabase.GetPrototypeName(toRef)}]");
         }
+
+        #endregion
+
+        #endregion
     }
 }
