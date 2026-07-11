@@ -74,9 +74,9 @@ namespace MHServerEmu.Games.Entities
             }
 
             InventoryPrototype sourceInvProto = item.InventoryLocation.InventoryPrototype;
-            if (sourceInvProto == null || sourceInvProto.IsPlayerStashInventory)
+            if (sourceInvProto != null && sourceInvProto.IsPlayerStashInventory)
             {
-                AppendDecision(report, requestedStashRef, "source is already a stash or unknown");
+                AppendDecision(report, requestedStashRef, "source is already a stash");
                 FlushReport(report);
                 return requestedStashRef;
             }

@@ -167,7 +167,7 @@ namespace MHServerEmu.Games.Entities
 
         #endregion
 
-        #region Crafting Ingredient Pickup
+        #region Crafting  Pickup
 
         private void PickupCraftingIngredients(Region region, Sphere volume, HashSet<Item> pickedUp, List<Item> candidates, Avatar avatar, CustomGameOptionsConfig customOptions)
         {
@@ -402,14 +402,36 @@ namespace MHServerEmu.Games.Entities
         }
 
         /// <summary>
-        /// Attempts to move an item into the first unlocked stash tab that accepts it,
-        /// falling back to the general inventory if no stash tab works.
+        /// Attempts to move an item into the best unlocked stash tab that accepts it,
+        /// using StashAffinity when enabled, and falling back to the general inventory
+        /// if no stash tab works.
         /// </summary>
         private InventoryResult TryAutoPickupToStash(Item item, string logPrefix = null, bool loggingEnabled = false)
         {
             using var stashRefsHandle = ListPool<PrototypeId>.Instance.Get(out List<PrototypeId> stashRefs);
             if (GetStashInventoryProtoRefs(stashRefs, getLocked: false, getUnlocked: true))
             {
+                // If StashAffinity is enabled, resolve the best stash tab for this item first.
+                if (Game?.CustomGameOptions?.ModStashAffinityEnable == true && stashRefs.Count > 0)
+                {
+                    PrototypeId affinityStashRef = ResolveModStashAffinity(item, stashRefs[0]);
+                    if (affinityStashRef != stashRefs[0])
+                    {
+                        if (loggingEnabled)
+                            Logger.Trace($"[{logPrefix}] Stash affinity redirected item to [{GameDatabase.GetPrototypeName(affinityStashRef)}]");
+
+                        Inventory stashInv = GetInventoryByRef(affinityStashRef);
+                        if (stashInv != null && stashInv.Prototype.AllowEntity(item.Prototype))
+                        {
+                            ulong? stackEntityId = InvalidId;
+                            InventoryResult result = item.ChangeInventoryLocation(stashInv, Inventory.InvalidSlot, ref stackEntityId, true);
+                            LogAutoPickupMoveResult(item, stashInv, result, stackEntityId, logPrefix, loggingEnabled);
+                            if (result == InventoryResult.Success)
+                                return result;
+                        }
+                    }
+                }
+
                 foreach (PrototypeId stashRef in stashRefs)
                 {
                     Inventory stashInv = GetInventoryByRef(stashRef);
