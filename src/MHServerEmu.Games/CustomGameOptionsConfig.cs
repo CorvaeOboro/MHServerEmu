@@ -74,7 +74,7 @@ namespace MHServerEmu.Games
         public float IncursionEnemyDamageTakenMultiplier { get; private set; } = 2.0f;
         public float IncursionEnemyVisualScale { get; private set; } = 1.5f;
         public float IncursionEnemyDamageMultiplier { get; private set; } = 1.0f;
-        public string IncursionExcludeEnemies { get; private set; } = "";
+        public string IncursionExcludeEnemies { get; private set; } = "RasputinIV , Onslaught , Surtur";
         public string IncursionEnemyPrototype { get; private set; } = "";
         public bool IncursionCommandsRequireAdmin { get; private set; } = false;
         public bool IncursionLoggingEnable { get; private set; } = false;
@@ -109,5 +109,25 @@ namespace MHServerEmu.Games
         // MOD STASH AFFINITY = redirects items to stash tabs whose custom names match item type
         public bool ModStashAffinityEnable { get; private set; } = true;
         public bool ModStashAffinityLoggingEnable { get; private set; } = false;
+
+        // REVIEW PROP PREVIEW = dev tool for exploring and previewing game props in-world
+        public bool ReviewPropPreviewLoggingEnable { get; private set; } = false;
+
+        // REVIEW DECO PREFAB = dev tool for multi-prop arrangements with VFX
+        public bool ReviewDecoPrefabLoggingEnable { get; private set; } = false;
+
+        // REVIEW MATERIAL OVERRIDE = dev tool for material/texture/model override research
+        public bool ReviewMaterialOverrideLoggingEnable { get; private set; } = false;
+
+        // DEATH RECAP = chat + banner output of biggest damage sources moments before death
+        public bool DeathRecapEnable { get; private set; } = true;
+        public int DeathRecapMaxEvents { get; private set; } = 20;
+        public int DeathRecapTopN { get; private set; } = 3;
+        public bool DeathRecapShowHeals { get; private set; } = false;
+        public bool DeathRecapColorEnable { get; private set; } = false;
+        public bool DeathRecapSingleLine { get; private set; } = true;
+        public bool DeathRecapUltraCompact { get; private set; } = true;
+        public bool DeathRecapBannerEnable { get; private set; } = false;
+        public bool DeathRecapLoggingEnable { get; private set; } = false;
     }
 }

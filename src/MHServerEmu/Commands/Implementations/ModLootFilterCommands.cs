@@ -25,7 +25,7 @@ using MHServerEmu.Games.Network;
 namespace MHServerEmu.Commands.Implementations
 {
     [CommandGroup("filter")]
-    [CommandGroupDescription("Manage personal loot filters for Ring, Medal, Insignia, Team-Up Gear, Catalysts, and Uru-Forged.")]
+    [CommandGroupDescription("Manage personal loot filters for Ring, Medal, Insignia, Team-Up Gear, Catalysts, Uru-Forged, and gear slots slot1-slot5.")]
     public class ModLootFilterCommands : CommandGroup
     {
         #region short names
@@ -112,12 +112,24 @@ namespace MHServerEmu.Commands.Implementations
                         ? ModLootFilterHelper.GetFormattedThreshold(charSection.Thresholds, key)
                         : "(none)";
                     PrototypeId effectiveRef = ModLootFilterHelper.GetEffectiveThreshold(player.LootFilter, key, avatarName);
-                    string effective = effectiveRef != PrototypeId.Invalid
-                        ? GameDatabase.GetFormattedPrototypeName(effectiveRef)
-                        : "(none)";
+                    string effective;
+                    if (effectiveRef == PrototypeId.Invalid)
+                        effective = "(none)";
+                    else if (effectiveRef == GameDatabase.LootGlobalsPrototype?.RarityUnique)
+                        effective = "unique (avatar-restricted only)";
+                    else
+                        effective = GameDatabase.GetFormattedPrototypeName(effectiveRef);
                     sb.Append($"  {key}: {effective}  (global: {global}, char: {charText})\n");
                 }
             }
+
+            if (player.LootFilter.Global.ExactItems.Count > 0)
+            {
+                sb.Append("\nExact item filters (global):\n");
+                foreach (string item in player.LootFilter.Global.ExactItems)
+                    sb.Append($"  {item}\n");
+            }
+
             return sb.ToString().TrimEnd();
         }
 
@@ -126,8 +138,8 @@ namespace MHServerEmu.Commands.Implementations
         #region  set
 
         [Command("set")]
-        [CommandDescription("Sets a rarity threshold or boolean toggle for an item type. Optional target: global (default), me, or a character name.")]
-        [CommandUsage("filter set <type> <rarity|on/off> [global|me|<character>]")]
+        [CommandDescription("Sets a rarity threshold or boolean toggle for an item type. Use 'unique' to filter avatar-restricted uniques. Optional target: global (default), me, or a character name.")]
+        [CommandUsage("filter set <type> <rarity|on/off|unique> [global|me|<character>]")]
         [CommandInvokerType(CommandInvokerType.Client)]
         [CommandParamCount(2)]
         public string Set(string[] @params, NetClient client)
@@ -142,7 +154,7 @@ namespace MHServerEmu.Commands.Implementations
             string target = @params.Length > 2 ? @params[2] : null;
 
             if (ModLootFilterHelper.FilterNameMap.TryGetValue(typeToken, out string filterKey) == false)
-                return $"Unknown type '{typeToken}'. Valid: ring, medal, insignia, teamup, catalyst, uruforged.";
+                return $"Unknown type '{typeToken}'. Valid: slot1-slot5, ring, medal, insignia, teamup, catalyst, uruforged.";
 
             ModLootFilterSection section = ResolveSection(player, target, create: true, out string scopeLabel);
             if (section == null)
@@ -192,7 +204,7 @@ namespace MHServerEmu.Commands.Implementations
             string target = @params.Length > 1 ? @params[1] : null;
 
             if (ModLootFilterHelper.FilterNameMap.TryGetValue(typeToken, out string filterKey) == false)
-                return $"Unknown type '{typeToken}'. Valid: ring, medal, insignia, teamup, catalyst, uruforged.";
+                return $"Unknown type '{typeToken}'. Valid: slot1-slot5, ring, medal, insignia, teamup, catalyst, uruforged.";
 
             ModLootFilterSection section = ResolveSection(player, target, create: false, out string scopeLabel);
             if (section == null)
@@ -259,6 +271,72 @@ namespace MHServerEmu.Commands.Implementations
                 sb.Append($"  {kvp.Key}  ({displayName})\n");
             }
             return sb.ToString().TrimEnd();
+        }
+
+        #endregion
+
+        #region  exact
+
+        [Command("exact")]
+        [CommandDescription("Manage exact-item prototype filters. Usage: !filter exact add <path> | remove <path> | list | clear")]
+        [CommandUsage("filter exact add|remove|list|clear")]
+        [CommandInvokerType(CommandInvokerType.Client)]
+        public string Exact(string[] @params, NetClient client)
+        {
+            PlayerConnection playerConnection = (PlayerConnection)client;
+            Player player = playerConnection.Player;
+            if (player?.LootFilter == null)
+                return "Loot filters are not available right now.";
+
+            if (@params.Length == 0)
+                return "Usage: !filter exact add <path> | remove <path> | list | clear";
+
+            string sub = @params[0].ToLowerInvariant();
+            switch (sub)
+            {
+                case "add":
+                case "remove":
+                    if (@params.Length < 2)
+                        return $"Usage: !filter exact {sub} <full/prototype/path.prototype>";
+
+                    string path = @params[1];
+                    if (sub == "add")
+                    {
+                        if (player.LootFilter.Global.ExactItems.Add(path))
+                        {
+                            ModLootFilterStorage.Save(player.DatabaseUniqueId, player.LootFilter);
+                            return $"Added exact-item filter: {path}";
+                        }
+                        return $"Exact-item filter already contains: {path}";
+                    }
+                    else
+                    {
+                        if (player.LootFilter.Global.ExactItems.Remove(path))
+                        {
+                            ModLootFilterStorage.Save(player.DatabaseUniqueId, player.LootFilter);
+                            return $"Removed exact-item filter: {path}";
+                        }
+                        return $"Exact-item filter did not contain: {path}";
+                    }
+
+                case "list":
+                    if (player.LootFilter.Global.ExactItems.Count == 0)
+                        return "No exact-item filters set.";
+                    var listSb = new StringBuilder();
+                    listSb.Append("Exact item filters (global):\n");
+                    foreach (string item in player.LootFilter.Global.ExactItems)
+                        listSb.Append($"  {item}\n");
+                    return listSb.ToString().TrimEnd();
+
+                case "clear":
+                    int count = player.LootFilter.Global.ExactItems.Count;
+                    player.LootFilter.Global.ExactItems.Clear();
+                    ModLootFilterStorage.Save(player.DatabaseUniqueId, player.LootFilter);
+                    return $"Cleared {count} exact-item filter(s).";
+
+                default:
+                    return "Unknown subcommand. Usage: !filter exact add <path> | remove <path> | list | clear";
+            }
         }
 
         #endregion

@@ -56,6 +56,10 @@ namespace MHServerEmu.Games.Populations
         // Visual bounds scale override (1.0 = default size).
         public float BoundsScaleOverride { get; set; } = 1f;
 
+        // Additional option flags to OR into EntitySettings during Spawn().
+        // Used by callers that need non-default flags (e.g. IsClientEntityHidden).
+        public EntitySettingsOptionFlags OptionFlagsOverride { get; set; } = EntitySettingsOptionFlags.None;
+
         public float LeashDistance
         {
             get
@@ -97,6 +101,7 @@ namespace MHServerEmu.Games.Populations
             Area area = cell.Area;
 
             using EntitySettings settings = ObjectPoolManager.Instance.Get<EntitySettings>();
+            settings.OptionFlags |= OptionFlagsOverride;
             settings.EntityRef = EntityRef;
             var entityProto = GameDatabase.GetPrototype<WorldEntityPrototype>(EntityRef);
             if (SnapToFloor != null)

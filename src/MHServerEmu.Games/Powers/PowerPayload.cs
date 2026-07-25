@@ -1148,7 +1148,12 @@ namespace MHServerEmu.Games.Powers
             // Bounded walk guards against any unexpected cycle in the ownership links.
             for (int hop = 0; entity != null && hop < 16; hop++)
             {
+                // Avatar-type incursion enemies set IsClientRenderedAsAvatar.
+                // TeamUp-type incursion enemies do not, so check the IncursionManager registry.
                 if (entity.IsClientRenderedAsAvatar)
+                    return entity;
+
+                if (Game.IncursionManager != null && Game.IncursionManager.IsIncursionEntity(entity.Id))
                     return entity;
 
                 ulong nextId = entity.PowerUserOverrideId;
@@ -1215,7 +1220,16 @@ namespace MHServerEmu.Games.Powers
                     logAbilityRef = parentRef;
             }
 
+            // Resolve the controller class name and enemy type for precise log parsing.
+            string enemyType = "Unknown";
+            string controllerCls = "Unknown";
+            if (Game?.IncursionManager != null)
+            {
+                Game.IncursionManager.TryGetControllerInfo(ultimateOwner.Id, out controllerCls, out enemyType);
+            }
+
             string damageMsg = $"[IncursionEnemy] DAMAGE: '{ultimateOwner.PrototypeName}' (id {ultimateOwner.Id}) " +
+                               $"[type={enemyType} cls={controllerCls}] " +
                                $"{(indirect ? "indirect" : "direct")} ability '{GameDatabase.GetPrototypeName(logAbilityRef)}' " +
                                $"(deliver '{GameDatabase.GetPrototypeName(PowerProtoRef)}') -> after={MathHelper.RoundToInt(totalAfter)} " +
                                $"(unscaled~{MathHelper.RoundToInt(totalBefore)}, scale x{scale:0.###}) " +

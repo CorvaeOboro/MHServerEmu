@@ -5,8 +5,8 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
     /// <summary>
     /// Incursion
     /// Rasputin IV Invader
-    /// Powers: 39 / 47 , five-gift chimera mutant created by Mister Sinister mixing collosus , quentin quire , kitty pryde , unus the untouchable , x23
-    /// + organic steel = collosus ( Osmium Armor ,  Colossal Roar) , possibly emma frost ( Diamond Form ) 
+    /// Powers: 39 / 47 , five-gift chimera mutant created by Mister Sinister mixing colossus , quentin quire , kitty pryde , unus the untouchable , x23
+    /// + organic steel = colossus ( Osmium Armor ,  Colossal Roar) , possibly emma frost ( Diamond Form ) 
     /// + telepathic = psylocke pink psy powers Psi-Strike Psi-Crush , emma frost (Telepathic Torment , Kneel Before Me , Sudden Dread), jean grey ( Psychic Hammer and Mind Crush  Psi Shield , Telepathic Illusion , Telekinetic Throw , Tactical Destruction , Psychokinetic Barrier)
     /// + intagible = kitty pryde ( Soulsword, Disciplined Strike , Logan-Style , Shadowcat's Pirouette, Just a Phase)
     /// + force field = invisible woman (Spheroid Typhoon , Shield Dome  , "Resonating Wave , Force Pillar , Steamroll , Wall of Force)

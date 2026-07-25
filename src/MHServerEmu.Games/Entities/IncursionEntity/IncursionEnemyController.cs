@@ -54,6 +54,13 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         // Set when the controller is bound to its live agent in Start().
         protected ulong AgentId { get; private set; }
 
+        /// <summary>
+        /// Entity ID of the invisible avatar nameplate proxy (TeamUp enemies only).
+        /// The proxy provides a red prestige nameplate since the client only applies
+        /// prestige colors to AvatarPrototype entities, not AgentTeamUpPrototype.
+        /// </summary>
+        public ulong ProxyEntityId { get; set; } = Entity.InvalidId;
+
         // Powers this enemy may use (assigned to the agent during setup).
         protected readonly List<PrototypeId> Powers = new();
 
@@ -85,6 +92,8 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         private TimeSpan _deathBeamTime;
         private TimeSpan _deathInvisibleTime;
         private TimeSpan _deathGraceEnd;
+        private TimeSpan _deathProxyDestroyTime;
+        private bool _proxyDestroyed;
 
         // Initial think cycles for which locomotion diagnostics are emitted.
         private int _diagThinksRemaining = 12;
@@ -148,6 +157,19 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         /// </summary>
         protected virtual int DeathGracePeriodMs => Game?.CustomGameOptions?.IncursionDeathGracePeriodMs ?? 4000;
 
+        /// <summary>
+        /// Per-enemy visual/collision scale override. 0 = use the global config value
+        /// (<c>IncursionEnemyVisualScale</c>, default 1.5). Override to shrink or enlarge
+        /// a specific enemy (e.g. 0.125 = 8x smaller).
+        /// </summary>
+        public virtual float VisualScaleOverride => 0f;
+
+        /// <summary>
+        /// Movement speed multiplier applied to the agent (1.0 = unchanged, 3.0 = triple speed).
+        /// Implemented via <see cref="PropertyEnum.MovementSpeedRate"/>.
+        /// </summary>
+        protected virtual float MovementSpeedMult => 1.0f;
+
         /// <summary>How often (ms) the think loop runs.</summary>
         protected virtual int ThinkIntervalMs => 350;
 
@@ -180,6 +202,15 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         /// <summary>Whether to say random intro dialog from <see cref="IntroDialogLines"/>.</summary>
         protected virtual bool SayIntroDialog => true;
+
+        /// <summary>
+        /// Delay (ms) after death before the nameplate proxy is destroyed.
+        /// 0 = destroy immediately on death. -1 = destroy at the same time as the
+        /// body becomes invisible (phase 3, the default for Avatar enemies).
+        /// Boss enemies override to 0 for instant nameplate removal.
+        /// TeamUp enemies override to half the invisible time for faster removal.
+        /// </summary>
+        protected virtual int NameplateProxyDestroyDelayMs => -1;
 
         /// <summary>
         /// Fallback raw-string lines. Unused - the controller now sends locale-based
@@ -253,11 +284,17 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         protected virtual float DamageScale => 0.05f;
 
         /// <summary>
-        /// Incoming damage multiplier (1.0 = unchanged, 2.0 = double damage taken).
+        /// Base incoming damage multiplier from config (default 2.0 = double damage taken).
         /// Applied as <see cref="PropertyEnum.DamagePctVulnerability"/>.
-        /// Defaults to the <c>IncursionEnemyDamageTakenMultiplier</c> config value.
         /// </summary>
         protected virtual float DamageTakenScale => Game?.CustomGameOptions?.IncursionEnemyDamageTakenMultiplier ?? 2.0f;
+
+        /// <summary>
+        /// Additional per-enemy damage taken multiplier (default 1.0 = unchanged).
+        /// The final damage taken scale is <see cref="DamageTakenScale"/> * <see cref="DamageTakenMultiplier"/>.
+        /// Override in subclasses to make specific enemies tankier (e.g. 0.5 = half damage).
+        /// </summary>
+        protected virtual float DamageTakenMultiplier => 1.0f;
 
         /// <summary>
         /// When false (default), the enemy cannot receive healing from any source.
@@ -329,9 +366,30 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         /// <summary>
         /// Avatar prototype the client renders this invader as.
-        /// <see cref="PrototypeId.Invalid"/> => render the combat body itself.
+        /// <see cref="PrototypeId.Invalid"/> => render the combat body itself, or check <see cref="RenderTeamupRef"/>.
         /// </summary>
         public virtual PrototypeId RenderAvatarRef => PrototypeId.Invalid;
+
+        /// <summary>
+        /// Team-Up prototype the client renders this invader as (alternative to <see cref="RenderAvatarRef"/>
+        /// for Team-Up-based illusion proxies). <see cref="PrototypeId.Invalid"/> => not a Team-Up render.
+        /// </summary>
+        public virtual PrototypeId RenderTeamupRef => PrototypeId.Invalid;
+
+        /// <summary>
+        /// Boss entity prototype spawned as the combat body itself (no render override).
+        /// When non-Invalid, the spawn spec's EntityRef is overridden to this boss prototype,
+        /// and no ClientRenderPrototypeRef is set — the boss renders as itself.
+        /// <see cref="PrototypeId.Invalid"/> => not a boss spawn (check Avatar/TeamUp refs).
+        /// </summary>
+        public virtual PrototypeId RenderBossRef => PrototypeId.Invalid;
+
+        /// <summary>
+        /// Categorizes this invader for logging and parsing: "Avatar", "TeamUp", or "Boss".
+        /// Subclasses override to identify their render/spawn path so the log parser can
+        /// group damage by the correct controller class rather than guessing from display names.
+        /// </summary>
+        public virtual string EnemyType => "Controller";
 
         /// <summary>
         /// Optional costume pool with per-entry enabled toggles. When non-null, one enabled
@@ -504,6 +562,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         {
             if (_disposed) return;
             _disposed = true;
+            DestroyNameplateProxy();
             Game?.GameEventScheduler?.CancelAllEvents(_events);
         }
 
@@ -517,8 +576,13 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         // Boss rank for presence and damage scaling.
         private const string BossRankName = "Mods/Ranks/Boss.prototype";
 
+        // Boss rank that hides the overhead nameplate. Used for TeamUp enemies
+        // whose nameplate is provided by a proxy entity instead.
+        private const string BossNoOverheadRankName = "Mods/Ranks/BossNoOverheadInfo.prototype";
+
         private static PrototypeId s_hostileAllianceRef = PrototypeId.Invalid;
         private static PrototypeId s_bossRankRef = PrototypeId.Invalid;
+        private static PrototypeId s_bossNoOverheadRankRef = PrototypeId.Invalid;
 
         /// <summary>
         /// Converts the spawned host into a mortal, hostile, mobile combatant regardless of
@@ -550,9 +614,17 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
                 agent.Properties[PropertyEnum.AllianceOverride] = hostileAlliance;
 
             // Promote to Boss rank for presence and damage scaling.
-            PrototypeId bossRank = ResolveBossRank();
+            // Non-avatar enemies (TeamUp, Boss) use BossNoOverheadInfo to hide their
+            // native nameplate; the red nameplate is provided by the proxy entity.
+            // Avatar enemies already render as avatars and get prestige coloring natively,
+            // so they keep the standard Boss rank with its overhead info.
+            PrototypeId bossRank = (RenderAvatarRef == PrototypeId.Invalid)
+                ? ResolveBossNoOverheadRank()
+                : ResolveBossRank();
             if (bossRank != PrototypeId.Invalid)
+            {
                 agent.Properties[PropertyEnum.Rank] = bossRank;
+            }
 
             if (agent.IsHostileToPlayers() == false)
                 Logger.Warn($"[IncursionEnemy] {InvaderLabel} ('{agent.PrototypeName}') is NOT hostile to players " +
@@ -571,6 +643,13 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             if (s_bossRankRef == PrototypeId.Invalid)
                 s_bossRankRef = GameDatabase.GetPrototypeRefByName(BossRankName);
             return s_bossRankRef;
+        }
+
+        private static PrototypeId ResolveBossNoOverheadRank()
+        {
+            if (s_bossNoOverheadRankRef == PrototypeId.Invalid)
+                s_bossNoOverheadRankRef = GameDatabase.GetPrototypeRefByName(BossNoOverheadRankName);
+            return s_bossNoOverheadRankRef;
         }
 
         #endregion
@@ -668,12 +747,23 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         /// </summary>
         protected virtual void ApplyCombatScaling(Agent agent)
         {
-            float damageTakenScale = DamageTakenScale;
+            float damageTakenScale = DamageTakenScale * DamageTakenMultiplier;
             if (damageTakenScale > 1.0f)
             {
                 float vulnerability = damageTakenScale - 1.0f;
                 agent.Properties[PropertyEnum.DamagePctVulnerability, DamageType.Any] = vulnerability;
             }
+            else if (damageTakenScale < 1.0f)
+            {
+                // Below 1.0 = less damage than baseline. Use negative vulnerability (resistance).
+                float resistance = 1.0f - damageTakenScale;
+                agent.Properties[PropertyEnum.DamagePctVulnerability, DamageType.Any] = -resistance;
+            }
+
+            // Apply movement speed multiplier.
+            float speedMult = MovementSpeedMult;
+            if (speedMult != 1.0f && speedMult > 0f)
+                agent.Properties[PropertyEnum.MovementSpeedRate] = speedMult;
 
             LogSpawnDiagnostics(agent, damageTakenScale);
         }
@@ -877,9 +967,21 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             if (string.IsNullOrEmpty(name))
             {
                 PrototypeId avatarRef = RenderAvatarRef;
-                name = avatarRef != PrototypeId.Invalid
-                    ? ShortPrototypeName(GameDatabase.GetPrototypeName(avatarRef))
-                    : StripControllerPrefix(GetType().Name);
+                if (avatarRef != PrototypeId.Invalid)
+                    name = ShortPrototypeName(GameDatabase.GetPrototypeName(avatarRef));
+                else
+                {
+                    PrototypeId teamupRef = RenderTeamupRef;
+                    if (teamupRef != PrototypeId.Invalid)
+                        name = ShortPrototypeName(GameDatabase.GetPrototypeName(teamupRef));
+                    else
+                    {
+                        PrototypeId bossRef = RenderBossRef;
+                        name = bossRef != PrototypeId.Invalid
+                            ? ShortPrototypeName(GameDatabase.GetPrototypeName(bossRef))
+                            : StripControllerPrefix(GetType().Name);
+                    }
+                }
             }
 
             return AgentId != 0 ? $"{name}#{AgentId}" : name;
@@ -1128,6 +1230,12 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
                     _deathBeamTime = now + TimeSpan.FromMilliseconds(beamMs);
                     _deathInvisibleTime = now + TimeSpan.FromMilliseconds(invisibleMs);
                     _deathGraceEnd = now + TimeSpan.FromMilliseconds(graceMs);
+
+                    // Schedule proxy destruction based on the controller's preference.
+                    int proxyDelay = NameplateProxyDestroyDelayMs;
+                    int proxyDestroyMs = proxyDelay < 0 ? invisibleMs : Math.Min(proxyDelay, graceMs);
+                    _deathProxyDestroyTime = now + TimeSpan.FromMilliseconds(proxyDestroyMs);
+                    _proxyDestroyed = false;
                     if (IsIncursionLoggingEnabled)
                         Logger.Info($"[IncursionEnemy:Death] {InvaderLabel} entering grace period for {graceMs}ms so lingering effects can resolve.");
                     IncursionLogCollator.WriteLine(AgentId, $"[IncursionEnemy:Death] Entering grace period for {graceMs}ms.");
@@ -1190,7 +1298,57 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             UpdateCombatState(agent, target);
             CheckAndRecoverIfStuck(agent, target);
             CheckAndStopExpiredChannel(agent);
+
+            // Sync the nameplate proxy's position to the combat body.
+            SyncNameplateProxy(agent);
+
             ScheduleNextThink();
+        }
+
+        #endregion
+
+        #region Nameplate Proxy
+
+        /// <summary>
+        /// Syncs the invisible nameplate proxy's position to the combat body.
+        /// The proxy is attached via physics, but we also update position explicitly
+        /// as a fallback in case the attachment doesn't propagate for invisible entities.
+        /// </summary>
+        private void SyncNameplateProxy(Agent agent)
+        {
+            if (ProxyEntityId == Entity.InvalidId) return;
+            var proxy = Game.EntityManager.GetEntity<WorldEntity>(ProxyEntityId);
+            if (proxy == null || proxy.IsInWorld == false) return;
+            if (agent == null || agent.IsInWorld == false) return;
+
+            Vector3 proxyPos = proxy.RegionLocation.Position;
+            Vector3 agentPos = agent.RegionLocation.Position;
+            if (Vector3.DistanceSquared2D(proxyPos, agentPos) > 1f)
+            {
+                proxy.ChangeRegionPosition(agentPos, agent.RegionLocation.Orientation,
+                    ChangePositionFlags.DoNotSendToServer | ChangePositionFlags.SkipInterestUpdate);
+            }
+        }
+
+        /// <summary>
+        /// Destroys the invisible nameplate proxy entity. Called during death cleanup
+        /// and controller disposal.
+        /// </summary>
+        private void DestroyNameplateProxy()
+        {
+            if (ProxyEntityId == Entity.InvalidId) return;
+            try
+            {
+                var proxy = Game.EntityManager.GetEntity<WorldEntity>(ProxyEntityId);
+                if (proxy != null)
+                {
+                    proxy.ClearSpoofAvatarPlayerName();
+                    proxy.ExitWorld();
+                    proxy.Destroy();
+                }
+            }
+            catch { /* proxy may already be destroyed */ }
+            ProxyEntityId = Entity.InvalidId;
         }
 
         #endregion
@@ -1205,6 +1363,15 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         private void ThinkDying(Agent agent)
         {
             TimeSpan now = Game.CurrentTime;
+
+            // Destroy the nameplate proxy at the configured time (may be before phase 3).
+            if (_proxyDestroyed == false && now >= _deathProxyDestroyTime)
+            {
+                _proxyDestroyed = true;
+                DestroyNameplateProxy();
+                if (IsIncursionLoggingEnabled)
+                    Logger.Info($"[IncursionEnemy:Death] {InvaderLabel} nameplate proxy destroyed at {NameplateProxyDestroyDelayMs}ms delay.");
+            }
 
             // Phase 1: Outro (dialog voicebox) at T+1.5s
             if (_deathPhase < 1 && now >= _deathOutroTime)
@@ -1273,6 +1440,13 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
                     // grace period ends so lingering DoTs can still resolve their damage scale.
                     try { agent.ExitWorld(); }
                     catch { /* entity may already be destroyed */ }
+
+                    // Fallback: destroy the proxy if the early check hasn't already done so.
+                    if (_proxyDestroyed == false)
+                    {
+                        _proxyDestroyed = true;
+                        DestroyNameplateProxy();
+                    }
 
                     if (IsIncursionLoggingEnabled)
                         Logger.Info($"[IncursionEnemy:Death] {InvaderLabel} turned invisible + VFX + exited world.");

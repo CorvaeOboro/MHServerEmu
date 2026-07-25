@@ -32,6 +32,7 @@ namespace MHServerEmu.Games.Loot
     {
         public Dictionary<string, PrototypeId> Thresholds { get; set; } = new(StringComparer.OrdinalIgnoreCase);
         public Dictionary<string, bool> Booleans { get; set; } = new(StringComparer.OrdinalIgnoreCase);
+        public HashSet<string> ExactItems { get; set; } = new(StringComparer.OrdinalIgnoreCase);
     }
 
     /// <summary>
@@ -92,6 +93,7 @@ namespace MHServerEmu.Games.Loot
         {
             public Dictionary<string, string> Thresholds { get; set; } = new(StringComparer.OrdinalIgnoreCase);
             public Dictionary<string, bool> Booleans { get; set; } = new(StringComparer.OrdinalIgnoreCase);
+            public HashSet<string> ExactItems { get; set; } = new(StringComparer.OrdinalIgnoreCase);
         }
 
         private class PersistedFilter
@@ -151,6 +153,11 @@ namespace MHServerEmu.Games.Loot
             if (persisted.Booleans != null)
                 foreach (var kvp in persisted.Booleans)
                     section.Booleans[kvp.Key.ToLowerInvariant()] = kvp.Value;
+
+            if (persisted.ExactItems != null)
+                foreach (string item in persisted.ExactItems)
+                    if (string.IsNullOrWhiteSpace(item) == false)
+                        section.ExactItems.Add(item);
 
             if (persisted.Thresholds != null)
             {
@@ -213,6 +220,9 @@ namespace MHServerEmu.Games.Loot
             foreach (var kvp in section.Booleans)
                 persisted.Booleans[kvp.Key.ToLowerInvariant()] = kvp.Value;
 
+            foreach (string item in section.ExactItems)
+                persisted.ExactItems.Add(item);
+
             return persisted;
         }
 
@@ -233,6 +243,15 @@ namespace MHServerEmu.Games.Loot
             EquipmentInvUISlot.Ring,
             EquipmentInvUISlot.Medal,
             EquipmentInvUISlot.Insignia
+        };
+
+        private static readonly HashSet<EquipmentInvUISlot> GearSlots = new()
+        {
+            EquipmentInvUISlot.Gear01,
+            EquipmentInvUISlot.Gear02,
+            EquipmentInvUISlot.Gear03,
+            EquipmentInvUISlot.Gear04,
+            EquipmentInvUISlot.Gear05
         };
 
         #region Filter apply
@@ -266,8 +285,10 @@ namespace MHServerEmu.Games.Loot
             });
             if (removed > 0 && lootFilterLogging)
             {
-                Logger.Trace($"[LootFilter] Removed {removed} filtered item(s) for player [{player}]");
-                ModLootFilterLogCollator.WriteLine(player.Id, $"[LootFilter] Removed {removed} filtered item(s) for player [{player}]");
+                int vaporized = summary.VaporizedItemSpecs.Count;
+                string summaryMsg = $"[LootFilter] Summary: {removed} item(s) removed by LootFilter (pure removal, no credits/XP), {vaporized} item(s) vaporized (converted to credits/PetTech XP) for player [{player}]";
+                Logger.Trace(summaryMsg);
+                ModLootFilterLogCollator.WriteLine(player.Id, summaryMsg);
             }
         }
 
@@ -276,6 +297,17 @@ namespace MHServerEmu.Games.Loot
             reason = null;
             ItemPrototype itemProto = itemSpec.ItemProtoRef.As<ItemPrototype>();
             if (itemProto == null) return false;
+
+            // Global exact-item filter: delete specific prototype paths regardless of rarity or slot
+            if (filter.Global.ExactItems.Count > 0)
+            {
+                string itemProtoName = GameDatabase.GetPrototypeName(itemSpec.ItemProtoRef);
+                if (string.IsNullOrEmpty(itemProtoName) == false && filter.Global.ExactItems.Contains(itemProtoName))
+                {
+                    reason = $"ExactItemFilter ({itemProtoName})";
+                    return true;
+                }
+            }
 
             // Character-specific filter: remove items bound to other characters, keep Any-Hero items
             if (enableCharacterFilter &&
@@ -295,6 +327,10 @@ namespace MHServerEmu.Games.Loot
             if (FilterableSlots.Contains(slot))
             {
                 filterKey = slot.ToString().ToLowerInvariant();
+            }
+            else if (GearSlots.Contains(slot))
+            {
+                filterKey = $"slot{(int)slot}";   // Gear01 -> slot1, Gear02 -> slot2, ... Gear05 -> slot5
             }
 
             // 2. Type-based check (TeamUpGear, Catalyst, UruForged slot)
@@ -337,10 +373,34 @@ namespace MHServerEmu.Games.Loot
                 return false;
 
             RarityPrototype itemRarity = itemSpec.RarityProtoRef.As<RarityPrototype>();
-            RarityPrototype thresholdRarity = thresholdRef.As<RarityPrototype>();
-            if (itemRarity == null || thresholdRarity == null)
+            if (itemRarity == null)
             {
                 reason = "Rarity lookup failed (null rarity prototype)";
+                return false;
+            }
+
+            // Special case: threshold is set to the Unique rarity -> only delete unique items that are
+            // avatar-restricted to the current character. Any-Hero uniques (EquippableBy Invalid) are preserved.
+            PrototypeId rarityUnique = GameDatabase.LootGlobalsPrototype?.RarityUnique ?? PrototypeId.Invalid;
+            if (thresholdRef == rarityUnique)
+            {
+                if (itemSpec.RarityProtoRef != rarityUnique)
+                    return false;
+
+                if (itemSpec.EquippableBy == PrototypeId.Invalid)
+                    return false; // Any-Hero unique: never delete
+
+                if (itemSpec.EquippableBy != avatarProtoRef)
+                    return false; // Bound to another character (already handled by character-specific mode, or simply not ours)
+
+                reason = $"{filterKey} unique filter (restricted to {GameDatabase.GetPrototypeName(itemSpec.EquippableBy)}, current avatar is {GameDatabase.GetPrototypeName(avatarProtoRef)})";
+                return true;
+            }
+
+            RarityPrototype thresholdRarity = thresholdRef.As<RarityPrototype>();
+            if (thresholdRarity == null)
+            {
+                reason = "Rarity lookup failed (null threshold rarity prototype)";
                 return false;
             }
 
@@ -521,6 +581,16 @@ namespace MHServerEmu.Games.Loot
 
         public static readonly Dictionary<string, string> FilterNameMap = new(StringComparer.OrdinalIgnoreCase)
         {
+            ["slot1"] = "slot1",
+            ["gear01"] = "slot1",
+            ["slot2"] = "slot2",
+            ["gear02"] = "slot2",
+            ["slot3"] = "slot3",
+            ["gear03"] = "slot3",
+            ["slot4"] = "slot4",
+            ["gear04"] = "slot4",
+            ["slot5"] = "slot5",
+            ["gear05"] = "slot5",
             ["ring"] = "ring",
             ["medal"] = "medal",
             ["insignia"] = "insignia",

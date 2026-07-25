@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using System.Threading;
 using MHServerEmu.Core.Config;
 using MHServerEmu.Core.Logging;
+using MHServerEmu.Core.Memory;
 using MHServerEmu.Core.VectorMath;
 using MHServerEmu.Games.Entities;
 using MHServerEmu.Games.Entities.Avatars;
@@ -277,6 +278,26 @@ namespace MHServerEmu.Games.Populations
         }
 
         /// <summary>
+        /// Resolves the controller class name and enemy type for the given invader entity.
+        /// Used by <see cref="Powers.PowerPayload"/> damage logging so the log parser can
+        /// group damage by the exact controller class (e.g. IncursionEnemyBossMODOK)
+        /// rather than guessing from display names or prototype names.
+        /// </summary>
+        public bool TryGetControllerInfo(ulong entityId, out string className, out string enemyType)
+        {
+            if (_controllersByEntity.TryGetValue(entityId, out IncursionEnemyController controller) && controller.IsFinished == false)
+            {
+                className = controller.GetType().Name;
+                enemyType = controller.EnemyType;
+                return true;
+            }
+
+            className = null;
+            enemyType = null;
+            return false;
+        }
+
+        /// <summary>
         /// Damage scale for the given invader entity and root power, or 1.0 if not a live invader.
         /// Queried by <see cref="Powers.PowerPayload"/>.
         /// </summary>
@@ -538,20 +559,32 @@ namespace MHServerEmu.Games.Populations
                 return Logger.WarnReturn<WorldEntity>(null, $"[Incursion] SpawnInvaderNearAvatar: cannot spawn enemy {DescribeEnemy()}: {invalidReason}. Set a valid enemy with '!incursion enemy <pattern>' or the IncursionEnemyPrototype config.");
             }
 
+            // Create the controller early so we can read per-enemy overrides (e.g. visual scale).
+            IncursionEnemyController controller = specificController ?? CreateRandomController();
+
             // Try several positions in a ring around the avatar to find an open nav spot.
             // Avoids spawning inside walls when the player is facing one.
+            // Scale the clearance bounds by the same BoundsScaleOverride that will be applied
+            // post-spawn, plus a safety margin, so the navmesh check accounts for the actual
+            // entity size and the rendered model's collision being larger than the combat body.
+            float configScale = _game.CustomGameOptions?.IncursionEnemyVisualScale ?? 1.5f;
+            float boundsScale = controller.VisualScaleOverride > 0f
+                ? controller.VisualScaleOverride
+                : configScale;
+            const float SpawnClearanceMargin = 1.2f;  // extra padding to avoid edge-clipping
+            float clearanceScale = boundsScale * SpawnClearanceMargin;
             PathFlags pathFlags = Region.GetPathFlagsForEntity(entityProto);
-            Vector3 spawnPosition = ChooseOpenSpawnPosition(region, avatar, entityProto, pathFlags);
+            Vector3 spawnPosition = ChooseOpenSpawnPosition(region, avatar, entityProto, pathFlags, clearanceScale);
             if (spawnPosition == Vector3.Zero)
             {
-                specificController?.Dispose();
+                controller.Dispose();
                 return Logger.WarnReturn<WorldEntity>(null, $"[Incursion] SpawnInvaderNearAvatar: could not find open spawn position near {avatar.RegionLocation.Position.ToStringNames()}.");
             }
 
             var cell = region.GetCellAtPosition(spawnPosition);
             if (cell == null)
             {
-                specificController?.Dispose();
+                controller.Dispose();
                 return Logger.WarnReturn<WorldEntity>(null, $"[Incursion] SpawnInvaderNearAvatar: no cell at {spawnPosition.ToStringNames()}.");
             }
 
@@ -565,10 +598,9 @@ namespace MHServerEmu.Games.Populations
             spec.EntityRef = EffectiveEnemyRef;
             spec.Transform = Transform3.Identity();
             spec.SnapToFloor = true;
-            spec.BoundsScaleOverride = _game.CustomGameOptions?.IncursionEnemyVisualScale ?? 1.5f;
+            spec.BoundsScaleOverride = boundsScale;
 
-            // Use the specified controller or pick a random one, then apply its render skin.
-            IncursionEnemyController controller = specificController ?? CreateRandomController();
+            // Apply the controller's render skin (avatar/team-up/boss).
             ApplyRenderSkin(spec, controller);
 
             int level = region.GetAreaLevel(cell.Area);
@@ -615,6 +647,15 @@ namespace MHServerEmu.Games.Populations
                 _controllers.Add(controller);
                 _controllersByEntity[controller.EntityId] = controller;
                 IncursionLogCollator.BeginSession(invaderAgent.Id, controller.GetLabel() ?? controller.GetType().Name);
+
+                // TeamUp and Boss enemies: spawn an invisible avatar proxy for the red
+                // prestige nameplate. The client only applies prestige colors to
+                // AvatarPrototype entities, so we spawn a second entity rendered as an
+                // avatar with prestige level 5 (red). The proxy's model is hidden via
+                // IsClientEntityHidden, and its _spoofAvatarPlayerName provides the name.
+                // Avatar-type enemies don't need this — they already render as avatars.
+                if (controller.RenderAvatarRef == PrototypeId.Invalid)
+                    SpawnNameplateProxy(region, invaderAgent, controller);
             }
             else
             {
@@ -622,6 +663,116 @@ namespace MHServerEmu.Games.Populations
             }
 
             return entity;
+        }
+
+        /// <summary>
+        /// Spawns an invisible avatar-rendered proxy entity that provides a red prestige
+        /// nameplate for TeamUp and Boss incursion enemies. The client only applies
+        /// prestige-based name coloring for AvatarPrototype entities, not AgentTeamUpPrototype
+        /// or standard AgentPrototype bosses. The proxy's 3D model is hidden via
+        /// IsClientEntityHidden, and the spoof avatar player name provides the display name.
+        /// </summary>
+        private void SpawnNameplateProxy(Region region, Agent combatBody, IncursionEnemyController controller)
+        {
+            // Use a known AvatarPrototype for the render override.
+            PrototypeId avatarRef = SheHulkAvatarProtoRef;
+            var avatarProto = avatarRef.As<AvatarPrototype>();
+            if (avatarProto == null)
+            {
+                Logger.Warn($"[Incursion] SpawnNameplateProxy: SheHulkAvatarProtoRef is not a valid AvatarPrototype.");
+                return;
+            }
+
+            Vector3 position = combatBody.RegionLocation.Position;
+            var manager = region.PopulationManager;
+            var group = manager.CreateSpawnGroup();
+            group.Transform = Transform3.BuildTransform(position, Orientation.Zero);
+
+            var spec = manager.CreateSpawnSpec(group);
+            spec.EntityRef = EffectiveEnemyRef;  // same combat body prototype
+            spec.Transform = Transform3.Identity();
+            spec.SnapToFloor = true;
+
+            // Render as an avatar so the client applies prestige name colors.
+            spec.ClientRenderPrototypeRef = avatarRef;
+
+            // Custom overhead name with prefix/suffix.
+            string displayName = controller.InvaderDisplayName;
+            if (string.IsNullOrEmpty(displayName) == false)
+            {
+                string prefix = controller.NameplatePrefix;
+                string suffix = controller.NameplateSuffix;
+                if (string.IsNullOrEmpty(prefix) == false)
+                    displayName = prefix + displayName;
+                if (string.IsNullOrEmpty(suffix) == false)
+                    displayName = displayName + suffix;
+            }
+            spec.ClientRenderPlayerName = displayName;
+
+            // Intentionally NOT setting CostumeCurrent: the client creates the avatar pawn
+            // from the hierarchy End message + avatar serialization tail, and uses the
+            // costume's CostumeUnrealClass for the visible mesh. Without a costume, the
+            // pawn exists for nameplate/prestige rendering but has no mesh to draw.
+            // (Setting IsClientEntityHidden + Visible=false didn't hide the mesh because
+            // the client doesn't respect those flags for modded render-as-avatar entities.)
+
+            // Prestige level 5 = red nameplate.
+            spec.Properties[PropertyEnum.AvatarPrestigeLevel] = controller.NameplatePrestigeLevel;
+
+            // Make the proxy non-hostile and untargetable so it doesn't interfere with combat.
+            spec.Properties[PropertyEnum.Untargetable] = true;
+
+            // Hide the proxy's 3D model using IsClientEntityHidden. This flag tells the
+            // client to create the avatar pawn but NOT add it to the visible render scene,
+            // while keeping the pawn alive for nameplate/UI rendering. This is the same
+            // mechanism used by PlayableExpandedController to hide the main avatar body.
+            // We also set Visible=false and BoundsScaleOverride=0.001f as secondary measures.
+            spec.OptionFlagsOverride = EntitySettingsOptionFlags.IsClientEntityHidden;
+            spec.Properties[PropertyEnum.Visible] = false;
+            spec.BoundsScaleOverride = 0.001f;
+
+            spec.Spawn();
+
+            var proxy = spec.ActiveEntity;
+            if (proxy == null)
+            {
+                manager.RemoveSpawnGroup(group.Id);
+                Logger.Warn($"[Incursion] SpawnNameplateProxy: failed to spawn proxy entity.");
+                return;
+            }
+
+            // Zero out the level so the nameplate doesn't display a level number.
+            proxy.Properties[PropertyEnum.CharacterLevel] = 0;
+            proxy.Properties[PropertyEnum.CombatLevel] = 0;
+
+            // Strip all powers from the proxy so it doesn't use SpidermanClone's web attacks
+            // or play any power animations/voicelines on the avatar pawn.
+            if (proxy is Agent proxyAgent && proxyAgent.PowerCollection != null)
+            {
+                using var powersHandle = ListPool<PrototypeId>.Instance.Get(out List<PrototypeId> powerRefs);
+                foreach (var kvp in proxyAgent.PowerCollection)
+                    powerRefs.Add(kvp.Value.PowerPrototypeRef);
+                foreach (var powerRef in powerRefs)
+                    proxyAgent.UnassignPower(powerRef);
+            }
+
+            // Disable AI and set dormant so the proxy never thinks or activates powers.
+            if (proxy is Agent aiAgent)
+            {
+                aiAgent.AIController?.SetIsEnabled(false);
+                aiAgent.SetDormant(true);
+            }
+
+            // Prevent the proxy from being simulated (stops AI think, power activation, locomotion).
+            proxy.SetSimulated(false);
+
+            // Attach the proxy to the combat body so it follows position automatically.
+            proxy.AttachToEntity(combatBody);
+
+            controller.ProxyEntityId = proxy.Id;
+
+            LogInfo($"[Incursion] Spawned nameplate proxy (id {proxy.Id}) for TeamUp invader " +
+                    $"{controller.GetLabel()} at {position.ToStringNames()}. IsClientEntityHidden, prestige={controller.NameplatePrestigeLevel}.");
         }
 
         /// <summary>
@@ -725,46 +876,113 @@ namespace MHServerEmu.Games.Populations
 
         /// <summary>
         /// Applies the controller's render identity to the spawn spec before Spawn().
-        /// Uses the controller's costume if valid, otherwise the avatar's starting costume.
+        /// Three render paths, checked in priority order:
+        ///   1. <strong>Boss</strong> (<see cref="IncursionEnemyController.RenderBossRef"/>):
+        ///      overrides the spawn spec's EntityRef to the boss prototype — the boss IS the combat body.
+        ///   2. <strong>Avatar</strong> (<see cref="IncursionEnemyController.RenderAvatarRef"/>):
+        ///      sets ClientRenderPrototypeRef + CostumeCurrent so a generic combat body renders as the avatar.
+        ///   3. <strong>Team-Up</strong> (<see cref="IncursionEnemyController.RenderTeamupRef"/>):
+        ///      sets ClientRenderPrototypeRef to the Team-Up prototype (no costume; client resolves model from UnrealClass).
         /// </summary>
         private void ApplyRenderSkin(SpawnSpec spec, IncursionEnemyController controller)
         {
+            // --- Boss spawn path ---
+            // The boss prototype IS the combat body. Override the spawn spec's EntityRef
+            // so the entity spawns as the boss itself, with its native model, animations, and powers.
+            // No ClientRenderPrototypeRef or CostumeCurrent is set.
+            PrototypeId bossRef = controller.RenderBossRef;
+            if (bossRef != PrototypeId.Invalid)
+            {
+                spec.EntityRef = bossRef;
+
+                // Custom overhead name for the boss invader.
+                string displayName = controller.InvaderDisplayName;
+                if (string.IsNullOrEmpty(displayName) == false)
+                {
+                    string prefix = controller.NameplatePrefix;
+                    string suffix = controller.NameplateSuffix;
+                    if (string.IsNullOrEmpty(prefix) == false)
+                        displayName = prefix + displayName;
+                    if (string.IsNullOrEmpty(suffix) == false)
+                        displayName = displayName + suffix;
+                }
+
+                LogInfo($"[Incursion]   render skin: {controller.GetType().Name} as boss '{GameDatabase.GetPrototypeName(bossRef)}' " +
+                            $"(entityRef override, no client render proto).");
+                return;
+            }
+
+            // --- Avatar render path ---
             PrototypeId renderRef = controller.RenderAvatarRef;
-            if (renderRef == PrototypeId.Invalid)
-                return;
-
-            var avatarProto = renderRef.As<AvatarPrototype>();
-            if (avatarProto == null)
+            if (renderRef != PrototypeId.Invalid)
             {
-                Logger.Warn($"[Incursion] {controller.GetType().Name}.RenderAvatarRef '{GameDatabase.GetPrototypeName(renderRef)}' is not an avatar; rendering the combat body itself.");
+                var avatarProto = renderRef.As<AvatarPrototype>();
+                if (avatarProto == null)
+                {
+                    Logger.Warn($"[Incursion] {controller.GetType().Name}.RenderAvatarRef '{GameDatabase.GetPrototypeName(renderRef)}' is not an avatar; rendering the combat body itself.");
+                    return;
+                }
+
+                spec.ClientRenderPrototypeRef = renderRef;
+
+                // Custom overhead name ( "Incursion Invader") drawn above the rendered avatar.
+                string displayName = controller.InvaderDisplayName;
+                if (string.IsNullOrEmpty(displayName) == false)
+                {
+                    string prefix = controller.NameplatePrefix;
+                    string suffix = controller.NameplateSuffix;
+                    if (string.IsNullOrEmpty(prefix) == false)
+                        displayName = prefix + displayName;
+                    if (string.IsNullOrEmpty(suffix) == false)
+                        displayName = displayName + suffix;
+                }
+                spec.ClientRenderPlayerName = displayName;
+
+                // The avatar's visible model is the costume's CostumeUnrealClass. 
+                PrototypeId costumeRef = controller.RenderCostumeRef;
+                if (costumeRef == PrototypeId.Invalid || costumeRef.As<CostumePrototype>() == null)
+                    costumeRef = avatarProto.GetStartingCostumeForPlatform(Platforms.PC);
+
+                if (costumeRef != PrototypeId.Invalid)
+                    spec.Properties[PropertyEnum.CostumeCurrent] = costumeRef;
+
+                LogInfo($"[Incursion]   render skin: {controller.GetType().Name} as avatar '{GameDatabase.GetPrototypeName(renderRef)}' " +
+                            $"costume={(costumeRef != PrototypeId.Invalid ? GameDatabase.GetPrototypeName(costumeRef) : "(none)")}.");
                 return;
             }
 
-            spec.ClientRenderPrototypeRef = renderRef;
-
-            // Custom overhead name ( "Incursion Invader") drawn above the rendered avatar.
-            string displayName = controller.InvaderDisplayName;
-            if (string.IsNullOrEmpty(displayName) == false)
+            // --- Team-Up render path ---
+            PrototypeId teamupRef = controller.RenderTeamupRef;
+            if (teamupRef != PrototypeId.Invalid)
             {
-                string prefix = controller.NameplatePrefix;
-                string suffix = controller.NameplateSuffix;
-                if (string.IsNullOrEmpty(prefix) == false)
-                    displayName = prefix + displayName;
-                if (string.IsNullOrEmpty(suffix) == false)
-                    displayName = displayName + suffix;
+                var teamUpProto = teamupRef.As<AgentTeamUpPrototype>();
+                if (teamUpProto == null)
+                {
+                    Logger.Warn($"[Incursion] {controller.GetType().Name}.RenderTeamupRef '{GameDatabase.GetPrototypeName(teamupRef)}' is not a Team-Up; rendering the combat body itself.");
+                    return;
+                }
+
+                spec.ClientRenderPrototypeRef = teamupRef;
+
+                // Custom overhead name drawn above the rendered Team-Up.
+                string displayName = controller.InvaderDisplayName;
+                if (string.IsNullOrEmpty(displayName) == false)
+                {
+                    string prefix = controller.NameplatePrefix;
+                    string suffix = controller.NameplateSuffix;
+                    if (string.IsNullOrEmpty(prefix) == false)
+                        displayName = prefix + displayName;
+                    if (string.IsNullOrEmpty(suffix) == false)
+                        displayName = displayName + suffix;
+                }
+                spec.ClientRenderPlayerName = displayName;
+
+                // Team-Ups use CostumeUnrealOverrides (AssetId pairs), not CostumePrototype refs.
+                // No CostumeCurrent property is set; the client resolves the model from the
+                // Team-Up prototype's UnrealClass directly.
+
+                LogInfo($"[Incursion]   render skin: {controller.GetType().Name} as Team-Up '{GameDatabase.GetPrototypeName(teamupRef)}'.");
             }
-            spec.ClientRenderPlayerName = displayName;
-
-            // The avatar's visible model is the costume's CostumeUnrealClass. 
-            PrototypeId costumeRef = controller.RenderCostumeRef;
-            if (costumeRef == PrototypeId.Invalid || costumeRef.As<CostumePrototype>() == null)
-                costumeRef = avatarProto.GetStartingCostumeForPlatform(Platforms.PC);
-
-            if (costumeRef != PrototypeId.Invalid)
-                spec.Properties[PropertyEnum.CostumeCurrent] = costumeRef;
-
-            LogInfo($"[Incursion]   render skin: {controller.GetType().Name} as avatar '{GameDatabase.GetPrototypeName(renderRef)}' " +
-                        $"costume={(costumeRef != PrototypeId.Invalid ? GameDatabase.GetPrototypeName(costumeRef) : "(none)")}.");
         }
 
         #endregion
@@ -775,7 +993,7 @@ namespace MHServerEmu.Games.Populations
         /// Tries positions ahead of the player's viewing direction first, then falls back
         /// to a wider arc around the player, and finally right next to the player.
         /// </summary>
-        private Vector3 ChooseOpenSpawnPosition(Region region, Avatar avatar, WorldEntityPrototype entityProto, PathFlags pathFlags)
+        private Vector3 ChooseOpenSpawnPosition(Region region, Avatar avatar, WorldEntityPrototype entityProto, PathFlags pathFlags, float boundsScale = 1f)
         {
             Vector3 playerPos = avatar.RegionLocation.Position;
             float playerYaw = avatar.Orientation.Yaw;
@@ -788,6 +1006,7 @@ namespace MHServerEmu.Games.Populations
                 float angle = playerYaw + angleOffset;
                 Vector3 origin = playerPos + new Vector3(MathF.Cos(angle) * baseDistance, MathF.Sin(angle) * baseDistance, 0f);
                 Bounds bounds = new(entityProto.Bounds, origin);
+                bounds.Scale(boundsScale);
                 Vector3 candidate = ChooseSpawnPosition(region, origin, ref bounds, pathFlags, SpawnRadius);
                 if (candidate != origin)
                     return candidate;
@@ -800,6 +1019,7 @@ namespace MHServerEmu.Games.Populations
                 float angle = fallbackAngleOffset + (i * MathF.PI / 4f);
                 Vector3 origin = playerPos + new Vector3(MathF.Cos(angle) * baseDistance, MathF.Sin(angle) * baseDistance, 0f);
                 Bounds bounds = new(entityProto.Bounds, origin);
+                bounds.Scale(boundsScale);
                 Vector3 candidate = ChooseSpawnPosition(region, origin, ref bounds, pathFlags, SpawnRadius);
                 if (candidate != origin)
                     return candidate;
@@ -809,6 +1029,7 @@ namespace MHServerEmu.Games.Populations
             {
                 Vector3 origin = playerPos;
                 Bounds bounds = new(entityProto.Bounds, origin);
+                bounds.Scale(boundsScale);
                 Vector3 candidate = ChooseSpawnPosition(region, origin, ref bounds, pathFlags, SpawnRadius);
                 if (candidate != origin)
                     return candidate;
@@ -851,7 +1072,8 @@ namespace MHServerEmu.Games.Populations
         /// spawned one at a time. The next enemy appears 5 seconds after the
         /// previous one is defeated.
         /// </summary>
-        public string StartTrial(Player player)
+        /// <param name="mode">"all" (default), "avatar", "teamup", or "boss" to filter the roster.</param>
+        public string StartTrial(Player player, string mode = "all")
         {
             if (_trialRunning) return "An incursion trial is already in progress.";
             if (player == null) return "Player not found.";
@@ -864,9 +1086,14 @@ namespace MHServerEmu.Games.Populations
             if (region == null || IsHubRegion(region))
                 return "Cannot start an incursion trial in a hub region.";
 
-            // Build a shuffled roster of every enemy type (highlander - each once).
+            // Filter factories by trial mode.
+            var filteredFactories = FilterFactoriesByMode(mode);
+            if (filteredFactories.Count == 0)
+                return $"No incursion enemies match trial mode '{mode}'. Valid modes: all, avatar, teamup, boss.";
+
+            // Build a shuffled roster of the filtered enemy types (highlander - each once).
             _trialRoster.Clear();
-            foreach (var factory in s_enemyFactories)
+            foreach (var factory in filteredFactories)
                 _trialRoster.Add(factory);
 
             // Fisher-Yates shuffle using the game's RNG.
@@ -883,7 +1110,37 @@ namespace MHServerEmu.Games.Populations
             _trialRunning = true;
 
             SpawnTrialEnemy();
-            return $"Incursion trial started! Defeat {_trialRoster.Count} invaders one by one.";
+            return $"Incursion trial started ({mode})! Defeat {_trialRoster.Count} invaders one by one.";
+        }
+
+        /// <summary>
+        /// Filters <see cref="s_enemyFactories"/> by the given trial mode.
+        /// "avatar" excludes TeamUp subclasses; "teamup" returns only TeamUp subclasses;
+        /// "boss" returns only Boss subclasses; "all" returns everything.
+        /// </summary>
+        private static List<Func<Game, IncursionEnemyController>> FilterFactoriesByMode(string mode)
+        {
+            if (string.IsNullOrEmpty(mode) || mode.Equals("all", StringComparison.OrdinalIgnoreCase))
+                return s_enemyFactories.ToList();
+
+            var result = new List<Func<Game, IncursionEnemyController>>();
+            foreach (var factory in s_enemyFactories)
+            {
+                var temp = factory(null);
+                if (temp == null) continue;
+
+                bool match = mode.ToLowerInvariant() switch
+                {
+                    "boss" => temp is IncursionEnemyBoss,
+                    "teamup" => temp is IncursionEnemyTeamup,
+                    "avatar" => temp is IncursionEnemyAvatar && temp is not IncursionEnemyTeamup,
+                    _ => true,
+                };
+
+                if (match)
+                    result.Add(factory);
+            }
+            return result;
         }
 
         /// <summary>
@@ -1173,7 +1430,11 @@ namespace MHServerEmu.Games.Populations
                 string displayName = temp.InvaderDisplayName ?? string.Empty;
                 string avatarName = temp.RenderAvatarRef != PrototypeId.Invalid
                     ? GameDatabase.GetPrototypeName(temp.RenderAvatarRef)
-                    : string.Empty;
+                    : temp.RenderTeamupRef != PrototypeId.Invalid
+                        ? GameDatabase.GetPrototypeName(temp.RenderTeamupRef)
+                        : temp.RenderBossRef != PrototypeId.Invalid
+                            ? GameDatabase.GetPrototypeName(temp.RenderBossRef)
+                            : string.Empty;
 
                 s_enemyMeta.Add(new EnemyMeta(typeName, shorthand, displayName, avatarName, factory));
                 temp.Dispose();
@@ -1194,27 +1455,31 @@ namespace MHServerEmu.Games.Populations
             EnsureEnemyMeta();
 
             string p = pattern.Trim();
-            var matches = new List<EnemyMeta>();
-            foreach (var meta in s_enemyMeta)
-            {
-                if (meta.Shorthand.Contains(p, StringComparison.OrdinalIgnoreCase)
-                    || meta.DisplayName.Contains(p, StringComparison.OrdinalIgnoreCase)
-                    || meta.AvatarName.Contains(p, StringComparison.OrdinalIgnoreCase))
-                {
-                    matches.Add(meta);
-                }
-            }
 
-            if (matches.Count == 0)
-            {
-                var suggestions = s_enemyMeta
-                    .Select(m => $"- {m.Shorthand}{(string.IsNullOrEmpty(m.DisplayName) ? "" : $" ({m.DisplayName})")}")
-                    .ToList();
-                return (null, $"No incursion enemy matches '{p}'. Known enemies:\r\n{string.Join("\r\n", suggestions)}");
-            }
+            // Priority 1: exact shorthand match (case-insensitive)
+            var exactShorthand = s_enemyMeta.Where(m => string.Equals(m.Shorthand, p, StringComparison.OrdinalIgnoreCase)).ToList();
+            if (exactShorthand.Count > 0)
+                return (exactShorthand[_game.Random.Next(exactShorthand.Count)].Factory, null);
 
-            var chosen = matches[_game.Random.Next(matches.Count)];
-            return (chosen.Factory, null);
+            // Priority 2: shorthand contains pattern
+            var shorthandMatches = s_enemyMeta.Where(m => m.Shorthand.Contains(p, StringComparison.OrdinalIgnoreCase)).ToList();
+            if (shorthandMatches.Count > 0)
+                return (shorthandMatches[_game.Random.Next(shorthandMatches.Count)].Factory, null);
+
+            // Priority 3: display name contains pattern
+            var displayNameMatches = s_enemyMeta.Where(m => m.DisplayName.Contains(p, StringComparison.OrdinalIgnoreCase)).ToList();
+            if (displayNameMatches.Count > 0)
+                return (displayNameMatches[_game.Random.Next(displayNameMatches.Count)].Factory, null);
+
+            // Priority 4: avatar/boss ref name contains pattern (least specific)
+            var avatarMatches = s_enemyMeta.Where(m => m.AvatarName.Contains(p, StringComparison.OrdinalIgnoreCase)).ToList();
+            if (avatarMatches.Count > 0)
+                return (avatarMatches[_game.Random.Next(avatarMatches.Count)].Factory, null);
+
+            var suggestions = s_enemyMeta
+                .Select(m => $"- {m.Shorthand}{(string.IsNullOrEmpty(m.DisplayName) ? "" : $" ({m.DisplayName})")}")
+                .ToList();
+            return (null, $"No incursion enemy matches '{p}'. Known enemies:\r\n{string.Join("\r\n", suggestions)}");
         }
 
         /// <summary>

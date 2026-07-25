@@ -209,6 +209,9 @@ namespace MHServerEmu.Games.Entities
                 ? settings.OptionFlags.HasFlag(EntitySettingsOptionFlags.OverrideSnapToFloorValue)
                 : worldEntityProto.SnapToFloorOnSpawn;
 
+            // Persist the IsClientEntityHidden flag so AOI re-entry (settings=null) still hides the pawn.
+            IsClientEntityHidden = settings.OptionFlags.HasFlag(EntitySettingsOptionFlags.IsClientEntityHidden);
+
             OnAllianceChanged(Properties[PropertyEnum.AllianceOverride]);
 
             SpawnSpec = settings.SpawnSpec;
@@ -219,7 +222,8 @@ namespace MHServerEmu.Games.Entities
             {
                 ClientPrototypeRefOverride = settings.SpawnSpec.ClientRenderPrototypeRef;
 
-                // Prepare avatar-compatible replication state for non-avatar entities rendered as an avatar.
+                // Prepare avatar-compatible replication state for non-avatar entities rendered
+                // as an avatar (e.g. Incursion avatar enemies that use a playable character model).
                 if (this is not Avatar && ClientPrototypeRefOverride.As<AvatarPrototype>() != null)
                 {
                     IsClientRenderedAsAvatar = true;
@@ -2271,7 +2275,10 @@ namespace MHServerEmu.Games.Entities
             health = Math.Clamp(health, Properties[PropertyEnum.HealthMin], Properties[PropertyEnum.HealthMax]);
 
             // Log health changes caused by incursion enemies for tuning visibility.
-            if (ultimateOwner != null && ultimateOwner.IsClientRenderedAsAvatar && health != startHealth)
+            bool ultimateOwnerIsIncursion = ultimateOwner != null
+                && (ultimateOwner.IsClientRenderedAsAvatar
+                    || (Game?.IncursionManager != null && Game.IncursionManager.IsIncursionEntity(ultimateOwner.Id)));
+            if (ultimateOwnerIsIncursion && health != startHealth)
             {
                 PrototypeId hitPowerRef = powerResults.PowerPrototype != null ? powerResults.PowerPrototype.DataRef : PrototypeId.Invalid;
                 string hpMsg = $"[IncursionEnemy] HP: target '{PrototypeName}' (id {Id}) {startHealth} -> {health} " +
@@ -2281,6 +2288,10 @@ namespace MHServerEmu.Games.Entities
                 IncursionLogCollator.WriteLine(Id, hpMsg);
                 IncursionLogCollator.WriteLine(ultimateOwner.Id, hpMsg);
             }
+
+            // [DeathRecap] Record incoming damage/healing for death recap
+            if (this is Avatar recapAvatar)
+                recapAvatar.RecordDamageEvent(powerResults, ultimateOwner, startHealth, health);
 
             // Trigger health events
             WorldEntity powerUser = Game.EntityManager.GetEntity<WorldEntity>(powerResults.PowerOwnerId);
@@ -2353,6 +2364,17 @@ namespace MHServerEmu.Games.Entities
                     Kill(ultimateOwner, killFlags, powerUser);
                     killed = true;
                     TriggerEntityActionEvent(EntitySelectorActionEventType.OnGotKilled);
+
+                    // [DeathRecap] Flush the death recap to chat on confirmed death
+                    if (this is Avatar killedAvatar2)
+                    {
+                        var buffer = killedAvatar2.FlushOnDeath();
+                        if (buffer != null)
+                        {
+                            var killedPlayer = GetOwnerOfType<Player>();
+                            killedPlayer?.SendDeathRecap(buffer, killedAvatar2);
+                        }
+                    }
                 }
             }
             else
@@ -4273,6 +4295,10 @@ namespace MHServerEmu.Games.Entities
         // so the client builds an avatar actor.
         public bool IsClientRenderedAsAvatar { get; private set; }
         public uint SpoofAvatarWorldInstanceId { get; private set; }
+
+        // Persistent flag: the client should hide this entity's pawn (not render it) even on AOI re-entry.
+        // Set from EntitySettingsOptionFlags.IsClientEntityHidden during Initialize.
+        public bool IsClientEntityHidden { get; private set; }
 
         // Bound only when rendering as an avatar.
         private RepVar_string _spoofAvatarPlayerName;

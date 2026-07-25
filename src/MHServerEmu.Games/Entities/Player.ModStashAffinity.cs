@@ -13,6 +13,11 @@
 //     Rune                     | rune, runes
 //     Relic                    | relic, relics
 //     Any-Hero Unique          | unique, uniques
+//       Gear01/Slot1           | slot1, one, gear1, weapon, unique1
+//       Gear02/Slot2           | slot2, two, gear2, body, unique2
+//       Gear03/Slot3           | slot3, three, gear3, belt, unique3
+//       Gear04/Slot4           | slot4, four, gear4, boots, foot, unique4
+//       Gear05/Slot5           | slot5, five, gear5, head, unique5
 //     Medal                    | medal, medals, medallion, medallions
 //     Insignia                 | insignia
 //     Catalyst                 | catalyst, core
@@ -23,7 +28,7 @@
 //   Applied automatically during inventory moves to stash from non-stash sources.
 //   Falls back to the originally requested stash tab when no affinity matches.
 //
-//  VERSION:: 20260711
+//  VERSION:: 20260713
 // =============================================================================
 
 using System;
@@ -99,6 +104,16 @@ namespace MHServerEmu.Games.Entities
                 LogAffinity(item, requestedStashRef, characterStashRef, "character-specific");
                 FlushReport(report);
                 return characterStashRef;
+            }
+
+            // Then: slot-based affinity for any-hero uniques (e.g. slot1-slot5)
+            PrototypeId slotStashRef = ResolveSlotModStashAffinity(item, requestedStashRef, report);
+            if (slotStashRef != requestedStashRef)
+            {
+                string slotLabel = TryGetUniqueGearSlotNumber(item, out int slotNum) ? $"unique-slot{slotNum}" : "unique-slot";
+                LogAffinity(item, requestedStashRef, slotStashRef, slotLabel);
+                FlushReport(report);
+                return slotStashRef;
             }
 
             // Then: type-based affinity (applies to any-hero uniques too, but only if no character stash matched)
@@ -270,6 +285,221 @@ namespace MHServerEmu.Games.Entities
         #endregion
 
         #region Type Affinity
+
+        private static readonly Dictionary<EquipmentInvUISlot, int> _uniqueGearSlotNumberMap = new Dictionary<EquipmentInvUISlot, int>
+        {
+            { EquipmentInvUISlot.Gear01, 1 },
+            { EquipmentInvUISlot.Gear02, 2 },
+            { EquipmentInvUISlot.Gear03, 3 },
+            { EquipmentInvUISlot.Gear04, 4 },
+            { EquipmentInvUISlot.Gear05, 5 },
+        };
+
+        private static readonly Dictionary<EquipmentInvUISlot, string[]> _uniqueSlotAliasMap = new Dictionary<EquipmentInvUISlot, string[]>
+        {
+            { EquipmentInvUISlot.Gear01, new[] { "slot1", "one", "gear1", "weapon", "unique1" } },
+            { EquipmentInvUISlot.Gear02, new[] { "slot2", "two", "gear2", "body", "unique2" } },
+            { EquipmentInvUISlot.Gear03, new[] { "slot3", "three", "gear3", "belt", "unique3" } },
+            { EquipmentInvUISlot.Gear04, new[] { "slot4", "four", "gear4", "boots", "foot", "unique4" } },
+            { EquipmentInvUISlot.Gear05, new[] { "slot5", "five", "gear5", "head", "unique5" } },
+        };
+
+        /// <summary>
+        /// Tries to map an item's default equipment slot to a 1-5 gear slot number for unique-slot affinity.
+        /// </summary>
+        private static bool TryGetUniqueGearSlotNumber(Item item, out int slotNumber)
+        {
+            slotNumber = 0;
+            return item.ItemPrototype != null &&
+                   _uniqueGearSlotNumberMap.TryGetValue(item.ItemPrototype.DefaultEquipmentSlot, out slotNumber);
+        }
+
+        /// <summary>
+        /// Tries to match a stash tab display name against the unique-slot aliases and returns the slot number.
+        /// </summary>
+        private static bool TryMatchUniqueSlotTabName(string tabName, out int slotNumber)
+        {
+            slotNumber = 0;
+            if (string.IsNullOrEmpty(tabName))
+                return false;
+
+            foreach (var kvp in _uniqueSlotAliasMap)
+            {
+                foreach (string alias in kvp.Value)
+                {
+                    if (tabName.Contains(alias, StringComparison.OrdinalIgnoreCase))
+                    {
+                        slotNumber = _uniqueGearSlotNumberMap[kvp.Key];
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Returns a slot-specific stash tab for any-hero unique gear, if one exists and has space.
+        /// Missing middle slots are distributed to the nearest existing slot tab (ties go to the higher slot).
+        /// </summary>
+        private PrototypeId ResolveSlotModStashAffinity(Item item, PrototypeId requestedStashRef, StringBuilder report)
+        {
+            // Character-specific uniques are handled by ResolveCharacterModStashAffinity
+            if (item.IsBoundToCharacter || item.ItemPrototype?.IsAvatarRestricted == true)
+            {
+                report?.AppendLine("  SlotStash: item is character-specific, skipping slot affinity");
+                return requestedStashRef;
+            }
+
+            RarityPrototype rarityProto = item.RarityPrototype;
+            if (rarityProto == null || rarityProto.DataRef != GameDatabase.LootGlobalsPrototype.RarityUnique)
+            {
+                report?.AppendLine("  SlotStash: item is not unique, skipping slot affinity");
+                return requestedStashRef;
+            }
+
+            if (TryGetUniqueGearSlotNumber(item, out int itemSlotNumber) == false)
+            {
+                report?.AppendLine($"  SlotStash: unique item has no gear slot mapping (slot={item.ItemPrototype?.DefaultEquipmentSlot})");
+                return requestedStashRef;
+            }
+
+            using var stashRefsHandle = ListPool<PrototypeId>.Instance.Get(out List<PrototypeId> stashRefs);
+            if (GetStashInventoryProtoRefs(stashRefs, getLocked: false, getUnlocked: true) == false)
+            {
+                report?.AppendLine("  SlotStash: failed to retrieve stash list");
+                return requestedStashRef;
+            }
+
+            // If the player already opened the correct slot tab, keep it
+            PlayerStashInventoryPrototype requestedProto = GameDatabase.GetPrototype<PlayerStashInventoryPrototype>(requestedStashRef);
+            if (requestedProto != null && requestedProto.ForAvatar == PrototypeId.Invalid)
+            {
+                Inventory requestedInv = GetInventoryByRef(requestedStashRef);
+                if (requestedInv != null && requestedInv.Prototype.AllowEntity(item.Prototype))
+                {
+                    string requestedName = GetStashDisplayName(requestedStashRef);
+                    if (TryMatchUniqueSlotTabName(requestedName, out int requestedSlot) && requestedSlot == itemSlotNumber)
+                    {
+                        AppendDecision(report, requestedStashRef, $"requested stash matches unique slot {itemSlotNumber}");
+                        return requestedStashRef;
+                    }
+                }
+            }
+
+            // Collect available slot-specific tabs that can hold this item
+            List<(PrototypeId StashRef, int SlotNumber, string StashName)> existingSlots = new();
+            PrototypeId exactMatch = PrototypeId.Invalid;
+
+            foreach (PrototypeId stashRef in stashRefs)
+            {
+                PlayerStashInventoryPrototype stashProto = GameDatabase.GetPrototype<PlayerStashInventoryPrototype>(stashRef);
+                if (stashProto?.ForAvatar != PrototypeId.Invalid)
+                    continue;
+
+                Inventory stashInv = GetInventoryByRef(stashRef);
+                if (stashInv == null)
+                    continue;
+
+                if (stashInv.Prototype.AllowEntity(item.Prototype) == false)
+                    continue;
+
+                string stashName = GetStashDisplayName(stashRef);
+                if (TryMatchUniqueSlotTabName(stashName, out int slotNumber) == false)
+                    continue;
+
+                if (stashInv.GetFreeSlot(item, true, true) == Inventory.InvalidSlot)
+                {
+                    report?.AppendLine($"  SlotStash: '{stashName}' matches slot {slotNumber} but is full");
+                    continue;
+                }
+
+                if (slotNumber == itemSlotNumber)
+                    exactMatch = stashRef;
+
+                existingSlots.Add((stashRef, slotNumber, stashName));
+            }
+
+            if (exactMatch != PrototypeId.Invalid)
+            {
+                string exactName = GetStashDisplayName(exactMatch);
+                AppendDecision(report, exactMatch, $"found exact unique slot {itemSlotNumber} stash '{exactName}' with space");
+                return exactMatch;
+            }
+
+            if (existingSlots.Count == 0)
+            {
+                report?.AppendLine($"  SlotStash: no available unique slot tabs for slot {itemSlotNumber}");
+                return requestedStashRef;
+            }
+
+            // Distribute missing slots to the nearest existing slot tab (ties go up)
+            PrototypeId lowerRef = PrototypeId.Invalid;
+            int lowerSlot = int.MinValue;
+            PrototypeId higherRef = PrototypeId.Invalid;
+            int higherSlot = int.MaxValue;
+
+            foreach (var (stashRef, slotNumber, stashName) in existingSlots)
+            {
+                if (slotNumber < itemSlotNumber && slotNumber > lowerSlot)
+                {
+                    lowerSlot = slotNumber;
+                    lowerRef = stashRef;
+                }
+                else if (slotNumber > itemSlotNumber && slotNumber < higherSlot)
+                {
+                    higherSlot = slotNumber;
+                    higherRef = stashRef;
+                }
+            }
+
+            PrototypeId chosenRef;
+            int chosenSlot;
+            string chosenName;
+            string reason;
+
+            if (lowerRef != PrototypeId.Invalid && higherRef != PrototypeId.Invalid)
+            {
+                int lowerDist = itemSlotNumber - lowerSlot;
+                int higherDist = higherSlot - itemSlotNumber;
+                if (higherDist <= lowerDist)
+                {
+                    chosenRef = higherRef;
+                    chosenSlot = higherSlot;
+                    chosenName = GetStashDisplayName(higherRef);
+                    reason = $"nearest unique slot tab (slot {itemSlotNumber} -> {chosenSlot}, tie/upper)";
+                }
+                else
+                {
+                    chosenRef = lowerRef;
+                    chosenSlot = lowerSlot;
+                    chosenName = GetStashDisplayName(lowerRef);
+                    reason = $"nearest unique slot tab (slot {itemSlotNumber} -> {chosenSlot}, lower)";
+                }
+            }
+            else if (lowerRef != PrototypeId.Invalid)
+            {
+                chosenRef = lowerRef;
+                chosenSlot = lowerSlot;
+                chosenName = GetStashDisplayName(lowerRef);
+                reason = $"nearest lower unique slot tab (slot {itemSlotNumber} -> {chosenSlot})";
+            }
+            else if (higherRef != PrototypeId.Invalid)
+            {
+                chosenRef = higherRef;
+                chosenSlot = higherSlot;
+                chosenName = GetStashDisplayName(higherRef);
+                reason = $"nearest higher unique slot tab (slot {itemSlotNumber} -> {chosenSlot})";
+            }
+            else
+            {
+                report?.AppendLine($"  SlotStash: no distribution target for slot {itemSlotNumber}");
+                return requestedStashRef;
+            }
+
+            AppendDecision(report, chosenRef, reason);
+            return chosenRef;
+        }
 
         /// <summary>
         /// Returns a stash tab whose custom display name matches the item's affinity key, if one exists and has space.

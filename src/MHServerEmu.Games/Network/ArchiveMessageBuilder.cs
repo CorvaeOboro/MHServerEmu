@@ -175,6 +175,11 @@ namespace MHServerEmu.Games.Network
                     if (settings.IgnoreNavi)
                         fieldFlags |= EntityCreateMessageFlags.IgnoreNavi;
                 }
+                else if (worldEntity != null && worldEntity.IsClientEntityHidden)
+                {
+                    // AOI re-entry (settings=null): persist the hidden flag from the entity itself.
+                    fieldFlags |= EntityCreateMessageFlags.IsClientEntityHidden;
+                }
 
                 // Include inventory location based on inventory visibility
                 if (includeInvLoc)
@@ -567,6 +572,11 @@ namespace MHServerEmu.Games.Network
 
                 if (settings.OptionFlags.HasFlag(EntitySettingsOptionFlags.IsClientEntityHidden))
                     extraFieldFlags |= EnterGameWorldMessageFlags.IsClientEntityHidden;
+            }
+            else if (worldEntity.IsClientEntityHidden)
+            {
+                // AOI re-entry (settings=null): persist the hidden flag from the entity itself.
+                extraFieldFlags |= EnterGameWorldMessageFlags.IsClientEntityHidden;
             }
 
             // Attached entities

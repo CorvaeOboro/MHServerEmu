@@ -171,14 +171,14 @@ namespace MHServerEmu.Games.Loot
             if ((lootTypes & (LootType.Item | LootType.Agent | LootType.Credits | LootType.Currency)) == 0)
                 return true;
 
-            // MOD LootFilter - pure removal, no credits/PetTech XP
-            ModLootFilterHelper.ApplyFilters(player, lootResultSummary, recipient.PrototypeDataRef);
-
-            // Finalize vaporization (early exit if everything was vaporized)
+            // Finalize vaporization first (vanilla credits/PetTech XP) so it has priority for gear slots
             ulong sourceEntityId = sourceEntity != null ? sourceEntity.Id : Entity.InvalidId;
 
             if (LootVaporizer.VaporizeLootResultSummary(player, lootResultSummary, sourceEntityId) == false)
                 return true;
+
+            // MOD LootFilter - pure removal, no credits/PetTech XP, runs after vaporizer
+            ModLootFilterHelper.ApplyFilters(player, lootResultSummary, recipient.PrototypeDataRef);
 
             // Spawn what's left
 

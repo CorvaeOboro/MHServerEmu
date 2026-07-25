@@ -140,8 +140,8 @@ namespace MHServerEmu.Commands.Implementations
         }
 
         [Command("trial")]
-        [CommandDescription("Starts or stops an incursion trial: a 1v1 gauntlet against every incursion enemy type.")]
-        [CommandUsage("incursion trial [stop]")]
+        [CommandDescription("Starts or stops an incursion trial: a 1v1 gauntlet against incursion enemy types. Optionally filter by mode.")]
+        [CommandUsage("incursion trial [stop|all|avatar|teamup|boss]")]
         [CommandInvokerType(CommandInvokerType.Client)]
         public string Trial(string[] @params, NetClient client)
         {
@@ -157,8 +157,12 @@ namespace MHServerEmu.Commands.Implementations
                 return "Incursion trial stopped.";
             }
 
+            string mode = "all";
+            if (@params != null && @params.Length > 0)
+                mode = @params[0];
+
             Player player = playerConnection.Player;
-            return game.IncursionManager.StartTrial(player);
+            return game.IncursionManager.StartTrial(player, mode);
         }
 
         /// <summary>

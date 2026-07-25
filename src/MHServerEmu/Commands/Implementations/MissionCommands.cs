@@ -12,7 +12,7 @@ namespace MHServerEmu.Commands.Implementations
 {
     [CommandGroup("mission")]
     [CommandGroupDescription("Commands related to the mission system.")]
-    public class MissionCommands : CommandGroup
+    public partial class MissionCommands : CommandGroup
     {
         [Command("debug")]
         [CommandUsage("mission debug [on|off]")]

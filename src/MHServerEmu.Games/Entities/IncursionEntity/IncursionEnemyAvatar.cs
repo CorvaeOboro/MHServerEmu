@@ -17,6 +17,8 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
     {
         protected IncursionEnemyAvatar(Game game) : base(game) { }
 
+        public override string EnemyType => "Avatar";
+
         /// <summary>The avatar this invader is rendered as .</summary>
         public abstract override PrototypeId RenderAvatarRef { get; }
 
@@ -112,7 +114,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         /// <summary>
         /// Assigns enabled powers from <see cref="PowerTable"/> and records every entry's damage scale.
         /// </summary>
-        private void PopulateFromTable(Agent agent, IncursionPowerEntry[] table)
+        protected void PopulateFromTable(Agent agent, IncursionPowerEntry[] table)
         {
             foreach (IncursionPowerEntry entry in table)
             {

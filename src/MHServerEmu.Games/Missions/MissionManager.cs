@@ -23,7 +23,7 @@ using MHServerEmu.Core.System.Time;
 namespace MHServerEmu.Games.Missions
 {
     /// <summary>MissionManager </summary>
-    public class MissionManager : ISerialize
+    public partial class MissionManager : ISerialize
     {
         private static readonly Logger Logger = LogManager.CreateLogger();
         public static bool Debug = false;
