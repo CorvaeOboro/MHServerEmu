@@ -30,15 +30,15 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/TeamUps/Groot/DeathFromAbove.prototype",  true,  0.033333f),  // Groot/DeathFromAbove.prototype
-            new("Powers/TeamUps/Groot/DirectedShockwave.prototype",  true,  0.033333f),  // Groot/DirectedShockwave.prototype
+            new("Powers/TeamUps/Groot/DeathFromAbove.prototype",  true,  0.0399f), // 2026-07-30
+            new("Powers/TeamUps/Groot/DirectedShockwave.prototype",  true,  0.0351f), // 2026-07-30
             new("Powers/TeamUps/Groot/WeAreGroot.prototype", false,  0.033333f),  // Groot/WeAreGroot.prototype - away passive
             new("Powers/TeamUps/Groot/HealingSpores.prototype", false,  0.033333f),  // Groot/HealingSpores.prototype - defensive
             new("Powers/TeamUps/Groot/GraspingRoots.prototype",  true,  0.033333f),  // Groot/GraspingRoots.prototype
-            new("Powers/TeamUps/Groot/PBAoE.prototype",  true,  0.033333f),  // Groot/PBAoE.prototype
+            new("Powers/TeamUps/Groot/PBAoE.prototype",  true,  0.0291f), // 2026-07-30
             new("Powers/TeamUps/Groot/AwayHealingSpores.prototype", false,  0.033333f),  // Groot/AwayHealingSpores.prototype - away passive
             new("Powers/TeamUps/Groot/AwayGraspingRoots.prototype", false,  0.033333f),  // Groot/AwayGraspingRoots.prototype - away passive
-            new("Powers/TeamUps/Groot/BrambleToss.prototype",  true,  0.033333f),  // Groot/BrambleToss.prototype
+            new("Powers/TeamUps/Groot/BrambleToss.prototype",  true,  0.0307f), // 2026-07-30
             new("Powers/TeamUps/Groot/GrootOut.prototype",  true, 0.016667f),  // Groot/GrootOut.prototype - signature / ultimate
             new("Powers/TeamUps/TeamUpSynergyHeroPassive.prototype", false,  0.033333f),  // TeamUpSynergyHeroPassive.prototype - synergy passive
         };

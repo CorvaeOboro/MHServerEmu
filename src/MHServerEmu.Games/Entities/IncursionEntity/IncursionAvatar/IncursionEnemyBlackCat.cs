@@ -41,22 +41,22 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/BlackCat/Assassinate.prototype",                                 true,  0.0761f), // 2026-06-18
-            new("Powers/Player/BlackCat/BasicClaws.prototype",                                  true,  0.1919f), // 2026-06-08
-            new("Powers/Player/BlackCat/BasicWhip.prototype",                                   true,  0.1509f), // 2026-06-11
-            new("Powers/Player/BlackCat/ClawPummel.prototype",                                  true,  0.1288f), // 2026-06-11
-            new("Powers/Player/BlackCat/ClawSwipes.prototype",                                  true,  0.1310f), // 2026-06-11
-            new("Powers/Player/BlackCat/ClawTwirl.prototype",                                   true,  0.1368f), // 2026-06-11
-            new("Powers/Player/BlackCat/ConeYank.prototype",                                    true,  0.0943f), // 2026-06-08
-            new("Powers/Player/BlackCat/DeathFromAbove.prototype",                              true,  0.0536f), // 2026-06-18
-            new("Powers/Player/BlackCat/Garrotte.prototype",                                    true,  0.0662f), // 2026-06-11
-            new("Powers/Player/BlackCat/GasTrap.prototype",                                     true,  0.1260f), // 2026-06-11
-            new("Powers/Player/BlackCat/GlueTrap.prototype",                                    true,  0.0983f), // 2026-06-11
+            new("Powers/Player/BlackCat/Assassinate.prototype",                                 true,  0.0758f), // 2026-07-31
+            new("Powers/Player/BlackCat/BasicClaws.prototype",                                  true,  0.2808f), // 2026-06-08
+            new("Powers/Player/BlackCat/BasicWhip.prototype",                                   true,  0.2049f), // 2026-06-11
+            new("Powers/Player/BlackCat/ClawPummel.prototype",                                  true,  0.0919f), // 2026-06-11
+            new("Powers/Player/BlackCat/ClawSwipes.prototype",                                  true,  0.1599f), // 2026-06-11
+            new("Powers/Player/BlackCat/ClawTwirl.prototype",                                   true,  0.1039f), // 2026-06-11
+            new("Powers/Player/BlackCat/ConeYank.prototype",                                    true,  0.0941f), // 2026-06-08
+            new("Powers/Player/BlackCat/DeathFromAbove.prototype",                              true,  0.0496f), // 2026-07-31
+            new("Powers/Player/BlackCat/Garrotte.prototype",                                    true,  0.0659f), // 2026-06-11
+            new("Powers/Player/BlackCat/GasTrap.prototype",                                     true,  0.1203f), // 2026-06-11
+            new("Powers/Player/BlackCat/GlueTrap.prototype",                                    true,  0.0930f), // 2026-06-11
             new("Powers/Player/BlackCat/MasterThief.prototype",                                 true,  0.05f),
             new("Powers/Player/BlackCat/NineLivesDisableHealthMinHiddenPassive.prototype",      false, 0.05f),
             new("Powers/Player/BlackCat/NineLivesHealthMinHiddenPassive.prototype",             false, 0.05f),
-            new("Powers/Player/BlackCat/ShrapnelTrap.prototype",                                true,  0.0994f), // 2026-06-11
-            new("Powers/Player/BlackCat/Signature.prototype",                                   true,  0.0134f), // 2026-06-11
+            new("Powers/Player/BlackCat/ShrapnelTrap.prototype",                                true,  0.0988f), // 2026-06-11
+            new("Powers/Player/BlackCat/Signature.prototype",                                   true,  0.0115f), // 2026-06-11
             new("Powers/Player/BlackCat/Talents/TalentAssassinateDoesntBreakStealth.prototype", false, 0.0761f), // 2026-06-18
             new("Powers/Player/BlackCat/Talents/TalentClawPummelBonus.prototype",               false, 0.1288f), // 2026-06-11
             new("Powers/Player/BlackCat/Talents/TalentConeYankDamageBonus.prototype",           false, 0.0943f), // 2026-06-08
@@ -79,7 +79,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/BlackCat/Tumble.prototype",                                      true,  0.05f),
             new("Powers/Player/BlackCat/Ultimate.prototype",                                    true,  0.0116f), // 2026-06-18
             new("Powers/Player/BlackCat/UltimateHiddenPassive.prototype",                       false, 0.0116f), // 2026-06-18
-            new("Powers/Player/BlackCat/WhipLash.prototype",                                    true,  0.1870f), // 2026-06-11
+            new("Powers/Player/BlackCat/WhipLash.prototype",                                    true,  0.2740f), // 2026-06-11
             new("Powers/Player/TravelPower/BlackCatFlight.prototype",                           false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/BlackCatStolenPower.prototype",            false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",                      false, 0.05f),

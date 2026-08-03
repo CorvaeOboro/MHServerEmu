@@ -1,8 +1,8 @@
 // =============================================================================
 //  MOD ReviewDecoPrefab - commands
 // =============================================================================
-//  Feature:    Dev tool for creating saved arrangements of props + VFX —
-//              "deco prefabs" — such as a ring of floating infinity stones
+//  Feature:    Dev tool for creating saved arrangements of props + VFX -
+//              "deco prefabs" - such as a ring of floating infinity stones
 //              each playing a looping VFX. Designed for designers and creatives
 //              to explore spawnable props, VFX, animations, and powers, then
 //              assemble them into reusable arrangements.
@@ -813,7 +813,7 @@ namespace MHServerEmu.Commands.Implementations
                 }
                 else if (trimmed == "}" && currentProto != null)
                 {
-                    // End of entity block — spawn it
+                    // End of entity block - spawn it
                     PrototypeId protoRef = GameDatabase.GetPrototypeRefByName(currentProto);
                     if (protoRef != PrototypeId.Invalid)
                     {

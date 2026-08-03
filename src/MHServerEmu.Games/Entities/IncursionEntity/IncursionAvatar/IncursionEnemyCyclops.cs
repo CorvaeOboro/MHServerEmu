@@ -52,19 +52,19 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         private static readonly IncursionPowerEntry[] _powerTable =
         {
             new("Powers/Player/Cyclops/CallAngelMovement.prototype",                      false, 0.05f),
-            new("Powers/Player/Cyclops/FocusBeamNew.prototype",                           true,  0.0922f), // 2026-06-11
-            new("Powers/Player/Cyclops/Rework/AoEBeam.prototype",                         true,  0.1278f), // 2026-06-11
-            new("Powers/Player/Cyclops/Rework/BasicBeam.prototype",                       true,  0.1510f), // 2026-06-11
-            new("Powers/Player/Cyclops/Rework/BasicBouncingBeam.prototype",               true,  0.1067f), // 2026-06-28
-            new("Powers/Player/Cyclops/Rework/CallBeast.prototype",                       true,  0.0726f), // 2026-06-11
-            new("Powers/Player/Cyclops/Rework/CallIceman.prototype",                      true,  0.05f),
-            new("Powers/Player/Cyclops/Rework/CallJean.prototype",                        true,  0.1265f), // 2026-06-28
-            new("Powers/Player/Cyclops/Rework/ChanneledBeam.prototype",                   true,  0.0618f), // 2026-06-11
-            new("Powers/Player/Cyclops/Rework/ChargeCone.prototype",                      true,  0.0623f), // 2026-06-11
-            new("Powers/Player/Cyclops/Rework/ConeBeam.prototype",                        true,  0.0199f), // 2026-06-16
-            new("Powers/Player/Cyclops/Rework/DisengagingShot.prototype",                 true,  0.05f),
-            new("Powers/Player/Cyclops/Rework/PrismBeam.prototype",                       true,  0.0589f), // 2026-06-11
-            new("Powers/Player/Cyclops/Rework/SignatureBeam.prototype",                   true,  0.0138f), // 2026-06-11
+            new("Powers/Player/Cyclops/FocusBeamNew.prototype",                           true,  0.0916f), // 2026-06-11
+            new("Powers/Player/Cyclops/Rework/AoEBeam.prototype",                         true,  0.1625f), // 2026-06-11
+            new("Powers/Player/Cyclops/Rework/BasicBeam.prototype",                       true,  0.1975f), // 2026-06-11
+            new("Powers/Player/Cyclops/Rework/BasicBouncingBeam.prototype",               true,  0.0955f), // 2026-06-28
+            new("Powers/Player/Cyclops/Rework/CallBeast.prototype",                       true,  0.0657f), // 2026-06-11
+            new("Powers/Player/Cyclops/Rework/CallIceman.prototype",                      true,  0.0349f), // 2026-06-11
+            new("Powers/Player/Cyclops/Rework/CallJean.prototype",                        true,  0.1588f), // 2026-06-28
+            new("Powers/Player/Cyclops/Rework/ChanneledBeam.prototype",                   true,  0.0717f), // 2026-06-11
+            new("Powers/Player/Cyclops/Rework/ChargeCone.prototype",                      true,  0.0548f), // 2026-06-11
+            new("Powers/Player/Cyclops/Rework/ConeBeam.prototype",                        true,  0.0187f), // 2026-06-16
+            new("Powers/Player/Cyclops/Rework/DisengagingShot.prototype",                 true,  0.3606f), // 2026-06-28
+            new("Powers/Player/Cyclops/Rework/PrismBeam.prototype",                       true,  0.0522f), // 2026-06-11
+            new("Powers/Player/Cyclops/Rework/SignatureBeam.prototype",                   true,  0.0120f), // 2026-06-11
             new("Powers/Player/Cyclops/Rework/TacticalAnalysis.prototype",                true,  0.05f),
             new("Powers/Player/Cyclops/Rework/Tumble.prototype",                          true,  0.05f),
             new("Powers/Player/Cyclops/Rework/UltimateHiddenPassiveSigSynergy.prototype", false, 0.0179f), // 2026-06-28
@@ -86,7 +86,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Cyclops/TeamSteroid.prototype",                            true,  0.05f),
             new("Powers/Player/Cyclops/Traits/DefenseTrait.prototype",                    false, 0.05f),
             new("Powers/Player/Cyclops/Traits/OffenseTrait.prototype",                    false, 0.05f),
-            new("Powers/Player/Cyclops/Ultimate.prototype",                               true,  0.0179f), // 2026-06-28
+            new("Powers/Player/Cyclops/Ultimate.prototype",                               true,  0.0115f), // 2026-06-28
             new("Powers/Player/TravelPower/CyclopsRide.prototype",                        false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/CyclopsStolenPower.prototype",       false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",                false, 0.05f),

@@ -616,7 +616,7 @@ namespace MHServerEmu.Commands.Implementations
             var filtered = matches.Where(m => GetPrototypeCategory(m) == category).ToList();
 
             const int MaxResults = 30;
-            var catLines = new List<string> { $"Category '{category}' — {catDef.Description}" };
+            var catLines = new List<string> { $"Category '{category}' - {catDef.Description}" };
             catLines.Add($"  {filtered.Count} prototypes found (showing {Math.Min(filtered.Count, MaxResults)}):");
 
             var fullLogLines = new List<string>();

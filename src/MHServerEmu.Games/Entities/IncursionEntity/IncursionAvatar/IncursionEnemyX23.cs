@@ -46,21 +46,21 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         private static readonly IncursionPowerEntry[] _powerTable =
         {
             new("Powers/Player/TravelPower/X23Sprint.prototype",                            false, 0.05f),
-            new("Powers/Player/X23/BasicBloody.prototype",                                  true,  0.1377f), // 2026-06-11
-            new("Powers/Player/X23/BladeSpin.prototype",                                    true,  0.0394f), // 2026-06-11
+            new("Powers/Player/X23/BasicBloody.prototype",                                  true,  0.1654f), // 2026-06-11
+            new("Powers/Player/X23/BladeSpin.prototype",                                    true,  0.0380f), // 2026-06-11
             new("Powers/Player/X23/CoupDeGrace.prototype",                                  true,  0.05f),
             new("Powers/Player/X23/CoupDeGraceEnableHiddenPassive.prototype",               false, 0.05f),
-            new("Powers/Player/X23/CrimsonCircle.prototype",                                true,  0.1501f), // 2026-06-10
-            new("Powers/Player/X23/CrimsonLeapStart.prototype",                             true,  0.0418f), // 2026-06-20
-            new("Powers/Player/X23/Eviscerate.prototype",                                   true,  0.1232f), // 2026-06-10
-            new("Powers/Player/X23/Execute.prototype",                                      true,  0.0714f), // 2026-06-10
-            new("Powers/Player/X23/FuriousLunge.prototype",                                 true,  0.1520f), // 2026-06-10
+            new("Powers/Player/X23/CrimsonCircle.prototype",                                true,  0.1965f), // 2026-06-10
+            new("Powers/Player/X23/CrimsonLeapStart.prototype",                             true,  0.0404f), // 2026-06-20
+            new("Powers/Player/X23/Eviscerate.prototype",                                   true,  0.1565f), // 2026-06-10
+            new("Powers/Player/X23/Execute.prototype",                                      true,  0.0686f), // 2026-06-10
+            new("Powers/Player/X23/FuriousLunge.prototype",                                 true,  0.2333f), // 2026-06-10
             new("Powers/Player/X23/MoveMechanicHiddenPassive.prototype",                    false, 0.05f),
-            new("Powers/Player/X23/MvmtSTSS.prototype",                                     true,  0.1400f), // 2026-06-11
+            new("Powers/Player/X23/MvmtSTSS.prototype",                                     true,  0.1616f), // 2026-06-11
             new("Powers/Player/X23/PassiveStealth.prototype",                               false, 0.05f),
             new("Powers/Player/X23/PassiveStealthCDRHiddenPassive.prototype",               false, 0.05f),
-            new("Powers/Player/X23/Pummel.prototype",                                       true,  0.1023f), // 2026-06-11
-            new("Powers/Player/X23/SigBladeDance.prototype",                                true,  0.0125f), // 2026-06-20
+            new("Powers/Player/X23/Pummel.prototype",                                       true,  0.0767f), // 2026-06-11
+            new("Powers/Player/X23/SigBladeDance.prototype",                                true,  0.0120f), // 2026-06-20
             new("Powers/Player/X23/Talents/Talent1MaxWrath.prototype",                      false, 0.05f),
             new("Powers/Player/X23/Talents/Talent1WrathGWTicksBleedDmg.prototype",          false, 0.05f),
             new("Powers/Player/X23/Talents/Talent1WrathMvmtDmg.prototype",                  false, 0.05f),
@@ -79,7 +79,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/X23/Traits/DefenseTrait.prototype",                          false, 0.05f),
             new("Powers/Player/X23/Traits/MechanicTrait.prototype",                         false, 0.05f),
             new("Powers/Player/X23/Traits/OffenseTrait.prototype",                          false, 0.05f),
-            new("Powers/Player/X23/TripleKick.prototype",                                   true,  0.0869f), // 2026-06-10
+            new("Powers/Player/X23/TripleKick.prototype",                                   true,  0.1044f), // 2026-06-10
             new("Powers/Player/X23/Tumble.prototype",                                       true,  0.05f),
             new("Powers/Player/X23/UltTriggerScent.prototype",                              true,  0.006f),
             new("Powers/Player/X23/UltimateHiddenPassive.prototype",                        false, 0.006f),

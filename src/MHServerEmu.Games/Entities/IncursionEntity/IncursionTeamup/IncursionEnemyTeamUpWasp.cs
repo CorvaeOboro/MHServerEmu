@@ -30,16 +30,16 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/TeamUps/Wasp/Biospray.prototype",  true,  0.023333f),  // Wasp/Biospray.prototype
-            new("Powers/TeamUps/Wasp/ShrinkAttack.prototype",  true,  0.023333f),  // Wasp/ShrinkAttack.prototype
+            new("Powers/TeamUps/Wasp/Biospray.prototype",  true,  0.0398f), // 2026-07-30
+            new("Powers/TeamUps/Wasp/ShrinkAttack.prototype",  true,  0.0230f), // 2026-07-30
             new("Powers/TeamUps/Wasp/AwayShrinkAttack.prototype", false,  0.023333f),  // Wasp/AwayShrinkAttack.prototype - away passive
-            new("Powers/TeamUps/Wasp/BiospraySlowTrigger.prototype", false,  0.023333f),  // Wasp/BiospraySlowTrigger.prototype - trigger/secondary
+            new("Powers/TeamUps/Wasp/BiospraySlowTrigger.prototype", false,  0.0398f), // 2026-07-30
             new("Powers/TeamUps/Wasp/TripleBioball.prototype",  true,  0.023333f),  // Wasp/TripleBioball.prototype
             new("Powers/TeamUps/Wasp/TripleBioballDoTTrigger.prototype", false,  0.023333f),  // Wasp/TripleBioballDoTTrigger.prototype - trigger/secondary
-            new("Powers/TeamUps/Wasp/Flyby.prototype",  true,  0.023333f),  // Wasp/Flyby.prototype
+            new("Powers/TeamUps/Wasp/Flyby.prototype",  true,  0.0344f), // 2026-07-30
             new("Powers/TeamUps/Wasp/AwayFlyby.prototype", false,  0.023333f),  // Wasp/AwayFlyby.prototype - away passive
-            new("Powers/TeamUps/Wasp/SpinAttack.prototype",  true,  0.023333f),  // Wasp/SpinAttack.prototype
-            new("Powers/TeamUps/Wasp/BarragePBAoE.prototype",  true,  0.023333f),  // Wasp/BarragePBAoE.prototype
+            new("Powers/TeamUps/Wasp/SpinAttack.prototype",  true,  0.0373f), // 2026-07-30
+            new("Powers/TeamUps/Wasp/BarragePBAoE.prototype",  true,  0.0211f), // 2026-07-30
             new("Powers/TeamUps/TeamUpSynergyHeroPassive.prototype", false,  0.023333f),  // TeamUpSynergyHeroPassive.prototype - synergy passive
         };
     }

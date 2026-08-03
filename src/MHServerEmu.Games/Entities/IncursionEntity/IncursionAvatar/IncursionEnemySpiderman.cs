@@ -63,21 +63,21 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/Spiderman/Rework/AmazingSmash.prototype",                          true,  0.05f),
-            new("Powers/Player/Spiderman/Rework/BasicRanged.prototype",                           true,  0.05f),
-            new("Powers/Player/Spiderman/Rework/Cocoon.prototype",                                true,  0.0456f), // 2026-07-08
-            new("Powers/Player/Spiderman/Rework/DisengagingShot.prototype",                       true,  0.05f),
-            new("Powers/Player/Spiderman/Rework/DiveKick.prototype",                              true,  0.0478f), // 2026-07-08
+            new("Powers/Player/Spiderman/Rework/AmazingSmash.prototype",                          true,  0.0307f), // 2026-07-08
+            new("Powers/Player/Spiderman/Rework/BasicRanged.prototype",                           true,  0.1209f), // 2026-07-08
+            new("Powers/Player/Spiderman/Rework/Cocoon.prototype",                                true,  0.0395f), // 2026-07-08
+            new("Powers/Player/Spiderman/Rework/DisengagingShot.prototype",                       true,  0.0494f), // 2026-07-08
+            new("Powers/Player/Spiderman/Rework/DiveKick.prototype",                              true,  0.0476f), // 2026-07-08
             new("Powers/Player/Spiderman/Rework/FuriousLungeFlip.prototype",                      true,  0.05f),
             new("Powers/Player/Spiderman/Rework/FuriousLungeWebZip.prototype",                    true,  0.05f),
-            new("Powers/Player/Spiderman/Rework/RapidFire.prototype",                             true,  0.0957f), // 2026-07-08
-            new("Powers/Player/Spiderman/Rework/Slingshot.prototype",                             true,  0.0311f), // 2026-07-08
-            new("Powers/Player/Spiderman/Rework/SpiderBamf.prototype",                            true,  0.0484f), // 2026-07-08
-            new("Powers/Player/Spiderman/Rework/SpiderCombo.prototype",                           true,  0.0383f), // 2026-07-08
-            new("Powers/Player/Spiderman/Rework/Uppercut.prototype",                              true,  0.0687f), // 2026-07-08
-            new("Powers/Player/Spiderman/Rework/WebSpray.prototype",                              true,  0.0478f), // 2026-07-08
-            new("Powers/Player/Spiderman/Rework/WebWhirlwind.prototype",                          true,  0.0233f), // 2026-07-08
-            new("Powers/Player/Spiderman/Rework/Wrap.prototype",                                  true,  0.0294f), // 2026-07-08
+            new("Powers/Player/Spiderman/Rework/RapidFire.prototype",                             true,  0.4464f), // 2026-07-08
+            new("Powers/Player/Spiderman/Rework/Slingshot.prototype",                             true,  0.0268f), // 2026-07-08
+            new("Powers/Player/Spiderman/Rework/SpiderBamf.prototype",                            true,  0.0383f), // 2026-07-08
+            new("Powers/Player/Spiderman/Rework/SpiderCombo.prototype",                           true,  0.0388f), // 2026-07-08
+            new("Powers/Player/Spiderman/Rework/Uppercut.prototype",                              true,  0.0864f), // 2026-07-08
+            new("Powers/Player/Spiderman/Rework/WebSpray.prototype",                              true,  0.0518f), // 2026-07-08
+            new("Powers/Player/Spiderman/Rework/WebWhirlwind.prototype",                          true,  0.0165f), // 2026-07-08
+            new("Powers/Player/Spiderman/Rework/Wrap.prototype",                                  true,  0.0262f), // 2026-07-08
             new("Powers/Player/Spiderman/Talents/Talent1MeleeBuff.prototype",                     false, 0.05f),
             new("Powers/Player/Spiderman/Talents/Talent1MovementBuff.prototype",                  false, 0.05f),
             new("Powers/Player/Spiderman/Talents/Talent1RangedBuff.prototype",                    false, 0.05f),
@@ -97,10 +97,10 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Spiderman/Traits/DefenseTrait.prototype",                          false, 0.05f),
             new("Powers/Player/Spiderman/Traits/MechanicTraitWebFluid.prototype",                 false, 0.05f),
             new("Powers/Player/Spiderman/Traits/OffenseTrait.prototype",                          false, 0.05f),
-            new("Powers/Player/Spiderman/Ultimate.prototype",                                     true,  0.0071f), // 2026-07-08
-            new("Powers/Player/Spiderman/UltimateHiddenPassive.prototype",                        false, 0.0071f), // 2026-07-08
-            new("Powers/Player/Spiderman/WebSplat.prototype",                                     true,  0.0746f), // 2026-07-08
-            new("Powers/Player/Spiderman/WebSwing.prototype",                                     true,  0.0323f), // 2026-07-08
+            new("Powers/Player/Spiderman/Ultimate.prototype",                                     true,  0.0055f), // 2026-07-08
+            new("Powers/Player/Spiderman/UltimateHiddenPassive.prototype",                        false, 0.0055f), // 2026-07-08
+            new("Powers/Player/Spiderman/WebSplat.prototype",                                     true,  0.1012f), // 2026-07-08
+            new("Powers/Player/Spiderman/WebSwing.prototype",                                     true,  0.0234f), // 2026-07-30
             new("Powers/Player/TravelPower/SpidermanFlight.prototype",                            false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/SpidermanStolenPower.prototype",             false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",                        false, 0.05f),

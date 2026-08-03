@@ -30,16 +30,16 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/TeamUps/FalconCivilWar/DashStrike.prototype",  true,  0.023333f),  // FalconCivilWar/DashStrike.prototype
+            new("Powers/TeamUps/FalconCivilWar/DashStrike.prototype",  true,  0.0325f), // 2026-07-30
             new("Powers/TeamUps/FalconCivilWar/ExplosiveRounds.prototype",  true,  0.023333f),  // FalconCivilWar/ExplosiveRounds.prototype
-            new("Powers/TeamUps/Falcon/BulletSpray.prototype",  true,  0.023333f),  // Falcon/BulletSpray.prototype
-            new("Powers/TeamUps/FalconCivilWar/MissileStrike.prototype",  true,  0.023333f),  // FalconCivilWar/MissileStrike.prototype
+            new("Powers/TeamUps/Falcon/BulletSpray.prototype",  true,  0.0250f), // 2026-07-30
+            new("Powers/TeamUps/FalconCivilWar/MissileStrike.prototype",  true,  0.0500f), // 2026-07-30
             new("Powers/TeamUps/FalconCivilWar/ExplosiveRoundsBleedTrigger.prototype", false,  0.023333f),  // FalconCivilWar/ExplosiveRoundsBleedTrigger.prototype - trigger/secondary
             new("Powers/TeamUps/Falcon/AwayStrafeProc.prototype", false,  0.023333f),  // Falcon/AwayStrafeProc.prototype - away passive
-            new("Powers/TeamUps/FalconCivilWar/DroneStrike.prototype",  true,  0.023333f),  // FalconCivilWar/DroneStrike.prototype
-            new("Powers/TeamUps/FalconCivilWar/DroneStrikeBarrage.prototype",  true,  0.023333f),  // FalconCivilWar/DroneStrikeBarrage.prototype
+            new("Powers/TeamUps/FalconCivilWar/DroneStrike.prototype",  true,  0.0579f), // 2026-07-30
+            new("Powers/TeamUps/FalconCivilWar/DroneStrikeBarrage.prototype",  true,  0.0357f), // 2026-07-30
             new("Powers/TeamUps/FalconCivilWar/AwayDroneProc.prototype", false,  0.023333f),  // FalconCivilWar/AwayDroneProc.prototype - away passive
-            new("Powers/TeamUps/Falcon/UltimateStrafe.prototype",  true, 0.011667f),  // Falcon/UltimateStrafe.prototype - signature / ultimate
+            new("Powers/TeamUps/Falcon/UltimateStrafe.prototype",  true, 0.0122f), // 2026-07-30
             new("Powers/TeamUps/TeamUpSynergyHeroPassive.prototype", false,  0.023333f),  // TeamUpSynergyHeroPassive.prototype - synergy passive
         };
     }

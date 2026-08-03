@@ -25,5 +25,21 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         protected override float GlobalAttackCooldownMs => 800f;
         protected override float PerPowerCooldownMs => 6000f;
         protected override float DamageScale => 1.0f;
+
+        protected override IncursionPowerEntry[] PowerTable => _powerTable;
+
+        private static readonly IncursionPowerEntry[] _powerTable =
+        {
+            new("Powers/EnemyPowers/Boss/Blob/BlobDefaultAttack3.prototype",                    true,  1.2063f), // 2026-08-01
+            new("Powers/EnemyPowers/Boss/Blob/BlobDefaultAttack.prototype",                     true,  1.2063f), // 2026-08-01
+            new("Powers/EnemyPowers/Boss/Blob/BlobBellyFlopEnd.prototype",                      false, 0.9758f), // 2026-07-28
+            new("Powers/EnemyPowers/Boss/Blob/BlobSummonToad.prototype",                        true,  1.0f),
+            new("Powers/EnemyPowers/Boss/Blob/BlobDirectedShockwave.prototype",                  true,  1.1192f), // 2026-08-01
+            new("Powers/EnemyPowers/Passive/SturdyMobNoKnock.prototype",                         false, 1.0f),
+            new("Powers/EnemyPowers/Shared/LeashReturnHeal.prototype",                           false, 1.0f),
+            new("Powers/EnemyPowers/Boss/Blob/BlobDefaultAttack2.prototype",                     true,  1.2063f), // 2026-08-01
+            new("Powers/EnemyPowers/Boss/Blob/BlobBellyFlop.prototype",                          true,  1.0734f), // 2026-08-01
+            new("Powers/EnemyPowers/Shared/LeashReturnNegStatusEffectImmune.prototype",          false, 1.0f),
+        };
     }
 }

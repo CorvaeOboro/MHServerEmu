@@ -45,19 +45,19 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         private static readonly IncursionPowerEntry[] _powerTable =
         {
             new("Powers/Player/TravelPower/WinterSoldierSprint.prototype",                     false, 0.05f),
-            new("Powers/Player/WinterSoldier/ArmBlast.prototype",                              true,  0.0482f), // 2026-06-10
-            new("Powers/Player/WinterSoldier/ArmSmash.prototype",                              true,  0.0314f), // 2026-06-20
-            new("Powers/Player/WinterSoldier/Assassinate.prototype",                           true,  0.0361f), // 2026-06-20
-            new("Powers/Player/WinterSoldier/BulletSpray.prototype",                           true,  0.0669f), // 2026-06-10
-            new("Powers/Player/WinterSoldier/FuriousLunge.prototype",                          true,  0.1878f), // 2026-06-10
-            new("Powers/Player/WinterSoldier/GrenadeLauncher.prototype",                       true,  0.1266f), // 2026-06-10
-            new("Powers/Player/WinterSoldier/Haymaker.prototype",                              true,  0.1013f), // 2026-06-10
-            new("Powers/Player/WinterSoldier/KnifeThrow.prototype",                            true,  0.0853f), // 2026-06-20
-            new("Powers/Player/WinterSoldier/PistolShot.prototype",                            true,  0.2370f), // 2026-06-10
-            new("Powers/Player/WinterSoldier/RapidFire.prototype",                             true,  0.0812f), // 2026-06-10
-            new("Powers/Player/WinterSoldier/SniperShot.prototype",                            true,  0.0603f), // 2026-06-10
+            new("Powers/Player/WinterSoldier/ArmBlast.prototype",                              true,  0.0378f), // 2026-06-10
+            new("Powers/Player/WinterSoldier/ArmSmash.prototype",                              true,  0.0222f), // 2026-07-15
+            new("Powers/Player/WinterSoldier/Assassinate.prototype",                           true,  0.0234f), // 2026-07-15
+            new("Powers/Player/WinterSoldier/BulletSpray.prototype",                           true,  0.0689f), // 2026-06-10
+            new("Powers/Player/WinterSoldier/FuriousLunge.prototype",                          true,  0.2494f), // 2026-06-10
+            new("Powers/Player/WinterSoldier/GrenadeLauncher.prototype",                       true,  0.1294f), // 2026-06-10
+            new("Powers/Player/WinterSoldier/Haymaker.prototype",                              true,  0.1168f), // 2026-06-10
+            new("Powers/Player/WinterSoldier/KnifeThrow.prototype",                            true,  0.0956f), // 2026-06-20
+            new("Powers/Player/WinterSoldier/PistolShot.prototype",                            true,  0.3105f), // 2026-06-10
+            new("Powers/Player/WinterSoldier/RapidFire.prototype",                             true,  0.0943f), // 2026-06-10
+            new("Powers/Player/WinterSoldier/SniperShot.prototype",                            true,  0.0539f), // 2026-06-10
             new("Powers/Player/WinterSoldier/SpinningMines.prototype",                         true,  0.05f),
-            new("Powers/Player/WinterSoldier/StealthMineToss.prototype",                       true,  0.1212f), // 2026-06-10
+            new("Powers/Player/WinterSoldier/StealthMineToss.prototype",                       true,  0.1194f), // 2026-06-10
             new("Powers/Player/WinterSoldier/StealthRoll.prototype",                           true,  0.05f),
             new("Powers/Player/WinterSoldier/Talents/Talent1BionicBrawling.prototype",         false, 0.05f),
             new("Powers/Player/WinterSoldier/Talents/Talent1BionicallyChargedThrow.prototype", false, 0.05f),
@@ -77,9 +77,9 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/WinterSoldier/TeamStealth.prototype",                           true,  0.05f),
             new("Powers/Player/WinterSoldier/Traits/DefenseTrait.prototype",                   false, 0.05f),
             new("Powers/Player/WinterSoldier/Traits/OffenseTrait.prototype",                   false, 0.05f),
-            new("Powers/Player/WinterSoldier/TripleShot.prototype",                            true,  0.3144f), // 2026-06-10
-            new("Powers/Player/WinterSoldier/Ultimate.prototype",                              true,  0.0116f), // 2026-06-10
-            new("Powers/Player/WinterSoldier/UltimateHiddenPassive.prototype",                 false, 0.0116f), // 2026-06-10
+            new("Powers/Player/WinterSoldier/TripleShot.prototype",                            true,  5.4167f), // 2026-06-10
+            new("Powers/Player/WinterSoldier/Ultimate.prototype",                              true,  0.0105f), // 2026-06-10
+            new("Powers/Player/WinterSoldier/UltimateHiddenPassive.prototype",                 false, 0.0105f), // 2026-06-10
             new("Powers/StolenPowers/StealablePowers/WinterSoldierStolenPower.prototype",      false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",                     false, 0.05f),
             new("Powers/Player/Active/ResurrectAnimOnly.prototype",                            false, 0.05f),

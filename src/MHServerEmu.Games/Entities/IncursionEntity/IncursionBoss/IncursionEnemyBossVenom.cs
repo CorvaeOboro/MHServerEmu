@@ -25,5 +25,19 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         protected override float GlobalAttackCooldownMs => 800f;
         protected override float PerPowerCooldownMs => 6000f;
         protected override float DamageScale => 1.0f;
+
+        protected override IncursionPowerEntry[] PowerTable => _powerTable;
+
+        private static readonly IncursionPowerEntry[] _powerTable =
+        {
+            new("Powers/EnemyPowers/Boss/Venom/BigPunch.prototype",                       true,  1.3363f), // 2026-08-01
+            new("Powers/EnemyPowers/Boss/Venom/NewYank.prototype",                        true,  1.0f),
+            new("Powers/EnemyPowers/Boss/Venom/VenomMad.prototype",                       true,  1.0f),
+            new("Powers/EnemyPowers/Boss/Venom/VenomOMTripleShot.prototype",              true,  1.3470f), // 2026-08-01
+            new("Powers/EnemyPowers/Boss/Venom/MawFromAbove.prototype",                   false, 1.5212f), // 2026-07-28
+            new("Powers/EnemyPowers/Boss/Venom/MawFromAboveEnd.prototype",                false, 1.5212f), // 2026-07-28
+            new("Powers/EnemyPowers/Shared/LeashReturnHeal.prototype",                    false, 1.0f),
+            new("Powers/EnemyPowers/Shared/LeashReturnNegStatusEffectImmune.prototype",   false, 1.0f),
+        };
     }
 }

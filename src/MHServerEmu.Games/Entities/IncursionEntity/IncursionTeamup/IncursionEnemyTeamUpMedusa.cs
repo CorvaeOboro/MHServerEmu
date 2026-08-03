@@ -30,16 +30,16 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/TeamUps/Medusa/Impale.prototype",  true,  0.023333f),  // Medusa/Impale.prototype
-            new("Powers/TeamUps/Medusa/Pirouette.prototype",  true,  0.023333f),  // Medusa/Pirouette.prototype
+            new("Powers/TeamUps/Medusa/Impale.prototype",  true,  0.0428f), // 2026-07-30
+            new("Powers/TeamUps/Medusa/Pirouette.prototype",  true,  0.0284f), // 2026-07-30
             new("Powers/TeamUps/Medusa/AwayPirouette.prototype", false,  0.023333f),  // Medusa/AwayPirouette.prototype - away passive
-            new("Powers/TeamUps/Medusa/HairCone.prototype",  true,  0.023333f),  // Medusa/HairCone.prototype
-            new("Powers/TeamUps/Medusa/PBAoEPush.prototype",  true,  0.023333f),  // Medusa/PBAoEPush.prototype
-            new("Powers/TeamUps/Medusa/Constrict.prototype",  true,  0.023333f),  // Medusa/Constrict.prototype
-            new("Powers/TeamUps/Medusa/AutoSlap.prototype",  true,  0.023333f),  // Medusa/AutoSlap.prototype
-            new("Powers/TeamUps/Medusa/HairThrow.prototype",  true,  0.023333f),  // Medusa/HairThrow.prototype
+            new("Powers/TeamUps/Medusa/HairCone.prototype",  true,  0.0321f), // 2026-07-30
+            new("Powers/TeamUps/Medusa/PBAoEPush.prototype",  true,  0.0297f), // 2026-07-30
+            new("Powers/TeamUps/Medusa/Constrict.prototype",  true,  0.0205f), // 2026-07-30
+            new("Powers/TeamUps/Medusa/AutoSlap.prototype",  true,  0.1502f), // 2026-07-30
+            new("Powers/TeamUps/Medusa/HairThrow.prototype",  true,  0.0242f), // 2026-07-30
             new("Powers/TeamUps/Medusa/AwayHairThrow.prototype", false,  0.023333f),  // Medusa/AwayHairThrow.prototype - away passive
-            new("Powers/TeamUps/Medusa/HairBarrage.prototype",  true, 0.011667f),  // Medusa/HairBarrage.prototype - signature / ultimate
+            new("Powers/TeamUps/Medusa/HairBarrage.prototype",  true, 0.0215f), // 2026-07-30
             new("Powers/TeamUps/TeamUpSynergyHeroPassive.prototype", false,  0.023333f),  // TeamUpSynergyHeroPassive.prototype - synergy passive
         };
     }

@@ -40,21 +40,21 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/NickFury/BasicPistol.prototype",                                   true,  0.2828f), // 2026-06-10
-            new("Powers/Player/NickFury/BulletSpray.prototype",                                   true,  0.0296f), // 2026-06-07
-            new("Powers/Player/NickFury/ChanneledBeam.prototype",                                 true,  0.0080f), // 2026-06-10
+            new("Powers/Player/NickFury/BasicPistol.prototype",                                   true,  0.3271f), // 2026-06-10
+            new("Powers/Player/NickFury/BulletSpray.prototype",                                   true,  0.0275f), // 2026-06-07
+            new("Powers/Player/NickFury/ChanneledBeam.prototype",                                 true,  0.0067f), // 2026-06-10
             new("Powers/Player/NickFury/CommandingShout.prototype",                               true,  0.05f),
-            new("Powers/Player/NickFury/DangerClose.prototype",                                   true,  0.0701f), // 2026-06-07
-            new("Powers/Player/NickFury/DriveByAnimStart.prototype",                              true,  0.0335f), // 2026-07-08
-            new("Powers/Player/NickFury/Execute.prototype",                                       true,  0.0179f), // 2026-07-08
-            new("Powers/Player/NickFury/EyesEverywhere.prototype",                                true,  0.0075f), // 2026-07-08
-            new("Powers/Player/NickFury/HeadsDownRanged.prototype",                               true,  0.0570f), // 2026-06-07
-            new("Powers/Player/NickFury/Microdrones.prototype",                                   true,  0.0452f), // 2026-07-08
-            new("Powers/Player/NickFury/MolecularGrenade.prototype",                              true,  0.0671f), // 2026-06-07
-            new("Powers/Player/NickFury/RapidFire.prototype",                                     true,  0.1952f), // 2026-06-07
+            new("Powers/Player/NickFury/DangerClose.prototype",                                   true,  0.0657f), // 2026-06-07
+            new("Powers/Player/NickFury/DriveByAnimStart.prototype",                              true,  0.0281f), // 2026-07-08
+            new("Powers/Player/NickFury/Execute.prototype",                                       true,  0.0167f), // 2026-07-08
+            new("Powers/Player/NickFury/EyesEverywhere.prototype",                                true,  0.0049f), // 2026-07-08
+            new("Powers/Player/NickFury/HeadsDownRanged.prototype",                               true,  0.0534f), // 2026-06-07
+            new("Powers/Player/NickFury/Microdrones.prototype",                                   true,  0.0317f), // 2026-07-30
+            new("Powers/Player/NickFury/MolecularGrenade.prototype",                              true,  0.0558f), // 2026-06-07
+            new("Powers/Player/NickFury/RapidFire.prototype",                                     true,  0.5286f), // 2026-06-07
             new("Powers/Player/NickFury/Reload.prototype",                                        true,  0.05f),
-            new("Powers/Player/NickFury/RocketLauncher.prototype",                                true,  0.0512f), // 2026-06-07
-            new("Powers/Player/NickFury/SniperShot.prototype",                                    true,  0.0633f), // 2026-06-07
+            new("Powers/Player/NickFury/RocketLauncher.prototype",                                true,  0.0504f), // 2026-06-07
+            new("Powers/Player/NickFury/SniperShot.prototype",                                    true,  0.0614f), // 2026-06-07
             new("Powers/Player/NickFury/Talents/Talent1CommandingShoutRemap.prototype",           false, 0.05f),
             new("Powers/Player/NickFury/Talents/Talent1FireteamRifles.prototype",                 false, 0.05f),
             new("Powers/Player/NickFury/Talents/Talent1LifeModelDecoy.prototype",                 false, 0.05f),

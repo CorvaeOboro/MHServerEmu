@@ -43,23 +43,23 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/SheHulk/Assault.prototype",                                           true,  0.1204f), // 2026-06-11
-            new("Powers/Player/SheHulk/BarExam.prototype",                                           true,  0.0364f), // 2026-06-11
-            new("Powers/Player/SheHulk/BarristerBeatdown.prototype",                                 true,  0.02f),
-            new("Powers/Player/SheHulk/Battery.prototype",                                           true,  0.1218f), // 2026-06-18
-            new("Powers/Player/SheHulk/CeaseAndDesist.prototype",                                    true,  0.0573f), // 2026-06-18
-            new("Powers/Player/SheHulk/ClosingArguments.prototype",                                  true,  0.0407f), // 2026-06-06
-            new("Powers/Player/SheHulk/Conviction.prototype",                                        true,  0.0061f), // 2026-06-18
-            new("Powers/Player/SheHulk/CrossExamination.prototype",                                  true,  0.0737f), // 2026-06-18
+            new("Powers/Player/SheHulk/Assault.prototype",                                           true,  0.1263f), // 2026-06-11
+            new("Powers/Player/SheHulk/BarExam.prototype",                                           true,  0.0346f), // 2026-06-11
+            new("Powers/Player/SheHulk/BarristerBeatdown.prototype",                                 true,  0.0284f), // 2026-07-30
+            new("Powers/Player/SheHulk/Battery.prototype",                                           true,  0.2296f), // 2026-06-18
+            new("Powers/Player/SheHulk/CeaseAndDesist.prototype",                                    true,  0.0570f), // 2026-06-18
+            new("Powers/Player/SheHulk/ClosingArguments.prototype",                                  true,  0.0405f), // 2026-06-06
+            new("Powers/Player/SheHulk/Conviction.prototype",                                        true,  0.0049f), // 2026-07-30
+            new("Powers/Player/SheHulk/CrossExamination.prototype",                                  true,  0.0819f), // 2026-06-18
             new("Powers/Player/SheHulk/DefenseAttorney.prototype",                                   true,  0.05f),
-            new("Powers/Player/SheHulk/FinalVerdict.prototype",                                      true,  0.0591f), // 2026-06-18
-            new("Powers/Player/SheHulk/FuriousLunge.prototype",                                      true,  0.1965f), // 2026-06-11
+            new("Powers/Player/SheHulk/FinalVerdict.prototype",                                      true,  0.0574f), // 2026-06-18
+            new("Powers/Player/SheHulk/FuriousLunge.prototype",                                      true,  0.4254f), // 2026-06-11
             new("Powers/Player/SheHulk/HostileWitness.prototype",                                    true,  0.05f),
             new("Powers/Player/SheHulk/LawyerUp.prototype",                                          true,  0.05f),
-            new("Powers/Player/SheHulk/MoveToStrike.prototype",                                      true,  0.0597f), // 2026-06-18
-            new("Powers/Player/SheHulk/Objection.prototype",                                         true,  0.1497f), // 2026-06-10
-            new("Powers/Player/SheHulk/OpeningStatement.prototype",                                  true,  0.0638f), // 2026-06-18
-            new("Powers/Player/SheHulk/SurpriseWitness.prototype",                                   true,  0.2389f), // 2026-06-06
+            new("Powers/Player/SheHulk/MoveToStrike.prototype",                                      true,  0.0609f), // 2026-07-30
+            new("Powers/Player/SheHulk/Objection.prototype",                                         true,  0.0926f), // 2026-06-10
+            new("Powers/Player/SheHulk/OpeningStatement.prototype",                                  true,  0.0608f), // 2026-06-18
+            new("Powers/Player/SheHulk/SurpriseWitness.prototype",                                   true,  0.5064f), // 2026-06-06
             new("Powers/Player/SheHulk/Talents/Talent1IncreaseFinisherDamage.prototype",             false, 0.05f),
             new("Powers/Player/SheHulk/Talents/Talent1IncreaseMaxComboPoints.prototype",             false, 0.025f),
             new("Powers/Player/SheHulk/Talents/Talent1RemoveComboPoints.prototype",                  false, 0.025f),
@@ -78,7 +78,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/SheHulk/Traits/DefenseTrait.prototype",                               false, 0.05f),
             new("Powers/Player/SheHulk/Traits/MechanicTraitAnger.prototype",                         false, 0.05f),
             new("Powers/Player/SheHulk/Traits/OffenseTrait.prototype",                               false, 0.05f),
-            new("Powers/Player/SheHulk/UltimateInitialHit.prototype",                                true,  0.0151f), // 2026-06-06
+            new("Powers/Player/SheHulk/UltimateInitialHit.prototype",                                true,  0.0183f), // 2026-06-06
             new("Powers/Player/TravelPower/SheHulkSprint.prototype",                                 false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/SheHulkStolenPower.prototype",                  false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",                           false, 0.05f),

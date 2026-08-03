@@ -30,14 +30,14 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/TeamUps/DeadpoolTheKid/BulletSpray.prototype",  true,  0.026667f),  // DeadpoolTheKid/BulletSpray.prototype
-            new("Powers/TeamUps/DeadpoolTheKid/Caltrops.prototype",  true,  0.026667f),  // DeadpoolTheKid/Caltrops.prototype
+            new("Powers/TeamUps/DeadpoolTheKid/BulletSpray.prototype",  true,  0.0554f), // 2026-07-30
+            new("Powers/TeamUps/DeadpoolTheKid/Caltrops.prototype",  true,  0.0639f), // 2026-07-30
             new("Powers/TeamUps/DeadpoolTheKid/AwayCaltropsProc.prototype", false,  0.026667f),  // DeadpoolTheKid/AwayCaltropsProc.prototype - away passive
             new("Powers/TeamUps/DeadpoolTheKid/TNT.prototype",  true,  0.026667f),  // DeadpoolTheKid/TNT.prototype
-            new("Powers/TeamUps/DeadpoolTheKid/Decoy.prototype",  true,  0.026667f),  // DeadpoolTheKid/Decoy.prototype
+            new("Powers/TeamUps/DeadpoolTheKid/Decoy.prototype",  true,  0.0188f), // 2026-07-30
             new("Powers/TeamUps/DeadpoolTheKid/AwayDecoyProc.prototype", false,  0.026667f),  // DeadpoolTheKid/AwayDecoyProc.prototype - away passive
             new("Powers/TeamUps/DeadpoolTheKid/TNTDoTTrigger.prototype", false,  0.026667f),  // DeadpoolTheKid/TNTDoTTrigger.prototype - trigger/secondary
-            new("Powers/TeamUps/DeadpoolTheKid/GatlingGun.prototype",  true,  0.026667f),  // DeadpoolTheKid/GatlingGun.prototype
+            new("Powers/TeamUps/DeadpoolTheKid/GatlingGun.prototype",  true,  0.0490f), // 2026-07-30
             new("Powers/TeamUps/DeadpoolTheKid/Godmode.prototype", false,  0.026667f),  // DeadpoolTheKid/Godmode.prototype - away passive
             new("Powers/TeamUps/DeadpoolTheKid/ServerLag.prototype",  true,  0.026667f),  // DeadpoolTheKid/ServerLag.prototype
             new("Powers/TeamUps/TeamUpSynergyHeroPassive.prototype", false,  0.026667f),  // TeamUpSynergyHeroPassive.prototype - synergy passive

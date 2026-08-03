@@ -47,23 +47,23 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/Thing/Rework/Bash.prototype",                                true,  0.0397f), // 2026-06-10
-            new("Powers/Player/Thing/Rework/CallHothead.prototype",                         true,  0.0550f), // 2026-06-10
-            new("Powers/Player/Thing/Rework/CallStretch.prototype",                         true,  0.0244f), // 2026-07-05
-            new("Powers/Player/Thing/Rework/CallSuzie.prototype",                           true,  0.0243f), // 2026-07-05
-            new("Powers/Player/Thing/Rework/CrashingLeap.prototype",                        true,  0.0305f), // 2026-07-05
-            new("Powers/Player/Thing/Rework/DiscusToss.prototype",                          true,  0.05f),
-            new("Powers/Player/Thing/Rework/FoodCart.prototype",                            true,  0.1586f), // 2026-06-10
-            new("Powers/Player/Thing/Rework/GroundSmash.prototype",                         true,  0.0691f), // 2026-06-10
-            new("Powers/Player/Thing/Rework/GuessWhatTimeItIs.prototype",                   true,  0.0417f), // 2026-06-10
-            new("Powers/Player/Thing/Rework/Headbutt.prototype",                            true,  0.0731f), // 2026-06-18
-            new("Powers/Player/Thing/Rework/Knockout.prototype",                            true,  0.0310f), // 2026-06-17
-            new("Powers/Player/Thing/Rework/LampBatThrow.prototype",                        true,  0.0319f), // 2026-06-10
-            new("Powers/Player/Thing/Rework/ParkingMeterSmash.prototype",                   true,  0.1196f), // 2026-06-10
-            new("Powers/Player/Thing/Rework/RockslideCharge.prototype",                     true,  0.1218f), // 2026-07-05
-            new("Powers/Player/Thing/Rework/RockyPunch.prototype",                          true,  0.1220f), // 2026-06-10
+            new("Powers/Player/Thing/Rework/Bash.prototype",                                true,  0.0308f), // 2026-06-10
+            new("Powers/Player/Thing/Rework/CallHothead.prototype",                         true,  0.0559f), // 2026-06-10
+            new("Powers/Player/Thing/Rework/CallStretch.prototype",                         true,  0.0160f), // 2026-07-17
+            new("Powers/Player/Thing/Rework/CallSuzie.prototype",                           true,  0.0188f), // 2026-07-17
+            new("Powers/Player/Thing/Rework/CrashingLeap.prototype",                        true,  0.0255f), // 2026-07-17
+            new("Powers/Player/Thing/Rework/DiscusToss.prototype",                          true,  0.0427f), // 2026-06-09
+            new("Powers/Player/Thing/Rework/FoodCart.prototype",                            true,  0.2170f), // 2026-06-10
+            new("Powers/Player/Thing/Rework/GroundSmash.prototype",                         true,  0.0729f), // 2026-06-10
+            new("Powers/Player/Thing/Rework/GuessWhatTimeItIs.prototype",                   true,  0.0308f), // 2026-06-10
+            new("Powers/Player/Thing/Rework/Headbutt.prototype",                            true,  0.0678f), // 2026-07-17
+            new("Powers/Player/Thing/Rework/Knockout.prototype",                            true,  0.0303f), // 2026-07-17
+            new("Powers/Player/Thing/Rework/LampBatThrow.prototype",                        true,  0.0286f), // 2026-06-10
+            new("Powers/Player/Thing/Rework/ParkingMeterSmash.prototype",                   true,  0.1454f), // 2026-06-10
+            new("Powers/Player/Thing/Rework/RockslideCharge.prototype",                     true,  0.2352f), // 2026-07-17
+            new("Powers/Player/Thing/Rework/RockyPunch.prototype",                          true,  0.1592f), // 2026-06-10
             new("Powers/Player/Thing/Rework/WiseCrack.prototype",                           true,  0.05f),
-            new("Powers/Player/Thing/Rework/YancyStreetGang.prototype",                     true,  0.1968f), // 2026-06-10
+            new("Powers/Player/Thing/Rework/YancyStreetGang.prototype",                     true,  0.4119f), // 2026-06-10
             new("Powers/Player/Thing/Talents/Talent1CallInNoUseBenefit.prototype",          false, 0.05f),
             new("Powers/Player/Thing/Talents/Talent1CallInSharedCooldown.prototype",        false, 0.05f),
             new("Powers/Player/Thing/Talents/Talent1YancyStreetBuff.prototype",             false, 0.05f),
@@ -82,7 +82,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Thing/Traits/ClobberinTime.prototype",                       false, 0.05f),
             new("Powers/Player/Thing/Traits/DefenseTrait.prototype",                        false, 0.05f),
             new("Powers/Player/Thing/Traits/OffenseTrait.prototype",                        false, 0.05f),
-            new("Powers/Player/Thing/Ultimate.prototype",                                   true,  0.0106f), // 2026-06-10
+            new("Powers/Player/Thing/Ultimate.prototype",                                   true,  0.0135f), // 2026-06-10
             new("Powers/Player/TravelPower/ThingFlight.prototype",                          false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/ThingStolenPower.prototype",           false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",                  false, 0.05f),

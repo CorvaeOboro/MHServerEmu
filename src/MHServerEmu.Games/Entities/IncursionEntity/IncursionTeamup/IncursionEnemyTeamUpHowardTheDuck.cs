@@ -31,14 +31,14 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         private static readonly IncursionPowerEntry[] _powerTable =
         {
             new("Powers/TeamUps/HowardTheDuck/FlyingDuckStart.prototype",  true,  0.026667f),  // HowardTheDuck/FlyingDuckStart.prototype
-            new("Powers/TeamUps/HowardTheDuck/PerfectLanding.prototype",  true,  0.026667f),  // HowardTheDuck/PerfectLanding.prototype
+            new("Powers/TeamUps/HowardTheDuck/PerfectLanding.prototype",  true,  0.0398f), // 2026-07-30
             new("Powers/TeamUps/HowardTheDuck/AwayLanding.prototype", false,  0.026667f),  // HowardTheDuck/AwayLanding.prototype - away passive
-            new("Powers/TeamUps/HowardTheDuck/SummonDoop.prototype",  true,  0.026667f),  // HowardTheDuck/SummonDoop.prototype
+            new("Powers/TeamUps/HowardTheDuck/SummonDoop.prototype",  true,  0.0576f), // 2026-07-30
             new("Powers/TeamUps/HowardTheDuck/AwayBuffProc.prototype", false,  0.026667f),  // HowardTheDuck/AwayBuffProc.prototype - away passive
-            new("Powers/TeamUps/HowardTheDuck/BigPunch.prototype",  true,  0.026667f),  // HowardTheDuck/BigPunch.prototype
+            new("Powers/TeamUps/HowardTheDuck/BigPunch.prototype",  true,  0.0517f), // 2026-07-30
             new("Powers/TeamUps/HowardTheDuck/AwayDoop.prototype", false,  0.026667f),  // HowardTheDuck/AwayDoop.prototype - away passive
-            new("Powers/TeamUps/HowardTheDuck/QuackAttack.prototype",  true,  0.026667f),  // HowardTheDuck/QuackAttack.prototype
-            new("Powers/TeamUps/HowardTheDuck/BigPunchExplosionTrigger.prototype", false,  0.026667f),  // HowardTheDuck/BigPunchExplosionTrigger.prototype - trigger/secondary
+            new("Powers/TeamUps/HowardTheDuck/QuackAttack.prototype",  true,  0.0337f), // 2026-07-30
+            new("Powers/TeamUps/HowardTheDuck/BigPunchExplosionTrigger.prototype", false,  0.0517f), // 2026-07-30
             new("Powers/TeamUps/HowardTheDuck/IronDuck.prototype",  true, 0.013333f),  // HowardTheDuck/IronDuck.prototype - signature / ultimate
             new("Powers/TeamUps/TeamUpSynergyHeroPassive.prototype", false,  0.026667f),  // TeamUpSynergyHeroPassive.prototype - synergy passive
         };

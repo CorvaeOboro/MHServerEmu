@@ -30,16 +30,16 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/TeamUps/Sunspot/FuriousLunge.prototype",  true,  0.023333f),  // Sunspot/FuriousLunge.prototype
-            new("Powers/TeamUps/Sunspot/DiveBomb.prototype",  true,  0.023333f),  // Sunspot/DiveBomb.prototype
+            new("Powers/TeamUps/Sunspot/FuriousLunge.prototype",  true,  0.0776f), // 2026-07-30
+            new("Powers/TeamUps/Sunspot/DiveBomb.prototype",  true,  0.0330f), // 2026-07-30
             new("Powers/TeamUps/Sunspot/AwayDiveBombProc.prototype", false,  0.023333f),  // Sunspot/AwayDiveBombProc.prototype - away passive
             new("Powers/TeamUps/Sunspot/FuriousLungeHotspotTrigger.prototype", false,  0.023333f),  // Sunspot/FuriousLungeHotspotTrigger.prototype - trigger/secondary
-            new("Powers/TeamUps/Sunspot/ChanneledBeam.prototype",  true,  0.023333f),  // Sunspot/ChanneledBeam.prototype
-            new("Powers/TeamUps/Sunspot/TripleStrike.prototype",  true,  0.023333f),  // Sunspot/TripleStrike.prototype
+            new("Powers/TeamUps/Sunspot/ChanneledBeam.prototype",  true,  0.0515f), // 2026-07-30
+            new("Powers/TeamUps/Sunspot/TripleStrike.prototype",  true,  0.0686f), // 2026-07-30
             new("Powers/TeamUps/Sunspot/SolarSteroid.prototype", false,  0.023333f),  // Sunspot/SolarSteroid.prototype - defensive
             new("Powers/TeamUps/Sunspot/SolarSteroidDamageAuraTrigger.prototype", false,  0.023333f),  // Sunspot/SolarSteroidDamageAuraTrigger.prototype - trigger/secondary
             new("Powers/TeamUps/Sunspot/AwaySolarSteroidProc.prototype", false,  0.023333f),  // Sunspot/AwaySolarSteroidProc.prototype - away passive
-            new("Powers/TeamUps/Sunspot/PBAoESignature.prototype",  true, 0.011667f),  // Sunspot/PBAoESignature.prototype - signature / ultimate
+            new("Powers/TeamUps/Sunspot/PBAoESignature.prototype",  true, 0.0129f), // 2026-07-30
             new("Powers/TeamUps/TeamUpSynergyHeroPassive.prototype", false,  0.023333f),  // TeamUpSynergyHeroPassive.prototype - synergy passive
         };
     }

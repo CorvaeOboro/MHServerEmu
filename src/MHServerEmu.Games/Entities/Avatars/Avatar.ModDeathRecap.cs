@@ -7,8 +7,8 @@
 //
 //  Config.ini :
 //   DeathRecapEnable, DeathRecapMaxEvents, DeathRecapTopN,
-//   DeathRecapShowHeals, DeathRecapColorEnable, DeathRecapSingleLine,
-//   DeathRecapBannerEnable, DeathRecapLoggingEnable
+//   DeathRecapNameLength, DeathRecapDamageTypeLength,
+//   DeathRecapLoggingEnable
 //
 //  Integration:
 //   - WorldEntity.ApplyPowerResultsInternal calls RecordDamageEvent() on every
@@ -62,10 +62,17 @@ namespace MHServerEmu.Games.Entities.Avatars
             // For hostile hits, only record if there was actual damage
             if (powerResults.TestFlag(PowerResultFlags.Hostile) && healthDelta >= 0) return;
 
-            // For heals, respect config
-            if (isHeal && Game.CustomGameOptions.DeathRecapShowHeals == false) return;
+            // Heals are not recorded - death recap focuses on damage sources only
+            if (isHeal) return;
 
-            string sourceName = ultimateOwner != null ? ultimateOwner.PrototypeName : "Unknown";
+            string sourceName = "Unknown";
+            if (ultimateOwner != null)
+            {
+                if (Game?.IncursionManager?.TryGetInvaderDisplayName(ultimateOwner.Id, out string invaderName) == true)
+                    sourceName = invaderName;
+                else
+                    sourceName = ultimateOwner.PrototypeName;
+            }
             string powerName = powerResults.PowerPrototype != null
                 ? GameDatabase.GetPrototypeName(powerResults.PowerPrototype.DataRef)
                 : "Unknown";

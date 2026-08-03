@@ -50,18 +50,18 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/LukeCage/BasicCrowbar.prototype",                        true,  0.1114f), // 2026-06-10
-            new("Powers/Player/LukeCage/BasicPunch.prototype",                          true,  0.1024f), // 2026-06-10
-            new("Powers/Player/LukeCage/Charge.prototype",                              true,  0.1415f), // 2026-07-05
-            new("Powers/Player/LukeCage/ChunkOConcrete.prototype",                      true,  0.0685f), // 2026-06-10
+            new("Powers/Player/LukeCage/BasicCrowbar.prototype",                        true,  0.1237f), // 2026-06-10
+            new("Powers/Player/LukeCage/BasicPunch.prototype",                          true,  0.1209f), // 2026-06-10
+            new("Powers/Player/LukeCage/Charge.prototype",                              true,  0.2592f), // 2026-07-30
+            new("Powers/Player/LukeCage/ChunkOConcrete.prototype",                      true,  0.0527f), // 2026-06-10
             new("Powers/Player/LukeCage/DefensiveLeader.prototype",                     true,  0.05f),
-            new("Powers/Player/LukeCage/ElbowDrop.prototype",                           true,  0.0415f), // 2026-07-05
-            new("Powers/Player/LukeCage/MeleePunchUppercut.prototype",                  true,  0.0990f), // 2026-06-10
+            new("Powers/Player/LukeCage/ElbowDrop.prototype",                           true,  0.0327f), // 2026-07-30
+            new("Powers/Player/LukeCage/MeleePunchUppercut.prototype",                  true,  0.0956f), // 2026-06-10
             new("Powers/Player/LukeCage/Pummel.prototype",                              true,  0.05f),
             new("Powers/Player/LukeCage/PunchTheGround.prototype",                      true,  0.05f),
-            new("Powers/Player/LukeCage/StreetKick.prototype",                          true,  0.1377f), // 2026-06-10
-            new("Powers/Player/LukeCage/SummonIronFist.prototype",                      true,  0.0556f), // 2026-07-05
-            new("Powers/Player/LukeCage/SweetChristmas.prototype",                      true,  0.0058f), // 2026-07-05
+            new("Powers/Player/LukeCage/StreetKick.prototype",                          true,  0.1469f), // 2026-06-10
+            new("Powers/Player/LukeCage/SummonIronFist.prototype",                      true,  0.0545f), // 2026-07-30
+            new("Powers/Player/LukeCage/SweetChristmas.prototype",                      true,  0.0043f), // 2026-07-30
             new("Powers/Player/LukeCage/Talents/BoxingSpec.prototype",                  false, 0.05f),
             new("Powers/Player/LukeCage/Talents/ChainSpec.prototype",                   false, 0.05f),
             new("Powers/Player/LukeCage/Talents/ColleenWing.prototype",                 false, 0.05f),
@@ -77,12 +77,12 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/LukeCage/Talents/MobilityBuffs.prototype",               false, 0.05f),
             new("Powers/Player/LukeCage/Talents/PowerBuffsLongRangeWeapons.prototype",  false, 0.05f),
             new("Powers/Player/LukeCage/Talents/PowerBuffsTauntSteroid.prototype",      false, 0.05f),
-            new("Powers/Player/LukeCage/ThrowCar.prototype",                            true,  0.0458f), // 2026-06-10
+            new("Powers/Player/LukeCage/ThrowCar.prototype",                            true,  0.0376f), // 2026-06-10
             new("Powers/Player/LukeCage/Traits/DefenseTrait.prototype",                 false, 0.05f),
             new("Powers/Player/LukeCage/Traits/MechanicTraitComboPoints.prototype",     false, 0.025f),
             new("Powers/Player/LukeCage/Traits/OffenseTrait.prototype",                 false, 0.05f),
-            new("Powers/Player/LukeCage/Ultimate.prototype",                            true,  0.0069f), // 2026-06-05
-            new("Powers/Player/LukeCage/Yank.prototype",                                true,  0.1072f), // 2026-06-10
+            new("Powers/Player/LukeCage/Ultimate.prototype",                            true,  0.0063f), // 2026-06-05
+            new("Powers/Player/LukeCage/Yank.prototype",                                true,  0.1114f), // 2026-06-10
             new("Powers/Player/TravelPower/LukeCageSprint.prototype",                   false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/LukeCageStolenPower.prototype",    false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",              false, 0.05f),

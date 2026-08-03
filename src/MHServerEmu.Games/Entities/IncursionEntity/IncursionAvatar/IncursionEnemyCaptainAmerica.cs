@@ -61,19 +61,19 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/CaptainAmerica/BackwardsTumble.prototype",                      true,  0.1018f), // 2026-06-11
-            new("Powers/Player/CaptainAmerica/BoomerangThrow.prototype",                       true,  0.0718f), // 2026-06-11
-            new("Powers/Player/CaptainAmerica/BroadStrike.prototype",                          true,  0.0934f), // 2026-06-11
-            new("Powers/Player/CaptainAmerica/BrutalStrike.prototype",                         true,  0.0588f), // 2026-06-11
-            new("Powers/Player/CaptainAmerica/DeathFromAbove.prototype",                       true,  0.0566f), // 2026-06-11
-            new("Powers/Player/CaptainAmerica/FinestHour.prototype",                           true,  0.0085f), // 2026-06-18
-            new("Powers/Player/CaptainAmerica/FirstStrike.prototype",                          true,  0.1032f), // 2026-06-11
-            new("Powers/Player/CaptainAmerica/FuriousLunge.prototype",                         true,  0.1482f), // 2026-06-11
+            new("Powers/Player/CaptainAmerica/BackwardsTumble.prototype",                      true,  0.1078f), // 2026-06-11
+            new("Powers/Player/CaptainAmerica/BoomerangThrow.prototype",                       true,  0.0703f), // 2026-06-11
+            new("Powers/Player/CaptainAmerica/BroadStrike.prototype",                          true,  0.1116f), // 2026-06-11
+            new("Powers/Player/CaptainAmerica/BrutalStrike.prototype",                         true,  0.0434f), // 2026-07-17
+            new("Powers/Player/CaptainAmerica/DeathFromAbove.prototype",                       true,  0.0346f), // 2026-07-30
+            new("Powers/Player/CaptainAmerica/FinestHour.prototype",                           true,  0.0058f), // 2026-07-17
+            new("Powers/Player/CaptainAmerica/FirstStrike.prototype",                          true,  0.1213f), // 2026-06-11
+            new("Powers/Player/CaptainAmerica/FuriousLunge.prototype",                         true,  0.1967f), // 2026-06-11
             new("Powers/Player/CaptainAmerica/PatrioticTaunt.prototype",                       true,  0.05f),
-            new("Powers/Player/CaptainAmerica/ShieldBash.prototype",                           true,  0.0239f), // 2026-06-11
+            new("Powers/Player/CaptainAmerica/ShieldBash.prototype",                           true,  0.0234f), // 2026-06-11
             new("Powers/Player/CaptainAmerica/ShieldBlock.prototype",                          true,  0.05f),
-            new("Powers/Player/CaptainAmerica/ShieldThrowPBAoE.prototype",                     true,  0.0304f), // 2026-06-11
-            new("Powers/Player/CaptainAmerica/SoundRicochet.prototype",                        true,  0.0836f), // 2026-06-11
+            new("Powers/Player/CaptainAmerica/ShieldThrowPBAoE.prototype",                     true,  0.0280f), // 2026-06-11
+            new("Powers/Player/CaptainAmerica/SoundRicochet.prototype",                        true,  0.0806f), // 2026-06-11
             new("Powers/Player/CaptainAmerica/Talents/GuardedTeamBuffSpec.prototype",          false, 0.05f),
             new("Powers/Player/CaptainAmerica/Talents/HeroicStrikeShieldSwipeSpec.prototype",  false, 0.05f),
             new("Powers/Player/CaptainAmerica/Talents/InspiredTeamBuffSpec.prototype",         false, 0.05f),
@@ -92,9 +92,9 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/CaptainAmerica/Traits/DefenseTrait.prototype",                  false, 0.05f),
             new("Powers/Player/CaptainAmerica/Traits/MechanicTraitSerum.prototype",            false, 0.05f),
             new("Powers/Player/CaptainAmerica/Traits/OffenseTrait.prototype",                  false, 0.05f),
-            new("Powers/Player/CaptainAmerica/Ultimate.prototype",                             true,  0.0093f), // 2026-06-10
+            new("Powers/Player/CaptainAmerica/Ultimate.prototype",                             true,  0.0089f), // 2026-06-10
             new("Powers/Player/CaptainAmerica/Vault.prototype",                                true,  0.05f),
-            new("Powers/Player/CaptainAmerica/VibraniumBash.prototype",                        true,  0.0708f), // 2026-06-11
+            new("Powers/Player/CaptainAmerica/VibraniumBash.prototype",                        true,  0.0641f), // 2026-06-11
             new("Powers/Player/TravelPower/CaptainAmericaSprint.prototype",                    false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/CaptainAmericaStolenPower.prototype",     false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",                     false, 0.05f),

@@ -79,19 +79,19 @@ namespace MHServerEmu.Commands.Implementations
 
         // --- Hardcoded test defaults ----------------------------------------
 
-        // Combat body — the invisible server-side entity that gets rendered as something else.
+        // Combat body - the invisible server-side entity that gets rendered as something else.
         // Same one the Incursion mod uses.
         private const string CombatBodyPath = "Entity/Characters/Mobs/SpiderClones/SpidermanCloneSuperiorBase.prototype";
 
-        // Silver Surfer — chrome material source
+        // Silver Surfer - chrome material source
         private const string SilverSurferAvatarPath = "Entity/Characters/Avatars/Shipping/SilverSurfer.prototype";
         private const string SilverSurferCostumePath = "Entity/Items/Costumes/Prototypes/SilverSurfer/Classic.prototype";
 
-        // She-Hulk — model swap test
+        // She-Hulk - model swap test
         private const string SheHulkAvatarPath = "Entity/Characters/Avatars/Shipping/SheHulk.prototype";
         private const string SheHulkCostumePath = "Entity/Items/Costumes/Prototypes/SheHulk/ModernVU.prototype";
 
-        // Prop search patterns — broadened for better coverage
+        // Prop search patterns - broadened for better coverage
         private static readonly string[] PropSearchPatterns =
         {
             "Chest", "Pyramid", "Obelisk", "Beacon", "Crystal", "Generator",
@@ -258,7 +258,7 @@ namespace MHServerEmu.Commands.Implementations
             spec.SnapToFloor = true;
             spec.BoundsScaleOverride = scale;
 
-            // Apply render override BEFORE Spawn() — this is the critical step.
+            // Apply render override BEFORE Spawn() - this is the critical step.
             // The override gets baked into NetMessageEntityCreate archive data.
             if (renderAvatarRef != PrototypeId.Invalid)
             {
@@ -398,7 +398,7 @@ namespace MHServerEmu.Commands.Implementations
             var lines = new List<string>();
             lines.Add("\n--- Technique: Cross-Avatar Costume Override (spawn) ---");
             lines.Add("  NOTE: This duplicates the Incursion mod's avatar rendering approach.");
-            lines.Add("  The entity will look like Silver Surfer — same as Incursion spawn.");
+            lines.Add("  The entity will look like Silver Surfer - same as Incursion spawn.");
             lines.Add("  Useful for testing different costumes/avatars via !mat spawn avatar.");
 
             PrototypeId combatBodyRef = GameDatabase.GetPrototypeRefByName(CombatBodyPath);
@@ -450,7 +450,7 @@ namespace MHServerEmu.Commands.Implementations
             var lines = new List<string>();
             lines.Add("\n--- Technique: ClientPrototypeRefOverride (spawn) ---");
             lines.Add("  NOTE: This duplicates the Incursion mod's avatar rendering approach.");
-            lines.Add("  The entity will look like She-Hulk — same as Incursion spawn.");
+            lines.Add("  The entity will look like She-Hulk - same as Incursion spawn.");
             lines.Add("  Useful for testing different avatars via !mat spawn avatar <path>.");
 
             PrototypeId combatBodyRef = GameDatabase.GetPrototypeRefByName(CombatBodyPath);
@@ -705,7 +705,7 @@ namespace MHServerEmu.Commands.Implementations
             }
 
             lines.Add($"  Prop: {GameDatabase.GetPrototypeName(propRef)}");
-            lines.Add("  Scale: 3.0x (should be visibly large — confirms spawn pipeline works)");
+            lines.Add("  Scale: 3.0x (should be visibly large - confirms spawn pipeline works)");
 
             var entity = SpawnTestEntity(avatar, "scale", propRef, scale: 3.0f);
 
@@ -1289,7 +1289,7 @@ namespace MHServerEmu.Commands.Implementations
         // --- applycostume ----------------------------------------------------
 
         [Command("applycostume")]
-        [CommandDescription("Applies a costume to an existing entity (post-spawn test). Expected to fail visually — documents why.")]
+        [CommandDescription("Applies a costume to an existing entity (post-spawn test). Expected to fail visually - documents why.")]
         [CommandUsage("mat applycostume <entityId> <costumePath>")]
         [CommandInvokerType(CommandInvokerType.Client)]
         [CommandParamCount(2)]

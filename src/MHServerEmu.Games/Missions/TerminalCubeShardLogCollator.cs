@@ -44,7 +44,7 @@ namespace MHServerEmu.Games.Missions
 
             lock (_sessions)
             {
-                // Keep existing session — continuous logging across region changes
+                // Keep existing session - continuous logging across region changes
                 if (_sessions.ContainsKey(playerDbGuid))
                     return;
 

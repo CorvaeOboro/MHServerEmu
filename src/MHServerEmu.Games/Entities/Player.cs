@@ -20,6 +20,7 @@ using MHServerEmu.Games.Logging;
 using MHServerEmu.Games.Entities.Avatars;
 using MHServerEmu.Games.Entities.Inventories;
 using MHServerEmu.Games.Entities.Items;
+using MHServerEmu.Games.Entities.IncursionEntity;
 using MHServerEmu.Games.Entities.Options;
 using MHServerEmu.Games.Entities.PowerCollections;
 using MHServerEmu.Games.Events;
@@ -102,6 +103,8 @@ namespace MHServerEmu.Games.Entities
         private readonly PropertyCollection _permaBuffProperties = new();
 
         public Loot.ModLootFilter LootFilter { get; private set; }     // MOD LootFilter
+
+        public IncursionHuntData IncursionHuntData { get; private set; }   // MOD Incursion Hunt
 
         private ReplicatedPropertyCollection _avatarProperties = new();
         private ulong _shardId;     // This was probably used for database sharding, we don't need this
@@ -517,6 +520,7 @@ namespace MHServerEmu.Games.Entities
             ScheduleModInteractNearbyAutoEvent();
             ScheduleModChestOpenAutoEvent();
             LootFilter = ModLootFilterStorage.Load(DatabaseUniqueId);   // MOD LootFilter
+            IncursionHuntData = IncursionHuntStorage.Load(DatabaseUniqueId);   // MOD Incursion Hunt
             UpdateUISystemLocks();
 
             Game.GuildManager.OnPlayerEnteringGame(this);

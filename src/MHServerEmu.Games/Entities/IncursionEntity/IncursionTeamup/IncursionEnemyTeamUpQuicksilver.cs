@@ -30,16 +30,16 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/TeamUps/Quicksilver/Pummel.prototype",  true,  0.026667f),  // Quicksilver/Pummel.prototype
+            new("Powers/TeamUps/Quicksilver/Pummel.prototype",  true,  0.0284f), // 2026-07-30
             new("Powers/TeamUps/Quicksilver/AwayPummel.prototype", false,  0.026667f),  // Quicksilver/AwayPummel.prototype - away passive
-            new("Powers/TeamUps/Quicksilver/BounceStrikeStart.prototype",  true,  0.026667f),  // Quicksilver/BounceStrikeStart.prototype
+            new("Powers/TeamUps/Quicksilver/BounceStrikeStart.prototype",  true,  0.0565f), // 2026-07-30
             new("Powers/TeamUps/Quicksilver/Taunt.prototype",  true,  0.026667f),  // Quicksilver/Taunt.prototype
             new("Powers/TeamUps/Quicksilver/AwayTaunt.prototype", false,  0.026667f),  // Quicksilver/AwayTaunt.prototype - away passive
             new("Powers/TeamUps/Quicksilver/BounceStrikeMoreBounces.prototype",  true,  0.026667f),  // Quicksilver/BounceStrikeMoreBounces.prototype
-            new("Powers/TeamUps/Quicksilver/WindTunnel.prototype",  true,  0.026667f),  // Quicksilver/WindTunnel.prototype
-            new("Powers/TeamUps/Quicksilver/SuperSonicCyclone.prototype",  true,  0.026667f),  // Quicksilver/SuperSonicCyclone.prototype
+            new("Powers/TeamUps/Quicksilver/WindTunnel.prototype",  true,  0.0618f), // 2026-07-30
+            new("Powers/TeamUps/Quicksilver/SuperSonicCyclone.prototype",  true,  0.0354f), // 2026-07-30
             new("Powers/TeamUps/Quicksilver/AwayCyclone.prototype", false,  0.026667f),  // Quicksilver/AwayCyclone.prototype - away passive
-            new("Powers/TeamUps/Quicksilver/Signature.prototype",  true, 0.013333f),  // Quicksilver/Signature.prototype - signature / ultimate
+            new("Powers/TeamUps/Quicksilver/Signature.prototype",  true, 0.0330f), // 2026-07-30
             new("Powers/TeamUps/TeamUpSynergyHeroPassive.prototype", false,  0.026667f),  // TeamUpSynergyHeroPassive.prototype - synergy passive
         };
     }

@@ -25,5 +25,19 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         protected override float GlobalAttackCooldownMs => 800f;
         protected override float PerPowerCooldownMs => 6000f;
         protected override float DamageScale => 1.0f;
+
+        protected override IncursionPowerEntry[] PowerTable => _powerTable;
+
+        private static readonly IncursionPowerEntry[] _powerTable =
+        {
+            new("Powers/EnemyPowers/Boss/LadyDeathstrike/BladedFlurry.prototype",          true,  1.2647f), // 2026-07-28
+            new("Powers/EnemyPowers/Boss/LadyDeathstrike/ClawSlash.prototype",             true,  1.0375f), // 2026-07-28
+            new("Powers/EnemyPowers/Boss/LadyDeathstrike/RapidRegenChanneled.prototype",   true,  1.0f),
+            new("Powers/EnemyPowers/Boss/LadyDeathstrike/ClawSlash2.prototype",            false, 1.0375f), // 2026-07-28
+            new("Powers/EnemyPowers/Boss/LadyDeathstrike/ClawSlash3.prototype",            false, 1.0375f), // 2026-07-28
+            new("Powers/EnemyPowers/Boss/LadyDeathstrike/Slashthrough.prototype",          false, 1.0f),
+            new("Powers/EnemyPowers/Shared/LeashReturnHeal.prototype",                     false, 1.0f),
+            new("Powers/EnemyPowers/Shared/LeashReturnNegStatusEffectImmune.prototype",    false, 1.0f),
+        };
     }
 }

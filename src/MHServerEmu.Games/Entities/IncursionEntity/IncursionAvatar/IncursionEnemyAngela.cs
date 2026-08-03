@@ -40,21 +40,21 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/Angela/BowPBAoE.prototype",                               true,  0.0925f), // 2026-06-11
-            new("Powers/Player/Angela/Constrict.prototype",                              true,  0.0604f), // 2026-06-10
-            new("Powers/Player/Angela/DeathFromAbove.prototype",                         true,  0.0368f), // 2026-07-08
-            new("Powers/Player/Angela/DisablingRibbons.prototype",                       true,  0.0762f), // 2026-06-10
-            new("Powers/Player/Angela/DoubleAxeThrow.prototype",                         true,  0.0558f), // 2026-07-08
-            new("Powers/Player/Angela/ExecuteChop.prototype",                            true,  0.0283f), // 2026-07-05
-            new("Powers/Player/Angela/HackSlash.prototype",                              true,  0.1732f), // 2026-06-10
-            new("Powers/Player/Angela/IchorBasic.prototype",                             true,  0.1406f), // 2026-06-11
-            new("Powers/Player/Angela/MiraculousAssaultStart.prototype",                 true,  0.0543f), // 2026-07-08
-            new("Powers/Player/Angela/RibbonChannel.prototype",                          true,  0.0565f), // 2026-06-11
+            new("Powers/Player/Angela/BowPBAoE.prototype",                               true,  0.0948f), // 2026-06-11
+            new("Powers/Player/Angela/Constrict.prototype",                              true,  0.0562f), // 2026-06-10
+            new("Powers/Player/Angela/DeathFromAbove.prototype",                         true,  0.0318f), // 2026-07-30
+            new("Powers/Player/Angela/DisablingRibbons.prototype",                       true,  0.0704f), // 2026-06-10
+            new("Powers/Player/Angela/DoubleAxeThrow.prototype",                         true,  0.0494f), // 2026-07-30
+            new("Powers/Player/Angela/ExecuteChop.prototype",                            true,  0.0203f), // 2026-07-05
+            new("Powers/Player/Angela/HackSlash.prototype",                              true,  0.2137f), // 2026-06-10
+            new("Powers/Player/Angela/IchorBasic.prototype",                             true,  0.1504f), // 2026-06-11
+            new("Powers/Player/Angela/MiraculousAssaultStart.prototype",                 true,  0.0406f), // 2026-07-30
+            new("Powers/Player/Angela/RibbonChannel.prototype",                          true,  0.0578f), // 2026-06-11
             new("Powers/Player/Angela/RibbonDancer.prototype",                           true,  0.05f),
-            new("Powers/Player/Angela/SigNoMatchStart.prototype",                        true,  0.0202f), // 2026-07-08
-            new("Powers/Player/Angela/SpartaKick.prototype",                             true,  0.0379f), // 2026-06-20
-            new("Powers/Player/Angela/SwordLunge.prototype",                             true,  0.1496f), // 2026-07-08
-            new("Powers/Player/Angela/SwordPummel.prototype",                            true,  0.0565f), // 2026-06-20
+            new("Powers/Player/Angela/SigNoMatchStart.prototype",                        true,  0.0158f), // 2026-07-30
+            new("Powers/Player/Angela/SpartaKick.prototype",                             true,  0.0352f), // 2026-06-20
+            new("Powers/Player/Angela/SwordLunge.prototype",                             true,  0.3052f), // 2026-07-30
+            new("Powers/Player/Angela/SwordPummel.prototype",                            true,  0.0416f), // 2026-07-30
             new("Powers/Player/Angela/Talents/AutoDisablingRibbons.prototype",           false, 0.0762f), // 2026-06-10
             new("Powers/Player/Angela/Talents/AxeBuffs.prototype",                       false, 0.05f),
             new("Powers/Player/Angela/Talents/DFAExtraHitTalent.prototype",              false, 0.05f),
@@ -73,8 +73,8 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Angela/Traits/DefenseTrait.prototype",                    false, 0.05f),
             new("Powers/Player/Angela/Traits/MechanicTraitWhippingRibbons.prototype",    false, 0.1138f), // 2026-07-08
             new("Powers/Player/Angela/Traits/OffensiveTrait.prototype",                  false, 0.05f),
-            new("Powers/Player/Angela/Ultimate.prototype",                               true,  0.0070f), // 2026-06-10
-            new("Powers/Player/Angela/WhippingRibbons.prototype",                        true,  0.1138f), // 2026-07-08
+            new("Powers/Player/Angela/Ultimate.prototype",                               true,  0.0053f), // 2026-06-10
+            new("Powers/Player/Angela/WhippingRibbons.prototype",                        true,  0.1328f), // 2026-07-30
             new("Powers/Player/TravelPower/AngelaFlight.prototype",                      false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/AngelaStolenPower.prototype",       false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",               false, 0.05f),

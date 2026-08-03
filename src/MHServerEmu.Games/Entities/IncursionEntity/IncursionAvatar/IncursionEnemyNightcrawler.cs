@@ -44,19 +44,19 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/Nightcrawler/Bamf.prototype",                                      true,  0.0419f), // 2026-06-10
-            new("Powers/Player/Nightcrawler/BamfDiveBomb.prototype",                              true,  0.0483f), // 2026-07-01
-            new("Powers/Player/Nightcrawler/BamfFrenzy.prototype",                                true,  0.0445f), // 2026-07-01
-            new("Powers/Player/Nightcrawler/BamfYank.prototype",                                  true,  0.1360f), // 2026-06-10
-            new("Powers/Player/Nightcrawler/BasicPunch.prototype",                                true,  0.1155f), // 2026-06-10
-            new("Powers/Player/Nightcrawler/BasicStealthPunch.prototype",                         true,  0.1683f), // 2026-06-10
-            new("Powers/Player/Nightcrawler/BasicSwordSlash.prototype",                           true,  0.1570f), // 2026-06-10
-            new("Powers/Player/Nightcrawler/BrimstoneBlitz.prototype",                            true,  0.0761f), // 2026-06-10
-            new("Powers/Player/Nightcrawler/DoubleSlash.prototype",                               true,  0.1348f), // 2026-06-08
-            new("Powers/Player/Nightcrawler/Execute.prototype",                                   true,  0.0561f), // 2026-07-01
+            new("Powers/Player/Nightcrawler/Bamf.prototype",                                      true,  0.0647f), // 2026-06-10
+            new("Powers/Player/Nightcrawler/BamfDiveBomb.prototype",                              true,  0.0416f), // 2026-07-14
+            new("Powers/Player/Nightcrawler/BamfFrenzy.prototype",                                true,  0.0453f), // 2026-07-14
+            new("Powers/Player/Nightcrawler/BamfYank.prototype",                                  true,  0.1639f), // 2026-06-10
+            new("Powers/Player/Nightcrawler/BasicPunch.prototype",                                true,  0.1338f), // 2026-06-10
+            new("Powers/Player/Nightcrawler/BasicStealthPunch.prototype",                         true,  0.2359f), // 2026-06-10
+            new("Powers/Player/Nightcrawler/BasicSwordSlash.prototype",                           true,  0.2134f), // 2026-06-10
+            new("Powers/Player/Nightcrawler/BrimstoneBlitz.prototype",                            true,  0.0744f), // 2026-06-10
+            new("Powers/Player/Nightcrawler/DoubleSlash.prototype",                               true,  0.1748f), // 2026-06-08
+            new("Powers/Player/Nightcrawler/Execute.prototype",                                   true,  0.0502f), // 2026-07-14
             new("Powers/Player/Nightcrawler/NewUltimate.prototype",                               true,  0.0151f), // 2026-07-01
-            new("Powers/Player/Nightcrawler/PBAoESwordSlash.prototype",                           true,  0.1141f), // 2026-06-10
-            new("Powers/Player/Nightcrawler/SwordPummel.prototype",                               true,  0.0598f), // 2026-07-01
+            new("Powers/Player/Nightcrawler/PBAoESwordSlash.prototype",                           true,  0.1372f), // 2026-06-10
+            new("Powers/Player/Nightcrawler/SwordPummel.prototype",                               true,  0.0507f), // 2026-07-14
             new("Powers/Player/Nightcrawler/Talents/BackstabStealthTalent.prototype",             false, 0.05f),
             new("Powers/Player/Nightcrawler/Talents/FlourishDeflectChanceTalent.prototype",       false, 0.05f),
             new("Powers/Player/Nightcrawler/Talents/FlourishTeleportComboTalent.prototype",       false, 0.025f),
@@ -72,10 +72,10 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Nightcrawler/Talents/Talent5FlourishBuff.prototype",               false, 0.05f),
             new("Powers/Player/Nightcrawler/Talents/TeleportDamageBuffTalent.prototype",          false, 0.05f),
             new("Powers/Player/Nightcrawler/Talents/TeleportDodgeChanceTalent.prototype",         false, 0.05f),
-            new("Powers/Player/Nightcrawler/TeleportBackstab.prototype",                          true,  0.0413f), // 2026-07-01
+            new("Powers/Player/Nightcrawler/TeleportBackstab.prototype",                          true,  0.0390f), // 2026-07-14
             new("Powers/Player/Nightcrawler/Traits/DefenseTrait.prototype",                       false, 0.05f),
             new("Powers/Player/Nightcrawler/Traits/OffenseTrait.prototype",                       false, 0.05f),
-            new("Powers/Player/Nightcrawler/ValiantLeap.prototype",                               true,  0.0525f), // 2026-07-01
+            new("Powers/Player/Nightcrawler/ValiantLeap.prototype",                               true,  0.0448f), // 2026-07-14
             new("Powers/Player/TravelPower/NightcrawlerSprint.prototype",                         false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/NightcrawlerStolenPower.prototype",          false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",                        false, 0.05f),

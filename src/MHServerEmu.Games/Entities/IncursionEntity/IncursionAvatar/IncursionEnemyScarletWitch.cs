@@ -52,21 +52,21 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         private static readonly IncursionPowerEntry[] _powerTable =
         {
             new("Powers/Player/ScarletWitch/Rework/AlterReality.prototype",              true,  0.05f),
-            new("Powers/Player/ScarletWitch/Rework/ArmyFromNothing.prototype",           true,  0.0319f), // 2026-06-11
-            new("Powers/Player/ScarletWitch/Rework/BouncingHex.prototype",               true,  0.05f),
-            new("Powers/Player/ScarletWitch/Rework/ChaosBlast.prototype",                true,  0.05f),
+            new("Powers/Player/ScarletWitch/Rework/ArmyFromNothing.prototype",           true,  0.0272f), // 2026-06-11
+            new("Powers/Player/ScarletWitch/Rework/BouncingHex.prototype",               true,  0.2365f), // 2026-06-10
+            new("Powers/Player/ScarletWitch/Rework/ChaosBlast.prototype",                true,  0.0519f), // 2026-07-30
             new("Powers/Player/ScarletWitch/Rework/ChaosHex.prototype",                  true,  0.05f),
-            new("Powers/Player/ScarletWitch/Rework/ChaosRift.prototype",                 true,  0.1343f), // 2026-06-11
-            new("Powers/Player/ScarletWitch/Rework/DarkHex.prototype",                   true,  0.1919f), // 2026-06-11
-            new("Powers/Player/ScarletWitch/Rework/HexBolt.prototype",                   true,  0.05f),
-            new("Powers/Player/ScarletWitch/Rework/HexSphere.prototype",                 true,  0.1219f), // 2026-06-10
-            new("Powers/Player/ScarletWitch/Rework/Implosion.prototype",                 true,  0.1475f), // 2026-06-11
-            new("Powers/Player/ScarletWitch/Rework/IronMaiden.prototype",                true,  0.05f),
+            new("Powers/Player/ScarletWitch/Rework/ChaosRift.prototype",                 true,  0.1433f), // 2026-06-11
+            new("Powers/Player/ScarletWitch/Rework/DarkHex.prototype",                   true,  0.3346f), // 2026-06-11
+            new("Powers/Player/ScarletWitch/Rework/HexBolt.prototype",                   true,  0.1398f), // 2026-06-11
+            new("Powers/Player/ScarletWitch/Rework/HexSphere.prototype",                 true,  0.1137f), // 2026-06-10
+            new("Powers/Player/ScarletWitch/Rework/Implosion.prototype",                 true,  0.1744f), // 2026-06-11
+            new("Powers/Player/ScarletWitch/Rework/IronMaiden.prototype",                true,  0.0754f), // 2026-06-08
             new("Powers/Player/ScarletWitch/Rework/Obfuscation.prototype",               true,  0.05f),
-            new("Powers/Player/ScarletWitch/Rework/RavenousBinding.prototype",           true,  0.05f),
-            new("Powers/Player/ScarletWitch/Rework/ShadowBolt.prototype",                true,  0.05f),
-            new("Powers/Player/ScarletWitch/Rework/Teleport.prototype",                  true,  0.05f),
-            new("Powers/Player/ScarletWitch/Rework/UnmakeReality.prototype",             true,  0.05f),
+            new("Powers/Player/ScarletWitch/Rework/RavenousBinding.prototype",           true,  0.0885f), // 2026-06-11
+            new("Powers/Player/ScarletWitch/Rework/ShadowBolt.prototype",                true,  1.0595f), // 2026-06-08
+            new("Powers/Player/ScarletWitch/Rework/Teleport.prototype",                  true,  0.1827f), // 2026-06-11
+            new("Powers/Player/ScarletWitch/Rework/UnmakeReality.prototype",             true,  0.0368f), // 2026-07-30
             new("Powers/Player/ScarletWitch/Talents/Talent1ChaosBuff.prototype",         false, 0.05f),
             new("Powers/Player/ScarletWitch/Talents/Talent1NonChaosBuff.prototype",      false, 0.05f),
             new("Powers/Player/ScarletWitch/Talents/Talent1Support.prototype",           false, 0.05f),
@@ -85,7 +85,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/ScarletWitch/Traits/DefenseTrait.prototype",              false, 0.05f),
             new("Powers/Player/ScarletWitch/Traits/MechanicTraitChaosEnergy.prototype",  false, 0.05f),
             new("Powers/Player/ScarletWitch/Traits/OffenseTrait.prototype",              false, 0.05f),
-            new("Powers/Player/ScarletWitch/Ultimate.prototype",                         true,  0.0072f), // 2026-06-10
+            new("Powers/Player/ScarletWitch/Ultimate.prototype",                         true,  0.0066f), // 2026-06-10
             new("Powers/Player/TravelPower/ScarletWitchFlight.prototype",                false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/ScarletWitchStolenPower.prototype", false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",               false, 0.05f),

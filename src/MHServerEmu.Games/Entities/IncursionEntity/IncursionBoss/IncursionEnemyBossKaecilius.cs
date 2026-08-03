@@ -25,5 +25,25 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         protected override float GlobalAttackCooldownMs => 800f;
         protected override float PerPowerCooldownMs => 6000f;
         protected override float DamageScale => 1.0f;
+
+        protected override IncursionPowerEntry[] PowerTable => _powerTable;
+
+        private static readonly IncursionPowerEntry[] _powerTable =
+        {
+            new("Powers/EnemyPowers/Boss/Kaecilius/PortalsVisualStart.prototype",           true,  1.0f),
+            new("Powers/EnemyPowers/Boss/Kaecilius/KaeciliusSummonMagicOrb.prototype",      true,  1.0f),
+            new("Powers/EnemyPowers/Boss/Kaecilius/DeathFromAboveComboEffect.prototype",    true,  0.9872f), // 2026-07-30
+            new("Powers/EnemyPowers/Boss/Kaecilius/HealChannelEruptionSummon.prototype",    true,  0.6612f), // 2026-07-30
+            new("Powers/EnemyPowers/Boss/Kaecilius/HealChannel.prototype",                  true,  0.6612f), // 2026-07-30
+            new("Powers/EnemyPowers/Boss/Kaecilius/KaeciliusScytheThrow.prototype",         true,  1.0454f), // 2026-08-01
+            new("Powers/EnemyPowers/Boss/Kaecilius/SummonMirrorImages.prototype",           true,  1.0f),
+            new("Powers/EnemyPowers/Boss/Kaecilius/Portals.prototype",                      false, 1.0f),
+            new("Powers/EnemyPowers/Boss/Kaecilius/ScythePortalBlocker.prototype",          false, 1.0f),
+            new("Powers/EnemyPowers/Boss/Kaecilius/KillMirrorImagesSummon.prototype",       false, 1.0f),
+            new("Powers/EnemyPowers/Boss/Kaecilius/KaeciliusHealthMinPassive.prototype",    false, 1.0f),
+            new("Powers/EnemyPowers/Boss/Kaecilius/DeathFromAbove.prototype",               false, 0.9872f), // 2026-07-30
+            new("Powers/EnemyPowers/Shared/LeashReturnHeal.prototype",                      false, 1.0f),
+            new("Powers/EnemyPowers/Shared/LeashReturnNegStatusEffectImmune.prototype",     false, 1.0f),
+        };
     }
 }

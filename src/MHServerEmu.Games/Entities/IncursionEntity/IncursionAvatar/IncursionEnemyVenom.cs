@@ -44,20 +44,20 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         private static readonly IncursionPowerEntry[] _powerTable =
         {
             new("Powers/Player/TravelPower/VenomFlight.prototype",                 false, 0.05f),
-            new("Powers/Player/Venom/BigPunch.prototype",                          true,  0.0218f), // 2026-06-11
-            new("Powers/Player/Venom/BigWebShoot.prototype",                       true,  0.1922f), // 2026-06-11
-            new("Powers/Player/Venom/ConeDrain.prototype",                         true,  0.1779f), // 2026-06-11
-            new("Powers/Player/Venom/DoubleSlash.prototype",                       true,  0.1858f), // 2026-06-11
-            new("Powers/Player/Venom/FuriousLunge.prototype",                      true,  0.1779f), // 2026-06-11
-            new("Powers/Player/Venom/IchorSpike.prototype",                        true,  0.0712f), // 2026-06-11
-            new("Powers/Player/Venom/MawFromAbove.prototype",                      true,  0.0222f), // 2026-06-20
-            new("Powers/Player/Venom/MeleeBasic.prototype",                        true,  0.1902f), // 2026-06-11
-            new("Powers/Player/Venom/PBAoEBlob.prototype",                         true,  0.0517f), // 2026-06-11
-            new("Powers/Player/Venom/RangedBasic.prototype",                       true,  0.1705f), // 2026-06-11
-            new("Powers/Player/Venom/SigFreakout.prototype",                       true,  0.0156f), // 2026-06-11
-            new("Powers/Player/Venom/SwingingAssault.prototype",                   true,  0.1746f), // 2026-06-11
-            new("Powers/Player/Venom/SymbioteDrain.prototype",                     true,  0.0610f), // 2026-06-11
-            new("Powers/Player/Venom/SymbioteDrainHiddenPassive.prototype",        false, 0.0610f), // 2026-06-11
+            new("Powers/Player/Venom/BigPunch.prototype",                          true,  0.0204f), // 2026-06-11
+            new("Powers/Player/Venom/BigWebShoot.prototype",                       true,  0.2790f), // 2026-06-11
+            new("Powers/Player/Venom/ConeDrain.prototype",                         true,  0.4868f), // 2026-06-11
+            new("Powers/Player/Venom/DoubleSlash.prototype",                       true,  0.3158f), // 2026-06-11
+            new("Powers/Player/Venom/FuriousLunge.prototype",                      true,  0.2362f), // 2026-06-11
+            new("Powers/Player/Venom/IchorSpike.prototype",                        true,  0.0740f), // 2026-06-11
+            new("Powers/Player/Venom/MawFromAbove.prototype",                      true,  0.0213f), // 2026-07-28
+            new("Powers/Player/Venom/MeleeBasic.prototype",                        true,  0.2967f), // 2026-06-11
+            new("Powers/Player/Venom/PBAoEBlob.prototype",                         true,  0.0441f), // 2026-06-11
+            new("Powers/Player/Venom/RangedBasic.prototype",                       true,  0.2177f), // 2026-06-11
+            new("Powers/Player/Venom/SigFreakout.prototype",                       true,  0.0134f), // 2026-06-11
+            new("Powers/Player/Venom/SwingingAssault.prototype",                   true,  0.2418f), // 2026-06-11
+            new("Powers/Player/Venom/SymbioteDrain.prototype",                     true,  0.0547f), // 2026-06-11
+            new("Powers/Player/Venom/SymbioteDrainHiddenPassive.prototype",        false, 0.0547f), // 2026-06-11
             new("Powers/Player/Venom/Talents/BigPunchBuff.prototype",              false, 0.0218f), // 2026-06-11
             new("Powers/Player/Venom/Talents/BuffAtLowHealth.prototype",           false, 0.05f),
             new("Powers/Player/Venom/Talents/DefenseBuff.prototype",               false, 0.05f),
@@ -73,14 +73,14 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Venom/Talents/TentacleImpaleBuff.prototype",        false, 0.0566f), // 2026-06-11
             new("Powers/Player/Venom/Talents/WrithingTendrilsBuff.prototype",      false, 0.0636f), // 2026-06-11
             new("Powers/Player/Venom/Talents/YankBuff.prototype",                  false, 0.0755f), // 2026-06-18
-            new("Powers/Player/Venom/TentacleImpale.prototype",                    true,  0.0566f), // 2026-06-11
+            new("Powers/Player/Venom/TentacleImpale.prototype",                    true,  0.0542f), // 2026-06-11
             new("Powers/Player/Venom/Traits/DefenseTrait.prototype",               false, 0.05f),
             new("Powers/Player/Venom/Traits/MechanicTraitIchor.prototype",         false, 0.05f),
             new("Powers/Player/Venom/Traits/OffenseTrait.prototype",               false, 0.05f),
-            new("Powers/Player/Venom/Ultimate.prototype",                          true,  0.0145f), // 2026-06-20
-            new("Powers/Player/Venom/WebSplat.prototype",                          true,  0.1402f), // 2026-06-11
-            new("Powers/Player/Venom/WrithingTendrils.prototype",                  true,  0.0636f), // 2026-06-11
-            new("Powers/Player/Venom/Yank.prototype",                              true,  0.0755f), // 2026-06-18
+            new("Powers/Player/Venom/Ultimate.prototype",                          true,  0.0125f), // 2026-07-28
+            new("Powers/Player/Venom/WebSplat.prototype",                          true,  0.1981f), // 2026-06-11
+            new("Powers/Player/Venom/WrithingTendrils.prototype",                  true,  0.0562f), // 2026-06-11
+            new("Powers/Player/Venom/Yank.prototype",                              true,  0.0764f), // 2026-06-18
             new("Powers/StolenPowers/StealablePowers/VenomStolenPower.prototype",  false, 0.05f),
             new("Powers/SynergyPowers/SynergyVenomLowHealthBuff.prototype",        false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",         false, 0.05f),

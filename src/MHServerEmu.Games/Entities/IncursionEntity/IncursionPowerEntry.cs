@@ -5,7 +5,8 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
     /// <summary>
     /// One row in an incursion enemy's power table: a power, whether it is assigned,
     /// the per-power outgoing damage multiplier, an optional max channel duration,
-    /// and an optional per-power cooldown override (0 = use default).
+    /// an optional per-power cooldown override (0 = use default), and whether the
+    /// enemy can move freely while the power is active.
     /// </summary>
     public readonly struct IncursionPowerEntry
     {
@@ -30,22 +31,31 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         /// </summary>
         public readonly int CooldownMs;
 
-        public IncursionPowerEntry(string powerPath, bool enabled, float damageScale, int maxChannelMs = 0, int cooldownMs = 0)
+        /// <summary>
+        /// If true, the enemy can move freely while this power is active, overriding
+        /// the class-level FreezeMovementDuringPower. Useful for channeled powers that
+        /// should not root the boss in place (e.g. Grim Reaper's scythe attacks).
+        /// </summary>
+        public readonly bool CanMoveDuringPower;
+
+        public IncursionPowerEntry(string powerPath, bool enabled, float damageScale, int maxChannelMs = 0, int cooldownMs = 0, bool canMoveDuringPower = false)
         {
             Power = GameDatabase.GetPrototypeRefByName(powerPath);
             Enabled = enabled;
             DamageScale = damageScale;
             MaxChannelMs = maxChannelMs;
             CooldownMs = cooldownMs;
+            CanMoveDuringPower = canMoveDuringPower;
         }
 
-        public IncursionPowerEntry(PrototypeId power, bool enabled, float damageScale, int maxChannelMs = 0, int cooldownMs = 0)
+        public IncursionPowerEntry(PrototypeId power, bool enabled, float damageScale, int maxChannelMs = 0, int cooldownMs = 0, bool canMoveDuringPower = false)
         {
             Power = power;
             Enabled = enabled;
             DamageScale = damageScale;
             MaxChannelMs = maxChannelMs;
             CooldownMs = cooldownMs;
+            CanMoveDuringPower = canMoveDuringPower;
         }
     }
 }

@@ -25,5 +25,21 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         protected override float GlobalAttackCooldownMs => 800f;
         protected override float PerPowerCooldownMs => 6000f;
         protected override float DamageScale => 1.0f;
+
+        protected override IncursionPowerEntry[] PowerTable => _powerTable;
+
+        private static readonly IncursionPowerEntry[] _powerTable =
+        {
+            new("Powers/EnemyPowers/Boss/Wizard/BallDashStart.prototype",                 true,  2.6727f), // 2026-07-30
+            new("Powers/EnemyPowers/Boss/Wizard/DiscPBAoE.prototype",                     true,  0.7854f), // 2026-07-30
+            new("Powers/EnemyPowers/Boss/Wizard/WizardTripleDisk.prototype",              true,  1.0f),
+            new("Powers/EnemyPowers/Boss/Wizard/BallDash.prototype",                      false, 2.6727f), // 2026-07-30
+            new("Powers/EnemyPowers/Boss/Wizard/BallDashSummonCombo.prototype",           false, 1.0f),
+            new("Powers/EnemyPowers/Boss/Wizard/DiscPBAoEHit2.prototype",                 false, 0.7854f), // 2026-07-30
+            new("Powers/EnemyPowers/Boss/Wizard/WizardFlyHere.prototype",                 false, 1.0f),
+            new("Powers/EnemyPowers/Boss/Wizard/WizardFlyHereEnd.prototype",              false, 1.0f),
+            new("Powers/EnemyPowers/Shared/LeashReturnHeal.prototype",                    false, 1.0f),
+            new("Powers/EnemyPowers/Shared/LeashReturnNegStatusEffectImmune.prototype",   false, 1.0f),
+        };
     }
 }

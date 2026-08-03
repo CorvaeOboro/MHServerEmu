@@ -50,22 +50,22 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/BlackPanther/AcrobaticAttack.prototype",                              true,  0.0697f), // 2026-07-04
-            new("Powers/Player/BlackPanther/BasicDaggerThrow.prototype",                             true,  0.1681f), // 2026-06-11
-            new("Powers/Player/BlackPanther/ClawUppercut.prototype",                                 true,  0.1103f), // 2026-06-11
-            new("Powers/Player/BlackPanther/DaggerCharge.prototype",                                 true,  0.1218f), // 2026-07-04
-            new("Powers/Player/BlackPanther/DisengagingShot.prototype",                              true,  0.1207f), // 2026-06-06
-            new("Powers/Player/BlackPanther/DoublePunch.prototype",                                  true,  0.1951f), // 2026-06-11
-            new("Powers/Player/BlackPanther/EnergyDaggers.prototype",                                true,  0.1981f), // 2026-06-11
+            new("Powers/Player/BlackPanther/AcrobaticAttack.prototype",                              true,  0.0745f), // 2026-07-04
+            new("Powers/Player/BlackPanther/BasicDaggerThrow.prototype",                             true,  0.2066f), // 2026-06-11
+            new("Powers/Player/BlackPanther/ClawUppercut.prototype",                                 true,  0.1359f), // 2026-06-11
+            new("Powers/Player/BlackPanther/DaggerCharge.prototype",                                 true,  0.1443f), // 2026-07-04
+            new("Powers/Player/BlackPanther/DisengagingShot.prototype",                              true,  0.1293f), // 2026-06-11
+            new("Powers/Player/BlackPanther/DoublePunch.prototype",                                  true,  0.2832f), // 2026-06-11
+            new("Powers/Player/BlackPanther/EnergyDaggers.prototype",                                true,  0.4079f), // 2026-06-11
             new("Powers/Player/BlackPanther/EnergyTrap.prototype",                                   true,  0.0821f), // 2026-06-11
-            new("Powers/Player/BlackPanther/EnervationDaggers.prototype",                            true,  0.1969f), // 2026-06-11
-            new("Powers/Player/BlackPanther/FreezingDaggers.prototype",                              true,  0.2759f), // 2026-06-05
+            new("Powers/Player/BlackPanther/EnervationDaggers.prototype",                            true,  0.3016f), // 2026-06-11
+            new("Powers/Player/BlackPanther/FreezingDaggers.prototype",                              true,  0.3723f), // 2026-06-05
             new("Powers/Player/BlackPanther/MineFieldRanged.prototype",                              true,  0.05f),
-            new("Powers/Player/BlackPanther/PantherBomb.prototype",                                  true,  0.0397f), // 2026-06-11
-            new("Powers/Player/BlackPanther/QuickSlash.prototype",                                   true,  0.1029f), // 2026-06-11
+            new("Powers/Player/BlackPanther/PantherBomb.prototype",                                  true,  0.0297f), // 2026-06-11
+            new("Powers/Player/BlackPanther/QuickSlash.prototype",                                   true,  0.1093f), // 2026-06-11
             new("Powers/Player/BlackPanther/SmokeScreen.prototype",                                  true,  0.05f),
-            new("Powers/Player/BlackPanther/Snare.prototype",                                        true,  0.1087f), // 2026-06-11
-            new("Powers/Player/BlackPanther/SweepingKick.prototype",                                 true,  0.0964f), // 2026-06-11
+            new("Powers/Player/BlackPanther/Snare.prototype",                                        true,  0.1113f), // 2026-06-11
+            new("Powers/Player/BlackPanther/SweepingKick.prototype",                                 true,  0.1346f), // 2026-06-11
             new("Powers/Player/BlackPanther/Talents/AcrobaticAttackBuffTalent.prototype",            false, 0.0697f), // 2026-07-04
             new("Powers/Player/BlackPanther/Talents/DoraDefensiveTalent.prototype",                  false, 0.05f),
             new("Powers/Player/BlackPanther/Talents/DoraOffensiveBonusTalent.prototype",             false, 0.05f),
@@ -83,9 +83,9 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/BlackPanther/Talents/UnseenPredatorHealRangedTalent.prototype",       false, 0.05f),
             new("Powers/Player/BlackPanther/Traits/DefensePassive.prototype",                        false, 0.05f),
             new("Powers/Player/BlackPanther/Traits/OffenseTrait.prototype",                          false, 0.05f),
-            new("Powers/Player/BlackPanther/TripleShot.prototype",                                   true,  0.1152f), // 2026-06-11
+            new("Powers/Player/BlackPanther/TripleShot.prototype",                                   true,  0.1336f), // 2026-06-11
             new("Powers/Player/BlackPanther/Tumble.prototype",                                       true,  0.05f),
-            new("Powers/Player/BlackPanther/Ultimate.prototype",                                     true,  0.0093f), // 2026-07-04
+            new("Powers/Player/BlackPanther/Ultimate.prototype",                                     true,  0.0074f), // 2026-07-04
             new("Powers/Player/TravelPower/BlackPantherSprint.prototype",                            false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/BlackPantherStolenPower.prototype",             false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",                           false, 0.05f),

@@ -50,19 +50,19 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/Storm/BallLightning.prototype",                    true,  0.1354f), // 2026-06-11
-            new("Powers/Player/Storm/ChainLightning.prototype",                   true,  0.0940f), // 2026-06-18
-            new("Powers/Player/Storm/ChanneledLightning.prototype",               true,  0.0308f), // 2026-06-11
-            new("Powers/Player/Storm/ChargedStrike.prototype",                    true,  0.0998f), // 2026-06-11
+            new("Powers/Player/Storm/BallLightning.prototype",                    true,  0.1395f), // 2026-06-11
+            new("Powers/Player/Storm/ChainLightning.prototype",                   true,  0.0745f), // 2026-07-30
+            new("Powers/Player/Storm/ChanneledLightning.prototype",               true,  0.0294f), // 2026-06-11
+            new("Powers/Player/Storm/ChargedStrike.prototype",                    true,  0.0989f), // 2026-06-11
             new("Powers/Player/Storm/ChargedStrikeHiddenPassive.prototype",       false, 0.05f),
-            new("Powers/Player/Storm/DisengagingShot.prototype",                  true,  0.0741f), // 2026-06-11
-            new("Powers/Player/Storm/ElementalStorm.prototype",                   true,  0.0860f), // 2026-06-11
+            new("Powers/Player/Storm/DisengagingShot.prototype",                  true,  0.0839f), // 2026-06-11
+            new("Powers/Player/Storm/ElementalStorm.prototype",                   true,  0.0903f), // 2026-06-11
             new("Powers/Player/Storm/Fog.prototype",                              true,  0.05f),
-            new("Powers/Player/Storm/Hailstorm.prototype",                        true,  0.1261f), // 2026-06-11
-            new("Powers/Player/Storm/LightningBolt.prototype",                    true,  0.1769f), // 2026-06-11
+            new("Powers/Player/Storm/Hailstorm.prototype",                        true,  0.1703f), // 2026-06-11
+            new("Powers/Player/Storm/LightningBolt.prototype",                    true,  0.2267f), // 2026-06-11
             new("Powers/Player/Storm/Maelstrom.prototype",                        true,  0.02f),
-            new("Powers/Player/Storm/Microburst.prototype",                       true,  0.1093f), // 2026-06-11
-            new("Powers/Player/Storm/SiroccoLunge.prototype",                     true,  0.1218f), // 2026-06-18
+            new("Powers/Player/Storm/Microburst.prototype",                       true,  0.1118f), // 2026-06-11
+            new("Powers/Player/Storm/SiroccoLunge.prototype",                     true,  0.1332f), // 2026-07-30
             new("Powers/Player/Storm/StormSurge.prototype",                       true,  0.03f),
             new("Powers/Player/Storm/Talents/AllTempests.prototype",              false, 0.05f),
             new("Powers/Player/Storm/Talents/ColdDamageSpec.prototype",           false, 0.05f),
@@ -79,14 +79,14 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Storm/Talents/TyphoonPull.prototype",              false, 0.0290f), // 2026-06-18
             new("Powers/Player/Storm/Talents/WindSpec.prototype",                 false, 0.05f),
             new("Powers/Player/Storm/Talents/WindTempest.prototype",              false, 0.05f),
-            new("Powers/Player/Storm/Tornado.prototype",                          true,  0.1634f), // 2026-06-03
+            new("Powers/Player/Storm/Tornado.prototype",                          true,  0.2403f), // 2026-06-03
             new("Powers/Player/Storm/Traits/DefenseTrait.prototype",              false, 0.05f),
             new("Powers/Player/Storm/Traits/MechanicTraitSurge.prototype",        false, 0.05f),
             new("Powers/Player/Storm/Traits/OffenseTrait.prototype",              false, 0.05f),
-            new("Powers/Player/Storm/Typhoon.prototype",                          true,  0.0290f), // 2026-06-18
-            new("Powers/Player/Storm/TyphoonHiddenPassive.prototype",             false, 0.0290f), // 2026-06-18
-            new("Powers/Player/Storm/Ultimate.prototype",                         true,  0.0080f), // 2026-06-10
-            new("Powers/Player/Storm/Zephyr.prototype",                           true,  0.1101f), // 2026-06-11
+            new("Powers/Player/Storm/Typhoon.prototype",                          true,  0.0172f), // 2026-07-30
+            new("Powers/Player/Storm/TyphoonHiddenPassive.prototype",             false, 0.0172f), // 2026-07-30
+            new("Powers/Player/Storm/Ultimate.prototype",                         true,  0.0068f), // 2026-06-10
+            new("Powers/Player/Storm/Zephyr.prototype",                           true,  0.1030f), // 2026-06-11
             new("Powers/Player/TravelPower/StormFlight.prototype",                false, 0.03f),
             new("Powers/StolenPowers/StealablePowers/StormStolenPower.prototype", false, 0.03f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",        false, 0.05f),

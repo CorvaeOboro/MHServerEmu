@@ -33,7 +33,7 @@ namespace MHServerEmu.Commands.Implementations
             Avatar avatar = playerConnection.Player?.CurrentAvatar;
             if (avatar == null || avatar.IsAliveInWorld == false) return "Avatar not found or not alive in world.";
 
-            var (entity, reason) = game.IncursionManager.ForceIncursionForAvatar(avatar);
+            var (entity, reason) = game.IncursionManager.ForceIncursionForAvatar(avatar, playerConnection.Player);
             if (entity == null) return $"Incursion failed: {reason}";
 
             return $"Invader spawned: {entity.PrototypeName} (id {entity.Id}).";
@@ -163,6 +163,29 @@ namespace MHServerEmu.Commands.Implementations
 
             Player player = playerConnection.Player;
             return game.IncursionManager.StartTrial(player, mode);
+        }
+
+        [Command("hunt")]
+        [CommandDescription("Shows incursion hunt completion status, or resets hunt data. Hunt tracks unique enemy encounters per player and per character.")]
+        [CommandUsage("incursion hunt [reset [all]]")]
+        [CommandInvokerType(CommandInvokerType.Client)]
+        public string Hunt(string[] @params, NetClient client)
+        {
+            if (HasAccess(client, out string accessError) == false) return accessError;
+
+            PlayerConnection playerConnection = (PlayerConnection)client;
+            Player player = playerConnection.Player;
+            if (player == null) return "Player not found.";
+
+            // Subcommand: reset
+            if (@params != null && @params.Length > 0 && @params[0].Equals("reset", StringComparison.OrdinalIgnoreCase))
+            {
+                bool resetAll = @params.Length > 1 && @params[1].Equals("all", StringComparison.OrdinalIgnoreCase);
+                return IncursionManager.ResetHuntData(player, resetAll);
+            }
+
+            // Default: show status
+            return IncursionManager.GetHuntStatusString(player);
         }
 
         /// <summary>

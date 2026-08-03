@@ -40,21 +40,21 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/Carnage/AxeBleedHiddenPassive.prototype",                   false, 0.05f),
-            new("Powers/Player/Carnage/AxeDFA.prototype",                                  true,  0.0370f), // 2026-06-20
-            new("Powers/Player/Carnage/AxeSweep.prototype",                                true,  0.0720f), // 2026-06-10
-            new("Powers/Player/Carnage/AxeThrow.prototype",                                true,  0.0445f), // 2026-06-10
-            new("Powers/Player/Carnage/BasicClaws.prototype",                              true,  0.0928f), // 2026-07-08
-            new("Powers/Player/Carnage/ClawPummel.prototype",                              true,  0.0869f), // 2026-06-10
-            new("Powers/Player/Carnage/GroundSmash.prototype",                             true,  0.0121f), // 2026-06-10
-            new("Powers/Player/Carnage/KnifeBarrage.prototype",                            true,  0.0471f), // 2026-06-10
-            new("Powers/Player/Carnage/Lunge.prototype",                                   true,  0.1615f), // 2026-06-05
-            new("Powers/Player/Carnage/MaceHand.prototype",                                true,  0.0394f), // 2026-06-20
-            new("Powers/Player/Carnage/MegaClaw.prototype",                                true,  0.0674f), // 2026-06-05
+            new("Powers/Player/Carnage/AxeBleedHiddenPassive.prototype",                   false, 0.0509f), // 2026-07-30
+            new("Powers/Player/Carnage/AxeDFA.prototype",                                  true,  0.0362f), // 2026-06-20
+            new("Powers/Player/Carnage/AxeSweep.prototype",                                true,  0.0691f), // 2026-06-10
+            new("Powers/Player/Carnage/AxeThrow.prototype",                                true,  0.0364f), // 2026-06-10
+            new("Powers/Player/Carnage/BasicClaws.prototype",                              true,  0.1081f), // 2026-07-08
+            new("Powers/Player/Carnage/ClawPummel.prototype",                              true,  0.1217f), // 2026-06-10
+            new("Powers/Player/Carnage/GroundSmash.prototype",                             true,  0.0110f), // 2026-06-10
+            new("Powers/Player/Carnage/KnifeBarrage.prototype",                            true,  0.0908f), // 2026-06-10
+            new("Powers/Player/Carnage/Lunge.prototype",                                   true,  0.2184f), // 2026-06-05
+            new("Powers/Player/Carnage/MaceHand.prototype",                                true,  0.0359f), // 2026-07-26
+            new("Powers/Player/Carnage/MegaClaw.prototype",                                true,  0.0628f), // 2026-06-05
             new("Powers/Player/Carnage/MegaClawHiddenPassive.prototype",                   false, 0.05f),
-            new("Powers/Player/Carnage/MeleeSwordSpin.prototype",                          true,  0.0427f), // 2026-06-18
-            new("Powers/Player/Carnage/OrganicWebbing.prototype",                          true,  0.0613f), // 2026-06-10
-            new("Powers/Player/Carnage/ReapingTime.prototype",                             true,  0.0149f), // 2026-06-10
+            new("Powers/Player/Carnage/MeleeSwordSpin.prototype",                          true,  0.0405f), // 2026-07-26
+            new("Powers/Player/Carnage/OrganicWebbing.prototype",                          true,  0.0615f), // 2026-06-10
+            new("Powers/Player/Carnage/ReapingTime.prototype",                             true,  0.0145f), // 2026-06-10
             new("Powers/Player/Carnage/Talents/AxeWeaponsAxeSweep.prototype",              false, 0.0720f), // 2026-06-10
             new("Powers/Player/Carnage/Talents/AxeWeaponsDFA.prototype",                   false, 0.05f),
             new("Powers/Player/Carnage/Talents/BladeWeaponsRanged.prototype",              false, 0.05f),
@@ -74,10 +74,10 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Carnage/Traits/MechanicTraitSymbioteArmor.prototype",       false, 0.05f),
             new("Powers/Player/Carnage/Traits/OffenseTrait.prototype",                     false, 0.05f),
             new("Powers/Player/Carnage/Traits/SymbioteArmorHiddenPassive.prototype",       false, 0.05f),
-            new("Powers/Player/Carnage/TransfusionPBAoE.prototype",                        true,  0.0749f), // 2026-06-10
-            new("Powers/Player/Carnage/Ultimate.prototype",                                true,  0.0038f), // 2026-06-10
-            new("Powers/Player/Carnage/UltimateHiddenPassive.prototype",                   false, 0.0038f), // 2026-06-10
-            new("Powers/Player/Carnage/YankImpale.prototype",                              true,  0.0441f), // 2026-06-10
+            new("Powers/Player/Carnage/TransfusionPBAoE.prototype",                        true,  0.0863f), // 2026-06-10
+            new("Powers/Player/Carnage/Ultimate.prototype",                                true,  0.0029f), // 2026-06-10
+            new("Powers/Player/Carnage/UltimateHiddenPassive.prototype",                   false, 0.0029f), // 2026-06-10
+            new("Powers/Player/Carnage/YankImpale.prototype",                              true,  0.0375f), // 2026-06-10
             new("Powers/Player/TravelPower/CarnageFlight.prototype",                       false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/CarnageStolenPower.prototype",        false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",                 false, 0.05f),

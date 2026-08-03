@@ -45,20 +45,20 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/HumanTorch/BasicFireWedge.prototype",                   true,  0.0636f), // 2026-06-05
-            new("Powers/Player/HumanTorch/BasicFireball.prototype",                    true,  0.1838f), // 2026-06-05
-            new("Powers/Player/HumanTorch/BowlingBall.prototype",                      true,  0.1359f), // 2026-06-05
-            new("Powers/Player/HumanTorch/ChanneledEnergyBeam.prototype",              true,  0.0271f), // 2026-06-06
+            new("Powers/Player/HumanTorch/BasicFireWedge.prototype",                   true,  0.0578f), // 2026-06-05
+            new("Powers/Player/HumanTorch/BasicFireball.prototype",                    true,  0.2445f), // 2026-06-05
+            new("Powers/Player/HumanTorch/BowlingBall.prototype",                      true,  0.1579f), // 2026-06-05
+            new("Powers/Player/HumanTorch/ChanneledEnergyBeam.prototype",              true,  0.0253f), // 2026-06-06
             new("Powers/Player/HumanTorch/ChargeUpBlowup.prototype",                   true,  0.05f),
             new("Powers/Player/HumanTorch/Consume.prototype",                          true,  0.05f),
-            new("Powers/Player/HumanTorch/FallbackBlast.prototype",                    true,  0.0838f), // 2026-06-06
-            new("Powers/Player/HumanTorch/FlameOn.prototype",                          true,  0.0142f), // 2026-07-05
-            new("Powers/Player/HumanTorch/FlameTornado.prototype",                     true,  0.0492f), // 2026-06-06
-            new("Powers/Player/HumanTorch/HomingShot.prototype",                       true,  0.1981f), // 2026-06-05
-            new("Powers/Player/HumanTorch/NovaBurst.prototype",                        true,  0.2575f), // 2026-06-06
-            new("Powers/Player/HumanTorch/NovaCharge.prototype",                       true,  0.2317f), // 2026-06-05
-            new("Powers/Player/HumanTorch/SummonFireHotspot.prototype",                true,  0.0824f), // 2026-06-06
-            new("Powers/Player/HumanTorch/SummonFireWall.prototype",                   true,  0.1026f), // 2026-06-05
+            new("Powers/Player/HumanTorch/FallbackBlast.prototype",                    true,  0.0856f), // 2026-06-06
+            new("Powers/Player/HumanTorch/FlameOn.prototype",                          true,  0.0088f), // 2026-07-17
+            new("Powers/Player/HumanTorch/FlameTornado.prototype",                     true,  0.0491f), // 2026-06-06
+            new("Powers/Player/HumanTorch/HomingShot.prototype",                       true,  0.5100f), // 2026-06-05
+            new("Powers/Player/HumanTorch/NovaBurst.prototype",                        true,  0.4689f), // 2026-06-06
+            new("Powers/Player/HumanTorch/NovaCharge.prototype",                       true,  0.3057f), // 2026-06-05
+            new("Powers/Player/HumanTorch/SummonFireHotspot.prototype",                true,  0.0883f), // 2026-06-06
+            new("Powers/Player/HumanTorch/SummonFireWall.prototype",                   true,  0.1049f), // 2026-06-05
             new("Powers/Player/HumanTorch/Talents/BouncingFireballs.prototype",        false, 0.05f),
             new("Powers/Player/HumanTorch/Talents/BurningProc.prototype",              false, 0.025f),
             new("Powers/Player/HumanTorch/Talents/Cauterize.prototype",                false, 0.05f),
@@ -77,7 +77,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/HumanTorch/Traits/DefenseTrait.prototype",              false, 0.05f),
             new("Powers/Player/HumanTorch/Traits/MechanicTraitHeat.prototype",         false, 0.05f),
             new("Powers/Player/HumanTorch/Traits/OffenseTrait.prototype",              false, 0.05f),
-            new("Powers/Player/HumanTorch/UltimateStart.prototype",                    true,  0.0266f), // 2026-06-05
+            new("Powers/Player/HumanTorch/UltimateStart.prototype",                    true,  0.0402f), // 2026-06-05
             new("Powers/Player/TravelPower/HumanTorchFlight.prototype",                false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/HumanTorchStolenPower.prototype", false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",             false, 0.05f),

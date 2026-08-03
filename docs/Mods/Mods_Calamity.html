@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MHServerEmu - Calamity</title>
+<style>
+:root { --bg:#0d0d0d; --surface:#141414; --border:#2a2a2a; --text:#e0e0e0; --muted:#999; --accent:#8b1a1a; --accent2:#b33a3a; --link:#64b5f6; --code:#1e1e1e; }
+* { box-sizing:border-box; }
+html,body { margin:0; height:100%; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+.page { display:flex; height:100vh; }
+.sidebar { width:12%; min-width:160px; border-right:1px solid var(--border); background:var(--bg); }
+.sidebar iframe { width:100%; height:100%; border:none; }
+.content { flex:1; overflow-y:auto; }
+header { background:linear-gradient(90deg,#1a0505 0%,#0d0d0d 100%); border-bottom:2px solid var(--accent); padding:1.2rem 1rem; text-align:center; }
+header h1 { margin:0; font-size:2rem; color:#fff; }
+header p { margin:0.5rem 0 0; color:var(--muted); }
+.container { max-width:1000px; margin:0 auto; padding:2rem 1.5rem; }
+h2 { color:#fff; border-bottom:1px solid var(--border); padding-bottom:0.5rem; margin-top:2.5rem; font-size:1.4rem; }
+h3 { color:#fff; margin-top:1.5rem; font-size:1.1rem; }
+a { color:var(--link); text-decoration:none; }
+a:hover { text-decoration:underline; }
+ul,ol { padding-left:1.4rem; }
+li { margin-bottom:0.4rem; }
+table { width:100%; border-collapse:collapse; margin:1rem 0; font-size:0.95rem; }
+th,td { border:1px solid var(--border); padding:0.5rem 0.7rem; text-align:left; }
+th { background:var(--surface); color:#fff; }
+td { background:#111; }
+code,pre { background:var(--code); border:1px solid var(--border); border-radius:4px; font-family:Consolas,Monaco,'Courier New',monospace; font-size:0.9rem; }
+code { padding:0.15rem 0.35rem; }
+pre { padding:0.8rem; overflow-x:auto; }
+.note { border-left:3px solid var(--accent); background:var(--surface); padding:0.8rem 1rem; margin:1rem 0; border-radius:0 6px 6px 0; }
+.flavor { text-align:center; color:#b33a3a; font-style:italic; }
+footer { text-align:center; padding:1.2rem 1rem; color:var(--muted); font-size:0.9rem; border-top:1px solid var(--border); margin-top:3rem; }
+</style>
+</head>
+<body>
+<div class="page">
+    <div class="sidebar"><iframe src="../marvel_heroes_menu.htm"></iframe></div>
+    <div class="content">
+<header>
+    <h1>Calamity</h1>
+    <p>Short themed scenario encounters with customized enemies wielding augmented powers</p>
+</header>
+<div class="container">
+
+<center>
+<pre class="flavor">
+a Herald of Darkness omens corruption of the "Amulet of Quiox" ,
+Cloak will transport you to battle a Vampire coven and disrupt the ritual .
+Some of those you know have been turned and command lesser thralls .
+the Vampire Blood Lord wields powers beyond her control ,
+of kursed and shaped forms , to rain down an onslaught of crimson carnage .
+</pre>
+</center>
+
+<p>Calamity is a collection of custom encounters that are
+     short, small, and play like the game's 
+     existing "terminals." Each encounter is a 
+     one-shot scenario populated by customized 
+     enemies wielding augmented powers shaped into cross, line, and cascading patterns,
+      with phase-based chimera abilities.</p>
+
+<h2>Encounter: Vampire Blood Ritual</h2>
+
+<ul>
+<li><strong>Region:</strong> Hulk Busters Hightown Arcade (entered via Cloak NPC in Avengers Tower hub)</li>
+<li><strong>Win condition:</strong> Defeat the Vampire Blood Lord</li>
+<li><strong>30 trash mobs</strong> round-robin from 4 vampire thrall types with random start offset</li>
+<li><strong>3 minibosses</strong> randomly chosen from a pool of 8 (no duplicates)</li>
+<li><strong>1 boss</strong> at the ritual site with a floating Amulet of Quiox centerpiece</li>
+<li>All enemies are spawned once at start; no respawns</li>
+<li>Minimap markers hidden for all event enemies</li>
+</ul>
+
+<h3>Boss: Vampire Blood Lord</h3>
+<p>Rendered as Scarlet Witch wearing the DarkWanda costume. Uses Scarlet Witch powers for normal single-target casting so animations match the SW pawn. Non-SW augmented powers are cast directly by the boss with an animation reset fired immediately after to mask T-posing.</p>
+
+<ul>
+<li>3-phase enrage: <strong>Normal</strong> (100-66%), <strong>Enraged</strong> (66-33%), <strong>Furious</strong> (33-0%)</li>
+<li>Cooldowns accelerate per phase: 100% &rarr; 70% &rarr; 40% of base cooldown</li>
+<li>Heals 15% max HP on each phase transition</li>
+<li>Phase 0 (100%):Summons 2-3 vampire thrall 
+<li>Phase 1 (66%): One-time Onslaught Mental Orb cast</li>
+<li>Phase 2 (33%): One-time Blade JustStayDown cast</li>
+<li>Round-robin augmented power cycling so the boss rotates through her kit</li>
+<li>Untauntable, CC resistant, sees through invisibility </li>
+</ul>
+
+<h3>Augmented Power Patterns</h3>
+<p>The boss wields an <strong>AugmentedPowerController</strong> that casts powers in geometric patterns around the battlefield. Each power has its own cooldown and damage scale. Patterns include:</p>
+
+<table>
+<tr><th>Pattern</th><th>Description</th></tr>
+<tr><td><code>Cross</code></td><td>4 points on the ground in a cross around the boss</td></tr>
+<tr><td><code>RadialBurst</code></td><td>N points evenly distributed in a circle around the boss</td></tr>
+<tr><td><code>CascadingRadial</code></td><td>Multiple expanding rings at increasing radius with delays between rings</td></tr>
+<tr><td><code>CascadingLine</code></td><td>N points in a line along the boss's facing direction, with delays between each cast</td></tr>
+<tr><td><code>SingleAtPosition</code></td><td>Single cast at a specific position (target or boss position)</td></tr>
+</table>
+
+<h3>Boss Augmented Powers</h3>
+<p>Borrowed powers from Onslaught, Carnage, Elektra, Venom, Blade, and Kurse (Malekith), combined with Scarlet Witch's own arsenal:</p>
+
+<table>
+<tr><th>Power</th><th>Source</th><th>Pattern</th><th>Cooldown</th></tr>
+<tr><td>Hex Sphere</td><td>Scarlet Witch</td><td>Cross</td><td>5s</td></tr>
+<tr><td>Dark Hex</td><td>Scarlet Witch</td><td>Cross</td><td>10s</td></tr>
+<tr><td>Mental Bomb</td><td>Onslaught</td><td>SingleAtPosition</td><td>20s</td></tr>
+<tr><td>Ultimate</td><td>Elektra</td><td>SingleAtPosition</td><td>11s</td></tr>
+<tr><td>Ultimate</td><td>Carnage</td><td>SingleAtPosition</td><td>20s</td></tr>
+<tr><td>Triple Shot</td><td>Venom</td><td>Cross</td><td>6s</td></tr>
+<tr><td>Unleash Glaive</td><td>Blade</td><td>Cross</td><td>8s</td></tr>
+<tr><td>Dark Void Toss</td><td>Kurse</td><td>CascadingLine</td><td>10s</td></tr>
+</table>
+
+<h3>Miniboss Pool</h3>
+<p>3 minibosses are randomly selected (no duplicates) from the following pool each run:</p>
+Malekith , Death Gambit , Wolverine , Moon Knight , Grim Reaper , Black Widow , Daredevil , Deathstrike 
+
+
+<h3>Vampire Thrall Types</h3>
+<p>Trash mobs are distributed round-robin from these
+     thrall types with a random starting offset so each run has a different distribution:</p>
+
+<ul>
+<li><strong>Dark Elf</strong> - melee thrall with red nameplate</li>
+<li><strong>Purifier</strong> - ranged thrall</li>
+<li><strong>Butcher</strong> - heavy melee thrall</li>
+<li><strong>Dark Elf Assassin</strong> - stealth assassin thrall</li>
+</ul>
+
+<h2>Ritual Centerpiece</h2>
+<p>A floating Amulet of Quiox is spawned at the ritual site with
+     looping VFX .
+     The amulet is the thematic centerpiece of the encounter,
+      eluding to its lore as an artifact that can slow vampirism.
+       The coven is attempting to corrupt it.</p>
+
+<h2>Play</h2>
+<ol>
+<li>Go to <strong>Avengers Tower</strong> hub</li>
+<li>Find <strong>Cloak</strong> NPC (Red name Herald of Darkness)</li>
+<li>Interact with Cloak to be transported </li>
+<li>Defeat trash mobs, minibosses, and the Vampire Blood Lord to complete the encounter</li>
+</ol>
+
+<div class="note"><strong>Note:</strong> The event is a one-shot encounter. All enemies spawn once at start. The region shuts down when vacant after completion.</div>
+
+<h2>Config Options</h2>
+<table>
+<tr><th>Option</th><th>Default</th><th>Description</th></tr>
+<tr><td><code>VampireBloodRitualEventEnable</code></td><td>true</td><td>Spawns Cloak NPC in Avengers Tower hub and initializes the event in Hulk Busters Arcade</td></tr>
+<tr><td><code>VampireBloodRitualEventLoggingEnable</code></td><td>true</td><td>Logging for debugging</td></tr>
+</table>
+
+<div class="note"><strong>Note:</strong> Calamity builds on the Incursion system. Incursion config options (damage multipliers, visual scale, logging, etc.) also affect Calamity enemies since they share the same base controller class.</div>
+
+<h2>Work in Progress</h2>
+<p>This is a work in progress with lots more tuning needed. </p>
+
+</div>
+<footer><p> </p></footer>
+    </div>
+</div>
+</body>
+</html>

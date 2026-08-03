@@ -25,5 +25,19 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         protected override float GlobalAttackCooldownMs => 800f;
         protected override float PerPowerCooldownMs => 6000f;
         protected override float DamageScale => 1.0f;
+
+        protected override IncursionPowerEntry[] PowerTable => _powerTable;
+
+        private static readonly IncursionPowerEntry[] _powerTable =
+        {
+            new("Powers/EnemyPowers/Boss/DocOc/DocOcTentacleSlamStart.prototype",            true,  1.1130f), // 2026-07-25
+            new("Powers/EnemyPowers/Boss/DocOc/DocOcTentacleSwipe.prototype",                true,  0.9807f), // 2026-08-01
+            new("Powers/EnemyPowers/Boss/DocOc/DocOcTentacleThrow.prototype",                true,  1.3620f), // 2026-08-01
+            new("Powers/EnemyPowers/Boss/DocOc/DocOcTentacleSlam.prototype",                 false, 1.1130f), // 2026-07-25
+            new("Powers/EnemyPowers/Boss/DocOc/DocOcTentacleSlamKnockdownCombo.prototype",   false, 1.1130f), // 2026-07-25
+            new("Powers/EnemyPowers/Boss/DocOc/DocOcTentacleThrowEnd.prototype",             false, 1.3620f), // 2026-08-01
+            new("Powers/EnemyPowers/Shared/LeashReturnHeal.prototype",                       false, 1.0f),
+            new("Powers/EnemyPowers/Shared/LeashReturnNegStatusEffectImmune.prototype",      false, 1.0f),
+        };
     }
 }

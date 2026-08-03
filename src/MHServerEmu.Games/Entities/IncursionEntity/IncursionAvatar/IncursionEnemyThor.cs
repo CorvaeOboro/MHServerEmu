@@ -53,23 +53,23 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/Thor/Rework/BasicMelee.prototype",                     true,  0.0917f), // 2026-06-10
-            new("Powers/Player/Thor/Rework/BoltSpray.prototype",                      true,  0.0409f), // 2026-06-10
+            new("Powers/Player/Thor/Rework/BasicMelee.prototype",                     true,  0.0898f), // 2026-06-10
+            new("Powers/Player/Thor/Rework/BoltSpray.prototype",                      true,  0.0405f), // 2026-06-10
             new("Powers/Player/Thor/Rework/Charge.prototype",                         true,  0.05f),
-            new("Powers/Player/Thor/Rework/DeathFromAbove.prototype",                 true,  0.0466f), // 2026-06-30
+            new("Powers/Player/Thor/Rework/DeathFromAbove.prototype",                 true,  0.0404f), // 2026-06-30
             new("Powers/Player/Thor/Rework/GroundSmash.prototype",                    true,  0.0364f), // 2026-06-30
-            new("Powers/Player/Thor/Rework/HammerDash.prototype",                     true,  0.0584f), // 2026-06-30
-            new("Powers/Player/Thor/Rework/HammerThrow.prototype",                    true,  0.0819f), // 2026-06-08
-            new("Powers/Player/Thor/Rework/ImmortalCombatRestore.prototype",          true,  0.0715f), // 2026-06-10
+            new("Powers/Player/Thor/Rework/HammerDash.prototype",                     true,  0.0575f), // 2026-06-30
+            new("Powers/Player/Thor/Rework/HammerThrow.prototype",                    true,  0.1041f), // 2026-06-08
+            new("Powers/Player/Thor/Rework/ImmortalCombatRestore.prototype",          true,  0.0851f), // 2026-06-10
             new("Powers/Player/Thor/Rework/KnockOut.prototype",                       true,  0.05f),
-            new("Powers/Player/Thor/Rework/LightningStrike.prototype",                true,  0.1284f), // 2026-06-30
+            new("Powers/Player/Thor/Rework/LightningStrike.prototype",                true,  0.1930f), // 2026-06-30
             new("Powers/Player/Thor/Rework/Ragnarok.prototype",                       true,  0.05f),
-            new("Powers/Player/Thor/Rework/Shockwave.prototype",                      true,  0.0773f), // 2026-06-10
-            new("Powers/Player/Thor/Rework/SignatureAntiforce.prototype",             true,  0.0042f), // 2026-06-10
+            new("Powers/Player/Thor/Rework/Shockwave.prototype",                      true,  0.0897f), // 2026-06-10
+            new("Powers/Player/Thor/Rework/SignatureAntiforce.prototype",             true,  0.0039f), // 2026-06-10
             new("Powers/Player/Thor/Rework/SteroidStrong.prototype",                  true,  0.05f),
             new("Powers/Player/Thor/Rework/Taunt.prototype",                          true,  0.05f),
-            new("Powers/Player/Thor/Rework/ThunderSpot.prototype",                    true,  0.1301f), // 2026-06-08
-            new("Powers/Player/Thor/StormHammerSummon.prototype",                     true,  0.0321f), // 2026-06-08
+            new("Powers/Player/Thor/Rework/ThunderSpot.prototype",                    true,  0.1760f), // 2026-06-08
+            new("Powers/Player/Thor/StormHammerSummon.prototype",                     true,  0.0248f), // 2026-06-08
             new("Powers/Player/Thor/Talents/BasicMeleeLightningBoltTalent.prototype", false, 0.0917f), // 2026-06-10
             new("Powers/Player/Thor/Talents/BasicMeleeThunderclapTalent.prototype",   false, 0.0917f), // 2026-06-10
             new("Powers/Player/Thor/Talents/BruiserTalent.prototype",                 false, 0.05f),
@@ -88,7 +88,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Thor/Traits/DefensiveTrait.prototype",                 false, 0.05f),
             new("Powers/Player/Thor/Traits/MechanicTraitOdinforce.prototype",         false, 0.05f),
             new("Powers/Player/Thor/Traits/OffensiveTrait.prototype",                 false, 0.05f),
-            new("Powers/Player/Thor/Ultimate.prototype",                              true,  0.0112f), // 2026-06-28
+            new("Powers/Player/Thor/Ultimate.prototype",                              true,  0.0086f), // 2026-06-28
             new("Powers/Player/TravelPower/ThorFlight.prototype",                     false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/ThorStolenPower.prototype",      false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",            false, 0.05f),

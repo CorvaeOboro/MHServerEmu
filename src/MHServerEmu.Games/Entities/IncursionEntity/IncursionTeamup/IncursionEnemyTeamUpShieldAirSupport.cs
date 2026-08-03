@@ -18,6 +18,9 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         public override PrototypeId RenderTeamupRef => TeamUpRef;
         public override string InvaderDisplayName => "Shield Air Support Invader";
 
+        // HardcodeExclude: lacks enough active skills (0 active / 11 total); passives appear bugged.
+        public override bool HardcodeExclude => true;
+
         protected override int ThinkIntervalMs => 250;
         protected override float AttackRange => 200f;
         protected override float ChaseRange => 5000f;

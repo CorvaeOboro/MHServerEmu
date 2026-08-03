@@ -13,6 +13,7 @@ using MHServerEmu.Core.VectorMath;
 using MHServerEmu.Games.Common;
 using MHServerEmu.Games.Dialog;
 using MHServerEmu.Games.Logging;
+using MHServerEmu.Games.Entities.IncursionEntity;
 using MHServerEmu.Games.Entities.Inventories;
 using MHServerEmu.Games.Entities.Items;
 using MHServerEmu.Games.Entities.PowerCollections;
@@ -34,6 +35,7 @@ using MHServerEmu.Games.Properties.Evals;
 using MHServerEmu.Games.Regions;
 using MHServerEmu.Games.Social.Guilds;
 using MHServerEmu.Games.Social.Parties;
+using MHServerEmu.Games.UI;
 
 namespace MHServerEmu.Games.Entities.Avatars
 {
@@ -4235,6 +4237,20 @@ namespace MHServerEmu.Games.Entities.Avatars
                 ModInteractNearbyAutoLogCollator.WriteLine(player.Id, $"[ModInteractNearbyAuto_USE] SUCCESS target=[{targetName}#{entityId}] type={interactableObject.GetType().Name} missionRef={missionRef} isMission={interactableObject.MissionPrototype != PrototypeId.Invalid}");
             }
 
+            // Vampire Blood Ritual: Cloak NPC interaction
+            // Only trigger on the specific Cloak NPC we spawned ("Herald of Darkness"),
+            // not the native Cloak NPC that already exists in Avengers Tower.
+            if (interactableObject.PrototypeDataRef == Region.CloakNPCRef
+                && Game?.CustomGameOptions?.VampireBloodRitualEventEnable == true)
+            {
+                var cloakRegion = interactableObject.Region;
+                if (cloakRegion != null && interactableObject.Id == cloakRegion.VampireBloodRitualCloakEntityId)
+                {
+                    HandleVampireBloodRitualCloakInteraction(player, interactableObject);
+                    return true;
+                }
+            }
+
             if (interactableObject.IsInWorld == false && interactableObject is Item item)
                 item.InteractWithAvatar(this);
 
@@ -4252,6 +4268,8 @@ namespace MHServerEmu.Games.Entities.Avatars
 
             return true;
         }
+
+        // Vampire Blood Ritual interaction methods are in Avatar.ModCalamityVampire.cs (partial class)
 
         private bool CanInteract(Player player, WorldEntity interactableObject)
         {

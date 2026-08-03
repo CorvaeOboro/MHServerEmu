@@ -23,14 +23,16 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         private class Session
         {
             public readonly ulong EntityId;
+            public readonly string FilePrefix;
             public readonly string AvatarName;
             public readonly DateTime StartTime;
             public readonly System.Text.StringBuilder Buffer = new();
             public bool HasContent;
 
-            public Session(ulong entityId, string avatarName)
+            public Session(ulong entityId, string filePrefix, string avatarName)
             {
                 EntityId = entityId;
+                FilePrefix = filePrefix;
                 AvatarName = avatarName;
                 StartTime = DateTime.Now;
             }
@@ -40,7 +42,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         /// Opens a new per-encounter log session for the given incursion enemy.
         /// Call once immediately after the entity spawns and its controller is bound.
         /// </summary>
-        public static void BeginSession(ulong entityId, string avatarName)
+        public static void BeginSession(ulong entityId, string filePrefix, string avatarName)
         {
             if (Enabled == false || entityId == 0) return;
 
@@ -49,7 +51,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
                 if (_sessions.ContainsKey(entityId))
                     EndSession(entityId); // orphan flush
 
-                _sessions[entityId] = new Session(entityId, avatarName);
+                _sessions[entityId] = new Session(entityId, filePrefix, avatarName);
             }
         }
 
@@ -108,8 +110,13 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
                 string dir = Path.Combine(FileHelper.ServerRoot, "Logs", "Incursions");
                 Directory.CreateDirectory(dir);
 
-                string safeName = string.Join("_", session.AvatarName.Split(Path.GetInvalidFileNameChars()));
-                string fileName = $"Incursion_{safeName}_{session.StartTime:yyyyMMdd_HHmmss}_{session.EntityId}.log";
+                // Strip the "#entityId" suffix that GetLabel() appends, then sanitize.
+                string rawName = session.AvatarName;
+                int hash = rawName.IndexOf('#');
+                if (hash >= 0) rawName = rawName[..hash];
+
+                string safeName = string.Join("_", rawName.Split(Path.GetInvalidFileNameChars())).Replace(' ', '_');
+                string fileName = $"{session.FilePrefix}_{safeName}_{session.StartTime:yyyyMMdd_HHmmss}_{session.EntityId}.log";
                 string path = Path.Combine(dir, fileName);
 
                 File.WriteAllText(path, session.Buffer.ToString());

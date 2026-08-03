@@ -18,6 +18,9 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         public override PrototypeId RenderTeamupRef => TeamUpRef;
         public override string InvaderDisplayName => "Magik of Limbo Invader";
 
+        // HardcodeExclude: Magik has Avatar version better power set
+        public override bool HardcodeExclude => true;
+
         protected override int ThinkIntervalMs => 250;
         protected override float AttackRange => 200f;
         protected override float ChaseRange => 5000f;

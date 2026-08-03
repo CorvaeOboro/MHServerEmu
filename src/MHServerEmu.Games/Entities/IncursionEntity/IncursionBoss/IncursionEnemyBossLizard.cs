@@ -25,5 +25,22 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         protected override float GlobalAttackCooldownMs => 800f;
         protected override float PerPowerCooldownMs => 6000f;
         protected override float DamageScale => 1.0f;
+
+        protected override IncursionPowerEntry[] PowerTable => _powerTable;
+
+        private static readonly IncursionPowerEntry[] _powerTable =
+        {
+            new("Powers/EnemyPowers/Boss/Lizard/LizardAnimalSummon.prototype",            true,  1.0f),
+            new("Powers/EnemyPowers/Boss/Lizard/LizardClawSlash.prototype",               true,  1.0f),
+            new("Powers/EnemyPowers/Boss/Lizard/LizardTailSpinStart.prototype",           true,  0.9119f), // 2026-07-28
+            new("Powers/EnemyPowers/Boss/Lizard/LizardThrowFire.prototype",               true,  2.4698f), // 2026-07-28
+            new("Powers/EnemyPowers/Boss/Lizard/LizardThrowFreeze.prototype",             true,  1.7415f), // 2026-07-28
+            new("Powers/EnemyPowers/Boss/Lizard/LizardThrowPoison.prototype",             true,  1.0f),
+            new("Powers/EnemyPowers/Boss/SurturRaid/TestPowerBlank.prototype",            true,  1.0f),
+            new("Powers/EnemyPowers/Boss/Lizard/LizardTailSpinEnd.prototype",             false, 1.0f),
+            new("Powers/EnemyPowers/Boss/Lizard/LizardTailSpinMovement.prototype",        false, 1.0f),
+            new("Powers/EnemyPowers/Shared/LeashReturnHeal.prototype",                    false, 1.0f),
+            new("Powers/EnemyPowers/Shared/LeashReturnNegStatusEffectImmune.prototype",   false, 1.0f),
+        };
     }
 }

@@ -30,16 +30,16 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/TeamUps/JessicaJones/DeathFromAbove.prototype",  true,  0.023333f),  // JessicaJones/DeathFromAbove.prototype
-            new("Powers/TeamUps/JessicaJones/DeathFromAboveQuakeTrigger.prototype", false,  0.023333f),  // JessicaJones/DeathFromAboveQuakeTrigger.prototype - trigger/secondary
+            new("Powers/TeamUps/JessicaJones/DeathFromAbove.prototype",  true,  0.0570f), // 2026-07-30
+            new("Powers/TeamUps/JessicaJones/DeathFromAboveQuakeTrigger.prototype", false,  0.0570f), // 2026-07-30
             new("Powers/TeamUps/JessicaJones/AwayDeathFromAbove.prototype", false,  0.023333f),  // JessicaJones/AwayDeathFromAbove.prototype - away passive
             new("Powers/TeamUps/JessicaJones/Taunt.prototype",  true,  0.023333f),  // JessicaJones/Taunt.prototype
-            new("Powers/TeamUps/JessicaJones/ThrowConcrete.prototype",  true,  0.023333f),  // JessicaJones/ThrowConcrete.prototype
-            new("Powers/TeamUps/JessicaJones/ThrowConcreteBleedTrigger.prototype", false,  0.023333f),  // JessicaJones/ThrowConcreteBleedTrigger.prototype - trigger/secondary
-            new("Powers/TeamUps/JessicaJones/Pummel.prototype",  true,  0.023333f),  // JessicaJones/Pummel.prototype
+            new("Powers/TeamUps/JessicaJones/ThrowConcrete.prototype",  true,  0.0334f), // 2026-07-30
+            new("Powers/TeamUps/JessicaJones/ThrowConcreteBleedTrigger.prototype", false,  0.0334f), // 2026-07-30
+            new("Powers/TeamUps/JessicaJones/Pummel.prototype",  true,  0.1624f), // 2026-07-30
             new("Powers/TeamUps/JessicaJones/PummelBleedTrigger.prototype", false,  0.023333f),  // JessicaJones/PummelBleedTrigger.prototype - trigger/secondary
             new("Powers/TeamUps/JessicaJones/AwayThrowConcrete.prototype", false,  0.023333f),  // JessicaJones/AwayThrowConcrete.prototype - away passive
-            new("Powers/TeamUps/JessicaJones/KickCar.prototype",  true,  0.023333f),  // JessicaJones/KickCar.prototype
+            new("Powers/TeamUps/JessicaJones/KickCar.prototype",  true,  0.0284f), // 2026-07-30
             new("Powers/TeamUps/TeamUpSynergyHeroPassive.prototype", false,  0.023333f),  // TeamUpSynergyHeroPassive.prototype - synergy passive
         };
     }

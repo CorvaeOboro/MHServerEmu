@@ -30,16 +30,16 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/TeamUps/Gamora/OpeningShot.prototype",  true,  0.023333f),  // Gamora/OpeningShot.prototype
+            new("Powers/TeamUps/Gamora/OpeningShot.prototype",  true,  0.0636f), // 2026-07-30
             new("Powers/TeamUps/Gamora/HunterKiller.prototype",  true,  0.023333f),  // Gamora/HunterKiller.prototype
             new("Powers/TeamUps/Gamora/AwayHunterKiller.prototype", false,  0.023333f),  // Gamora/AwayHunterKiller.prototype - away passive
-            new("Powers/TeamUps/Gamora/Homerun.prototype",  true,  0.023333f),  // Gamora/Homerun.prototype
-            new("Powers/TeamUps/Gamora/HomerunBleedTrigger.prototype", false,  0.023333f),  // Gamora/HomerunBleedTrigger.prototype - trigger/secondary
-            new("Powers/TeamUps/Gamora/BulletSpray.prototype",  true,  0.023333f),  // Gamora/BulletSpray.prototype
-            new("Powers/TeamUps/Gamora/SwordLeap.prototype",  true,  0.023333f),  // Gamora/SwordLeap.prototype
+            new("Powers/TeamUps/Gamora/Homerun.prototype",  true,  0.0391f), // 2026-07-30
+            new("Powers/TeamUps/Gamora/HomerunBleedTrigger.prototype", false,  0.0391f), // 2026-07-30
+            new("Powers/TeamUps/Gamora/BulletSpray.prototype",  true,  0.0303f), // 2026-07-30
+            new("Powers/TeamUps/Gamora/SwordLeap.prototype",  true,  0.0302f), // 2026-07-30
             new("Powers/TeamUps/Gamora/DeathDealer.prototype",  true,  0.023333f),  // Gamora/DeathDealer.prototype
             new("Powers/TeamUps/Gamora/AssassinInstincts.prototype", false,  0.023333f),  // Gamora/AssassinInstincts.prototype - away passive
-            new("Powers/TeamUps/Gamora/BladeDash.prototype",  true,  0.023333f),  // Gamora/BladeDash.prototype
+            new("Powers/TeamUps/Gamora/BladeDash.prototype",  true,  0.0205f), // 2026-07-30
             new("Powers/TeamUps/TeamUpSynergyHeroPassive.prototype", false,  0.023333f),  // TeamUpSynergyHeroPassive.prototype - synergy passive
         };
     }

@@ -18,6 +18,9 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         public override PrototypeId RenderTeamupRef => TeamUpRef;
         public override string InvaderDisplayName => "Punisher Invader";
 
+                 // HardcodeExclude: has avatar version 
+        public override bool HardcodeExclude => true;
+
         protected override int ThinkIntervalMs => 250;
         protected override float AttackRange => 200f;
         protected override float ChaseRange => 5000f;
@@ -30,16 +33,16 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/TeamUps/FrankenCastle/ShotgunBlast.prototype",  true,  0.023333f),  // FrankenCastle/ShotgunBlast.prototype
-            new("Powers/TeamUps/FrankenCastle/RPG.prototype",  true,  0.023333f),  // FrankenCastle/RPG.prototype
+            new("Powers/TeamUps/FrankenCastle/ShotgunBlast.prototype",  true,  0.0595f), // 2026-07-30
+            new("Powers/TeamUps/FrankenCastle/RPG.prototype",  true,  0.0393f), // 2026-07-30
             new("Powers/TeamUps/FrankenCastle/AwayMissileProc.prototype", false,  0.023333f),  // FrankenCastle/AwayMissileProc.prototype - away passive
-            new("Powers/TeamUps/FrankenCastle/ShotgunBlastBleedTrigger.prototype", false,  0.023333f),  // FrankenCastle/ShotgunBlastBleedTrigger.prototype - trigger/secondary
-            new("Powers/TeamUps/FrankenCastle/ChemicalBomb.prototype",  true,  0.023333f),  // FrankenCastle/ChemicalBomb.prototype
-            new("Powers/TeamUps/FrankenCastle/ChemicalBombHotspotTrigger.prototype", false,  0.023333f),  // FrankenCastle/ChemicalBombHotspotTrigger.prototype - trigger/secondary
-            new("Powers/TeamUps/FrankenCastle/ArmorPiercing.prototype",  true,  0.023333f),  // FrankenCastle/ArmorPiercing.prototype
+            new("Powers/TeamUps/FrankenCastle/ShotgunBlastBleedTrigger.prototype", false,  0.0595f), // 2026-07-30
+            new("Powers/TeamUps/FrankenCastle/ChemicalBomb.prototype",  true,  0.0417f), // 2026-07-30
+            new("Powers/TeamUps/FrankenCastle/ChemicalBombHotspotTrigger.prototype", false,  0.0417f), // 2026-07-30
+            new("Powers/TeamUps/FrankenCastle/ArmorPiercing.prototype",  true,  0.0380f), // 2026-07-30
             new("Powers/TeamUps/FrankenCastle/AwaySniperProc.prototype", false,  0.023333f),  // FrankenCastle/AwaySniperProc.prototype - away passive
-            new("Powers/TeamUps/FrankenCastle/Flamethrower.prototype",  true,  0.023333f),  // FrankenCastle/Flamethrower.prototype
-            new("Powers/TeamUps/FrankenCastle/Bazooka.prototype",  true,  0.023333f),  // FrankenCastle/Bazooka.prototype
+            new("Powers/TeamUps/FrankenCastle/Flamethrower.prototype",  true,  0.0499f), // 2026-07-30
+            new("Powers/TeamUps/FrankenCastle/Bazooka.prototype",  true,  0.0241f), // 2026-07-30
             new("Powers/TeamUps/TeamUpSynergyHeroPassive.prototype", false,  0.023333f),  // TeamUpSynergyHeroPassive.prototype - synergy passive
         };
     }

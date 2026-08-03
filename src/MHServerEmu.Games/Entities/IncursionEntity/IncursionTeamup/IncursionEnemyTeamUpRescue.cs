@@ -39,7 +39,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/TeamUps/Rescue/TotheRescue.prototype",  true,  0.023333f),  // Rescue/TotheRescue.prototype
             new("Powers/TeamUps/Rescue/AwayRescue.prototype", false,  0.023333f),  // Rescue/AwayRescue.prototype - away passive
             new("Powers/TeamUps/Rescue/StasisRay.prototype",  true,  0.023333f),  // Rescue/StasisRay.prototype
-            new("Powers/TeamUps/Rescue/Signature.prototype",  true, 0.011667f),  // Rescue/Signature.prototype - signature / ultimate
+            new("Powers/TeamUps/Rescue/Signature.prototype",  true, 0.0091f), // 2026-07-30
             new("Powers/TeamUps/TeamUpSynergyHeroPassive.prototype", false,  0.023333f),  // TeamUpSynergyHeroPassive.prototype - synergy passive
         };
     }

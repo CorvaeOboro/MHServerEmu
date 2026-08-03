@@ -23,7 +23,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         protected override float AttackRange => 300f;
         protected override float ChaseRange => 5000f;
         protected override float GlobalAttackCooldownMs => 800f;
-        protected override float PerPowerCooldownMs => 6000f;
+        protected override float PerPowerCooldownMs => 1000f; // fast attack , limitied power set
         protected override float DamageScale => 1.0f;
         protected override float DamageTakenMultiplier => 0.2f;
     }

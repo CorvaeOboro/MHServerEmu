@@ -30,16 +30,16 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/TeamUps/Spiderman/WebSplat.prototype",  true,  0.026667f),  // Spiderman/WebSplat.prototype
-            new("Powers/TeamUps/GwenStacy/DisengagingShot.prototype",  true,  0.026667f),  // GwenStacy/DisengagingShot.prototype
+            new("Powers/TeamUps/Spiderman/WebSplat.prototype",  true,  0.1095f), // 2026-07-29
+            new("Powers/TeamUps/GwenStacy/DisengagingShot.prototype",  true,  0.0632f), // 2026-07-29
             new("Powers/TeamUps/GwenStacy/AwayDisengagingShot.prototype", false,  0.026667f),  // GwenStacy/AwayDisengagingShot.prototype - away passive
             new("Powers/TeamUps/GwenStacy/AwayWebSplat.prototype", false,  0.026667f),  // GwenStacy/AwayWebSplat.prototype - away passive
-            new("Powers/TeamUps/GwenStacy/WebSpray.prototype",  true,  0.026667f),  // GwenStacy/WebSpray.prototype
-            new("Powers/TeamUps/GwenStacy/Wrap.prototype",  true,  0.026667f),  // GwenStacy/Wrap.prototype
-            new("Powers/TeamUps/GwenStacy/Slingshot.prototype",  true,  0.026667f),  // GwenStacy/Slingshot.prototype
-            new("Powers/TeamUps/GwenStacy/CorrosiveWebbing.prototype",  true,  0.026667f),  // GwenStacy/CorrosiveWebbing.prototype
+            new("Powers/TeamUps/GwenStacy/WebSpray.prototype",  true,  0.0549f), // 2026-07-29
+            new("Powers/TeamUps/GwenStacy/Wrap.prototype",  true,  0.0700f), // 2026-07-29
+            new("Powers/TeamUps/GwenStacy/Slingshot.prototype",  true,  0.0307f), // 2026-07-29
+            new("Powers/TeamUps/GwenStacy/CorrosiveWebbing.prototype",  true,  0.0358f), // 2026-07-29
             new("Powers/TeamUps/GwenStacy/AwayCorrosiveWebbing.prototype", false,  0.026667f),  // GwenStacy/AwayCorrosiveWebbing.prototype - away passive
-            new("Powers/TeamUps/Spiderman/AmazingSmash.prototype",  true, 0.013333f),  // Spiderman/AmazingSmash.prototype - signature / ultimate
+            new("Powers/TeamUps/Spiderman/AmazingSmash.prototype",  true, 0.0130f), // 2026-07-29
             new("Powers/TeamUps/TeamUpSynergyHeroPassive.prototype", false,  0.026667f),  // TeamUpSynergyHeroPassive.prototype - synergy passive
         };
     }

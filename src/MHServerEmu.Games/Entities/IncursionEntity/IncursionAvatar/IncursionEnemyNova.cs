@@ -44,24 +44,24 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/Nova/ArcBurst.prototype",                                   true,  0.0872f), // 2026-06-11
-            new("Powers/Player/Nova/BasicPunch.prototype",                                 true,  0.1527f), // 2026-06-11
-            new("Powers/Player/Nova/BasicSpiritBeam.prototype",                            true,  0.1670f), // 2026-06-11
-            new("Powers/Player/Nova/BouncingStrike.prototype",                             true,  0.0657f), // 2026-06-11
-            new("Powers/Player/Nova/ChanneledPulsarBeam.prototype",                        true,  0.0391f), // 2026-06-11
+            new("Powers/Player/Nova/ArcBurst.prototype",                                   true,  0.1089f), // 2026-06-11
+            new("Powers/Player/Nova/BasicPunch.prototype",                                 true,  0.2029f), // 2026-06-11
+            new("Powers/Player/Nova/BasicSpiritBeam.prototype",                            true,  0.2479f), // 2026-06-11
+            new("Powers/Player/Nova/BouncingStrike.prototype",                             true,  0.0578f), // 2026-06-11
+            new("Powers/Player/Nova/ChanneledPulsarBeam.prototype",                        true,  0.0372f), // 2026-06-11
             new("Powers/Player/Nova/ChargedDash.prototype",                                true,  0.05f),
-            new("Powers/Player/Nova/DeathFromAbove.prototype",                             true,  0.0796f), // 2026-07-08
-            new("Powers/Player/Nova/FuriousLunge.prototype",                               true,  0.1320f), // 2026-06-11
-            new("Powers/Player/Nova/HeavyBlast.prototype",                                 true,  0.1643f), // 2026-06-11
+            new("Powers/Player/Nova/DeathFromAbove.prototype",                             true,  0.0698f), // 2026-07-29
+            new("Powers/Player/Nova/FuriousLunge.prototype",                               true,  1.0511f), // 2026-06-11
+            new("Powers/Player/Nova/HeavyBlast.prototype",                                 true,  0.2078f), // 2026-06-11
             new("Powers/Player/Nova/HeavyBlastHiddenPassive.prototype",                    false, 0.05f),
-            new("Powers/Player/Nova/LungingPunch.prototype",                               true,  0.1478f), // 2026-06-11
-            new("Powers/Player/Nova/MegaPunch.prototype",                                  true,  0.0706f), // 2026-06-11
-            new("Powers/Player/Nova/PBAoENuke.prototype",                                  true,  0.0967f), // 2026-06-11
+            new("Powers/Player/Nova/LungingPunch.prototype",                               true,  0.1870f), // 2026-06-11
+            new("Powers/Player/Nova/MegaPunch.prototype",                                  true,  0.0672f), // 2026-06-11
+            new("Powers/Player/Nova/PBAoENuke.prototype",                                  true,  0.1063f), // 2026-06-11
             new("Powers/Player/Nova/PassiveSRShieldHiddenPassive.prototype",               false, 0.05f),
-            new("Powers/Player/Nova/PulsarExplosion.prototype",                            true,  0.0663f), // 2026-06-10
-            new("Powers/Player/Nova/PulsarHotspot.prototype",                              true,  0.0991f), // 2026-06-11
-            new("Powers/Player/Nova/PulsarImplosion.prototype",                            true,  0.1109f), // 2026-06-10
-            new("Powers/Player/Nova/SignatureSupernova.prototype",                         true,  0.0471f), // 2026-06-11
+            new("Powers/Player/Nova/PulsarExplosion.prototype",                            true,  0.0621f), // 2026-06-10
+            new("Powers/Player/Nova/PulsarHotspot.prototype",                              true,  0.1075f), // 2026-06-11
+            new("Powers/Player/Nova/PulsarImplosion.prototype",                            true,  0.0984f), // 2026-06-10
+            new("Powers/Player/Nova/SignatureSupernova.prototype",                         true,  0.0324f), // 2026-06-11
             new("Powers/Player/Nova/Talents/Talent1ChanneledBeamDetonateBuff.prototype",   false, 0.025f),
             new("Powers/Player/Nova/Talents/Talent1MeleeFreeNovaPulse.prototype",          false, 0.01f),
             new("Powers/Player/Nova/Talents/Talent1MovementExplosion.prototype",           false, 0.01f),
@@ -80,7 +80,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Nova/Traits/DefenseTrait.prototype",                        false, 0.05f),
             new("Powers/Player/Nova/Traits/MechanicTrait.prototype",                       false, 0.05f),
             new("Powers/Player/Nova/Traits/OffenseTrait.prototype",                        false, 0.05f),
-            new("Powers/Player/Nova/UltimateNovaCorps.prototype",                          true,  0.0084f), // 2026-06-11
+            new("Powers/Player/Nova/UltimateNovaCorps.prototype",                          true,  0.0078f), // 2026-06-11
             new("Powers/Player/TravelPower/NovaFlight.prototype",                          false, 0.01f),
             new("Powers/StolenPowers/StealablePowers/NovaStolenPower.prototype",           false, 0.01f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",                 false, 0.05f),

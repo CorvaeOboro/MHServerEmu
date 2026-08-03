@@ -119,15 +119,16 @@ namespace MHServerEmu.Games
         // REVIEW MATERIAL OVERRIDE = dev tool for material/texture/model override research
         public bool ReviewMaterialOverrideLoggingEnable { get; private set; } = false;
 
-        // DEATH RECAP = chat + banner output of biggest damage sources moments before death
+        // DEATH RECAP = chat output of biggest damage sources moments before death
         public bool DeathRecapEnable { get; private set; } = true;
         public int DeathRecapMaxEvents { get; private set; } = 20;
         public int DeathRecapTopN { get; private set; } = 3;
-        public bool DeathRecapShowHeals { get; private set; } = false;
-        public bool DeathRecapColorEnable { get; private set; } = false;
-        public bool DeathRecapSingleLine { get; private set; } = true;
-        public bool DeathRecapUltraCompact { get; private set; } = true;
-        public bool DeathRecapBannerEnable { get; private set; } = false;
+        public int DeathRecapNameLength { get; private set; } = 3;
+        public int DeathRecapDamageTypeLength { get; private set; } = 1;
         public bool DeathRecapLoggingEnable { get; private set; } = false;
+
+        // VAMPIRE BLOOD RITUAL = custom scenario entered via Cloak NPC in Avengers Tower
+        public bool VampireBloodRitualEventEnable { get; private set; } = true;
+        public bool VampireBloodRitualEventLoggingEnable { get; private set; } = false;
     }
 }

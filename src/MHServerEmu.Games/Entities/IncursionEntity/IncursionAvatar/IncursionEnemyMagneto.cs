@@ -42,22 +42,22 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/Magneto/AllIn.prototype",                                 true,  0.0669f), // 2026-06-11
-            new("Powers/Player/Magneto/ChanneledCone.prototype",                         true,  0.0751f), // 2026-06-11
-            new("Powers/Player/Magneto/DebrisCrush.prototype",                           true,  0.0653f), // 2026-06-11
-            new("Powers/Player/Magneto/DebrisShot.prototype",                            true,  0.3198f), // 2026-06-11
-            new("Powers/Player/Magneto/ElectromagneticBeam.prototype",                   true,  0.0936f), // 2026-06-11
-            new("Powers/Player/Magneto/ElectromagneticShockwave.prototype",              true,  0.0818f), // 2026-06-11
+            new("Powers/Player/Magneto/AllIn.prototype",                                 true,  0.0667f), // 2026-06-11
+            new("Powers/Player/Magneto/ChanneledCone.prototype",                         true,  0.0801f), // 2026-06-11
+            new("Powers/Player/Magneto/DebrisCrush.prototype",                           true,  0.0635f), // 2026-06-11
+            new("Powers/Player/Magneto/DebrisShot.prototype",                            true,  0.3819f), // 2026-06-11
+            new("Powers/Player/Magneto/ElectromagneticBeam.prototype",                   true,  0.0925f), // 2026-06-11
+            new("Powers/Player/Magneto/ElectromagneticShockwave.prototype",              true,  0.0867f), // 2026-06-11
             new("Powers/Player/Magneto/ForceField.prototype",                            true,  0.05f),
-            new("Powers/Player/Magneto/HomingBlast.prototype",                           true,  0.1322f), // 2026-06-11
-            new("Powers/Player/Magneto/Implosion.prototype",                             true,  0.1106f), // 2026-06-11
-            new("Powers/Player/Magneto/Lunge.prototype",                                 true,  0.1409f), // 2026-07-01
-            new("Powers/Player/Magneto/MagneticSphere.prototype",                        true,  0.1666f), // 2026-06-11
-            new("Powers/Player/Magneto/MetalCage.prototype",                             true,  0.0960f), // 2026-06-11
-            new("Powers/Player/Magneto/MetalObjectSmash.prototype",                      true,  0.0854f), // 2026-06-11
-            new("Powers/Player/Magneto/ShrapnelCone.prototype",                          true,  0.1504f), // 2026-06-06
-            new("Powers/Player/Magneto/ShrapnelHotspot.prototype",                       true,  0.1467f), // 2026-06-11
-            new("Powers/Player/Magneto/SignatureMaelstrom.prototype",                    true,  0.0146f), // 2026-06-11
+            new("Powers/Player/Magneto/HomingBlast.prototype",                           true,  0.1091f), // 2026-06-11
+            new("Powers/Player/Magneto/Implosion.prototype",                             true,  0.1095f), // 2026-06-11
+            new("Powers/Player/Magneto/Lunge.prototype",                                 true,  0.2313f), // 2026-08-01
+            new("Powers/Player/Magneto/MagneticSphere.prototype",                        true,  0.2133f), // 2026-06-11
+            new("Powers/Player/Magneto/MetalCage.prototype",                             true,  0.0933f), // 2026-06-11
+            new("Powers/Player/Magneto/MetalObjectSmash.prototype",                      true,  0.0842f), // 2026-06-11
+            new("Powers/Player/Magneto/ShrapnelCone.prototype",                          true,  0.1779f), // 2026-06-06
+            new("Powers/Player/Magneto/ShrapnelHotspot.prototype",                       true,  0.1854f), // 2026-06-11
+            new("Powers/Player/Magneto/SignatureMaelstrom.prototype",                    true,  0.0123f), // 2026-06-11
             new("Powers/Player/Magneto/SpawnMetalOrbHiddenPassive.prototype",            false, 0.05f),
             new("Powers/Player/Magneto/Talents/AllInPickupBuff.prototype",               false, 0.0669f), // 2026-06-11
             new("Powers/Player/Magneto/Talents/AutoDebrisCrush.prototype",               false, 0.0653f), // 2026-06-11
@@ -78,7 +78,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Magneto/Traits/MechanicTraitDebris.prototype",            false, 0.05f),
             new("Powers/Player/Magneto/Traits/OffenseTrait.prototype",                   false, 0.05f),
             new("Powers/Player/Magneto/UltimateHiddenPassive.prototype",                 false, 0.006f),
-            new("Powers/Player/Magneto/UltimateSentinelSmash.prototype",                 true,  0.0242f), // 2026-06-11
+            new("Powers/Player/Magneto/UltimateSentinelSmash.prototype",                 true,  0.0291f), // 2026-06-11
             new("Powers/Player/TravelPower/MagnetoFlight.prototype",                     false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/MagnetoStolenPower.prototype",      false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",               false, 0.05f),

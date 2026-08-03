@@ -55,20 +55,20 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/Hulk/Rework/BasicMeleeUtil.prototype",             true,  0.1014f), // 2026-06-11
+            new("Powers/Player/Hulk/Rework/BasicMeleeUtil.prototype",             true,  0.1034f), // 2026-06-11
             new("Powers/Player/Hulk/Rework/CarFists.prototype",                   true,  0.05f),
-            new("Powers/Player/Hulk/Rework/Clap.prototype",                       true,  0.0459f), // 2026-06-09
-            new("Powers/Player/Hulk/Rework/DashCrash.prototype",                  true,  0.1218f), // 2026-07-08
-            new("Powers/Player/Hulk/Rework/GammaPunch.prototype",                 true,  0.0970f), // 2026-06-09
-            new("Powers/Player/Hulk/Rework/LeapImplode.prototype",                true,  0.0311f), // 2026-07-08
-            new("Powers/Player/Hulk/Rework/LeapQuake.prototype",                  true,  0.0369f), // 2026-07-08
-            new("Powers/Player/Hulk/Rework/Meteor.prototype",                     true,  0.0123f), // 2026-06-11
+            new("Powers/Player/Hulk/Rework/Clap.prototype",                       true,  0.0352f), // 2026-06-09
+            new("Powers/Player/Hulk/Rework/DashCrash.prototype",                  true,  0.2247f), // 2026-07-13
+            new("Powers/Player/Hulk/Rework/GammaPunch.prototype",                 true,  0.1071f), // 2026-06-09
+            new("Powers/Player/Hulk/Rework/LeapImplode.prototype",                true,  0.0289f), // 2026-07-13
+            new("Powers/Player/Hulk/Rework/LeapQuake.prototype",                  true,  0.0336f), // 2026-07-13
+            new("Powers/Player/Hulk/Rework/Meteor.prototype",                     true,  0.0116f), // 2026-06-11
             new("Powers/Player/Hulk/Rework/PBAoESlam.prototype",                  true,  0.03f),
             new("Powers/Player/Hulk/Rework/Rawr.prototype",                       true,  0.05f),
-            new("Powers/Player/Hulk/Rework/Shockwave.prototype",                  true,  0.1584f), // 2026-06-11
-            new("Powers/Player/Hulk/Rework/SmashFace.prototype",                  true,  0.0545f), // 2026-06-27
-            new("Powers/Player/Hulk/Rework/Tantrum.prototype",                    true,  0.0437f), // 2026-07-08
-            new("Powers/Player/Hulk/Rework/ThrowRock.prototype",                  true,  0.0405f), // 2026-07-08
+            new("Powers/Player/Hulk/Rework/Shockwave.prototype",                  true,  0.2070f), // 2026-06-11
+            new("Powers/Player/Hulk/Rework/SmashFace.prototype",                  true,  0.0521f), // 2026-06-27
+            new("Powers/Player/Hulk/Rework/Tantrum.prototype",                    true,  0.0369f), // 2026-07-08
+            new("Powers/Player/Hulk/Rework/ThrowRock.prototype",                  true,  0.0337f), // 2026-07-13
             new("Powers/Player/Hulk/Talents/Talent1AlwaysAngry.prototype",        false, 0.05f),
             new("Powers/Player/Hulk/Talents/Talent1BerserkerHulk.prototype",      false, 0.05f),
             new("Powers/Player/Hulk/Talents/Talent1DoubleAngerBonuses.prototype", false, 0.05f),
@@ -88,7 +88,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Hulk/Traits/DefenseTrait.prototype",               false, 0.05f),
             new("Powers/Player/Hulk/Traits/MechanicTraitAnger.prototype",         false, 0.05f),
             new("Powers/Player/Hulk/Traits/OffenseTrait.prototype",               false, 0.05f),
-            new("Powers/Player/Hulk/Ultimate.prototype",                          true,  0.0116f), // 2026-06-09
+            new("Powers/Player/Hulk/Ultimate.prototype",                          true,  0.0110f), // 2026-06-09
             new("Powers/Player/TravelPower/HulkSprint.prototype",                 false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/HulkStolenPower.prototype",  false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",        false, 0.05f),

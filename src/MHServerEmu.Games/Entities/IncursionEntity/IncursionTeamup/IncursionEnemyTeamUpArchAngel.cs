@@ -30,16 +30,16 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/TeamUps/ArchAngel/DeathFromAbove.prototype",  true,  0.026667f),  // ArchAngel/DeathFromAbove.prototype
+            new("Powers/TeamUps/ArchAngel/DeathFromAbove.prototype",  true,  0.0627f), // 2026-07-30
             new("Powers/TeamUps/ArchAngel/AwayDeathFromAbove.prototype", false,  0.026667f),  // ArchAngel/AwayDeathFromAbove.prototype - away passive
             new("Powers/TeamUps/ArchAngel/SlowSteroid.prototype", false,  0.026667f),  // ArchAngel/SlowSteroid.prototype - defensive
-            new("Powers/TeamUps/ArchAngel/BulletSpray.prototype",  true,  0.026667f),  // ArchAngel/BulletSpray.prototype
+            new("Powers/TeamUps/ArchAngel/BulletSpray.prototype",  true,  0.0440f), // 2026-07-30
             new("Powers/TeamUps/ArchAngel/AwayBulletSpray.prototype", false,  0.026667f),  // ArchAngel/AwayBulletSpray.prototype - away passive
             new("Powers/TeamUps/ArchAngel/SlowSteroidHealTrigger.prototype", false,  0.026667f),  // ArchAngel/SlowSteroidHealTrigger.prototype - trigger/secondary
-            new("Powers/TeamUps/ArchAngel/WingShards.prototype",  true,  0.026667f),  // ArchAngel/WingShards.prototype
-            new("Powers/TeamUps/ArchAngel/ToxicFeathers.prototype",  true,  0.026667f),  // ArchAngel/ToxicFeathers.prototype
+            new("Powers/TeamUps/ArchAngel/WingShards.prototype",  true,  0.0712f), // 2026-07-30
+            new("Powers/TeamUps/ArchAngel/ToxicFeathers.prototype",  true,  0.0455f), // 2026-07-30
             new("Powers/TeamUps/ArchAngel/AwaySlowSteroid.prototype", false,  0.026667f),  // ArchAngel/AwaySlowSteroid.prototype - away passive
-            new("Powers/TeamUps/ArchAngel/CircleStrafe.prototype",  true,  0.026667f),  // ArchAngel/CircleStrafe.prototype
+            new("Powers/TeamUps/ArchAngel/CircleStrafe.prototype",  true,  0.0336f), // 2026-07-30
             new("Powers/TeamUps/TeamUpSynergyHeroPassive.prototype", false,  0.026667f),  // TeamUpSynergyHeroPassive.prototype - synergy passive
         };
     }

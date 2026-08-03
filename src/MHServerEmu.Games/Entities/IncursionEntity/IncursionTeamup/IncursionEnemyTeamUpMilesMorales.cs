@@ -31,15 +31,15 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         private static readonly IncursionPowerEntry[] _powerTable =
         {
             new("Powers/TeamUps/Spiderman/MilesMorales/SwingingAssault.prototype",  true,  0.023333f),  // Spiderman/MilesMorales/SwingingAssault.prototype
-            new("Powers/TeamUps/Spiderman/MilesMorales/WebSwing.prototype",  true,  0.023333f),  // Spiderman/MilesMorales/WebSwing.prototype
+            new("Powers/TeamUps/Spiderman/MilesMorales/WebSwing.prototype",  true,  0.0312f), // 2026-07-30
             new("Powers/TeamUps/Spiderman/MilesMorales/AwayWebSwingProc.prototype", false,  0.023333f),  // Spiderman/MilesMorales/AwayWebSwingProc.prototype - away passive
-            new("Powers/TeamUps/Spiderman/MilesMorales/VenomSting.prototype",  true,  0.023333f),  // Spiderman/MilesMorales/VenomSting.prototype
+            new("Powers/TeamUps/Spiderman/MilesMorales/VenomSting.prototype",  true,  0.0306f), // 2026-07-30
             new("Powers/TeamUps/Spiderman/MilesMorales/VenomStingDoTTrigger.prototype", false,  0.023333f),  // Spiderman/MilesMorales/VenomStingDoTTrigger.prototype - trigger/secondary
             new("Powers/TeamUps/Spiderman/MilesMorales/AwayVenomStingProc.prototype", false,  0.023333f),  // Spiderman/MilesMorales/AwayVenomStingProc.prototype - away passive
-            new("Powers/TeamUps/Spiderman/MilesMorales/WebSplat.prototype",  true,  0.023333f),  // Spiderman/MilesMorales/WebSplat.prototype
+            new("Powers/TeamUps/Spiderman/MilesMorales/WebSplat.prototype",  true,  0.0622f), // 2026-07-30
             new("Powers/TeamUps/Spiderman/MilesMorales/Camouflage.prototype",  true,  0.023333f),  // Spiderman/MilesMorales/Camouflage.prototype
-            new("Powers/TeamUps/Spiderman/MilesMorales/MaximumSpider.prototype",  true,  0.023333f),  // Spiderman/MilesMorales/MaximumSpider.prototype
-            new("Powers/TeamUps/Spiderman/MilesMorales/VenomBlast.prototype",  true,  0.023333f),  // Spiderman/MilesMorales/VenomBlast.prototype
+            new("Powers/TeamUps/Spiderman/MilesMorales/MaximumSpider.prototype",  true,  0.0483f), // 2026-07-30
+            new("Powers/TeamUps/Spiderman/MilesMorales/VenomBlast.prototype",  true,  0.0256f), // 2026-07-30
             new("Powers/TeamUps/TeamUpSynergyHeroPassive.prototype", false,  0.023333f),  // TeamUpSynergyHeroPassive.prototype - synergy passive
         };
     }

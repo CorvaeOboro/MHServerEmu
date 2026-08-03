@@ -42,26 +42,26 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/DrDoom/AirStrike.prototype",                                 true,  0.0948f), // 2026-06-11
+            new("Powers/Player/DrDoom/AirStrike.prototype",                                 true,  0.0811f), // 2026-06-11
             new("Powers/Player/DrDoom/AoEDebuff.prototype",                                 false, 0.03f),
-            new("Powers/Player/DrDoom/BallLightning.prototype",                             true,  0.1056f), // 2026-06-11
-            new("Powers/Player/DrDoom/BasicPunch.prototype",                                true,  0.0834f), // 2026-06-11
-            new("Powers/Player/DrDoom/ChanneledBeam.prototype",                             true,  0.0491f), // 2026-06-11
-            new("Powers/Player/DrDoom/ConcussiveBlasts.prototype",                          true,  0.1051f), // 2026-06-11
+            new("Powers/Player/DrDoom/BallLightning.prototype",                             true,  0.1479f), // 2026-06-11
+            new("Powers/Player/DrDoom/BasicPunch.prototype",                                true,  0.0812f), // 2026-06-11
+            new("Powers/Player/DrDoom/ChanneledBeam.prototype",                             true,  0.0483f), // 2026-06-11
+            new("Powers/Player/DrDoom/ConcussiveBlasts.prototype",                          true,  0.1073f), // 2026-06-11
             new("Powers/Player/DrDoom/DiplomaticImmunity.prototype",                        true,  0.05f),
-            new("Powers/Player/DrDoom/DoomBots.prototype",                                  true,  0.1974f), // 2026-06-11
-            new("Powers/Player/DrDoom/DoombotBlockadeCallIn.prototype",                     true,  0.1000f), // 2026-06-18
+            new("Powers/Player/DrDoom/DoomBots.prototype",                                  true,  0.3407f), // 2026-06-11
+            new("Powers/Player/DrDoom/DoombotBlockadeCallIn.prototype",                     true,  0.1074f), // 2026-07-17
             new("Powers/Player/DrDoom/DoombotInfernoCallIn.prototype",                      true,  0.05f),
-            new("Powers/Player/DrDoom/DoombotThumperCallIn.prototype",                      true,  0.1991f), // 2026-06-11
-            new("Powers/Player/DrDoom/DoomsDay.prototype",                                  true,  0.1266f), // 2026-06-11
-            new("Powers/Player/DrDoom/FingerLasers.prototype",                              true,  0.0117f), // 2026-06-11
-            new("Powers/Player/DrDoom/FootDive.prototype",                                  true,  0.0399f), // 2026-06-18
-            new("Powers/Player/DrDoom/GroundSmash.prototype",                               true,  0.0808f), // 2026-06-05
-            new("Powers/Player/DrDoom/MagicLance.prototype",                                true,  0.1775f), // 2026-06-05
-            new("Powers/Player/DrDoom/MagicOrbSummon.prototype",                            true,  0.0496f), // 2026-06-05
-            new("Powers/Player/DrDoom/Missiles.prototype",                                  true,  0.1266f), // 2026-06-11
-            new("Powers/Player/DrDoom/RapidFire.prototype",                                 true,  0.4392f), // 2026-06-11
-            new("Powers/Player/DrDoom/Repulsors.prototype",                                 true,  0.1496f), // 2026-06-11
+            new("Powers/Player/DrDoom/DoombotThumperCallIn.prototype",                      true,  0.4567f), // 2026-06-11
+            new("Powers/Player/DrDoom/DoomsDay.prototype",                                  true,  0.0722f), // 2026-06-11
+            new("Powers/Player/DrDoom/FingerLasers.prototype",                              true,  0.0107f), // 2026-06-11
+            new("Powers/Player/DrDoom/FootDive.prototype",                                  true,  0.0265f), // 2026-07-17
+            new("Powers/Player/DrDoom/GroundSmash.prototype",                               true,  0.0769f), // 2026-06-05
+            new("Powers/Player/DrDoom/MagicLance.prototype",                                true,  0.2292f), // 2026-06-05
+            new("Powers/Player/DrDoom/MagicOrbSummon.prototype",                            true,  0.0468f), // 2026-06-05
+            new("Powers/Player/DrDoom/Missiles.prototype",                                  true,  0.2693f), // 2026-06-11
+            new("Powers/Player/DrDoom/RapidFire.prototype",                                 true,  0.9916f), // 2026-06-11
+            new("Powers/Player/DrDoom/Repulsors.prototype",                                 true,  0.1575f), // 2026-06-11
             new("Powers/Player/DrDoom/Talents/Talent1DoombotFlyers.prototype",              false, 0.05f),
             new("Powers/Player/DrDoom/Talents/Talent1MagicLanceBasicPunch.prototype",       false, 0.0834f), // 2026-06-11
             new("Powers/Player/DrDoom/Talents/Talent1MagicOrbSmart.prototype",              false, 0.05f),
@@ -82,7 +82,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/DrDoom/Traits/MechanicTraitPowerMagic.prototype",            false, 0.05f),
             new("Powers/Player/DrDoom/Traits/OffenseTrait.prototype",                       false, 0.05f),
             new("Powers/Player/DrDoom/UltimateHiddenPassive.prototype",                     false, 0.006f),
-            new("Powers/Player/DrDoom/UnworthyPistol.prototype",                            true,  0.0386f), // 2026-06-11
+            new("Powers/Player/DrDoom/UnworthyPistol.prototype",                            true,  0.0376f), // 2026-06-11
             new("Powers/Player/TravelPower/DrDoomFlight.prototype",                         false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/DrDoomStolenPower.prototype",          false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",                  false, 0.05f),

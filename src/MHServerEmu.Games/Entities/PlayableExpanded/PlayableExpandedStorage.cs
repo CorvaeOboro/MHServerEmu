@@ -20,7 +20,7 @@ namespace MHServerEmu.Games.Entities.PlayableExpanded
 
     /// <summary>
     /// Handles loading and saving PlayableExpanded settings to disk,
-    /// mirroring the pattern used by <see cref="PlayerLootFilterStorage"/>.
+    /// mirroring the pattern used by <see cref="ModLootFilterStorage"/>.
     /// </summary>
     public static class PlayableExpandedStorage
     {

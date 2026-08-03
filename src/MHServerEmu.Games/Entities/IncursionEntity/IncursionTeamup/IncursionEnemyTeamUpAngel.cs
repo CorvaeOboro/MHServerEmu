@@ -30,16 +30,16 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/TeamUps/Angel/DeathFromAbove.prototype",  true,  0.026667f),  // Angel/DeathFromAbove.prototype
+            new("Powers/TeamUps/Angel/DeathFromAbove.prototype",  true,  0.0446f), // 2026-07-30
             new("Powers/TeamUps/Angel/AwayDFAProc.prototype", false,  0.026667f),  // Angel/AwayDFAProc.prototype - away passive
             new("Powers/TeamUps/Angel/SpeedSteroid.prototype", false,  0.026667f),  // Angel/SpeedSteroid.prototype - defensive
-            new("Powers/TeamUps/Angel/AngelicBombardmentStart.prototype",  true,  0.026667f),  // Angel/AngelicBombardmentStart.prototype
+            new("Powers/TeamUps/Angel/AngelicBombardmentStart.prototype",  true,  0.0423f), // 2026-07-30
             new("Powers/TeamUps/Angel/AwayAngelicBombardmentProc.prototype", false,  0.026667f),  // Angel/AwayAngelicBombardmentProc.prototype - away passive
             new("Powers/TeamUps/Angel/SpeedSteroidHealTrigger.prototype", false,  0.026667f),  // Angel/SpeedSteroidHealTrigger.prototype - trigger/secondary
-            new("Powers/TeamUps/Angel/WingSweep.prototype",  true,  0.026667f),  // Angel/WingSweep.prototype
-            new("Powers/TeamUps/Angel/WingSweepSlowTrigger.prototype", false,  0.026667f),  // Angel/WingSweepSlowTrigger.prototype - trigger/secondary
+            new("Powers/TeamUps/Angel/WingSweep.prototype",  true,  0.0582f), // 2026-07-30
+            new("Powers/TeamUps/Angel/WingSweepSlowTrigger.prototype", false,  0.0582f), // 2026-07-30
             new("Powers/TeamUps/Angel/AwaySpeedSteroidProc.prototype", false,  0.026667f),  // Angel/AwaySpeedSteroidProc.prototype - away passive
-            new("Powers/TeamUps/Angel/SwordFlurryStart.prototype",  true,  0.026667f),  // Angel/SwordFlurryStart.prototype
+            new("Powers/TeamUps/Angel/SwordFlurryStart.prototype",  true,  0.0361f), // 2026-07-30
             new("Powers/TeamUps/TeamUpSynergyHeroPassive.prototype", false,  0.026667f),  // TeamUpSynergyHeroPassive.prototype - synergy passive
         };
     }

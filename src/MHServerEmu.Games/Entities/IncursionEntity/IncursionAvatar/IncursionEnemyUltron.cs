@@ -43,23 +43,23 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         private static readonly IncursionPowerEntry[] _powerTable =
         {
             new("Powers/Player/TravelPower/UltronFlight.prototype",                       false, 0.006f),
-            new("Powers/Player/Ultron/BigBigBlast.prototype",                             true,  0.0564f), // 2026-06-17
-            new("Powers/Player/Ultron/CommandingShot.prototype",                          true,  0.0677f), // 2026-06-05
-            new("Powers/Player/Ultron/ConcussionBlast.prototype",                         true,  0.0385f), // 2026-06-17
-            new("Powers/Player/Ultron/Dash.prototype",                                    true,  0.1169f), // 2026-06-17
-            new("Powers/Player/Ultron/DroneStrafe.prototype",                             true,  0.1017f), // 2026-06-05
-            new("Powers/Player/Ultron/EncephaloBeam.prototype",                           true,  0.0610f), // 2026-06-18
+            new("Powers/Player/Ultron/BigBigBlast.prototype",                             true,  0.0367f), // 2026-07-15
+            new("Powers/Player/Ultron/CommandingShot.prototype",                          true,  0.0687f), // 2026-06-05
+            new("Powers/Player/Ultron/ConcussionBlast.prototype",                         true,  0.0293f), // 2026-07-15
+            new("Powers/Player/Ultron/Dash.prototype",                                    true,  0.1757f), // 2026-07-15
+            new("Powers/Player/Ultron/DroneStrafe.prototype",                             true,  0.0863f), // 2026-06-05
+            new("Powers/Player/Ultron/EncephaloBeam.prototype",                           true,  0.0554f), // 2026-07-15
             new("Powers/Player/Ultron/FingerLaserBlasts.prototype",                       true,  0.05f),
-            new("Powers/Player/Ultron/FingerLasers.prototype",                            true,  0.1436f), // 2026-06-05
-            new("Powers/Player/Ultron/FocusedConcussion.prototype",                       true,  0.1365f), // 2026-06-05
-            new("Powers/Player/Ultron/GroundThrow.prototype",                             true,  0.0331f), // 2026-06-18
-            new("Powers/Player/Ultron/LeapStrike.prototype",                              true,  0.0234f), // 2026-06-17
-            new("Powers/Player/Ultron/MeleeStrike.prototype",                             true,  0.0820f), // 2026-06-16
-            new("Powers/Player/Ultron/RadiationBlast.prototype",                          true,  0.0892f), // 2026-06-05
+            new("Powers/Player/Ultron/FingerLasers.prototype",                            true,  0.1905f), // 2026-06-05
+            new("Powers/Player/Ultron/FocusedConcussion.prototype",                       true,  0.1744f), // 2026-06-05
+            new("Powers/Player/Ultron/GroundThrow.prototype",                             true,  0.0306f), // 2026-07-15
+            new("Powers/Player/Ultron/LeapStrike.prototype",                              true,  0.0214f), // 2026-07-15
+            new("Powers/Player/Ultron/MeleeStrike.prototype",                             true,  0.1179f), // 2026-07-15
+            new("Powers/Player/Ultron/RadiationBlast.prototype",                          true,  0.0899f), // 2026-06-05
             new("Powers/Player/Ultron/Signature.prototype",                               true,  0.0371f), // 2026-06-05
-            new("Powers/Player/Ultron/Slam.prototype",                                    true,  0.0476f), // 2026-06-18
-            new("Powers/Player/Ultron/SpinAttack.prototype",                              true,  0.0465f), // 2026-06-17
-            new("Powers/Player/Ultron/SummonSuicideDrone.prototype",                      true,  0.0561f), // 2026-06-18
+            new("Powers/Player/Ultron/Slam.prototype",                                    true,  0.0473f), // 2026-07-15
+            new("Powers/Player/Ultron/SpinAttack.prototype",                              true,  0.0457f), // 2026-06-17
+            new("Powers/Player/Ultron/SummonSuicideDrone.prototype",                      true,  0.0469f), // 2026-07-15
             new("Powers/Player/Ultron/Talents/Talent1EncephaloBeamBuff.prototype",        false, 0.0610f), // 2026-06-18
             new("Powers/Player/Ultron/Talents/Talent1MoreFlyingExplodeyDrones.prototype", false, 0.05f),
             new("Powers/Player/Ultron/Talents/Talent1SpinAttackCooldownReset.prototype",  false, 0.0465f), // 2026-06-17
@@ -78,8 +78,8 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Ultron/Traits/DefenseTrait.prototype",                     false, 0.05f),
             new("Powers/Player/Ultron/Traits/MechanicTraitBandwidth.prototype",           false, 0.05f),
             new("Powers/Player/Ultron/Traits/OffenseTrait.prototype",                     false, 0.05f),
-            new("Powers/Player/Ultron/Ultimate.prototype",                                true,  0.0188f), // 2026-06-17
-            new("Powers/Player/Ultron/UltimateHiddenPassive.prototype",                   false, 0.0188f), // 2026-06-17
+            new("Powers/Player/Ultron/Ultimate.prototype",                                true,  0.0229f), // 2026-07-15
+            new("Powers/Player/Ultron/UltimateHiddenPassive.prototype",                   false, 0.0229f), // 2026-07-15
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",                false, 0.05f),
             new("Powers/Player/Active/ResurrectAnimOnly.prototype",                       false, 0.05f),
             new("Powers/Player/Active/ResurrectOtherEntityPower.prototype",               false, 0.05f),

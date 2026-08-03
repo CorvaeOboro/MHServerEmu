@@ -12,6 +12,7 @@ using MHServerEmu.Games.Events;
 using MHServerEmu.Games.Events.Templates;
 using MHServerEmu.Games.GameData;
 using MHServerEmu.Games.GameData.Prototypes;
+using MHServerEmu.Games.Loot;
 using MHServerEmu.Games.Navi;
 using MHServerEmu.Games.Network;
 using MHServerEmu.Games.Properties;
@@ -32,6 +33,154 @@ namespace MHServerEmu.Games.Populations
         // Reference-only: a playable AvatarPrototype that cannot be spawned as an NPC.
         public const PrototypeId SheHulkAvatarProtoRef = (PrototypeId)12394659164528645362;
 
+        // Round-robin pool of avatar prototypes for nameplate proxies. The client appears to
+        // cache avatar pawn data by prototype ref - when a second proxy uses the same avatar
+        // prototype, the client may reuse cached pawn data (including a default costume/mesh),
+        // making the invisible proxy visible. Using different avatar prototypes per proxy
+        // avoids this client-side cache collision. The full pool of 62 shipping avatars
+        // minimizes the chance of collision, even when many proxies are alive simultaneously
+        // or when the player's own avatar matches a pool entry.
+        private static readonly string[] NameplateAvatarPoolNames = new string[]
+        {
+            "Entity/Characters/Avatars/Shipping/Angela.prototype",
+            "Entity/Characters/Avatars/Shipping/AntMan.prototype",
+            "Entity/Characters/Avatars/Shipping/Beast.prototype",
+            "Entity/Characters/Avatars/Shipping/BlackBolt.prototype",
+            "Entity/Characters/Avatars/Shipping/BlackCat.prototype",
+            "Entity/Characters/Avatars/Shipping/BlackPanther.prototype",
+            "Entity/Characters/Avatars/Shipping/BlackWidow.prototype",
+            "Entity/Characters/Avatars/Shipping/Blade.prototype",
+            "Entity/Characters/Avatars/Shipping/Cable.prototype",
+            "Entity/Characters/Avatars/Shipping/CaptainAmerica.prototype",
+            "Entity/Characters/Avatars/Shipping/Carnage.prototype",
+            "Entity/Characters/Avatars/Shipping/Colossus.prototype",
+            "Entity/Characters/Avatars/Shipping/Cyclops.prototype",
+            "Entity/Characters/Avatars/Shipping/Daredevil.prototype",
+            "Entity/Characters/Avatars/Shipping/Deadpool.prototype",
+            "Entity/Characters/Avatars/Shipping/DoctorStrange.prototype",
+            "Entity/Characters/Avatars/Shipping/DrDoom.prototype",
+            "Entity/Characters/Avatars/Shipping/Elektra.prototype",
+            "Entity/Characters/Avatars/Shipping/EmmaFrost.prototype",
+            "Entity/Characters/Avatars/Shipping/Gambit.prototype",
+            "Entity/Characters/Avatars/Shipping/GhostRider.prototype",
+            "Entity/Characters/Avatars/Shipping/GreenGoblin.prototype",
+            "Entity/Characters/Avatars/Shipping/Hawkeye.prototype",
+            "Entity/Characters/Avatars/Shipping/Hulk.prototype",
+            "Entity/Characters/Avatars/Shipping/HumanTorch.prototype",
+            "Entity/Characters/Avatars/Shipping/Iceman.prototype",
+            "Entity/Characters/Avatars/Shipping/InvisibleWoman.prototype",
+            "Entity/Characters/Avatars/Shipping/IronFist.prototype",
+            "Entity/Characters/Avatars/Shipping/IronMan.prototype",
+            "Entity/Characters/Avatars/Shipping/JeanGrey.prototype",
+            "Entity/Characters/Avatars/Shipping/Juggernaut.prototype",
+            "Entity/Characters/Avatars/Shipping/KittyPryde.prototype",
+            "Entity/Characters/Avatars/Shipping/Loki.prototype",
+            "Entity/Characters/Avatars/Shipping/LukeCage.prototype",
+            "Entity/Characters/Avatars/Shipping/Magik.prototype",
+            "Entity/Characters/Avatars/Shipping/Magneto.prototype",
+            "Entity/Characters/Avatars/Shipping/MoonKnight.prototype",
+            "Entity/Characters/Avatars/Shipping/MrFantastic.prototype",
+            "Entity/Characters/Avatars/Shipping/MsMarvel.prototype",
+            "Entity/Characters/Avatars/Shipping/NickFury.prototype",
+            "Entity/Characters/Avatars/Shipping/Nightcrawler.prototype",
+            "Entity/Characters/Avatars/Shipping/Nova.prototype",
+            "Entity/Characters/Avatars/Shipping/Psylocke.prototype",
+            "Entity/Characters/Avatars/Shipping/Punisher.prototype",
+            "Entity/Characters/Avatars/Shipping/RocketRaccoon.prototype",
+            "Entity/Characters/Avatars/Shipping/Rogue.prototype",
+            "Entity/Characters/Avatars/Shipping/ScarletWitch.prototype",
+            "Entity/Characters/Avatars/Shipping/SheHulk.prototype",
+            "Entity/Characters/Avatars/Shipping/SilverSurfer.prototype",
+            "Entity/Characters/Avatars/Shipping/Spiderman.prototype",
+            "Entity/Characters/Avatars/Shipping/SquirrelGirl.prototype",
+            "Entity/Characters/Avatars/Shipping/Starlord.prototype",
+            "Entity/Characters/Avatars/Shipping/Storm.prototype",
+            "Entity/Characters/Avatars/Shipping/Taskmaster.prototype",
+            "Entity/Characters/Avatars/Shipping/Thing.prototype",
+            "Entity/Characters/Avatars/Shipping/Thor.prototype",
+            "Entity/Characters/Avatars/Shipping/Ultron.prototype",
+            "Entity/Characters/Avatars/Shipping/Venom.prototype",
+            "Entity/Characters/Avatars/Shipping/Vision.prototype",
+            "Entity/Characters/Avatars/Shipping/WarMachine.prototype",
+            "Entity/Characters/Avatars/Shipping/WinterSoldier.prototype",
+            "Entity/Characters/Avatars/Shipping/Wolverine.prototype",
+            "Entity/Characters/Avatars/Shipping/X23.prototype",
+        };
+        private static PrototypeId[] s_nameplateAvatarPool;
+        private static int s_nameplateAvatarIndex;
+
+        /// <summary>
+        /// Selects the next avatar prototype from the round-robin pool, excluding any
+        /// avatar prototypes currently in use by player avatars or render-as-avatar
+        /// entities in the given region. This prevents client-side pawn cache collisions
+        /// where the client reuses cached avatar pawn data (including costumes/meshes)
+        /// when a nameplate proxy shares the same avatar prototype as an existing entity.
+        /// </summary>
+        private static PrototypeId GetNextNameplateAvatarRef(Region region)
+        {
+            if (s_nameplateAvatarPool == null)
+            {
+                var refs = new List<PrototypeId>(NameplateAvatarPoolNames.Length);
+                foreach (var name in NameplateAvatarPoolNames)
+                {
+                    var id = GameDatabase.GetPrototypeRefByName(name);
+                    if (id != PrototypeId.Invalid && id.As<AvatarPrototype>() != null)
+                        refs.Add(id);
+                }
+                if (refs.Count == 0)
+                    refs.Add(SheHulkAvatarProtoRef);
+                s_nameplateAvatarPool = refs.ToArray();
+            }
+
+            // Build exclusion set from existing avatar-rendered entities in the region.
+            // This includes player avatars and any entity with IsClientRenderedAsAvatar
+            // (e.g. IncursionEnemyAvatar enemies, other nameplate proxies).
+            var excluded = new HashSet<PrototypeId>();
+            if (region != null)
+            {
+                foreach (var entity in region.Entities)
+                {
+                    if (entity is Avatar avatar)
+                    {
+                        excluded.Add(avatar.PrototypeDataRef);
+                    }
+                    else if (entity is WorldEntity we && we.IsClientRenderedAsAvatar)
+                    {
+                        if (we.ClientPrototypeRefOverride != PrototypeId.Invalid)
+                            excluded.Add(we.ClientPrototypeRefOverride);
+                    }
+                }
+            }
+
+            // Try the next round-robin index, skipping excluded avatars.
+            // We try up to pool.Length entries to find a non-excluded one.
+            for (int i = 0; i < s_nameplateAvatarPool.Length; i++)
+            {
+                int idx = Interlocked.Increment(ref s_nameplateAvatarIndex);
+                int index = (int)((uint)idx % (uint)s_nameplateAvatarPool.Length);
+                PrototypeId candidate = s_nameplateAvatarPool[index];
+                if (excluded.Contains(candidate) == false)
+                    return candidate;
+            }
+
+            // All pool entries are excluded - fall back to the last candidate.
+            // This is unlikely with 62 avatars but handles the edge case gracefully.
+            int fallbackIdx = Interlocked.Increment(ref s_nameplateAvatarIndex);
+            return s_nameplateAvatarPool[(int)((uint)fallbackIdx % (uint)s_nameplateAvatarPool.Length)];
+        }
+
+        // Rank that hides all overhead info (name, level, health bar). Used on nameplate proxies.
+        private static PrototypeId s_bossNoOverheadRankRef = PrototypeId.Invalid;
+        private static PrototypeId BossNoOverheadRankRef
+        {
+            get
+            {
+                if (s_bossNoOverheadRankRef == PrototypeId.Invalid)
+                    s_bossNoOverheadRankRef = GameDatabase.GetPrototypeRefByName("Mods/Ranks/BossNoOverheadInfo.prototype");
+                return s_bossNoOverheadRankRef;
+            }
+        }
+
         // Combat body driven by the server. Render skin is applied via ClientPrototypeRefOverride.
         private const string DefaultEnemyProtoName = "Entity/Characters/Mobs/SpiderClones/SpidermanCloneSuperiorBase.prototype";
 
@@ -46,6 +195,7 @@ namespace MHServerEmu.Games.Populations
             string Shorthand,
             string DisplayName,
             string AvatarName,
+            bool HardcodeExclude,
             Func<Game, IncursionEnemyController> Factory);
 
         private static List<EnemyMeta> s_enemyMeta;
@@ -71,6 +221,11 @@ namespace MHServerEmu.Games.Populations
             foreach (Type type in baseType.Assembly.GetTypes())
             {
                 if (type.IsAbstract || type.IsGenericTypeDefinition || baseType.IsAssignableFrom(type) == false)
+                    continue;
+
+                // Exclude Calamity Vampire enemies - they are specific to the Vampire Blood
+                // Ritual event and should not spawn in generic Incursion events.
+                if (type.Namespace?.StartsWith("MHServerEmu.Games.Entities.CalamityEntity") == true)
                     continue;
 
                 var ctor = type.GetConstructor(new[] { typeof(Game) });
@@ -278,6 +433,36 @@ namespace MHServerEmu.Games.Populations
         }
 
         /// <summary>
+        /// Registers an externally-created controller (e.g. from VampireBloodRitualEvent)
+        /// so the damage pipeline can look up its outgoing damage scale.
+        /// </summary>
+        public void RegisterController(IncursionEnemyController controller)
+        {
+            if (controller == null || controller.EntityId == 0) return;
+            _controllers.Add(controller);
+            _controllersByEntity[controller.EntityId] = controller;
+        }
+
+        /// <summary>
+        /// Registers a proxy entity (e.g. Augmented power proxy caster) with an existing
+        /// controller so the damage pipeline scales the proxy's damage using the parent
+        /// controller's per-power damage scales.
+        /// </summary>
+        public void RegisterProxyEntity(ulong proxyEntityId, IncursionEnemyController parentController)
+        {
+            if (parentController == null || proxyEntityId == 0) return;
+            _controllersByEntity[proxyEntityId] = parentController;
+        }
+
+        /// <summary>
+        /// Removes a proxy entity from the controller registry.
+        /// </summary>
+        public void UnregisterProxyEntity(ulong proxyEntityId)
+        {
+            _controllersByEntity.Remove(proxyEntityId);
+        }
+
+        /// <summary>
         /// Resolves the controller class name and enemy type for the given invader entity.
         /// Used by <see cref="Powers.PowerPayload"/> damage logging so the log parser can
         /// group damage by the exact controller class (e.g. IncursionEnemyBossMODOK)
@@ -298,6 +483,23 @@ namespace MHServerEmu.Games.Populations
         }
 
         /// <summary>
+        /// Resolves the invader display name for the given entity, or null if not a live invader.
+        /// Used by DeathRecap to show the nice name (e.g. "CaptainAmerica Invader") instead of
+        /// the raw host-body prototype name.
+        /// </summary>
+        public bool TryGetInvaderDisplayName(ulong entityId, out string displayName)
+        {
+            if (_controllersByEntity.TryGetValue(entityId, out IncursionEnemyController controller) && controller.IsFinished == false)
+            {
+                displayName = controller.InvaderDisplayName;
+                return displayName != null;
+            }
+
+            displayName = null;
+            return false;
+        }
+
+        /// <summary>
         /// Damage scale for the given invader entity and root power, or 1.0 if not a live invader.
         /// Queried by <see cref="Powers.PowerPayload"/>.
         /// </summary>
@@ -305,6 +507,20 @@ namespace MHServerEmu.Games.Populations
         {
             if (_controllersByEntity.TryGetValue(entityId, out IncursionEnemyController controller) && controller.IsFinished == false)
                 return controller.GetOutgoingDamageScale(rootPowerRef);
+
+            return 1f;
+        }
+
+        /// <summary>
+        /// Incoming damage scale for the given invader entity, or 1.0 if not a live invader.
+        /// Queried by <see cref="Powers.PowerPayload"/> to apply per-enemy damage taken multipliers
+        /// (e.g. DamageTakenMultiplier) directly in the damage pipeline, bypassing the
+        /// DamagePctVulnerability property which can be overridden by conditions.
+        /// </summary>
+        public float GetIncomingDamageScale(ulong entityId)
+        {
+            if (_controllersByEntity.TryGetValue(entityId, out IncursionEnemyController controller) && controller.IsFinished == false)
+                return controller.GetIncomingDamageScale();
 
             return 1f;
         }
@@ -361,7 +577,7 @@ namespace MHServerEmu.Games.Populations
         /// <summary>
         /// Forces an immediate spawn near the given avatar, bypassing enabled/hub checks.
         /// </summary>
-        public (WorldEntity, string) ForceIncursionForAvatar(Avatar avatar)
+        public (WorldEntity, string) ForceIncursionForAvatar(Avatar avatar, Player player = null)
         {
             if (avatar == null || avatar.IsAliveInWorld == false)
                 return (null, "avatar is not alive in world");
@@ -374,7 +590,7 @@ namespace MHServerEmu.Games.Populations
             LogInfo($"[Incursion] FORCE spawn requested by avatar {avatar.Id} in region " +
                         $"'{region.PrototypeName}' (hub={isHub}).");
 
-            var entity = SpawnInvaderNearAvatar(avatar);
+            var entity = SpawnInvaderNearAvatar(avatar, player: player);
             if (entity == null)
                 return (null, "spawn failed (see server log)");
 
@@ -439,6 +655,10 @@ namespace MHServerEmu.Games.Populations
             {
                 IncursionEnemyController controller = _controllers[i];
                 if (controller.IsFinished == false) continue;
+
+                // Record hunt kill if this invader was killed (not culled/expired) and
+                // hasn't been recorded yet.
+                RecordHuntKillIfPending(controller);
 
                 _controllersByEntity.Remove(controller.EntityId);
                 _controllers.RemoveAt(i);
@@ -519,8 +739,8 @@ namespace MHServerEmu.Games.Populations
                 { LogVerbose($"[Incursion]  skip player '{player?.GetName()}': no alive avatar in world."); continue; }
 
                 int charLevel = avatar.Properties[PropertyEnum.CharacterLevel];
-                if (charLevel < 30)
-                { LogVerbose($"[Incursion]  skip player '{player.GetName()}': avatar level {charLevel} < 30."); continue; }
+                if (charLevel < 55)
+                { LogVerbose($"[Incursion]  skip player '{player.GetName()}': avatar level {charLevel} < 55."); continue; }
 
                 Region region = avatar.Region;
                 if (region == null)
@@ -536,14 +756,14 @@ namespace MHServerEmu.Games.Populations
                 { LogVerbose($"[Incursion]  skip player '{player.GetName()}': currently in incursion trial."); continue; }
 
                 LogVerbose($"[Incursion]  spawning for player '{player.GetName()}' in '{region.PrototypeName}'.");
-                if (SpawnInvaderNearAvatar(avatar) != null)
+                if (SpawnInvaderNearAvatar(avatar, player: player) != null)
                     spawned++;
             }
 
             return spawned;
         }
 
-        private WorldEntity SpawnInvaderNearAvatar(Avatar avatar, IncursionEnemyController specificController = null)
+        private WorldEntity SpawnInvaderNearAvatar(Avatar avatar, IncursionEnemyController specificController = null, Player player = null)
         {
             var region = avatar.Region;
             if (region == null)
@@ -560,7 +780,7 @@ namespace MHServerEmu.Games.Populations
             }
 
             // Create the controller early so we can read per-enemy overrides (e.g. visual scale).
-            IncursionEnemyController controller = specificController ?? CreateRandomController();
+            IncursionEnemyController controller = specificController ?? CreateRandomController(player);
 
             // Try several positions in a ring around the avatar to find an open nav spot.
             // Avoids spawning inside walls when the player is facing one.
@@ -642,20 +862,28 @@ namespace MHServerEmu.Games.Populations
 
             if (entity is Agent invaderAgent)
             {
+                // Set hunt tracking context on the controller.
+                if (player != null)
+                {
+                    controller.HuntPlayerDbId = player.DatabaseUniqueId;
+                    controller.HuntAvatarName = ModLootFilterHelper.GetAvatarShortName(avatar.PrototypeDataRef);
+                }
+
                 controller.Start(invaderAgent);
-                controller.BeginIntro(invaderAgent);
+
+                // Spawn the nameplate proxy BEFORE scheduling the intro - the intro VFX
+                // sends AOI proximity updates that can cause the client to re-process
+                // nearby entities. By deferring the intro to the first think tick (via
+                // ScheduleIntro), the client gets a full network tick to process the
+                // proxy spawn + attachment before any AOI-disrupting VFX is sent.
+                if (controller.RenderAvatarRef == PrototypeId.Invalid && controller.NeedsNameplateProxy)
+                    SpawnNameplateProxy(region, invaderAgent, controller);
+
+                controller.ScheduleIntro(invaderAgent);
                 _controllers.Add(controller);
                 _controllersByEntity[controller.EntityId] = controller;
-                IncursionLogCollator.BeginSession(invaderAgent.Id, controller.GetLabel() ?? controller.GetType().Name);
-
-                // TeamUp and Boss enemies: spawn an invisible avatar proxy for the red
-                // prestige nameplate. The client only applies prestige colors to
-                // AvatarPrototype entities, so we spawn a second entity rendered as an
-                // avatar with prestige level 5 (red). The proxy's model is hidden via
-                // IsClientEntityHidden, and its _spoofAvatarPlayerName provides the name.
-                // Avatar-type enemies don't need this — they already render as avatars.
-                if (controller.RenderAvatarRef == PrototypeId.Invalid)
-                    SpawnNameplateProxy(region, invaderAgent, controller);
+                string logName = controller.LogTrueName ?? controller.GetLabel() ?? controller.GetType().Name;
+                IncursionLogCollator.BeginSession(invaderAgent.Id, controller.LogFilePrefix, logName);
             }
             else
             {
@@ -672,14 +900,17 @@ namespace MHServerEmu.Games.Populations
         /// or standard AgentPrototype bosses. The proxy's 3D model is hidden via
         /// IsClientEntityHidden, and the spoof avatar player name provides the display name.
         /// </summary>
-        private void SpawnNameplateProxy(Region region, Agent combatBody, IncursionEnemyController controller)
+        internal void SpawnNameplateProxy(Region region, Agent combatBody, IncursionEnemyController controller)
         {
-            // Use a known AvatarPrototype for the render override.
-            PrototypeId avatarRef = SheHulkAvatarProtoRef;
+            // Use a round-robin avatar prototype for the render override to avoid client-side
+            // pawn cache collisions when multiple nameplate proxies are alive simultaneously.
+            // Dynamic exclusion skips avatar prototypes already in use by players or other
+            // render-as-avatar entities in this region.
+            PrototypeId avatarRef = GetNextNameplateAvatarRef(region);
             var avatarProto = avatarRef.As<AvatarPrototype>();
             if (avatarProto == null)
             {
-                Logger.Warn($"[Incursion] SpawnNameplateProxy: SheHulkAvatarProtoRef is not a valid AvatarPrototype.");
+                Logger.Warn($"[Incursion] SpawnNameplateProxy: avatarRef {GameDatabase.GetPrototypeName(avatarRef)} is not a valid AvatarPrototype.");
                 return;
             }
 
@@ -719,8 +950,22 @@ namespace MHServerEmu.Games.Populations
             // Prestige level 5 = red nameplate.
             spec.Properties[PropertyEnum.AvatarPrestigeLevel] = controller.NameplatePrestigeLevel;
 
-            // Make the proxy non-hostile and untargetable so it doesn't interfere with combat.
+            // Set level to -1 so the client doesn't display a level number next to the
+            // spoofed name. The client typically clamps level 0 to 1 for avatars, so we
+            // use -1 to make the client skip the level display entirely.
+            spec.Properties[PropertyEnum.CharacterLevel] = -1;
+            spec.Properties[PropertyEnum.CombatLevel] = -1;
+
+            // Set rank to BossNoOverheadInfo so the client hides all overhead info (including
+            // the level number that avatar-rendered entities show by default).
+            spec.Properties[PropertyEnum.Rank] = BossNoOverheadRankRef;
+
+            // Make the proxy non-hostile, untargetable, and invulnerable so it doesn't
+            // interfere with combat or get killed by AoE damage (which would drop loot).
             spec.Properties[PropertyEnum.Untargetable] = true;
+            spec.Properties[PropertyEnum.Unaffectable] = true;
+            spec.Properties[PropertyEnum.Invulnerable] = true;
+            spec.Properties[PropertyEnum.NoEntityCollide] = true;
 
             // Hide the proxy's 3D model using IsClientEntityHidden. This flag tells the
             // client to create the avatar pawn but NOT add it to the visible render scene,
@@ -730,6 +975,17 @@ namespace MHServerEmu.Games.Populations
             spec.OptionFlagsOverride = EntitySettingsOptionFlags.IsClientEntityHidden;
             spec.Properties[PropertyEnum.Visible] = false;
             spec.BoundsScaleOverride = 0.001f;
+
+            // CRITICAL: Set Dormant=true BEFORE spawn so the entity never activates powers.
+            // During spec.Spawn(), WorldEntity.SetSimulated(true) calls
+            // Agent.SetSimulated which calls TryAutoActivatePowersInCollection() if the
+            // entity is NOT dormant. This auto-activates passive powers (including the
+            // SpidermanClone's buff/passive powers), which triggers the client to load
+            // visual effects and potentially assign a default SheHulk costume/mesh to the
+            // avatar pawn. By setting Dormant=true on the spec, the entity spawns dormant
+            // and TryAutoActivatePowersInCollection is skipped (it checks IsDormant first).
+            // This matches the approach used by CalamityRitualCenterpiece which works reliably.
+            spec.Properties[PropertyEnum.Dormant] = true;
 
             spec.Spawn();
 
@@ -741,58 +997,180 @@ namespace MHServerEmu.Games.Populations
                 return;
             }
 
-            // Zero out the level so the nameplate doesn't display a level number.
-            proxy.Properties[PropertyEnum.CharacterLevel] = 0;
-            proxy.Properties[PropertyEnum.CombatLevel] = 0;
+            // NOTE: Do NOT write properties on the proxy after spawn - any property write
+            // triggers replication to the client, which can cause it to re-process the
+            // avatar pawn and assign a default SheHulk costume/mesh. The level is already
+            // set to -1 on the spec, and BossNoOverheadInfo rank hides the level display.
+            //
+            // All post-spawn operations (loot strip, power strip, AI disable, dormant,
+            // simulate, attach) are deferred to the first think tick via ScheduleProxyConfig.
+            // See IncursionEnemyController.ScheduleProxyConfig / ConfigureSpawnedProxy for
+            // detailed documentation of why this is necessary.
 
-            // Strip all powers from the proxy so it doesn't use SpidermanClone's web attacks
-            // or play any power animations/voicelines on the avatar pawn.
+            controller.ProxyEntityId = proxy.Id;
+            controller._proxySpawnGameTime = _game.CurrentTime;
+            controller.ScheduleProxyConfig(combatBody.Id);
+
+            var proxyWe = proxy as WorldEntity;
+            uint spoofId = proxyWe?.SpoofAvatarWorldInstanceId ?? 0;
+            LogInfo($"[Incursion] Spawned nameplate proxy (id {proxy.Id}) for TeamUp invader " +
+                    $"{controller.GetLabel()} at {position.ToStringNames()} in region '{region.PrototypeName}'. " +
+                    $"AvatarProto='{GameDatabase.GetPrototypeName(avatarRef)}', SpoofAvatarWorldInstanceId={spoofId}, " +
+                    $"IsClientEntityHidden, prestige={controller.NameplatePrestigeLevel}. " +
+                    $"Post-spawn config deferred to first think tick.");
+        }
+
+        /// <summary>
+        /// Overload for controllerless spawns (e.g. BloodLord summoned adds).
+        /// Spawns an invisible avatar-rendered proxy with a custom display name and red prestige.
+        /// </summary>
+        internal void SpawnNameplateProxy(Region region, Agent combatBody, string displayName, int prestigeLevel = 5)
+        {
+            PrototypeId avatarRef = GetNextNameplateAvatarRef(region);
+            var avatarProto = avatarRef.As<AvatarPrototype>();
+            if (avatarProto == null) return;
+
+            Vector3 position = combatBody.RegionLocation.Position;
+            var manager = region.PopulationManager;
+            var group = manager.CreateSpawnGroup();
+            group.Transform = Transform3.BuildTransform(position, Orientation.Zero);
+
+            var spec = manager.CreateSpawnSpec(group);
+            spec.EntityRef = EffectiveEnemyRef;
+            spec.Transform = Transform3.Identity();
+            spec.SnapToFloor = true;
+
+            spec.ClientRenderPrototypeRef = avatarRef;
+            spec.ClientRenderPlayerName = displayName;
+            spec.Properties[PropertyEnum.AvatarPrestigeLevel] = prestigeLevel;
+            spec.Properties[PropertyEnum.CharacterLevel] = -1;
+            spec.Properties[PropertyEnum.CombatLevel] = -1;
+            spec.Properties[PropertyEnum.Rank] = BossNoOverheadRankRef;
+            spec.Properties[PropertyEnum.Untargetable] = true;
+            spec.Properties[PropertyEnum.Unaffectable] = true;
+            spec.Properties[PropertyEnum.Invulnerable] = true;
+            spec.Properties[PropertyEnum.NoEntityCollide] = true;
+            spec.OptionFlagsOverride = EntitySettingsOptionFlags.IsClientEntityHidden;
+            spec.Properties[PropertyEnum.Visible] = false;
+            spec.BoundsScaleOverride = 0.001f;
+            spec.Properties[PropertyEnum.Dormant] = true;
+
+            spec.Spawn();
+
+            var proxy = spec.ActiveEntity;
+            if (proxy == null)
+            {
+                manager.RemoveSpawnGroup(group.Id);
+                return;
+            }
+
+            // NOTE: Do NOT write properties on the proxy after spawn - see comment above.
+            // Level is already set to -1 on the spec, and BossNoOverheadInfo hides it.
+
+            // Strip all loot tables from the proxy so it can never drop loot if killed.
+            IncursionEnemyController.RemoveDeathLootTables(proxy as Agent);
+
             if (proxy is Agent proxyAgent && proxyAgent.PowerCollection != null)
             {
                 using var powersHandle = ListPool<PrototypeId>.Instance.Get(out List<PrototypeId> powerRefs);
                 foreach (var kvp in proxyAgent.PowerCollection)
                     powerRefs.Add(kvp.Value.PowerPrototypeRef);
                 foreach (var powerRef in powerRefs)
-                    proxyAgent.UnassignPower(powerRef);
+                {
+                    if (proxyAgent.PowerCollection.ContainsPower(powerRef))
+                        proxyAgent.UnassignPower(powerRef);
+                }
             }
 
-            // Disable AI and set dormant so the proxy never thinks or activates powers.
             if (proxy is Agent aiAgent)
             {
                 aiAgent.AIController?.SetIsEnabled(false);
-                aiAgent.SetDormant(true);
+                // Dormant already set on spec before spawn - no need to reassert.
             }
 
-            // Prevent the proxy from being simulated (stops AI think, power activation, locomotion).
             proxy.SetSimulated(false);
-
-            // Attach the proxy to the combat body so it follows position automatically.
             proxy.AttachToEntity(combatBody);
 
-            controller.ProxyEntityId = proxy.Id;
-
-            LogInfo($"[Incursion] Spawned nameplate proxy (id {proxy.Id}) for TeamUp invader " +
-                    $"{controller.GetLabel()} at {position.ToStringNames()}. IsClientEntityHidden, prestige={controller.NameplatePrestigeLevel}.");
+            var proxyWe2 = proxy as WorldEntity;
+            uint spoofId2 = proxyWe2?.SpoofAvatarWorldInstanceId ?? 0;
+            LogInfo($"[Incursion] Spawned nameplate proxy (id {proxy.Id}) for '{displayName}' at {position.ToStringNames()}. " +
+                    $"AvatarProto='{GameDatabase.GetPrototypeName(avatarRef)}', SpoofAvatarWorldInstanceId={spoofId2}.");
         }
 
         /// <summary>
-        /// Picks the next enemy type from the roster in round-robin order. The returned controller is unbound; call Start after spawn.
+        /// Picks the next enemy type from the roster, preferring types the player has
+        /// hunted the least. Falls back to round-robin when no player context is available
+        /// or when all enemies have been hunted equally.
         /// Respects the IncursionExcludeEnemies config filter.
         /// </summary>
-        private IncursionEnemyController CreateRandomController()
+        private IncursionEnemyController CreateRandomController(Player player = null)
         {
             var factories = GetRandomFactories();
+
+            // If we have a player with hunt data, select the least-hunted enemy type.
+            if (player?.IncursionHuntData != null)
+            {
+                var controller = CreateHuntWeightedController(player, factories);
+                if (controller != null)
+                    return controller;
+            }
+
+            // Fallback: round-robin selection.
             int idx = Interlocked.Increment(ref s_roundRobinIndex);
             int index = (int)((uint)idx % (uint)factories.Length);
-            var controller = factories[index](_game);
-            LogInfo($"[Incursion] Round-robin selected {controller.GetLabel()} ({index + 1}/{factories.Length})");
-            return controller;
+            var fallback = factories[index](_game);
+            LogInfo($"[Incursion] Round-robin selected {fallback.GetLabel()} ({index + 1}/{factories.Length})");
+            return fallback;
+        }
+
+        /// <summary>
+        /// Selects an enemy type the player has hunted the least. Creates a temporary
+        /// instance to read the shorthand, then picks the one with the lowest effective
+        /// kill count. Ties are broken randomly.
+        /// </summary>
+        private IncursionEnemyController CreateHuntWeightedController(Player player, Func<Game, IncursionEnemyController>[] factories)
+        {
+            EnsureEnemyMeta();
+
+            string avatarName = ModLootFilterHelper.GetAvatarShortName(player.CurrentAvatar?.PrototypeDataRef ?? PrototypeId.Invalid);
+            var huntData = player.IncursionHuntData;
+
+            // Build (factory, killCount) pairs for all eligible factories.
+            var candidates = new List<(Func<Game, IncursionEnemyController> Factory, int KillCount, string Shorthand)>();
+            foreach (var meta in s_enemyMeta)
+            {
+                if (meta.HardcodeExclude) continue;
+
+                // Find the matching factory by type name.
+                // s_enemyMeta and s_randomFactories may differ in order after shuffle,
+                // so we match by creating a temp to read the shorthand.
+                // Optimization: use the meta's shorthand directly.
+                int killCount = huntData.GetEffectiveKillCount(meta.Shorthand, avatarName);
+                candidates.Add((meta.Factory, killCount, meta.Shorthand));
+            }
+
+            if (candidates.Count == 0)
+                return null;
+
+            // Find the minimum kill count.
+            int minKills = candidates.Min(c => c.KillCount);
+
+            // Gather all candidates at the minimum (ties).
+            var leastHunted = candidates.Where(c => c.KillCount == minKills).ToList();
+
+            // Pick randomly among the tied least-hunted entries.
+            var chosen = leastHunted[_game.Random.Next(leastHunted.Count)];
+            var result = chosen.Factory(_game);
+            LogInfo($"[Incursion] Hunt-weighted selected {result.GetLabel()} (kills={chosen.KillCount}, " +
+                    $"tied among {leastHunted.Count} least-hunted type(s), avatar={avatarName ?? "?"})");
+            return result;
         }
 
         /// <summary>
         /// Builds (or returns the cached) filtered factory array for random spawns,
         /// excluding any enemy whose shorthand, display name, or avatar name matches
         /// a pattern in the IncursionExcludeEnemies config.
+        /// HardcodeExclude entries are always excluded regardless of config.
         /// </summary>
         private static Func<Game, IncursionEnemyController>[] GetRandomFactories()
         {
@@ -805,13 +1183,6 @@ namespace MHServerEmu.Games.Populations
                 var options = ConfigManager.Instance.GetConfig<CustomGameOptionsConfig>();
                 var excluded = ParseExcludedPatterns(options.IncursionExcludeEnemies);
 
-                if (excluded.Count == 0)
-                {
-                    s_randomFactories = s_enemyFactories;
-                    Logger.Info($"[Incursion] Random spawn pool: all {s_enemyFactories.Length} type(s) (no exclusions).");
-                    return s_randomFactories;
-                }
-
                 EnsureEnemyMeta();
 
                 var filtered = new List<Func<Game, IncursionEnemyController>>();
@@ -819,6 +1190,13 @@ namespace MHServerEmu.Games.Populations
 
                 foreach (var meta in s_enemyMeta)
                 {
+                    // Hardcoded exclusions always apply, even if config is wiped.
+                    if (meta.HardcodeExclude)
+                    {
+                        excludedNames.Add(meta.Shorthand);
+                        continue;
+                    }
+
                     bool isExcluded = false;
                     foreach (var pattern in excluded)
                     {
@@ -839,8 +1217,10 @@ namespace MHServerEmu.Games.Populations
 
                 if (filtered.Count == 0)
                 {
-                    Logger.Warn($"[Incursion] All {s_enemyFactories.Length} enemy type(s) matched exclusion patterns ({string.Join(", ", excluded)}). Falling back to full roster.");
-                    s_randomFactories = s_enemyFactories;
+                    // Fallback: all non-hardcoded-excluded factories (still respects HardcodeExclude).
+                    s_randomFactories = s_enemyMeta.Where(m => m.HardcodeExclude == false).Select(m => m.Factory).ToArray();
+                    Logger.Warn($"[Incursion] All {s_enemyFactories.Length} enemy type(s) matched exclusion patterns ({string.Join(", ", excluded)}). " +
+                                $"Falling back to roster minus hardcoded exclusions ({s_randomFactories.Length} type(s)).");
                 }
                 else
                 {
@@ -878,7 +1258,7 @@ namespace MHServerEmu.Games.Populations
         /// Applies the controller's render identity to the spawn spec before Spawn().
         /// Three render paths, checked in priority order:
         ///   1. <strong>Boss</strong> (<see cref="IncursionEnemyController.RenderBossRef"/>):
-        ///      overrides the spawn spec's EntityRef to the boss prototype — the boss IS the combat body.
+        ///      overrides the spawn spec's EntityRef to the boss prototype - the boss IS the combat body.
         ///   2. <strong>Avatar</strong> (<see cref="IncursionEnemyController.RenderAvatarRef"/>):
         ///      sets ClientRenderPrototypeRef + CostumeCurrent so a generic combat body renders as the avatar.
         ///   3. <strong>Team-Up</strong> (<see cref="IncursionEnemyController.RenderTeamupRef"/>):
@@ -1120,8 +1500,7 @@ namespace MHServerEmu.Games.Populations
         /// </summary>
         private static List<Func<Game, IncursionEnemyController>> FilterFactoriesByMode(string mode)
         {
-            if (string.IsNullOrEmpty(mode) || mode.Equals("all", StringComparison.OrdinalIgnoreCase))
-                return s_enemyFactories.ToList();
+            var excluded = ParseExcludedPatterns(ConfigManager.Instance.GetConfig<CustomGameOptionsConfig>().IncursionExcludeEnemies);
 
             var result = new List<Func<Game, IncursionEnemyController>>();
             foreach (var factory in s_enemyFactories)
@@ -1137,8 +1516,32 @@ namespace MHServerEmu.Games.Populations
                     _ => true,
                 };
 
-                if (match)
-                    result.Add(factory);
+                if (match == false) continue;
+
+                // Hardcoded exclusions always apply, even if config is wiped.
+                if (temp.HardcodeExclude)
+                { temp.Dispose(); continue; }
+
+                // Exclude enemies matching the exclusion list so trials don't spawn
+                // excluded bosses like Surtur.
+                if (excluded.Count > 0)
+                {
+                    string shorthand = IncursionEnemyController.StripControllerPrefix(temp.GetType().Name);
+                    string displayName = temp.InvaderDisplayName ?? string.Empty;
+                    string avatarName = temp.RenderAvatarRef != PrototypeId.Invalid
+                        ? GameDatabase.GetPrototypeName(temp.RenderAvatarRef)
+                        : temp.RenderTeamupRef != PrototypeId.Invalid
+                            ? GameDatabase.GetPrototypeName(temp.RenderTeamupRef)
+                            : temp.RenderBossRef != PrototypeId.Invalid
+                                ? GameDatabase.GetPrototypeName(temp.RenderBossRef)
+                                : string.Empty;
+
+                    var meta = new EnemyMeta(temp.GetType().Name, shorthand, displayName, avatarName, false, factory);
+                    if (IsExcludedEnemy(meta, excluded))
+                    { temp.Dispose(); continue; }
+                }
+
+                result.Add(factory);
             }
             return result;
         }
@@ -1299,6 +1702,124 @@ namespace MHServerEmu.Games.Populations
 
         #region Helpers
 
+        #region Hunt Tracking
+
+        /// <summary>
+        /// Records a hunt kill for the given controller's player if the controller
+        /// was spawned for a player and the kill hasn't been recorded yet.
+        /// Called when a controller is pruned (finished) in the tick loop.
+        /// </summary>
+        private void RecordHuntKillIfPending(IncursionEnemyController controller)
+        {
+            if (controller == null || controller.HuntKillRecorded) return;
+            if (controller.HuntPlayerDbId == 0) return;
+
+            controller.MarkHuntKillRecorded();
+
+            // Look up the player to access their hunt data.
+            Player player = _game.EntityManager.GetEntityByDbGuid<Player>(controller.HuntPlayerDbId);
+            if (player?.IncursionHuntData == null) return;
+
+            string shorthand = controller.HuntShorthand;
+            string avatarName = controller.HuntAvatarName;
+
+            // Record in both global and per-character sections.
+            player.IncursionHuntData.RecordKill(shorthand, avatarName, perCharacter: true);
+            IncursionHuntStorage.Save(player.DatabaseUniqueId, player.IncursionHuntData);
+
+            int globalCount = player.IncursionHuntData.Global.KillCounts.GetValueOrDefault(shorthand);
+            int charCount = avatarName != null
+                ? player.IncursionHuntData.GetCharacterSection(avatarName)?.KillCounts.GetValueOrDefault(shorthand) ?? 0
+                : 0;
+
+            LogInfo($"[Incursion:Hunt] Recorded kill for {shorthand} (player={player.GetName()}, " +
+                    $"avatar={avatarName ?? "?"}, global={globalCount}, char={charCount}).");
+        }
+
+        /// <summary>
+        /// Builds a human-readable hunt status string for the given player.
+        /// Shows per-enemy kill counts and unique completion progress.
+        /// </summary>
+        public static string GetHuntStatusString(Player player)
+        {
+            if (player?.IncursionHuntData == null)
+                return "Incursion hunt data not available.";
+
+            EnsureEnemyMeta();
+
+            string avatarName = ModLootFilterHelper.GetAvatarShortName(player.CurrentAvatar?.PrototypeDataRef ?? PrototypeId.Invalid);
+            var huntData = player.IncursionHuntData;
+
+            // Build the set of all non-hardcode-excluded enemy shorthands.
+            var allShorthands = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var meta in s_enemyMeta)
+            {
+                if (meta.HardcodeExclude) continue;
+                allShorthands.Add(meta.Shorthand);
+            }
+
+            int totalTypes = allShorthands.Count;
+            int uniqueHunted = huntData.GetUniqueCount(avatarName, allShorthands);
+
+            var sb = new System.Text.StringBuilder();
+            sb.Append($"Incursion Hunt Status for {player.GetName()} (avatar: {avatarName ?? "?"}):\n");
+            sb.Append($"  Unique encounters completed: {uniqueHunted}/{totalTypes}\n\n");
+
+            // Sort by kill count descending, then alphabetically.
+            var entries = allShorthands
+                .Select(s => (Shorthand: s, Kills: huntData.GetEffectiveKillCount(s, avatarName)))
+                .OrderByDescending(e => e.Kills)
+                .ThenBy(e => e.Shorthand)
+                .ToList();
+
+            sb.Append("  Enemy              Kills\n");
+            sb.Append("  ------------------ -----\n");
+            foreach (var entry in entries)
+            {
+                string marker = entry.Kills == 0 ? " [NEW]" : "";
+                sb.Append($"  {entry.Shorthand,-18} {entry.Kills,5}{marker}\n");
+            }
+
+            return sb.ToString().TrimEnd();
+        }
+
+        /// <summary>
+        /// Resets hunt data for the given player. If resetAll is true, clears everything.
+        /// Otherwise clears only the current character's section.
+        /// </summary>
+        public static string ResetHuntData(Player player, bool resetAll)
+        {
+            if (player?.IncursionHuntData == null)
+                return "Incursion hunt data not available.";
+
+            if (resetAll)
+            {
+                int globalCount = player.IncursionHuntData.Global.KillCounts.Count;
+                int charCount = player.IncursionHuntData.Characters.Count;
+                player.IncursionHuntData.Global.KillCounts.Clear();
+                player.IncursionHuntData.Characters.Clear();
+                IncursionHuntStorage.Save(player.DatabaseUniqueId, player.IncursionHuntData);
+                return $"Reset ALL incursion hunt data: cleared {globalCount} global kill count(s) and {charCount} character section(s).";
+            }
+            else
+            {
+                string avatarName = ModLootFilterHelper.GetAvatarShortName(player.CurrentAvatar?.PrototypeDataRef ?? PrototypeId.Invalid);
+                if (string.IsNullOrEmpty(avatarName))
+                    return "Could not determine current avatar for hunt reset.";
+
+                var section = player.IncursionHuntData.GetCharacterSection(avatarName);
+                if (section == null || section.KillCounts.Count == 0)
+                    return $"No per-character hunt data to reset for {avatarName}.";
+
+                int count = section.KillCounts.Count;
+                player.IncursionHuntData.Characters.Remove(avatarName);
+                IncursionHuntStorage.Save(player.DatabaseUniqueId, player.IncursionHuntData);
+                return $"Reset incursion hunt data for {avatarName}: cleared {count} kill count(s). Global counts preserved.";
+            }
+        }
+
+        #endregion
+
         private void ResolveEnemy()
         {
             _enemyProtoRef = ResolveDefaultEnemy();
@@ -1436,7 +1957,7 @@ namespace MHServerEmu.Games.Populations
                             ? GameDatabase.GetPrototypeName(temp.RenderBossRef)
                             : string.Empty;
 
-                s_enemyMeta.Add(new EnemyMeta(typeName, shorthand, displayName, avatarName, factory));
+                s_enemyMeta.Add(new EnemyMeta(typeName, shorthand, displayName, avatarName, temp.HardcodeExclude, factory));
                 temp.Dispose();
             }
 
@@ -1446,6 +1967,9 @@ namespace MHServerEmu.Games.Populations
         /// <summary>
         /// Finds enemy factories whose shorthand name, display name, or render avatar name contain the pattern.
         /// Returns a randomly chosen match, or an error message when no match is found.
+        /// Exact shorthand matches bypass the exclusion list (so users can explicitly spawn a
+        /// specific excluded boss like Surtur). Fuzzy matches respect exclusions so generic
+        /// patterns like "boss" won't randomly pick excluded enemies.
         /// </summary>
         private (Func<Game, IncursionEnemyController>, string) ResolveFactoryByPattern(string pattern)
         {
@@ -1455,24 +1979,33 @@ namespace MHServerEmu.Games.Populations
             EnsureEnemyMeta();
 
             string p = pattern.Trim();
+            var excluded = ParseExcludedPatterns(ConfigManager.Instance.GetConfig<CustomGameOptionsConfig>().IncursionExcludeEnemies);
 
-            // Priority 1: exact shorthand match (case-insensitive)
+            // Priority 1: exact shorthand match (case-insensitive) - bypasses exclusions
+            // so an explicit "!incursion spawn surtur" works even if Surtur is excluded.
             var exactShorthand = s_enemyMeta.Where(m => string.Equals(m.Shorthand, p, StringComparison.OrdinalIgnoreCase)).ToList();
             if (exactShorthand.Count > 0)
                 return (exactShorthand[_game.Random.Next(exactShorthand.Count)].Factory, null);
 
+            // For fuzzy matches, filter out excluded enemies so generic patterns like
+            // "boss" don't randomly spawn excluded bosses.
+            // Hardcoded exclusions are also filtered from fuzzy matches (but exact shorthand above still works).
+            var pool = s_enemyMeta.Where(m => m.HardcodeExclude == false).ToList();
+            if (excluded.Count > 0)
+                pool = pool.Where(m => IsExcludedEnemy(m, excluded) == false).ToList();
+
             // Priority 2: shorthand contains pattern
-            var shorthandMatches = s_enemyMeta.Where(m => m.Shorthand.Contains(p, StringComparison.OrdinalIgnoreCase)).ToList();
+            var shorthandMatches = pool.Where(m => m.Shorthand.Contains(p, StringComparison.OrdinalIgnoreCase)).ToList();
             if (shorthandMatches.Count > 0)
                 return (shorthandMatches[_game.Random.Next(shorthandMatches.Count)].Factory, null);
 
             // Priority 3: display name contains pattern
-            var displayNameMatches = s_enemyMeta.Where(m => m.DisplayName.Contains(p, StringComparison.OrdinalIgnoreCase)).ToList();
+            var displayNameMatches = pool.Where(m => m.DisplayName.Contains(p, StringComparison.OrdinalIgnoreCase)).ToList();
             if (displayNameMatches.Count > 0)
                 return (displayNameMatches[_game.Random.Next(displayNameMatches.Count)].Factory, null);
 
             // Priority 4: avatar/boss ref name contains pattern (least specific)
-            var avatarMatches = s_enemyMeta.Where(m => m.AvatarName.Contains(p, StringComparison.OrdinalIgnoreCase)).ToList();
+            var avatarMatches = pool.Where(m => m.AvatarName.Contains(p, StringComparison.OrdinalIgnoreCase)).ToList();
             if (avatarMatches.Count > 0)
                 return (avatarMatches[_game.Random.Next(avatarMatches.Count)].Factory, null);
 
@@ -1480,6 +2013,22 @@ namespace MHServerEmu.Games.Populations
                 .Select(m => $"- {m.Shorthand}{(string.IsNullOrEmpty(m.DisplayName) ? "" : $" ({m.DisplayName})")}")
                 .ToList();
             return (null, $"No incursion enemy matches '{p}'. Known enemies:\r\n{string.Join("\r\n", suggestions)}");
+        }
+
+        /// <summary>
+        /// Returns true if the given enemy meta matches any exclusion pattern.
+        /// </summary>
+        private static bool IsExcludedEnemy(EnemyMeta meta, List<string> excludedPatterns)
+        {
+            if (excludedPatterns == null || excludedPatterns.Count == 0) return false;
+            foreach (var pattern in excludedPatterns)
+            {
+                if (meta.Shorthand.Contains(pattern, StringComparison.OrdinalIgnoreCase)
+                    || meta.DisplayName.Contains(pattern, StringComparison.OrdinalIgnoreCase)
+                    || meta.AvatarName.Contains(pattern, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            return false;
         }
 
         /// <summary>

@@ -18,6 +18,9 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         public override PrototypeId RenderTeamupRef => TeamUpRef;
         public override string InvaderDisplayName => "Ironman Hulkbuster Invader";
 
+        // HardcodeExclude: Hulkbuster Iron Man renders invisible; needs investigation.
+        public override bool HardcodeExclude => true;
+
         protected override int ThinkIntervalMs => 250;
         protected override float AttackRange => 200f;
         protected override float ChaseRange => 5000f;
@@ -30,16 +33,16 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/TeamUps/Havok/PiercingBeam.prototype",  true,  0.026667f),  // Havok/PiercingBeam.prototype
-            new("Powers/TeamUps/Havok/ExplodingChargeShot.prototype",  true,  0.026667f),  // Havok/ExplodingChargeShot.prototype
-            new("Powers/TeamUps/Havok/ChanneledBeam.prototype",  true,  0.026667f),  // Havok/ChanneledBeam.prototype
-            new("Powers/TeamUps/Havok/PiercingBeamDoTTrigger.prototype", false,  0.026667f),  // Havok/PiercingBeamDoTTrigger.prototype - trigger/secondary
+            new("Powers/TeamUps/Havok/PiercingBeam.prototype",  true,  0.0450f), // 2026-07-30
+            new("Powers/TeamUps/Havok/ExplodingChargeShot.prototype",  true,  0.0589f), // 2026-07-30
+            new("Powers/TeamUps/Havok/ChanneledBeam.prototype",  true,  0.0306f), // 2026-07-30
+            new("Powers/TeamUps/Havok/PiercingBeamDoTTrigger.prototype", false,  0.0450f), // 2026-07-30
             new("Powers/TeamUps/Havok/ExplodingChargeShotEnergyBuffTrigger.prototype", false,  0.026667f),  // Havok/ExplodingChargeShotEnergyBuffTrigger.prototype - trigger/secondary
             new("Powers/TeamUps/Havok/MissileAbsorbPassive.prototype", false,  0.026667f),  // Havok/MissileAbsorbPassive.prototype - away passive
-            new("Powers/TeamUps/Havok/ConeShot.prototype",  true,  0.026667f),  // Havok/ConeShot.prototype
+            new("Powers/TeamUps/Havok/ConeShot.prototype",  true,  0.0376f), // 2026-07-30
             new("Powers/TeamUps/Havok/AwayExplodingShot.prototype", false,  0.026667f),  // Havok/AwayExplodingShot.prototype - away passive
             new("Powers/TeamUps/Havok/EnergyDamageBuffProc.prototype", false,  0.026667f),  // Havok/EnergyDamageBuffProc.prototype - away passive
-            new("Powers/TeamUps/Havok/SpinShot.prototype",  true,  0.026667f),  // Havok/SpinShot.prototype
+            new("Powers/TeamUps/Havok/SpinShot.prototype",  true,  0.0221f), // 2026-07-30
             new("Powers/TeamUps/TeamUpSynergyHeroPassive.prototype", false,  0.026667f),  // TeamUpSynergyHeroPassive.prototype - synergy passive
         };
     }

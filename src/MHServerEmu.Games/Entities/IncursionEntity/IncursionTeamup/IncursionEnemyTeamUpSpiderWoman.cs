@@ -30,16 +30,16 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/TeamUps/SpiderWoman/DashStrike.prototype",  true,  0.023333f),  // SpiderWoman/DashStrike.prototype
-            new("Powers/TeamUps/SpiderWoman/VenomSpray.prototype",  true,  0.023333f),  // SpiderWoman/VenomSpray.prototype
+            new("Powers/TeamUps/SpiderWoman/DashStrike.prototype",  true,  0.0468f), // 2026-07-30
+            new("Powers/TeamUps/SpiderWoman/VenomSpray.prototype",  true,  0.0458f), // 2026-07-30
             new("Powers/TeamUps/SpiderWoman/AwayStrafeProc.prototype", false,  0.023333f),  // SpiderWoman/AwayStrafeProc.prototype - away passive
-            new("Powers/TeamUps/SpiderWoman/DashStrikeHotspotTrigger.prototype", false,  0.023333f),  // SpiderWoman/DashStrikeHotspotTrigger.prototype - trigger/secondary
-            new("Powers/TeamUps/SpiderWoman/FocusVenomBeam.prototype",  true,  0.023333f),  // SpiderWoman/FocusVenomBeam.prototype
-            new("Powers/TeamUps/SpiderWoman/FocusVenomBeamSlowTrigger.prototype", false,  0.023333f),  // SpiderWoman/FocusVenomBeamSlowTrigger.prototype - trigger/secondary
+            new("Powers/TeamUps/SpiderWoman/DashStrikeHotspotTrigger.prototype", false,  0.0468f), // 2026-07-30
+            new("Powers/TeamUps/SpiderWoman/FocusVenomBeam.prototype",  true,  0.0232f), // 2026-07-30
+            new("Powers/TeamUps/SpiderWoman/FocusVenomBeamSlowTrigger.prototype", false,  0.0232f), // 2026-07-30
             new("Powers/TeamUps/SpiderWoman/TauntSilence.prototype",  true,  0.023333f),  // SpiderWoman/TauntSilence.prototype
             new("Powers/TeamUps/SpiderWoman/EnergyDoTProc.prototype", false,  0.023333f),  // SpiderWoman/EnergyDoTProc.prototype - trigger/secondary
             new("Powers/TeamUps/SpiderWoman/AwayEnergyDoTProc.prototype", false,  0.023333f),  // SpiderWoman/AwayEnergyDoTProc.prototype - away passive
-            new("Powers/TeamUps/SpiderWoman/SuperVenomBeam.prototype",  true,  0.023333f),  // SpiderWoman/SuperVenomBeam.prototype
+            new("Powers/TeamUps/SpiderWoman/SuperVenomBeam.prototype",  true,  0.0223f), // 2026-07-30
             new("Powers/TeamUps/TeamUpSynergyHeroPassive.prototype", false,  0.023333f),  // TeamUpSynergyHeroPassive.prototype - synergy passive
         };
     }

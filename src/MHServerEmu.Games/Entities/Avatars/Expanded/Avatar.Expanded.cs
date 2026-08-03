@@ -9,7 +9,7 @@ namespace MHServerEmu.Games.Entities.Avatars
     /// <summary>
     /// Avatar.Expanded - mod extensions for PlayableExpanded: NEW playable characters that
     /// borrow the assets of non-avatar entities (Team-Ups now; potentially bosses and other
-    /// characters later). The real Team-Up pet system is deliberately left untouched.
+    /// characters later). The real Team-Up companion system is deliberately left untouched.
     ///
     /// Kept as a partial class so mod functionality stays out of the vanilla Avatar.cs.
     /// Avatar.cs contains only two one-line hooks:

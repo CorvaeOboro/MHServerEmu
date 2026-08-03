@@ -47,22 +47,22 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/GhostRider/BasicChains.prototype",                             true,  0.1153f), // 2026-06-11
-            new("Powers/Player/GhostRider/BasicChainsNarrow.prototype",                       true,  0.1328f), // 2026-06-11
-            new("Powers/Player/GhostRider/BasicFireball.prototype",                           true,  0.1309f), // 2026-06-11
-            new("Powers/Player/GhostRider/BikeLunge.prototype",                               true,  0.1162f), // 2026-06-11
-            new("Powers/Player/GhostRider/ChainFlechette.prototype",                          true,  0.0895f), // 2026-06-11
-            new("Powers/Player/GhostRider/ChainLineAoE.prototype",                            true,  0.0572f), // 2026-06-11
-            new("Powers/Player/GhostRider/ChainRoot.prototype",                               true,  0.0972f), // 2026-06-11
-            new("Powers/Player/GhostRider/ChainShockwave.prototype",                          true,  0.0644f), // 2026-06-10
-            new("Powers/Player/GhostRider/ChargeUpBike.prototype",                            true,  0.0786f), // 2026-07-07
-            new("Powers/Player/GhostRider/ConeYank.prototype",                                true,  0.1364f), // 2026-06-11
-            new("Powers/Player/GhostRider/DeathFromAbove.prototype",                          true,  0.0485f), // 2026-06-29
-            new("Powers/Player/GhostRider/FireBreath.prototype",                              true,  0.0782f), // 2026-06-11
-            new("Powers/Player/GhostRider/FirePillar.prototype",                              true,  0.1405f), // 2026-06-11
-            new("Powers/Player/GhostRider/HellfireBeam.prototype",                            true,  0.1221f), // 2026-06-11
-            new("Powers/Player/GhostRider/LoopChainWhirlwind.prototype",                      true,  0.0516f), // 2026-06-11
-            new("Powers/Player/GhostRider/PenanceStare.prototype",                            true,  0.0195f), // 2026-06-11
+            new("Powers/Player/GhostRider/BasicChains.prototype",                             true,  0.1352f), // 2026-06-11
+            new("Powers/Player/GhostRider/BasicChainsNarrow.prototype",                       true,  0.1708f), // 2026-06-11
+            new("Powers/Player/GhostRider/BasicFireball.prototype",                           true,  0.0885f), // 2026-06-11
+            new("Powers/Player/GhostRider/BikeLunge.prototype",                               true,  0.1113f), // 2026-06-11
+            new("Powers/Player/GhostRider/ChainFlechette.prototype",                          true,  0.0858f), // 2026-06-11
+            new("Powers/Player/GhostRider/ChainLineAoE.prototype",                            true,  0.0648f), // 2026-06-11
+            new("Powers/Player/GhostRider/ChainRoot.prototype",                               true,  0.1399f), // 2026-06-11
+            new("Powers/Player/GhostRider/ChainShockwave.prototype",                          true,  0.0671f), // 2026-06-10
+            new("Powers/Player/GhostRider/ChargeUpBike.prototype",                            true,  0.0766f), // 2026-07-07
+            new("Powers/Player/GhostRider/ConeYank.prototype",                                true,  0.1597f), // 2026-06-11
+            new("Powers/Player/GhostRider/DeathFromAbove.prototype",                          true,  0.0418f), // 2026-06-29
+            new("Powers/Player/GhostRider/FireBreath.prototype",                              true,  0.0859f), // 2026-06-11
+            new("Powers/Player/GhostRider/FirePillar.prototype",                              true,  0.1933f), // 2026-06-11
+            new("Powers/Player/GhostRider/HellfireBeam.prototype",                            true,  0.1332f), // 2026-06-11
+            new("Powers/Player/GhostRider/LoopChainWhirlwind.prototype",                      true,  0.0413f), // 2026-06-11
+            new("Powers/Player/GhostRider/PenanceStare.prototype",                            true,  0.0193f), // 2026-06-11
             new("Powers/Player/GhostRider/SpiritofVengeance.prototype",                       true,  0.05f),
             new("Powers/Player/GhostRider/Talents/Talent1ChainsAblaze.prototype",             false, 0.05f),
             new("Powers/Player/GhostRider/Talents/Talent1HellfireCombustion.prototype",       false, 0.05f),
@@ -82,7 +82,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/GhostRider/Traits/DefenseTrait.prototype",                     false, 0.05f),
             new("Powers/Player/GhostRider/Traits/MechanicTraitFlameTrail.prototype",          false, 0.05f),
             new("Powers/Player/GhostRider/Traits/OffenseTrait.prototype",                     false, 0.05f),
-            new("Powers/Player/GhostRider/UltimateForRealz.prototype",                        true,  0.0213f), // 2026-06-20
+            new("Powers/Player/GhostRider/UltimateForRealz.prototype",                        true,  0.0308f), // 2026-06-20
             new("Powers/Player/TravelPower/GhostRiderRide.prototype",                         false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/GhostRiderStolenPower.prototype",        false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",                    false, 0.05f),

@@ -15,6 +15,7 @@ using MHServerEmu.Games.DRAG;
 using MHServerEmu.Games.DRAG.Generators.Regions;
 using MHServerEmu.Games.Entities;
 using MHServerEmu.Games.Entities.Avatars;
+using MHServerEmu.Games.Entities.IncursionEntity;
 using MHServerEmu.Games.Entities.Inventories;
 using MHServerEmu.Games.Entities.Locomotion;
 using MHServerEmu.Games.Events;
@@ -62,7 +63,7 @@ namespace MHServerEmu.Games.Regions
         Remove
     }
 
-    public class Region : IArchiveMessageDispatcher, ISerialize, IMissionManagerOwner, IUIDataProviderOwner
+    public partial class Region : IArchiveMessageDispatcher, ISerialize, IMissionManagerOwner, IUIDataProviderOwner
     {
         private static readonly Logger Logger = LogManager.CreateLogger();
 
@@ -445,6 +446,11 @@ namespace MHServerEmu.Games.Regions
 
             IsGenerated = true;
             CreatedTime = Clock.UnixTime;
+
+            // Custom event hooks (after IsGenerated so entity creation sees a fully initialized region)
+            SpawnVampireBloodRitualCloakNPC();
+            InitializeVampireBloodRitualEvent();
+
             return true;
         }
 
@@ -461,6 +467,8 @@ namespace MHServerEmu.Games.Regions
 
         public void Shutdown(bool logLifetime)
         {
+            ShutdownVampireBloodRitualEvent();
+
             if (logLifetime)
             {
                 TimeSpan lifetime = Clock.UnixTime - CreatedTime;
@@ -789,9 +797,25 @@ namespace MHServerEmu.Games.Regions
             {
                 Stopwatch stopwatch = Stopwatch.StartNew();
 
-                success &= GenerateMissionPopulation()
-                        && GenerateHelper(regionGenerator, GenerateFlag.Population)
-                        && GenerateHelper(regionGenerator, GenerateFlag.PostGenerate);
+                // Skip default population for the Vampire Blood Ritual custom region -
+                // the event spawns its own enemies. Default population is scheduled via
+                // game events that fire after Initialize() returns, so clearing them
+                // post-spawn doesn't work. Preventing generation here is the clean fix.
+                bool skipDefaultPopulation = PrototypeDataRef == VampireBloodRitualRegionRef
+                    && Game?.CustomGameOptions?.VampireBloodRitualEventEnable == true;
+
+                if (skipDefaultPopulation)
+                {
+                    // Still run PostGenerate (cell generation for non-dynamic areas)
+                    success &= GenerateHelper(regionGenerator, GenerateFlag.PostGenerate);
+                    Logger.Info($"Skipped default population for Vampire Blood Ritual region.");
+                }
+                else
+                {
+                    success &= GenerateMissionPopulation()
+                            && GenerateHelper(regionGenerator, GenerateFlag.Population)
+                            && GenerateHelper(regionGenerator, GenerateFlag.PostGenerate);
+                }
 
                 Logger.Info($"Generated population in {stopwatch.ElapsedMilliseconds} ms");
             }
@@ -1998,6 +2022,8 @@ namespace MHServerEmu.Games.Regions
         }
 
         #endregion
+
+        // Vampire Blood Ritual event hooks are in Region.ModCalamityVampire.cs (partial class)
     }
 
     public interface IRandomPositionPredicate

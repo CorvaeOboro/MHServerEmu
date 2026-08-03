@@ -25,5 +25,20 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         protected override float GlobalAttackCooldownMs => 800f;
         protected override float PerPowerCooldownMs => 6000f;
         protected override float DamageScale => 1.0f;
+
+        protected override IncursionPowerEntry[] PowerTable => _powerTable;
+
+        private static readonly IncursionPowerEntry[] _powerTable =
+        {
+            new("Powers/EnemyPowers/Boss/Gorgon/GorgonSwordSlash1.prototype",                true,  1.6776f), // 2026-08-01
+            new("Powers/EnemyPowers/Boss/Gorgon/GorgonSwordSlash3.prototype",                true,  1.6776f), // 2026-08-01
+            new("Powers/EnemyPowers/Boss/Gorgon/GorgonSwordSlash4.prototype",                true,  1.6776f), // 2026-08-01
+            new("Powers/EnemyPowers/Boss/Gorgon/GorgonStoneGazeSweepBeam.prototype",         true,  0.9768f), // 2026-07-30
+            new("Powers/EnemyPowers/Boss/Gorgon/GorgonSwordSlash2.prototype",                true,  1.6776f), // 2026-08-01
+            new("Powers/EnemyPowers/Boss/Gorgon/GorgonSwordSlash5.prototype",                true,  1.6776f), // 2026-08-01
+            new("Powers/EnemyPowers/Boss/Gorgon/GorgonSwordLunge.prototype",                 true,  0.7579f), // 2026-08-01
+            new("Powers/EnemyPowers/Shared/LeashReturnHeal.prototype",                       false, 1.0f),
+            new("Powers/EnemyPowers/Shared/LeashReturnNegStatusEffectImmune.prototype",      false, 1.0f),
+        };
     }
 }

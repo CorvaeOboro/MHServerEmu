@@ -25,5 +25,19 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         protected override float GlobalAttackCooldownMs => 800f;
         protected override float PerPowerCooldownMs => 6000f;
         protected override float DamageScale => 1.0f;
+
+        protected override IncursionPowerEntry[] PowerTable => _powerTable;
+
+        private static readonly IncursionPowerEntry[] _powerTable =
+        {
+            new("Powers/EnemyPowers/MobPowers/RockTrolls/RockTrollBerserkerMeleeStrike1.prototype",   true,  0.8396f), // 2026-08-01
+            new("Powers/EnemyPowers/MobPowers/RockTrolls/RockTrollBerserkerMeleeStrike2.prototype",   true,  0.8396f), // 2026-08-01
+            new("Powers/EnemyPowers/MobPowers/RockTrolls/RockTrollBerserkerSpinAttack.prototype",     true,  0.9980f), // 2026-08-01
+            new("Powers/EnemyPowers/MobPowers/RockTrolls/RockTrollBerserkerMeleeStrike3.prototype",   false, 0.8396f), // 2026-08-01
+            new("Powers/EnemyPowers/MobPowers/RockTrolls/RockTrollBerserkerSlashHit.prototype",       false, 1.4752f), // 2026-07-28
+            new("Powers/EnemyPowers/MobPowers/RockTrolls/RockTrollBerserkerSlashStart.prototype",     false, 1.0f),
+            new("Powers/EnemyPowers/Shared/LeashReturnHeal.prototype",                                false, 1.0f),
+            new("Powers/EnemyPowers/Shared/LeashReturnNegStatusEffectImmune.prototype",               false, 1.0f),
+        };
     }
 }

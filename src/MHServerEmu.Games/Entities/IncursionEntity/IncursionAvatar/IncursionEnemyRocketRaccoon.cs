@@ -50,30 +50,30 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         {
             new("Powers/CharacterSelectOnly/HeroProfilePowerRocketRaccoon.prototype",           true,  0.05f),
             new("Powers/Player/RocketRaccoon/Burrow.prototype",                                 true,  0.05f),
-            new("Powers/Player/RocketRaccoon/GravityMine.prototype",                            true,  0.1039f), // 2026-06-11
-            new("Powers/Player/RocketRaccoon/Groot.prototype",                                  true,  0.0769f), // 2026-06-11
-            new("Powers/Player/RocketRaccoon/GrootRide.prototype",                              true,  0.0257f), // 2026-06-17
-            new("Powers/Player/RocketRaccoon/Rework/ArcTurret.prototype",                       true,  0.1264f), // 2026-06-11
-            new("Powers/Player/RocketRaccoon/Rework/BFG.prototype",                             true,  0.0538f), // 2026-06-11
-            new("Powers/Player/RocketRaccoon/Rework/BasicPistols.prototype",                    true,  0.1791f), // 2026-06-11
-            new("Powers/Player/RocketRaccoon/Rework/BasicRifle.prototype",                      true,  0.05f),
+            new("Powers/Player/RocketRaccoon/GravityMine.prototype",                            true,  0.1095f), // 2026-06-11
+            new("Powers/Player/RocketRaccoon/Groot.prototype",                                  true,  0.0787f), // 2026-06-11
+            new("Powers/Player/RocketRaccoon/GrootRide.prototype",                              true,  0.0226f), // 2026-07-16
+            new("Powers/Player/RocketRaccoon/Rework/ArcTurret.prototype",                       true,  0.1447f), // 2026-06-11
+            new("Powers/Player/RocketRaccoon/Rework/BFG.prototype",                             true,  0.0442f), // 2026-06-11
+            new("Powers/Player/RocketRaccoon/Rework/BasicPistols.prototype",                    true,  0.2620f), // 2026-06-11
+            new("Powers/Player/RocketRaccoon/Rework/BasicRifle.prototype",                      true,  0.1731f), // 2026-06-11
             new("Powers/Player/RocketRaccoon/Rework/ChargeBeam.prototype",                      true,  0.05f),
-            new("Powers/Player/RocketRaccoon/Rework/DisengagingShot.prototype",                 true,  0.05f),
-            new("Powers/Player/RocketRaccoon/Rework/FlashGrenade.prototype",                    true,  0.0959f), // 2026-06-11
+            new("Powers/Player/RocketRaccoon/Rework/DisengagingShot.prototype",                 true,  0.0569f), // 2026-06-11
+            new("Powers/Player/RocketRaccoon/Rework/FlashGrenade.prototype",                    true,  0.0961f), // 2026-06-11
             new("Powers/Player/RocketRaccoon/Rework/GunTurret.prototype",                       true,  0.05f),
-            new("Powers/Player/RocketRaccoon/Rework/JetDash.prototype",                         true,  0.05f),
-            new("Powers/Player/RocketRaccoon/Rework/Minigun.prototype",                         true,  0.05f),
-            new("Powers/Player/RocketRaccoon/Rework/NewSigHadronEnforcer.prototype",            true,  0.0089f), // 2026-06-11
+            new("Powers/Player/RocketRaccoon/Rework/JetDash.prototype",                         true,  0.1970f), // 2026-06-11
+            new("Powers/Player/RocketRaccoon/Rework/Minigun.prototype",                         true,  0.2882f), // 2026-06-11
+            new("Powers/Player/RocketRaccoon/Rework/NewSigHadronEnforcer.prototype",            true,  0.0064f), // 2026-06-11
             new("Powers/Player/RocketRaccoon/Rework/PassiveShieldHiddenPassive.prototype",      false, 0.05f),
             new("Powers/Player/RocketRaccoon/Rework/PassiveShieldRegenHiddenPassive.prototype", false, 0.05f),
-            new("Powers/Player/RocketRaccoon/Rework/PlasmaCannon.prototype",                    true,  0.1149f), // 2026-06-11
-            new("Powers/Player/RocketRaccoon/Rework/PlasmaCannonLarger.prototype",              true,  0.1149f), // 2026-06-11
+            new("Powers/Player/RocketRaccoon/Rework/PlasmaCannon.prototype",                    true,  0.1334f), // 2026-06-11
+            new("Powers/Player/RocketRaccoon/Rework/PlasmaCannonLarger.prototype",              true,  0.0882f), // 2026-06-11
             new("Powers/Player/RocketRaccoon/Rework/ShieldBoost.prototype",                     true,  0.05f),
-            new("Powers/Player/RocketRaccoon/Rework/SignatureNuke.prototype",                   true,  0.02f),
-            new("Powers/Player/RocketRaccoon/Rework/UltimateChanneledBeam.prototype",           true,  0.0164f), // 2026-06-11
-            new("Powers/Player/RocketRaccoon/Rework/UltimateDeathFromAbove.prototype",          true,  0.0216f), // 2026-06-17
-            new("Powers/Player/RocketRaccoon/Rework/UltimateFuriousLunge.prototype",            true,  0.006f),
-            new("Powers/Player/RocketRaccoon/Rework/UltimateMissileLauncher.prototype",         true,  0.006f),
+            new("Powers/Player/RocketRaccoon/Rework/SignatureNuke.prototype",                   true,  0.0424f), // 2026-06-11
+            new("Powers/Player/RocketRaccoon/Rework/UltimateChanneledBeam.prototype",           true,  0.0170f), // 2026-06-11
+            new("Powers/Player/RocketRaccoon/Rework/UltimateDeathFromAbove.prototype",          true,  0.0284f), // 2026-07-16
+            new("Powers/Player/RocketRaccoon/Rework/UltimateFuriousLunge.prototype",            true,  0.0863f), // 2026-06-11
+            new("Powers/Player/RocketRaccoon/Rework/UltimateMissileLauncher.prototype",         true,  0.1263f), // 2026-06-11
             new("Powers/Player/RocketRaccoon/Rework/WarpTurret.prototype",                      true,  0.05f),
             new("Powers/Player/RocketRaccoon/Talents/Talent1GrootRide.prototype",               false, 0.0257f), // 2026-06-17
             new("Powers/Player/RocketRaccoon/Talents/Talent1HealingSpores.prototype",           false, 0.05f),

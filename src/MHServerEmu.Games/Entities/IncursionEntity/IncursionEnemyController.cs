@@ -1,5 +1,17 @@
+#region INCURSION AI
+// =============================================================================
+// MOD INCURSION 
+// =============================================================================
+//   INCURSION spawns hostile Avatars, teamup , Bosses , that randomly hunt players 
+//   dangerous short encounters 
+//
+//   IncursionEnemyController 
+//
+//  VERSION:: 20260728
+// =============================================================================
 using MHServerEmu.Core.Extensions;
 using MHServerEmu.Core.Logging;
+using MHServerEmu.Core.Memory;
 using MHServerEmu.Core.System.Random;
 using MHServerEmu.Core.VectorMath;
 using MHServerEmu.Games.Entities;
@@ -14,6 +26,7 @@ using MHServerEmu.Games.Loot;
 using MHServerEmu.Games.Navi;
 using MHServerEmu.Games.Network;
 using MHServerEmu.Games.Powers;
+using MHServerEmu.Games.Powers.Conditions;
 using MHServerEmu.Games.Properties;
 using Gazillion;
 using MHServerEmu.Games.Regions;
@@ -33,7 +46,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
     /// </summary>
     public abstract class IncursionEnemyController
     {
-        #region Incursion Controller
+        #region Properties
         protected static readonly Logger Logger = LogManager.CreateLogger();
 
         // Verbose setup/locomotion/scaling diagnostics. Off by default to keep logs focused on tuning.
@@ -61,6 +74,18 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         /// </summary>
         public ulong ProxyEntityId { get; set; } = Entity.InvalidId;
 
+        /// <summary>
+        /// Database ID of the player this invader was spawned for (for hunt tracking).
+        /// 0 when spawned from console/trial or without a player context.
+        /// </summary>
+        public ulong HuntPlayerDbId { get; set; }
+
+        /// <summary>Avatar short name of the player this invader was spawned for (for hunt tracking).</summary>
+        public string HuntAvatarName { get; set; }
+
+        /// <summary>True once the hunt kill has been recorded for this controller.</summary>
+        private bool _huntKillRecorded;
+
         // Powers this enemy may use (assigned to the agent during setup).
         protected readonly List<PrototypeId> Powers = new();
 
@@ -71,7 +96,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private readonly EventGroup _events = new();
         private readonly EventPointer<ThinkEvent> _thinkEvent = new();
-        private readonly Dictionary<PrototypeId, TimeSpan> _cooldownEndTimes = new();
+        protected readonly Dictionary<PrototypeId, TimeSpan> _cooldownEndTimes = new();
 
         // Powers whose per-ability damage scale has already been applied (and logged once).
         private readonly HashSet<PrototypeId> _scaledPowers = new();
@@ -83,8 +108,12 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         // Round-robin priority order: the first ready power is chosen, then moved to the bottom.
         private readonly List<PrototypeId> _powerPriority = new();
 
-        private TimeSpan _globalAttackCooldownEnd = TimeSpan.Zero;
+        protected TimeSpan _globalAttackCooldownEnd = TimeSpan.Zero;
         private int _phase = -1;
+
+        /// <summary>Current phase index (read-only for subclasses). Set by <see cref="UpdatePhase"/>.</summary>
+        protected int CurrentPhase => _phase;
+
         private bool _disposed;
         private bool _dying;
         private int _deathPhase;          // 0=entered, 1=outro, 2=teleport beam, 3=invisible+hide name, 4=cleanup
@@ -94,6 +123,10 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         private TimeSpan _deathGraceEnd;
         private TimeSpan _deathProxyDestroyTime;
         private bool _proxyDestroyed;
+
+        // Tracks when the nameplate proxy was spawned (set by IncursionManager) so
+        // ConfigureSpawnedProxy can log the delay between spawn and deferred config.
+        internal TimeSpan _proxySpawnGameTime;
 
         // Initial think cycles for which locomotion diagnostics are emitted.
         private int _diagThinksRemaining = 12;
@@ -105,10 +138,15 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         private string _label;
 
         // Lifecycle tracking
-        private TimeSpan _spawnTime;
+        protected TimeSpan _spawnTime;
         private TimeSpan _lastCombatTime;
         private long _maxHealthDeficit;
         private bool _inCombat;
+        private bool _permanentAggro = false;  // Once woken, chase forever
+
+        // Additional resilience: temporary damage reduction that decays after the enemy is woken.
+        private TimeSpan _resilienceStartTime;
+        private bool _resilienceActive = false;
 
         // Periodic health diagnostic
         private long _lastLoggedHealth = -1;
@@ -130,14 +168,34 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         private PrototypeId _channelPowerRef = PrototypeId.Invalid;
         private int _channelMaxMs;
 
+        // General power execution timeout safety net. Tracks when ANY power started
+        // executing so we can force-end it if it runs too long (catches channeled powers
+        // that slip through channel tracking, and any other stuck-power scenario).
+        private TimeSpan _powerExecStartTime;
+        private PrototypeId _powerExecPowerRef = PrototypeId.Invalid;
+        private const int DefaultPowerTimeoutMs = 5000;
+
         // Last power used so we can enforce variety instead of spamming the same ability.
-        private PrototypeId _lastUsedPowerRef = PrototypeId.Invalid;
+        protected PrototypeId _lastUsedPowerRef = PrototypeId.Invalid;
 
         // Entrance intro state
         private bool _introActive;
         private TimeSpan _introEndTime;
         private bool _introVfxPlayed;
         private bool _introDialogSaid;
+        private bool _pendingIntro;
+        private int _introDelayTicks;
+
+        // Deferred proxy configuration: post-spawn operations (loot strip, power strip,
+        // AI disable, dormant, attach) all write replicated properties on the proxy.
+        // If these run in the same network tick as spec.Spawn(), the client receives
+        // property replication updates while still processing the initial entity creation,
+        // which can cause it to assign a default SheHulk costume/mesh to the avatar pawn.
+        // Deferring to the first think tick gives the client a full tick to process the
+        // bare proxy entity before any property-modifying operations occur.
+        private bool _pendingProxyConfig;
+        private ulong _pendingProxyCombatBodyId;
+        private static readonly Logger ProxyLogger = LogManager.CreateLogger("IncursionProxy");
 
         /// <summary>True once the controlled entity is gone and the controller is finished.</summary>
         public bool IsFinished => _disposed;
@@ -178,6 +236,10 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         /// <summary>Beyond this distance the enemy ignores a candidate target.</summary>
         protected virtual float ChaseRange => 5000.0f;
+
+        /// <summary>Initial wake-up radius. Enemy won't chase until a player enters this range.
+        /// Once woken, the enemy chases forever (within ChaseRange).</summary>
+        protected virtual float WakeRadius => 800.0f;
 
         /// <summary>Minimum delay (ms) between any two power activations, before phase scaling.</summary>
         protected virtual float GlobalAttackCooldownMs => 1500.0f;
@@ -275,7 +337,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         #endregion
 
-        #region Combat Scale Config
+        #region Combat Scale 
 
         /// <summary>
         /// Multiplier applied to all outgoing damage (1.0 = unchanged).
@@ -297,10 +359,36 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         protected virtual float DamageTakenMultiplier => 1.0f;
 
         /// <summary>
+        /// Peak damage-taken multiplier during the wake-up resilience window (0..1 range).
+        /// 0.5 = take 50% damage (50% reduction). 1.0 = no extra mitigation.
+        /// Applied multiplicatively on top of DamageTakenScale * DamageTakenMultiplier.
+        /// </summary>
+        protected virtual float AdditionalResilienceMax => 0.5f;
+
+        /// <summary>Seconds of full-strength resilience after waking before decay begins.</summary>
+        protected virtual float AdditionalResilienceFullDurationSec => 10f;
+
+        /// <summary>Total seconds after waking for resilience to fully decay to 1.0 (normal).</summary>
+        protected virtual float AdditionalResilienceDecayDurationSec => 30f;
+
+        /// <summary>
         /// When false (default), the enemy cannot receive healing from any source.
         /// Subclasses may override to true for self-healing bosses.
         /// </summary>
         protected virtual bool CanRegainHealth => false;
+
+        /// <summary>
+        /// When true (default), the enemy is promoted to Boss rank for presence and damage scaling.
+        /// Override to false to use Champion rank instead (e.g. to hide minimap markers).
+        /// </summary>
+        protected virtual bool UseBossRank => true;
+
+        /// <summary>
+        /// When set to a valid prototype ref, overrides all rank resolution logic.
+        /// Use this to specify an exact rank (e.g. BossNoOverheadInfo for thralls that
+        /// need no overhead name and no champion glow).
+        /// </summary>
+        protected virtual PrototypeId RankOverride => PrototypeId.Invalid;
 
         /// <summary>
         /// Custom name drawn above this invader. Shown via the avatar nameplate when rendered as an avatar.
@@ -315,6 +403,16 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         public virtual int NameplatePrestigeLevel => 5;
 
         /// <summary>
+        /// Whether to spawn an invisible nameplate proxy for this enemy.
+        /// The proxy provides a prestige-colored nameplate for boss-type and team-up-type
+        /// enemies (which don't render as avatars). The proxy's hiding mechanism
+        /// (IsClientEntityHidden) can be unreliable during combat, causing visible
+        /// SheHulk/SpidermanClone bodies. Override to false for trash-tier enemies
+        /// that don't need prestige nameplates.
+        /// </summary>
+        public virtual bool NeedsNameplateProxy => true;
+
+        /// <summary>
         /// Optional markup prefix for the overhead name. May show literally if the client does not support rich text in nameplates.
         /// </summary>
         public virtual string NameplatePrefix => null;
@@ -323,6 +421,15 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         /// Optional markup suffix for the overhead name. Must match <see cref="NameplatePrefix"/>.
         /// </summary>
         public virtual string NameplateSuffix => null;
+
+        /// <summary>
+        /// When true, this enemy is permanently excluded from the random spawn pool and
+        /// fuzzy pattern matching, regardless of the IncursionExcludeEnemies config.
+        /// Override to true in individual subclass files for broken/WIP/placeholder
+        /// characters so they never spawn even if the user wipes their config exclusions.
+        /// Explicit exact-shorthand spawns (e.g. "!incursion spawn Foo") still work.
+        /// </summary>
+        public virtual bool HardcodeExclude => false;
 
         #endregion
 
@@ -340,9 +447,9 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Brooklyn Bosses",          "Loot/Tables/Mob/Bosses/PatrolBrooklyn/Subtable/SharedPatrolBrooklynBosses.prototype",          true),
             new("Hightown Bosses",          "Loot/Tables/Mob/Bosses/PatrolHightown/Subtable/SharedPatrolHightownBosses.prototype",          true),
             new("Midtown Bosses",           "Loot/Tables/Mob/Bosses/PatrolMidtown/Subtable/SharedPatrolMidtownBosses.prototype",            true),
-            new("Brooklyn Bosses (Cosmic)", "Loot/Tables/Mob/Bosses/PatrolBrooklyn/Subtable/SharedPatrolBrooklynBossesCosmic.prototype",    false),
-            new("Hightown Bosses (Cosmic)", "Loot/Tables/Mob/Bosses/PatrolHightown/Subtable/SharedPatrolHightownBossesCosmic.prototype",    false),
-            new("Brooklyn Bosses (All)",    "Loot/Tables/Mob/Bosses/PatrolBrooklyn/Subtable/SharedPatrolBrooklynBossesAll.prototype",       false),
+            //new("Brooklyn Bosses (Cosmic)", "Loot/Tables/Mob/Bosses/PatrolBrooklyn/Subtable/SharedPatrolBrooklynBossesCosmic.prototype",    false),
+            //new("Hightown Bosses (Cosmic)", "Loot/Tables/Mob/Bosses/PatrolHightown/Subtable/SharedPatrolHightownBossesCosmic.prototype",    false),
+            //new("Brooklyn Bosses (All)",    "Loot/Tables/Mob/Bosses/PatrolBrooklyn/Subtable/SharedPatrolBrooklynBossesAll.prototype",       false),
         };
 
         #endregion
@@ -357,7 +464,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         #endregion
 
-        #region Construct Render Identity
+        #region Construct Render 
 
         protected IncursionEnemyController(Game game)
         {
@@ -379,7 +486,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         /// <summary>
         /// Boss entity prototype spawned as the combat body itself (no render override).
         /// When non-Invalid, the spawn spec's EntityRef is overridden to this boss prototype,
-        /// and no ClientRenderPrototypeRef is set — the boss renders as itself.
+        /// and no ClientRenderPrototypeRef is set - the boss renders as itself.
         /// <see cref="PrototypeId.Invalid"/> => not a boss spawn (check Avatar/TeamUp refs).
         /// </summary>
         public virtual PrototypeId RenderBossRef => PrototypeId.Invalid;
@@ -390,6 +497,21 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         /// group damage by the correct controller class rather than guessing from display names.
         /// </summary>
         public virtual string EnemyType => "Controller";
+
+        /// <summary>
+        /// Prefix used for the per-encounter log filename. Default is "Incursion_{EnemyType}".
+        /// Calamity entities override this to "Calamity_Vampire" (or similar) so their logs
+        /// are grouped separately from standard Incursion logs.
+        /// </summary>
+        public virtual string LogFilePrefix => $"Incursion_{EnemyType}";
+
+        /// <summary>
+        /// When non-null, overrides the display-name portion of the log filename.
+        /// Calamity entities set this to a short identifier derived from their class name
+        /// (e.g. "BossBloodLord") so logs read "Calamity_Vampire_BossBloodLord_...log".
+        /// When null, the collator falls back to the invader label name.
+        /// </summary>
+        public virtual string LogTrueName => null;
 
         /// <summary>
         /// Optional costume pool with per-entry enabled toggles. When non-null, one enabled
@@ -555,6 +677,8 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             _channelStartTime = TimeSpan.Zero;
             _channelPowerRef = PrototypeId.Invalid;
             _channelMaxMs = 0;
+            _powerExecStartTime = TimeSpan.Zero;
+            _powerExecPowerRef = PrototypeId.Invalid;
         }
 
         /// <summary>Stops the think loop and releases scheduled events.</summary>
@@ -568,7 +692,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         #endregion
 
-        #region Combat Enablement
+        #region Combat Enable
 
         // Hostile to Players but not to standard enemy alliances (other NPCs ignore it).
         private const string HostileAllianceName = "Entity/Alliances/EnemiesOmitFriendlies.prototype";
@@ -580,9 +704,13 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         // whose nameplate is provided by a proxy entity instead.
         private const string BossNoOverheadRankName = "Mods/Ranks/BossNoOverheadInfo.prototype";
 
+        // Champion rank - non-boss rank that doesn't show on the minimap.
+        private const string ChampionRankName = "Mods/Ranks/Champion.prototype";
+
         private static PrototypeId s_hostileAllianceRef = PrototypeId.Invalid;
         private static PrototypeId s_bossRankRef = PrototypeId.Invalid;
         private static PrototypeId s_bossNoOverheadRankRef = PrototypeId.Invalid;
+        private static PrototypeId s_championRankRef = PrototypeId.Invalid;
 
         /// <summary>
         /// Converts the spawned host into a mortal, hostile, mobile combatant regardless of
@@ -594,6 +722,12 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             agent.Properties[PropertyEnum.Unaffectable] = false;
             agent.Properties[PropertyEnum.Invulnerable] = false;
 
+            // Some boss prototypes (e.g. Kaecilius) have a HealthMin passive that sets
+            // HealthMin to 1, which prevents health from ever reaching 0 via Math.Clamp.
+            // Reset it to 0 so the boss can actually die.
+            if (agent.Properties.HasProperty(PropertyEnum.HealthMin))
+                agent.Properties[PropertyEnum.HealthMin] = 0L;
+
             // Hub NPCs can start dormant, leaving the invader inert/invisible.
             agent.Properties[PropertyEnum.Dormant] = false;
 
@@ -601,7 +735,11 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             // NoEntityCollide disables entity-entity physical blocking and nav mesh
             // influence while preserving power targeting and damage. Players can walk
             // through the invisible combat body to reach the visible rendered avatar.
-            agent.Properties[PropertyEnum.NoEntityCollide] = true;
+            // Only apply when the combat body is invisible (avatar/teamup render type).
+            // Boss-type enemies (RenderBossRef) ARE the visible body and need nav mesh
+            // for pathfinding, so NoEntityCollide must NOT be set for them.
+            if (RenderAvatarRef != PrototypeId.Invalid || RenderTeamupRef != PrototypeId.Invalid)
+                agent.Properties[PropertyEnum.NoEntityCollide] = true;
 
             // Detach from any mission/encounter so cross-encounter hostility checks don't
             // block fighting with players.
@@ -613,23 +751,56 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             if (hostileAlliance != PrototypeId.Invalid)
                 agent.Properties[PropertyEnum.AllianceOverride] = hostileAlliance;
 
-            // Promote to Boss rank for presence and damage scaling.
-            // Non-avatar enemies (TeamUp, Boss) use BossNoOverheadInfo to hide their
-            // native nameplate; the red nameplate is provided by the proxy entity.
-            // Avatar enemies already render as avatars and get prestige coloring natively,
-            // so they keep the standard Boss rank with its overhead info.
-            PrototypeId bossRank = (RenderAvatarRef == PrototypeId.Invalid)
-                ? ResolveBossNoOverheadRank()
-                : ResolveBossRank();
-            if (bossRank != PrototypeId.Invalid)
+            // Resolve rank: explicit override > UseBossRank logic.
+            PrototypeId rankRef = RankOverride;
+            if (rankRef == PrototypeId.Invalid)
             {
-                agent.Properties[PropertyEnum.Rank] = bossRank;
+                if (UseBossRank == false)
+                    rankRef = ResolveChampionRank();
+                else if (RenderAvatarRef == PrototypeId.Invalid)
+                    rankRef = ResolveBossNoOverheadRank();
+                else
+                    rankRef = ResolveBossRank();
+            }
+            if (rankRef != PrototypeId.Invalid)
+            {
+                agent.Properties[PropertyEnum.Rank] = rankRef;
             }
 
             if (agent.IsHostileToPlayers() == false)
                 Logger.Warn($"[IncursionEnemy] {InvaderLabel} ('{agent.PrototypeName}') is NOT hostile to players " +
                             "after override; players may be unable to damage it.");
+
+            // Force-create a locomotor if the host prototype is immobile (e.g. mob base
+            // prototypes that set Locomotion.Immobile = true). Without a locomotor the
+            // agent cannot chase or path, leaving it stuck at the spawn position.
+            if (agent.Locomotor == null)
+            {
+                var fallbackProto = GameDatabase.GetPrototype<AgentPrototype>(
+                    GameDatabase.GetPrototypeRefByName(FallbackLocomotionProtoName));
+                if (fallbackProto?.Locomotion != null && fallbackProto.Locomotion.Immobile == false)
+                {
+                    if (agent.ForceCreateLocomotor(fallbackProto.Locomotion))
+                        Logger.Info($"[IncursionEnemy] {InvaderLabel} host prototype is immobile; created fallback locomotor.");
+                    else
+                        Logger.Warn($"[IncursionEnemy] {InvaderLabel} ForceCreateLocomotor failed.");
+                }
+                else
+                {
+                    Logger.Warn($"[IncursionEnemy] {InvaderLabel} host prototype is immobile and fallback locomotion is unavailable.");
+                }
+            }
+
+            // Boss prototypes have ObjectiveInfo.EdgeEnabled baked into their data, which
+            // causes WorldEntityPrototype.DiscoverInRegion to return true. On enter world,
+            // the entity is auto-discovered and added to the map. Setting MapTracking = false
+            // does not prevent this because DiscoverInRegion is computed from the prototype,
+            // not from agent properties. Undiscover the entity to remove it from the map.
+            if (agent.IsInWorld && agent.Region != null && agent.Region.IsEntityDiscovered(agent))
+                agent.Region.UndiscoverEntity(agent, false);
         }
+
+        private const string FallbackLocomotionProtoName = "Entity/Characters/Mobs/SpiderClones/SpidermanCloneSuperiorBase.prototype";
 
         private static PrototypeId ResolveHostileAlliance()
         {
@@ -645,11 +816,18 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             return s_bossRankRef;
         }
 
-        private static PrototypeId ResolveBossNoOverheadRank()
+        protected static PrototypeId ResolveBossNoOverheadRank()
         {
             if (s_bossNoOverheadRankRef == PrototypeId.Invalid)
                 s_bossNoOverheadRankRef = GameDatabase.GetPrototypeRefByName(BossNoOverheadRankName);
             return s_bossNoOverheadRankRef;
+        }
+
+        private static PrototypeId ResolveChampionRank()
+        {
+            if (s_championRankRef == PrototypeId.Invalid)
+                s_championRankRef = GameDatabase.GetPrototypeRefByName(ChampionRankName);
+            return s_championRankRef;
         }
 
         #endregion
@@ -701,8 +879,8 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
                        $"from {enabledTables.Count} enabled pool(s) (event {eventType}).");
         }
 
-        /// <summary>Removes all existing death-loot table properties from the host body.</summary>
-        private static void RemoveDeathLootTables(Agent agent)
+        /// <summary>Removes all existing death-loot table properties from the agent.</summary>
+        public static void RemoveDeathLootTables(Agent agent)
         {
             List<PropertyId> toRemove = new();
             foreach (var kvp in agent.Properties.IteratePropertyRange(PropertyEnum.LootTablePrototype))
@@ -739,7 +917,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         #endregion
 
-        #region Combat Scaling Spawn 
+        #region Combat Scaling  
 
         /// <summary>
         /// Applies combat scaling: incoming damage vulnerability and outgoing damage scaling.
@@ -747,18 +925,11 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         /// </summary>
         protected virtual void ApplyCombatScaling(Agent agent)
         {
+            // Incoming damage scaling is now handled by the PowerPayload system via
+            // IncursionManager.GetIncomingDamageScale(), which queries the controller's
+            // DamageTakenScale * DamageTakenMultiplier directly. This avoids the
+            // DamagePctVulnerability property being overridden by conditions (e.g. AvatarOfCyttorak).
             float damageTakenScale = DamageTakenScale * DamageTakenMultiplier;
-            if (damageTakenScale > 1.0f)
-            {
-                float vulnerability = damageTakenScale - 1.0f;
-                agent.Properties[PropertyEnum.DamagePctVulnerability, DamageType.Any] = vulnerability;
-            }
-            else if (damageTakenScale < 1.0f)
-            {
-                // Below 1.0 = less damage than baseline. Use negative vulnerability (resistance).
-                float resistance = 1.0f - damageTakenScale;
-                agent.Properties[PropertyEnum.DamagePctVulnerability, DamageType.Any] = -resistance;
-            }
 
             // Apply movement speed multiplier.
             float speedMult = MovementSpeedMult;
@@ -902,6 +1073,57 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         }
 
         /// <summary>
+        /// Returns the full incoming damage scale (DamageTakenScale * DamageTakenMultiplier).
+        /// Queried by the damage pipeline through <see cref="Populations.IncursionManager"/>
+        /// to apply per-enemy damage vulnerability directly in PowerPayload, bypassing the
+        /// DamagePctVulnerability property which can be overridden by conditions.
+        /// </summary>
+        public float GetIncomingDamageScale()
+        {
+            return DamageTakenScale * DamageTakenMultiplier * GetAdditionalResilienceMultiplier();
+        }
+
+        /// <summary>
+        /// Returns the current additional resilience multiplier (0..1, where 1.0 = no mitigation).
+        /// During the first <see cref="AdditionalResilienceFullDurationSec"/> seconds after waking,
+        /// returns <see cref="AdditionalResilienceMax"/>. Then linearly interpolates to 1.0
+        /// over the remaining time until <see cref="AdditionalResilienceDecayDurationSec"/>.
+        /// </summary>
+        protected virtual float GetAdditionalResilienceMultiplier()
+        {
+            if (_resilienceActive == false) return 1.0f;
+
+            float elapsedSec = (float)(Game.CurrentTime - _resilienceStartTime).TotalSeconds;
+
+            if (elapsedSec >= AdditionalResilienceDecayDurationSec)
+            {
+                _resilienceActive = false;
+                return 1.0f;
+            }
+
+            if (elapsedSec <= AdditionalResilienceFullDurationSec)
+                return AdditionalResilienceMax;
+
+            // Linear interpolation from AdditionalResilienceMax to 1.0
+            float t = (elapsedSec - AdditionalResilienceFullDurationSec)
+                      / (AdditionalResilienceDecayDurationSec - AdditionalResilienceFullDurationSec);
+            return AdditionalResilienceMax + (1.0f - AdditionalResilienceMax) * t;
+        }
+
+        /// <summary>
+        /// Activates (or refreshes) the additional resilience window, resetting the decay timer.
+        /// Called automatically when the enemy is first woken by a nearby player.
+        /// Subclasses may call this on phase changes to re-trigger resilience.
+        /// </summary>
+        protected void RefreshAdditionalResilience()
+        {
+            _resilienceStartTime = Game.CurrentTime;
+            _resilienceActive = true;
+            if (IsIncursionLoggingEnabled)
+                Logger.Info($"[IncursionEnemy:Resilience] {InvaderLabel} additional resilience activated (max={AdditionalResilienceMax}, full={AdditionalResilienceFullDurationSec}s, decay={AdditionalResilienceDecayDurationSec}s).");
+        }
+
+        /// <summary>
         /// Builds a map from child effect powers to their parent (root) power by
         /// recursively following <see cref="PowerPrototype.ActionsTriggeredOnPowerEvent"/> chains.
         /// </summary>
@@ -946,7 +1168,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         #endregion
 
-        #region Logging & Labels
+        #region Logging 
 
         /// <summary>Logs a setup/diagnostic line only when <see cref="VerboseLogging"/> is enabled.</summary>
         protected void LogVerbose(string message)
@@ -1013,7 +1235,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         #endregion
 
-        #region Locomotion Diagnostics
+        #region Locomotion 
 
         /// <summary>
         /// Emits a one-line locomotion diagnostic for the invader.
@@ -1116,6 +1338,17 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
                 Logger.Info($"[IncursionEnemy:Intro] {InvaderLabel} entrance intro started ({IntroDurationMs}ms, attackRange x{IntroAttackRangeMultiplier}).");
         }
 
+        /// <summary>
+        /// Defers BeginIntro to the first think tick. This gives the client a full network
+        /// tick to process the proxy spawn + attachment before intro VFX triggers AOI
+        /// proximity updates that can expose the SheHulk mesh on the nameplate proxy.
+        /// </summary>
+        public void ScheduleIntro(Agent agent)
+        {
+            if (_disposed || agent == null || agent.IsAliveInWorld == false) return;
+            _pendingIntro = true;
+        }
+
         private void PlayIntroVfxInternal(Agent agent)
         {
             if (_introVfxPlayed) return;
@@ -1153,7 +1386,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
                 Logger.Info($"[IncursionEnemy:Intro] {InvaderLabel} overhead text: 0x{(ulong)chosen:X16}");
         }
 
-        private bool IsInIntroState()
+        protected bool IsInIntroState()
         {
             if (_introActive == false) return false;
             if (Game.CurrentTime >= _introEndTime)
@@ -1166,7 +1399,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             return true;
         }
 
-        private float GetEffectiveAttackRange()
+        protected float GetEffectiveAttackRange()
         {
             float range = AttackRange;
             if (IsInIntroState())
@@ -1193,6 +1426,34 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         {
             Agent agent = GetAgent();
 
+            // Fire deferred proxy configuration on the first think tick - this gives the
+            // client a full network tick to process the bare proxy entity (with only
+            // spec-level properties) before any post-spawn property writes occur.
+            // See SpawnNameplateProxyDeferred for details on why this matters.
+            if (_pendingProxyConfig)
+            {
+                _pendingProxyConfig = false;
+                ConfigureSpawnedProxy(agent);
+                _introDelayTicks = 1;  // delay intro by 1 more tick after proxy config
+            }
+
+            // Fire deferred intro one tick AFTER proxy config completes - this gives the
+            // client a full network tick to process the proxy config property replication
+            // (loot strip, power strip, attach) before the intro VFX sends AOI proximity
+            // updates that can cause the client to re-process the avatar pawn.
+            if (_pendingIntro)
+            {
+                if (_introDelayTicks > 0)
+                {
+                    _introDelayTicks--;
+                }
+                else
+                {
+                    _pendingIntro = false;
+                    BeginIntro(agent);
+                }
+            }
+
             // Safety: if the agent is invisible for any reason (death, stealth, etc.),
             // make sure the spoof nameplate is cleared so it doesn't float without a body.
             // ClearSpoofAvatarPlayerName() is a no-op once the name is already empty.
@@ -1205,6 +1466,21 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             {
                 ThinkDying(agent);
                 return;
+            }
+
+            // Forced death check: some boss prototypes (e.g. Kaecilius) have a HealthMin
+            // passive that clamps health to 1, preventing the normal death pipeline from
+            // ever firing (health never reaches 0, so Kill() is never called). If the agent
+            // is alive in world but its health has dropped to 1 or below, force-kill it so
+            // the dying grace period can proceed.
+            if (agent != null && agent.IsAliveInWorld && agent.Properties[PropertyEnum.Health] <= 1L)
+            {
+                long healthMax = agent.Properties[PropertyEnum.HealthMax];
+                if (IsIncursionLoggingEnabled)
+                    Logger.Info($"[IncursionEnemy:Death] {InvaderLabel} health reached {agent.Properties[PropertyEnum.Health]}/{healthMax} - force-killing to bypass HealthMin passive.");
+                IncursionLogCollator.WriteLine(AgentId, $"[IncursionEnemy:Death] Force-kill triggered (health={agent.Properties[PropertyEnum.Health]}, HealthMin passive bypass).");
+                try { agent.Kill(null, KillFlags.NoLoot | KillFlags.NoExp); }
+                catch { /* agent may already be destroyed */ }
             }
 
             if (agent == null || agent.IsAliveInWorld == false)
@@ -1280,12 +1556,22 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
                 // Freeze movement while executing a non-movement power so the combat body
                 // stays in sync with the client's rendered animation.
-                if (IsExecutingNonMovementPower(agent) == false)
+                // Bosses that cast without matching animations (e.g. BloodLord) opt out.
+                // Per-power CanMoveDuringPower overrides the freeze for specific abilities.
+                if (FreezeMovementDuringPower == false
+                    || IsExecutingNonMovementPower(agent) == false
+                    || (agent.ActivePowerRef != PrototypeId.Invalid && CanMoveDuringPower(agent.ActivePowerRef)))
                     ChaseTarget(agent, target);
 
                 CheckAndStopExpiredChannel(agent);
-                TryUsePower(agent, target);
-                CheckAndApplyImpatience(agent, target);
+
+                // Allow subclasses to do custom pattern-based power casting.
+                // If the override handles power usage this tick, skip standard logic.
+                if (TryCustomPowerCast(agent, target) == false)
+                    TryUsePower(agent, target);
+
+                if (EnableImpatience)
+                    CheckAndApplyImpatience(agent, target);
 
                 if (_diagThinksRemaining > 0)
                 {
@@ -1296,7 +1582,14 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             }
 
             UpdateCombatState(agent, target);
-            CheckAndRecoverIfStuck(agent, target);
+
+            // Safety net: force-end any power that has been executing too long.
+            // This runs BEFORE stuck recovery so that if a power is stuck, it gets
+            // ended here and stuck recovery can then re-engage normally.
+            CheckAndStopStuckPower(agent);
+
+            if (EnableStuckRecovery)
+                CheckAndRecoverIfStuck(agent, target);
             CheckAndStopExpiredChannel(agent);
 
             // Sync the nameplate proxy's position to the combat body.
@@ -1310,6 +1603,145 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         #region Nameplate Proxy
 
         /// <summary>
+        /// Schedules deferred post-spawn configuration of the nameplate proxy.
+        /// The proxy entity is spawned by IncursionManager with only spec-level properties
+        /// (set before spec.Spawn()). All post-spawn operations that write replicated
+        /// properties - loot stripping, power stripping, SetDormant, AttachToEntity -
+        /// are deferred to the first think tick via this method.
+        /// 
+        /// WHY: Post-spawn property writes trigger replication to the client. If they
+        /// happen in the same network tick as spec.Spawn(), the client receives property
+        /// updates while still processing the initial entity creation message. This can
+        /// cause the client to re-process the avatar pawn and assign a default SheHulk
+        /// costume/mesh - the exact visibility bug we're trying to prevent.
+        /// 
+        /// KNOWN BEHAVIOR (documented from in-game observation):
+        /// - NOT setting CostumeCurrent on the spec -> proxy has no mesh (correct, invisible)
+        /// - Setting IsClientEntityHidden + Visible=false on the spec -> client ignores these
+        ///   for modded render-as-avatar entities (does NOT hide the mesh)
+        /// - Writing ANY property on the proxy after spawn -> triggers replication -> client
+        ///   may re-process avatar pawn and assign default SheHulk costume (SHE-HULK VISIBLE)
+        /// - Repeatedly writing Visible=false in Think -> makes it WORSE (more replication)
+        /// - Deferring all post-spawn property writes to first think tick -> client has
+        ///   already processed the bare entity, subsequent replication is less likely to
+        ///   trigger costume assignment (CURRENT APPROACH)
+        /// </summary>
+        public void ScheduleProxyConfig(ulong combatBodyId)
+        {
+            _pendingProxyCombatBodyId = combatBodyId;
+            _pendingProxyConfig = true;
+        }
+
+        /// <summary>
+        /// Performs all post-spawn proxy configuration: loot stripping, power stripping,
+        /// AI disable, dormant, simulate false, and physics attachment. Each operation
+        /// writes replicated properties on the proxy, so they are batched here and deferred
+        /// to the first think tick to avoid racing with the client's entity creation processing.
+        /// </summary>
+        private void ConfigureSpawnedProxy(Agent agent)
+        {
+            if (ProxyEntityId == Entity.InvalidId) return;
+            var proxy = Game.EntityManager.GetEntity<WorldEntity>(ProxyEntityId);
+            if (proxy == null)
+            {
+                ProxyLogger.Warn($"[ProxyConfig] {InvaderLabel} proxy entity {ProxyEntityId} not found.");
+                return;
+            }
+
+            var configDeltaMs = (Game.CurrentTime - _proxySpawnGameTime).TotalMilliseconds;
+            string renderProtoName = proxy.ClientPrototypeRefOverride != PrototypeId.Invalid
+                ? GameDatabase.GetPrototypeName(proxy.ClientPrototypeRefOverride) : "(none)";
+            PrototypeId costumeVal = proxy.Properties[PropertyEnum.CostumeCurrent];
+            string costumeName = costumeVal != PrototypeId.Invalid ? GameDatabase.GetPrototypeName(costumeVal) : "Invalid";
+            bool visibleVal = proxy.Properties[PropertyEnum.Visible];
+            ProxyLogger.Info($"[ProxyConfig] {InvaderLabel} configuring proxy {proxy.Id} (deferred {configDeltaMs:F1}ms after spawn). " +
+                             $"Proxy IsInWorld={proxy.IsInWorld}, Visible={visibleVal}, " +
+                             $"IsClientEntityHidden={proxy.TestStatus(EntityStatus.ClientOnly) == false}, " +
+                             $"IsClientRenderedAsAvatar={proxy.IsClientRenderedAsAvatar}, " +
+                             $"ClientRenderProto='{renderProtoName}', SpoofAvatarWorldInstanceId={proxy.SpoofAvatarWorldInstanceId}, " +
+                             $"CostumeCurrent={costumeName} ({(ulong)costumeVal}).");
+
+            // 1. Strip loot tables - removes LootTablePrototype properties (replication).
+            int lootRemoved = 0;
+            if (proxy is Agent proxyAgent0)
+            {
+                var propsBefore = proxyAgent0.Properties.IteratePropertyRange(PropertyEnum.LootTablePrototype).Count();
+                RemoveDeathLootTables(proxyAgent0);
+                lootRemoved = propsBefore;
+            }
+            ProxyLogger.Info($"[ProxyConfig] {InvaderLabel} stripped {lootRemoved} loot table properties.");
+
+            // 2. Strip all powers - UnassignPower modifies the power collection (replication).
+            int powersRemoved = 0;
+            if (proxy is Agent proxyAgent && proxyAgent.PowerCollection != null)
+            {
+                using var powersHandle = ListPool<PrototypeId>.Instance.Get(out List<PrototypeId> powerRefs);
+                foreach (var kvp in proxyAgent.PowerCollection)
+                    powerRefs.Add(kvp.Value.PowerPrototypeRef);
+                foreach (var powerRef in powerRefs)
+                {
+                    if (proxyAgent.PowerCollection.ContainsPower(powerRef))
+                    {
+                        proxyAgent.UnassignPower(powerRef);
+                        powersRemoved++;
+                    }
+                }
+            }
+            ProxyLogger.Info($"[ProxyConfig] {InvaderLabel} stripped {powersRemoved} powers.");
+
+            // 3. Disable AI - SetDormant is NOT needed here because Dormant=true is set
+            // on the spec before spawn. The entity is already dormant. We only disable
+            // the AI controller to prevent any future think ticks from firing.
+            if (proxy is Agent aiAgent)
+            {
+                aiAgent.AIController?.SetIsEnabled(false);
+                ProxyLogger.Info($"[ProxyConfig] {InvaderLabel} AI disabled (dormant already set on spec).");
+            }
+
+            // 4. Prevent simulation - modifies collection membership (likely no replication).
+            proxy.SetSimulated(false);
+            ProxyLogger.Info($"[ProxyConfig] {InvaderLabel} simulation disabled.");
+
+            // 5. Attach to combat body - writes Properties[AttachedToEntityId] (replication).
+            // This is the last operation because attachment triggers the most visible
+            // client-side reprocessing (the proxy starts following the combat body).
+            if (agent != null && agent.IsInWorld)
+            {
+                // Diagnostic: log CostumeCurrent and key property state BEFORE attach.
+                PrototypeId costumeBefore = proxy.Properties[PropertyEnum.CostumeCurrent];
+                string costumeBeforeName = costumeBefore != PrototypeId.Invalid ? GameDatabase.GetPrototypeName(costumeBefore) : "Invalid";
+                bool visibleBefore = proxy.Properties[PropertyEnum.Visible];
+                var attachedBefore = proxy.Properties.HasProperty(PropertyEnum.AttachedToEntityId);
+                ProxyLogger.Info($"[ProxyConfig] {InvaderLabel} BEFORE attach: CostumeCurrent={costumeBeforeName} ({(ulong)costumeBefore}), " +
+                                 $"Visible={visibleBefore}, HasAttachedToEntityId={attachedBefore}.");
+
+                proxy.AttachToEntity(agent);
+
+                // Diagnostic: log CostumeCurrent and key property state AFTER attach.
+                PrototypeId costumeAfter = proxy.Properties[PropertyEnum.CostumeCurrent];
+                string costumeAfterName = costumeAfter != PrototypeId.Invalid ? GameDatabase.GetPrototypeName(costumeAfter) : "Invalid";
+                bool visibleAfter = proxy.Properties[PropertyEnum.Visible];
+                bool costumeChanged = costumeBefore != costumeAfter;
+                ProxyLogger.Info($"[ProxyConfig] {InvaderLabel} AFTER attach: CostumeCurrent={costumeAfterName} ({(ulong)costumeAfter}), " +
+                                 $"Visible={visibleAfter}, IsAttached={proxy.IsAttachedToEntity}. " +
+                                 $"CostumeChanged={costumeChanged}.");
+                ProxyLogger.Info($"[ProxyConfig] {InvaderLabel} attached proxy to combat body {agent.Id}.");
+            }
+            else
+            {
+                ProxyLogger.Warn($"[ProxyConfig] {InvaderLabel} combat body not in world - proxy not attached.");
+            }
+
+            PrototypeId finalCostume = proxy.Properties[PropertyEnum.CostumeCurrent];
+            string finalCostumeName = finalCostume != PrototypeId.Invalid ? GameDatabase.GetPrototypeName(finalCostume) : "Invalid";
+            bool finalVisible = proxy.Properties[PropertyEnum.Visible];
+            ProxyLogger.Info($"[ProxyConfig] {InvaderLabel} proxy configuration complete. " +
+                             $"Final state: Visible={finalVisible}, " +
+                             $"IsInWorld={proxy.IsInWorld}, IsAttached={proxy.IsAttachedToEntity}, " +
+                             $"CostumeCurrent={finalCostumeName} ({(ulong)finalCostume}).");
+        }
+
+        /// <summary>
         /// Syncs the invisible nameplate proxy's position to the combat body.
         /// The proxy is attached via physics, but we also update position explicitly
         /// as a fallback in case the attachment doesn't propagate for invisible entities.
@@ -1320,6 +1752,11 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             var proxy = Game.EntityManager.GetEntity<WorldEntity>(ProxyEntityId);
             if (proxy == null || proxy.IsInWorld == false) return;
             if (agent == null || agent.IsInWorld == false) return;
+
+            // Do NOT touch proxy properties here - repeatedly setting Visible=false
+            // triggers property replication to the client, which can cause it to
+            // re-process the avatar pawn and assign a default SheHulk costume/mesh.
+            // The proxy is hidden at spawn time by NOT setting CostumeCurrent.
 
             Vector3 proxyPos = proxy.RegionLocation.Position;
             Vector3 agentPos = agent.RegionLocation.Position;
@@ -1486,6 +1923,11 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         {
             if (target == null) return;
 
+            // Don't interrupt a power that's currently animating - let it finish.
+            // EXCEPTION: if the power has been running too long, the safety net in
+            // CheckAndStopStuckPower will have already force-ended it before we get here.
+            if (agent.IsExecutingPower) return;
+
             TimeSpan now = Game.CurrentTime;
 
             // Sample position every 2 seconds
@@ -1644,6 +2086,11 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         {
             if (target == null) return;
 
+            // Don't interrupt a power that's currently animating - let it finish.
+            // PerformCombatReset would cancel it mid-cast, causing the boss to
+            // slide out of its animation prematurely.
+            if (agent.IsExecutingPower) return;
+
             TimeSpan now = Game.CurrentTime;
             float distSq = Vector3.DistanceSquared2D(agent.RegionLocation.Position, target.RegionLocation.Position);
 
@@ -1723,6 +2170,13 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
                 if (IsIncursionLoggingEnabled)
                     Logger.Info($"[IncursionEnemy:Impatience] {InvaderLabel} forced '{GameDatabase.GetPrototypeName(chosen)}' (ready pool={readyPowers.Count}).");
             }
+            else
+            {
+                // Even if the forced activation failed (e.g. out of melee range), reset the
+                // idle timer so impatience doesn't fire every think tick.  The thrall gets
+                // a full threshold cycle to close distance before impatience tries again.
+                _lastSuccessfulAttackTime = now;
+            }
         }
 
         /// <summary>
@@ -1758,22 +2212,71 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         #endregion
 
-        #region Channel Power Stop
+        #region Channel Stop
+
+        // Default timeout for channeled powers that don't have an explicit MaxChannelMs
+        // in the power table. Prevents enemies from being permanently locked in a
+        // channeled power state when FreezeMovementDuringPower stops locomotion.
+        private const int DefaultMaxChannelMs = 3000;
 
         /// <summary>
-        /// Returns the MaxChannelMs for a given power from the power table, or 0 if not listed.
+        /// Returns the MaxChannelMs for a given power from the power table, or a default
+        /// value if the power is channeled but not explicitly listed.
         /// </summary>
-        private int GetMaxChannelMsForPower(PrototypeId powerRef)
+        private int GetMaxChannelMsForPower(PrototypeId powerRef, Power power = null)
         {
             IncursionPowerEntry[] table = PowerTable;
-            if (table == null) return 0;
-
-            foreach (var entry in table)
+            if (table != null)
             {
-                if (entry.Power == powerRef)
-                    return entry.MaxChannelMs;
+                foreach (var entry in table)
+                {
+                    if (entry.Power == powerRef)
+                        return entry.MaxChannelMs;
+                }
             }
+
+            // For channeled powers not in the table, use the default timeout so they
+            // don't lock the enemy in a channeling state forever.
+            // Use IsChannelingPower() (prototype check) instead of IsChanneling (runtime
+            // phase) because the power may still be in the Active phase right after
+            // activation and hasn't transitioned to Channeling yet.
+            if (power != null && power.IsChannelingPower())
+                return DefaultMaxChannelMs;
+
+            // For non-channeled powers not in the table, no timeout needed.
             return 0;
+        }
+
+        /// <summary>
+        /// Safety net: if the agent has been executing ANY power for longer than
+        /// DefaultPowerTimeoutMs, force-end it. This catches channeled powers that
+        /// slipped through channel tracking (e.g. phase mismatch at activation time).
+        /// </summary>
+        private void CheckAndStopStuckPower(Agent agent)
+        {
+            if (_powerExecPowerRef == PrototypeId.Invalid)
+                return;
+
+            if (agent.IsExecutingPower == false || agent.ActivePowerRef != _powerExecPowerRef)
+            {
+                _powerExecPowerRef = PrototypeId.Invalid;
+                return;
+            }
+
+            TimeSpan elapsed = Game.CurrentTime - _powerExecStartTime;
+            if (elapsed.TotalMilliseconds >= DefaultPowerTimeoutMs)
+            {
+                Power activePower = agent.GetPower(_powerExecPowerRef);
+                if (activePower != null)
+                {
+                    activePower.EndPower(EndPowerFlags.ExplicitCancel | EndPowerFlags.Interrupting);
+                    if (IsIncursionLoggingEnabled)
+                        Logger.Info($"[IncursionEnemy:StuckPower] {InvaderLabel} force-ended '{GameDatabase.GetPrototypeName(_powerExecPowerRef)}' after {(int)elapsed.TotalMilliseconds}ms (safety net).");
+                }
+                _powerExecPowerRef = PrototypeId.Invalid;
+                _channelPowerRef = PrototypeId.Invalid;
+                _channelMaxMs = 0;
+            }
         }
 
         /// <summary>
@@ -1805,6 +2308,8 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
                     IncursionLogCollator.WriteLine(AgentId, $"[IncursionEnemy:Channel] Stopped '{GameDatabase.GetPrototypeName(_channelPowerRef)}' after {(int)elapsed.TotalMilliseconds}ms.");
                 }
 
+                // EndPower clears ActivePowerRef so IsExecutingPower becomes false,
+                // allowing the next think tick to resume movement via ChaseTarget.
                 _channelPowerRef = PrototypeId.Invalid;
                 _channelMaxMs = 0;
             }
@@ -1820,7 +2325,9 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             if (region == null) return null;
 
             Vector3 selfPos = agent.RegionLocation.Position;
-            float bestDistSq = ChaseRange * ChaseRange;
+            // Use WakeRadius until first engagement, then ChaseRange forever.
+            float effectiveRange = _permanentAggro ? ChaseRange : WakeRadius;
+            float bestDistSq = effectiveRange * effectiveRange;
             Avatar nearest = null;
 
             foreach (Player player in Game.EntityManager.Players)
@@ -1835,6 +2342,18 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
                     bestDistSq = distSq;
                     nearest = avatar;
                 }
+            }
+
+            // Once we find a target within wake radius, permanently aggro so we chase forever.
+            if (nearest != null && _permanentAggro == false)
+            {
+                _permanentAggro = true;
+                if (agent != null)
+                    agent.Properties[PropertyEnum.AIAlwaysAggroed] = true;
+                // Activate the wake-up resilience window (extra damage reduction that decays over time).
+                RefreshAdditionalResilience();
+                if (IsIncursionLoggingEnabled)
+                    Logger.Info($"[IncursionEnemy:Wake] {InvaderLabel} woken by player at {bestDistSq:F0}^2 units - permanent aggro enabled.");
             }
 
             return nearest;
@@ -1881,6 +2400,14 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         }
 
         /// <summary>
+        /// Returns true if the power table explicitly allows movement during the given power.
+        /// </summary>
+        private bool CanMoveDuringPower(PrototypeId powerRef)
+        {
+            return FindPowerTableEntry(powerRef)?.CanMoveDuringPower == true;
+        }
+
+        /// <summary>
         /// Computes the cooldown (in ms) for a given power, accounting for explicit table
         /// overrides, ultimate detection, and phase scaling.
         /// </summary>
@@ -1905,6 +2432,10 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         private void TryUsePower(Agent agent, Avatar target)
         {
             if (Powers.Count == 0) return;
+
+            // Don't try to activate a new power while one is already in progress.
+            // CanActivatePower would fail anyway, and this avoids unnecessary work.
+            if (agent.IsExecutingPower) return;
 
             // If we're stuck in a channeled power, stop it before trying anything new.
             if (_channelPowerRef != PrototypeId.Invalid && agent.IsExecutingPower && agent.ActivePowerRef == _channelPowerRef)
@@ -1995,8 +2526,15 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             ulong targetId = target.Id;
             Vector3 targetPos = target.RegionLocation.Position;
 
-            if (agent.CanActivatePower(power, targetId, targetPos) != PowerUseResult.Success)
+            PowerUseResult canActivate = agent.CanActivatePower(power, targetId, targetPos);
+            if (canActivate != PowerUseResult.Success)
+            {
+                if (IsIncursionLoggingEnabled)
+                {
+                    Logger.Info($"[IncursionEnemy:PowerFail] {InvaderLabel} CanActivatePower failed for '{GameDatabase.GetPrototypeName(powerRef)}': {canActivate}");
+                }
                 return false;
+            }
 
             PowerActivationSettings settings = new(targetId, targetPos, agent.RegionLocation.Position);
             settings.Flags |= PowerActivationSettingsFlags.NotifyOwner;
@@ -2009,11 +2547,15 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
                 // Stop locomotion for non-movement powers so the combat body doesn't drift
                 // away from the rendered animation, which causes invisible-damage desync.
-                if (power.IsPartOfAMovementPower() == false)
+                // Bosses that opt out of FreezeMovementDuringPower (e.g. BloodLord) keep moving.
+                // Per-power CanMoveDuringPower overrides the freeze for specific abilities.
+                if (FreezeMovementDuringPower && power.IsPartOfAMovementPower() == false && CanMoveDuringPower(powerRef) == false)
                     agent.Locomotor?.Stop();
 
-                // Track channeled powers so we can forcibly stop them after MaxChannelMs
-                int maxChannelMs = GetMaxChannelMsForPower(powerRef);
+                // Track channeled powers so we can forcibly stop them after MaxChannelMs.
+                // Pass the power instance so GetMaxChannelMsForPower can detect channeled
+                // powers not explicitly listed in the table and apply the default timeout.
+                int maxChannelMs = GetMaxChannelMsForPower(powerRef, power);
                 if (maxChannelMs > 0)
                 {
                     _channelStartTime = Game.CurrentTime;
@@ -2022,11 +2564,100 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
                     LogVerbose($"[IncursionEnemy] {InvaderLabel} started channeled '{GameDatabase.GetPrototypeName(powerRef)}' (max {maxChannelMs}ms).");
                 }
 
+                // Safety net: track ALL power executions so we can force-end any that
+                // run too long, even if channel tracking didn't start.
+                _powerExecStartTime = Game.CurrentTime;
+                _powerExecPowerRef = powerRef;
+
                 LogVerbose($"[IncursionEnemy] {InvaderLabel} used '{GameDatabase.GetPrototypeName(powerRef)}' (damage scale x{damageScale:0.###}) on target {targetId}.");
             }
 
             return activated;
         }
+
+        /// <summary>
+        /// Activates the given power at a specific world position. Used for pattern-based
+        /// casting (e.g. cross AOE around the boss). Assigns the power if not already present.
+        /// </summary>
+        protected bool ActivatePowerAtPosition(Agent agent, PrototypeId powerRef, Vector3 targetPos, bool skipActivationCheck = false)
+        {
+            if (powerRef == PrototypeId.Invalid) return false;
+
+            Power power = agent.GetPower(powerRef);
+            if (power == null)
+            {
+                PowerIndexProperties indexProps = new(0, agent.CharacterLevel, agent.CombatLevel);
+                if (agent.AssignPower(powerRef, indexProps) == null)
+                    return false;
+                power = agent.GetPower(powerRef);
+                if (power == null) return false;
+            }
+
+            // Pattern casts (e.g. cross AOE) activate multiple powers in a single tick.
+            // After the first cast, IsExecutingPower is true, which would block subsequent
+            // casts via CanActivatePower. skipActivationCheck bypasses this for pattern casts.
+            if (skipActivationCheck == false &&
+                agent.CanActivatePower(power, Entity.InvalidId, targetPos) != PowerUseResult.Success)
+                return false;
+
+            PowerActivationSettings settings = new(Entity.InvalidId, targetPos, agent.RegionLocation.Position);
+            settings.Flags |= PowerActivationSettingsFlags.NotifyOwner;
+            bool activated = agent.ActivatePower(powerRef, ref settings) == PowerUseResult.Success;
+
+            if (activated)
+            {
+                _lastAbilityUseTime = Game.CurrentTime;
+                _lastSuccessfulAttackTime = Game.CurrentTime;
+
+                // Do NOT stop the locomotor here - pattern-cast powers are expected to
+                // play without matching animations (T-pose), and the boss should keep
+                // chasing the target between casts.
+
+                // Track channeled powers and general execution for the safety net.
+                int maxChannelMs = GetMaxChannelMsForPower(powerRef, power);
+                if (maxChannelMs > 0)
+                {
+                    _channelStartTime = Game.CurrentTime;
+                    _channelPowerRef = powerRef;
+                    _channelMaxMs = maxChannelMs;
+                }
+                _powerExecStartTime = Game.CurrentTime;
+                _powerExecPowerRef = powerRef;
+            }
+
+            return activated;
+        }
+
+        /// <summary>
+        /// Virtual hook called during the think loop before standard power logic.
+        /// Override to implement custom pattern-based power casting (e.g. cross AOE).
+        /// Return true to suppress standard TryUsePower this tick, false to fall through.
+        /// </summary>
+        protected virtual bool TryCustomPowerCast(Agent agent, Avatar target) => false;
+
+        /// <summary>
+        /// When true (default), the enemy freezes movement while executing a non-movement power
+        /// to stay in sync with the client's rendered animation. Override to false for bosses
+        /// that cast powers without matching animations (e.g. BloodLord) so they keep chasing.
+        /// </summary>
+        protected virtual bool FreezeMovementDuringPower => true;
+
+        /// <summary>
+        /// When true (default), the impatience mechanic runs: if the enemy hasn't landed a
+        /// successful attack within the threshold, it halves cooldowns and forces a power.
+        /// Trash mobs that spawn and wait (e.g. Vampire Thralls) should override to false
+        /// since they don't need aggressive pressure - only IncursionEnemies that spawn near
+        /// the player and hunt immediately benefit from it.
+        /// </summary>
+        protected virtual bool EnableImpatience => true;
+
+        /// <summary>
+        /// When true (default), the stuck-recovery mechanic runs: if the enemy hasn't moved
+        /// or used an ability for ~6s, it performs a combat reset and recovery action.
+        /// Trash mobs that spawn far from the player and need to path to them can disable
+        /// this to avoid false-positive resets during long approach runs.
+        /// </summary>
+        protected virtual bool EnableStuckRecovery => true;
 
         #endregion
 
@@ -2037,6 +2668,12 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             float pct = GetHealthPct(agent);
             int phase = GetPhaseForHealthPct(pct);
             if (phase == _phase) return;
+
+            // Phase only advances forward - healing (e.g. BloodLord phase heal) can push
+            // health above the threshold, but we never revert to a lower phase. This prevents
+            // the same phase transition from re-triggering and re-healing repeatedly.
+            if (phase < _phase)
+                return;
 
             _phase = phase;
             try
@@ -2069,7 +2706,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         #endregion
 
-        #region Lifecycle Track Priority
+        #region Lifecycle  
 
         public TimeSpan SpawnTime => _spawnTime;
         public TimeSpan LastCombatTime => _lastCombatTime;
@@ -2140,6 +2777,96 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         public string GetLabel() => InvaderLabel;
 
+        /// <summary>Shorthand enemy name for hunt tracking (e.g. "CaptainAmerica", "BossMODOK").</summary>
+        public string HuntShorthand => StripControllerPrefix(GetType().Name);
+
+        /// <summary>True if the hunt kill has already been recorded for this controller.</summary>
+        public bool HuntKillRecorded => _huntKillRecorded;
+
+        /// <summary>Marks the hunt kill as recorded so it's not double-counted.</summary>
+        public void MarkHuntKillRecorded() => _huntKillRecorded = true;
+
+        #endregion
+
+        #region Conditions
+
+        /// <summary>
+        /// Applies a condition from a power prototype directly to the agent's ConditionCollection,
+        /// bypassing power activation entirely. No animation plays, no T-pose risk.
+        /// Uses the same InitializeFromPower pattern as IncursionEnemyBossOnslaught.
+        /// </summary>
+        protected void ApplyConditionFromPower(Agent agent, PrototypeId powerProtoRef)
+        {
+            if (agent == null || powerProtoRef == PrototypeId.Invalid) return;
+
+            var conditionCollection = agent.ConditionCollection;
+            if (conditionCollection == null) return;
+
+            ConditionPrototype conditionProto = GetConditionPrototypeFromPower(powerProtoRef);
+            if (conditionProto == null) return;
+
+            PowerPayload payload = CreateMinimalPayload(powerProtoRef, agent);
+            if (payload == null) return;
+
+            Condition condition = ConditionCollection.AllocateCondition();
+            condition.InitializeFromPower(
+                conditionCollection.NextConditionId, payload, conditionProto, TimeSpan.Zero);
+            conditionCollection.AddCondition(condition);
+        }
+
+        /// <summary>
+        /// Applies conditions from multiple power prototypes in sequence.
+        /// </summary>
+        protected void ApplyConditionsFromPowers(Agent agent, PrototypeId[] powerProtoRefs)
+        {
+            if (agent == null || powerProtoRefs == null) return;
+            foreach (PrototypeId powerRef in powerProtoRefs)
+                ApplyConditionFromPower(agent, powerRef);
+        }
+
+        /// <summary>
+        /// Extracts the first ConditionPrototype from a power's AppliesConditions mixin list.
+        /// </summary>
+        protected static ConditionPrototype GetConditionPrototypeFromPower(PrototypeId powerProtoRef)
+        {
+            if (powerProtoRef == PrototypeId.Invalid) return null;
+            var powerProto = powerProtoRef.As<PowerPrototype>();
+            if (powerProto?.AppliesConditions == null) return null;
+            foreach (var item in powerProto.AppliesConditions)
+            {
+                if (item.Prototype is ConditionPrototype conditionProto)
+                    return conditionProto;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Creates a minimal PowerPayload with just enough data for InitializeFromPower.
+        /// Uses reflection to set private/protected setters on PowerPayload and PowerEffectsPacket.
+        /// </summary>
+        protected PowerPayload CreateMinimalPayload(PrototypeId powerProtoRef, Agent agent)
+        {
+            PowerPrototype powerProto = powerProtoRef.As<PowerPrototype>();
+            if (powerProto == null) return null;
+
+            var payload = new PowerPayload();
+            payload.Init(Game);
+
+            typeof(PowerEffectsPacket).GetProperty(nameof(PowerEffectsPacket.PowerPrototype))
+                .SetValue(payload, powerProto);
+            typeof(PowerEffectsPacket).GetProperty(nameof(PowerEffectsPacket.PowerOwnerId))
+                .SetValue(payload, agent.Id);
+            typeof(PowerEffectsPacket).GetProperty(nameof(PowerEffectsPacket.UltimateOwnerId))
+                .SetValue(payload, agent.Id);
+            typeof(PowerEffectsPacket).GetProperty(nameof(PowerEffectsPacket.TargetId))
+                .SetValue(payload, agent.Id);
+
+            typeof(PowerPayload).GetProperty(nameof(PowerPayload.PowerProtoRef))
+                .SetValue(payload, powerProtoRef);
+
+            return payload;
+        }
+
         #endregion
 
         #region Scheduled Event
@@ -2152,3 +2879,4 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         #endregion
     }
 }
+#endregion

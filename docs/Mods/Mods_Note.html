@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MHServerEmu - Area Notes</title>
+<style>
+:root { --bg:#0d0d0d; --surface:#141414; --border:#2a2a2a; --text:#e0e0e0; --muted:#999; --accent:#4a7fb5; --link:#64b5f6; --code:#1e1e1e; }
+* { box-sizing:border-box; }
+html,body { margin:0; height:100%; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+.page { display:flex; height:100vh; }
+.sidebar { width:12%; min-width:160px; border-right:1px solid var(--border); background:var(--bg); }
+.sidebar iframe { width:100%; height:100%; border:none; }
+.content { flex:1; overflow-y:auto; }
+header { background:linear-gradient(90deg,#0a1520 0%,#0d0d0d 100%); border-bottom:2px solid var(--accent); padding:1.2rem 1rem; text-align:center; }
+header h1 { margin:0; font-size:2rem; color:#fff; }
+header p { margin:0.5rem 0 0; color:var(--muted); }
+.container { max-width:1000px; margin:0 auto; padding:2rem 1.5rem; }
+h2 { color:#fff; border-bottom:1px solid var(--border); padding-bottom:0.5rem; margin-top:2.5rem; font-size:1.4rem; }
+h3 { color:#fff; margin-top:1.5rem; font-size:1.1rem; }
+a { color:var(--link); text-decoration:none; }
+a:hover { text-decoration:underline; }
+ul,ol { padding-left:1.4rem; }
+li { margin-bottom:0.4rem; }
+table { width:100%; border-collapse:collapse; margin:1rem 0; font-size:0.95rem; }
+th,td { border:1px solid var(--border); padding:0.5rem 0.7rem; text-align:left; }
+th { background:var(--surface); color:#fff; }
+td { background:#111; }
+code,pre { background:var(--code); border:1px solid var(--border); border-radius:4px; font-family:Consolas,Monaco,'Courier New',monospace; font-size:0.9rem; }
+code { padding:0.15rem 0.35rem; }
+pre { padding:0.8rem; overflow-x:auto; }
+.note { border-left:3px solid var(--accent); background:var(--surface); padding:0.8rem 1rem; margin:1rem 0; border-radius:0 6px 6px 0; }
+footer { text-align:center; padding:1.2rem 1rem; color:var(--muted); font-size:0.9rem; border-top:1px solid var(--border); margin-top:3rem; }
+</style>
+</head>
+<body>
+<div class="page">
+    <div class="sidebar"><iframe src="../marvel_heroes_menu.htm"></iframe></div>
+    <div class="content">
+<header>
+    <h1>Area Notes</h1>
+    <p>place labelled map pins at world positions for area design</p>
+</header>
+<div class="container">
+
+<p>Area Notes is a dev tool for marking world positions with labelled pins . Each note captures a position , category , and optional comment , and spawns an invisible nameplate marker in-world so the label is visible while editing . Notes can be flushed to JSON for use by other tools ( enemy placement , event design , etc. ) .</p>
+
+<div class="note">Requires admin privileges . All note commands are gated on <code>AccountUserLevel.Admin</code> .</div>
+
+<h2>Commands</h2>
+<table>
+<tr><th>Command</th><th>Description</th></tr>
+<tr><td><code>!note place &lt;category&gt; [comment...]</code></td><td>Place a note at your current position . Categories : <code>boss</code> , <code>mob</code> , <code>miniboss</code> , or any custom word . Example : <code>!note place boss good spawn for vampire lord</code></td></tr>
+<tr><td><code>!note list</code></td><td>List all notes in the current region with labels , categories , positions , and comments</td></tr>
+<tr><td><code>!note clear</code></td><td>Clear all notes in the current region and despawn their markers</td></tr>
+<tr><td><code>!note remove &lt;label&gt;</code></td><td>Remove a specific note by label ( e.g. <code>NOTE_BOSS_01</code> ) and despawn its marker</td></tr>
+<tr><td><code>!note save</code></td><td>Flush all notes to a JSON file in <code>Logs/AreaNotes/</code></td></tr>
+<tr><td><code>!note status</code></td><td>Show a summary of all placed notes across all regions</td></tr>
+<tr><td><code>!note clearall</code></td><td>Clear ALL notes across all regions and despawn their markers ( admin only )</td></tr>
+</table>
+
+<h2>Note Labels</h2>
+<p>Notes are auto-labelled with an incrementing per-region , per-category counter :</p>
+<pre>NOTE_BOSS_01
+NOTE_BOSS_02
+NOTE_MOB_01
+NOTE_MINIBOSS_01</pre>
+
+<h2>JSON Export</h2>
+<p><code>!note save</code> writes a timestamped JSON file to <code>Logs/AreaNotes/</code> with the following structure :</p>
+<pre>{
+  "exportedAt": "2026-08-01T15:30:00",
+  "totalNotes": 1,
+  "regions": [
+    {
+      "region": "Entity/Regions/AvengersTowerHUB.prototype",
+      "regionId": 12345,
+      "notes": [
+        {
+          "label": "NOTE_NPC_01",
+          "category": "npc",
+          "position": { "x": -98.75, "y": 268.75, "z": 177.0 },
+          "comment": "Herald of Darkness spawn - next to event vendor machine downstairs to the left",
+          "timestamp": "2026-08-01T15:25:00"
+        }
+      ]
+    }
+  ]
+}</pre>
+
+<h2>In-World Markers</h2>
+<p>Each note spawns an invisible avatar-rendered proxy entity at the noted position . The proxy displays the note label as a red prestige nameplate ( level 5 ) with no visible 3D model . Markers are untargetable , non-hostile , and have AI disabled .</p>
+
+<h2>Implementation Files</h2>
+<table>
+<tr><th>File</th><th>Purpose</th></tr>
+<tr><td><code>NoteCommands.cs</code></td><td>Command group for <code>!note</code> subcommands ( place , list , clear , remove , save , status , clearall )</td></tr>
+<tr><td><code>AreaNoteCollator.cs</code></td><td>Static collator that stores notes , spawns/despawns markers , and exports JSON</td></tr>
+</table>
+
+</div>
+<footer><p> </p></footer>
+    </div>
+</div>
+</body>
+</html>

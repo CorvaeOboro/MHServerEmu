@@ -151,7 +151,21 @@ namespace MHServerEmu.Games.Entities
 
             #region Blacklist Filter
 
-            // Hardcoded blacklist: NEVER auto-activate these entities (overrides everything)
+            // Hardcoded exclusions: NEVER auto-activate these entities (overrides everything).
+            // Calamity mod's Cloak NPC ("Herald of Darkness") - spawned by SpawnVampireBloodRitualCloakNPC.
+            // It's a conversational NPC that triggers the Vampire Blood Ritual event; auto-interacting
+            // would spam the dialog every tick when the player stands near it in Avengers Tower.
+            if (worldEntity.PrototypeDataRef == Regions.Region.CloakNPCRef)
+            {
+                if (logging)
+                {
+                    Logger.Trace($"[ModInteractNearbyAuto] SKIP [{entityName}#{entityId}] - hardcoded exclusion (Cloak NPC / Herald of Darkness)");
+                    ModInteractNearbyAutoLogCollator.WriteLine(Id, $"[ModInteractNearbyAuto_AUTO] SKIP [{entityName}#{entityId}] - hardcoded exclusion (Cloak NPC / Herald of Darkness)");
+                }
+                return AutoInteractResult.Blacklisted;
+            }
+
+            // Config-driven blacklist: NEVER auto-activate entities matching these substrings
             if (blacklist.Length > 0 && blacklist.Any(b => entityName.Contains(b, StringComparison.OrdinalIgnoreCase)))
             {
                 if (logging)

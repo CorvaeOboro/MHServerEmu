@@ -25,5 +25,21 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         protected override float GlobalAttackCooldownMs => 800f;
         protected override float PerPowerCooldownMs => 6000f;
         protected override float DamageScale => 1.0f;
+
+        protected override IncursionPowerEntry[] PowerTable => _powerTable;
+
+        private static readonly IncursionPowerEntry[] _powerTable =
+        {
+            new("Powers/EnemyPowers/Boss/Tombstone/SpinningLariat.prototype",                true,  0.9871f), // 2026-08-01
+            new("Powers/EnemyPowers/Boss/Tombstone/TombstonePunchFIRST.prototype",           true,  0.9812f), // 2026-08-01
+            new("Powers/EnemyPowers/Boss/Tombstone/DisengagingBulletSpray.prototype",        false, 1.6295f), // 2026-07-28
+            new("Powers/EnemyPowers/Boss/Tombstone/DisengagingBulletsprayCombo.prototype",   false, 1.6295f), // 2026-07-28
+            new("Powers/EnemyPowers/Boss/Tombstone/TombstoneCrushingLeap.prototype",         false, 1.2725f), // 2026-07-28
+            new("Powers/EnemyPowers/Boss/Tombstone/TombstoneCrushingLeapEnd.prototype",      false, 1.2725f), // 2026-07-28
+            new("Powers/EnemyPowers/Boss/Tombstone/TombstonePunchSECOND.prototype",          false, 1.0f),
+            new("Powers/EnemyPowers/Passive/SturdyMobNoKnock.prototype",                     false, 1.0f),
+            new("Powers/EnemyPowers/Shared/LeashReturnHeal.prototype",                       false, 1.0f),
+            new("Powers/EnemyPowers/Shared/LeashReturnNegStatusEffectImmune.prototype",      false, 1.0f),
+        };
     }
 }

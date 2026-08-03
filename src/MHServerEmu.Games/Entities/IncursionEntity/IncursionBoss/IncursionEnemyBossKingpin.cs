@@ -26,6 +26,24 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         protected override float PerPowerCooldownMs => 6000f;
         protected override float DamageScale => 1.0f;
 
+        protected override IncursionPowerEntry[] PowerTable => _powerTable;
+
+        private static readonly IncursionPowerEntry[] _powerTable =
+        {
+            new("Powers/EnemyPowers/Boss/Kingpin/PunchKingpin.prototype",                      true,  1.0186f), // 2026-08-01
+            new("Powers/EnemyPowers/Boss/Kingpin/ObliteratorCane.prototype",                   true,  1.0f),
+            new("Powers/EnemyPowers/Boss/Kingpin/SummonBullseye.prototype",                    true,  1.0f),
+            new("Powers/EnemyPowers/Boss/Kingpin/KingpinPreCharge.prototype",                  false, 1.0f),
+            new("Powers/EnemyPowers/Boss/Kingpin/SleepingGasSprayDOT.prototype",               true,  1.8970f), // 2026-08-01
+            new("Powers/EnemyPowers/Boss/Kingpin/Punch3Kingpin.prototype",                     true,  1.0f),
+            new("Powers/EnemyPowers/Boss/Kingpin/SummonElektra.prototype",                     true,  1.1495f), // 2026-08-01
+            new("Powers/EnemyPowers/Passive/SturdyMobNoKnock.prototype",                       false, 1.0f),
+            new("Powers/EnemyPowers/Shared/LeashReturnHeal.prototype",                         false, 1.0f),
+            new("Powers/EnemyPowers/Boss/Kingpin/Punch2Kingpin.prototype",                     true,  1.0f),
+            new("Powers/EnemyPowers/Boss/Kingpin/KingpinCharge.prototype",                     true,  0.5513f), // 2026-08-01
+            new("Powers/EnemyPowers/Shared/LeashReturnNegStatusEffectImmune.prototype",        false, 1.0f),
+        };
+
         // Henchmen: 2-3 elite Hand ninjas, 3-5 champion Maggia bats, 4-6 normal Maggia pistoleros.
         protected override IncursionHenchmanEntry[] HenchmenPool => _henchmen;
         private static readonly IncursionHenchmanEntry[] _henchmen =

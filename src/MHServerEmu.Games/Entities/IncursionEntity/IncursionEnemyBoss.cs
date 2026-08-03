@@ -15,7 +15,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
     /// Incursion Enemy rendered as an existing game boss entity.
     /// Unlike <see cref="IncursionEnemyAvatar"/> (illusion proxy on a generic combat body)
     /// and <see cref="IncursionEnemyTeamup"/> (Team-Up render), a Boss invader spawns the
-    /// actual boss prototype as the combat body — the boss renders and animates as itself.
+    /// actual boss prototype as the combat body - the boss renders and animates as itself.
     /// Powers are harvested from the boss entity's native power collection after spawn,
     /// or overridden by an explicit <see cref="IncursionPowerEntry"/>[] power table.
     /// The controller disables the boss's native AI and drives it through the same
@@ -30,11 +30,11 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         /// <summary>The boss entity prototype spawned as the combat body.</summary>
         public abstract override PrototypeId RenderBossRef { get; }
 
-        // Bosses render as themselves — seal the illusion-proxy refs to Invalid.
+        // Bosses render as themselves - seal the illusion-proxy refs to Invalid.
         public sealed override PrototypeId RenderAvatarRef => PrototypeId.Invalid;
         public sealed override PrototypeId RenderTeamupRef => PrototypeId.Invalid;
 
-        // Boss nameplate should vanish immediately on death — no outro delay.
+        // Boss nameplate should vanish immediately on death - no outro delay.
         protected override int NameplateProxyDestroyDelayMs => 0;
 
         // Suppress intro overhead dialog for boss invaders.
@@ -69,7 +69,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         /// <summary>
         /// Spawns henchmen NPCs around the boss. For each entry in <see cref="HenchmenPool"/>,
         /// rolls a random count between Min and Max and spawns that many NPCs in a ring around
-        /// the boss. Henchmen keep their native AI — they are not incursion-controlled.
+        /// the boss. Henchmen keep their native AI - they are not incursion-controlled.
         /// </summary>
         private void SpawnHenchmen(Agent agent)
         {
@@ -129,7 +129,10 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
                     var henchman = spec.ActiveEntity;
                     if (henchman != null)
+                    {
                         totalSpawned++;
+                        OnHenchmanSpawned(agent, henchman);
+                    }
                     else
                         manager.RemoveSpawnGroup(group.Id);
                 }
@@ -143,6 +146,11 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
                 IncursionLogCollator.WriteLine(EntityId, msg);
             }
         }
+
+        /// <summary>
+        /// Called for each henchman after it spawns. Override to apply buffs, nameplate proxies, etc.
+        /// </summary>
+        protected virtual void OnHenchmanSpawned(Agent boss, WorldEntity henchman) { }
 
         /// <summary>
         /// Harvests usable offensive powers from the boss entity's native power collection.

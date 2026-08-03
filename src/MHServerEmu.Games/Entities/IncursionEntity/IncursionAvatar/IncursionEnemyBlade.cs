@@ -41,22 +41,22 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/Blade/AllOutAssault.prototype",                            true,  0.1116f), // 2026-06-10
+            new("Powers/Player/Blade/AllOutAssault.prototype",                            true,  0.1246f), // 2026-06-10
             new("Powers/Player/Blade/BloodlustHiddenPassive.prototype",                   false, 0.05f),
-            new("Powers/Player/Blade/DeathFromAbove.prototype",                           true,  0.0512f), // 2026-07-08
-            new("Powers/Player/Blade/HandCannon.prototype",                               true,  0.1593f), // 2026-06-10
-            new("Powers/Player/Blade/Helichopter.prototype",                              true,  0.0297f), // 2026-07-08
-            new("Powers/Player/Blade/HemoglycerinGauntlet.prototype",                     true,  0.0682f), // 2026-07-08
-            new("Powers/Player/Blade/HemoglycerinGrenade.prototype",                      true,  0.0678f), // 2026-06-10
-            new("Powers/Player/Blade/JustStayDown.prototype",                             true,  0.0111f), // 2026-06-10
-            new("Powers/Player/Blade/KnifeBarrage.prototype",                             true,  0.0119f), // 2026-06-10
-            new("Powers/Player/Blade/PBAoEGlaive.prototype",                              true,  0.0981f), // 2026-06-10
-            new("Powers/Player/Blade/RapidFire.prototype",                                true,  0.0523f), // 2026-06-10
+            new("Powers/Player/Blade/DeathFromAbove.prototype",                           true,  0.0340f), // 2026-07-08
+            new("Powers/Player/Blade/HandCannon.prototype",                               true,  0.2011f), // 2026-06-10
+            new("Powers/Player/Blade/Helichopter.prototype",                              true,  0.0232f), // 2026-07-08
+            new("Powers/Player/Blade/HemoglycerinGauntlet.prototype",                     true,  0.0592f), // 2026-07-08
+            new("Powers/Player/Blade/HemoglycerinGrenade.prototype",                      true,  0.0562f), // 2026-06-10
+            new("Powers/Player/Blade/JustStayDown.prototype",                             true,  0.0102f), // 2026-06-10
+            new("Powers/Player/Blade/KnifeBarrage.prototype",                             true,  0.0106f), // 2026-06-10
+            new("Powers/Player/Blade/PBAoEGlaive.prototype",                              true,  0.1028f), // 2026-06-10
+            new("Powers/Player/Blade/RapidFire.prototype",                                true,  0.0442f), // 2026-06-10
             new("Powers/Player/Blade/SerumInjection.prototype",                           true,  0.05f),
-            new("Powers/Player/Blade/Shotgun.prototype",                                  true,  0.0776f), // 2026-07-08
-            new("Powers/Player/Blade/StakeThroughTheHeart.prototype",                     true,  0.0397f), // 2026-07-08
-            new("Powers/Player/Blade/StakeThrower.prototype",                             true,  0.0815f), // 2026-06-09
-            new("Powers/Player/Blade/SwordDash.prototype",                                true,  0.1912f), // 2026-06-08
+            new("Powers/Player/Blade/Shotgun.prototype",                                  true,  0.0800f), // 2026-07-29
+            new("Powers/Player/Blade/StakeThroughTheHeart.prototype",                     true,  0.0427f), // 2026-07-08
+            new("Powers/Player/Blade/StakeThrower.prototype",                             true,  0.0807f), // 2026-06-09
+            new("Powers/Player/Blade/SwordDash.prototype",                                true,  0.3659f), // 2026-06-08
             new("Powers/Player/Blade/Talents/ArsenalTalent.prototype",                    false, 0.05f),
             new("Powers/Player/Blade/Talents/BasicCritChanceTalent.prototype",            false, 0.05f),
             new("Powers/Player/Blade/Talents/BerserkerTalent.prototype",                  false, 0.05f),
@@ -75,8 +75,8 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Blade/Traits/BloodLustMechanicTrait.prototype",            false, 0.05f),
             new("Powers/Player/Blade/Traits/DefenseTrait.prototype",                      false, 0.05f),
             new("Powers/Player/Blade/Traits/OffenseTrait.prototype",                      false, 0.05f),
-            new("Powers/Player/Blade/UVGrenade.prototype",                                true,  0.0695f), // 2026-06-10
-            new("Powers/Player/Blade/UnleashGlaive.prototype",                            true,  0.0961f), // 2026-06-10
+            new("Powers/Player/Blade/UVGrenade.prototype",                                true,  0.0688f), // 2026-06-10
+            new("Powers/Player/Blade/UnleashGlaive.prototype",                            true,  0.0886f), // 2026-06-10
             new("Powers/Player/TravelPower/BladeRide.prototype",                          false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/BladeStolenPower.prototype",         false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",                false, 0.05f),

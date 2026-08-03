@@ -111,7 +111,7 @@ namespace MHServerEmu.Games.Missions
                         TerminalCubeShardLogCollator.WriteLine(Player.DatabaseUniqueId, $"[RegionChange] Leaving region {(region != null ? region.PrototypeDataRef.GetName() : "null")}.");
                     if (trackerEnabled && Game.CustomGameOptions.MissionTrackerHideCompletedSharedQuestsLoggingEnable)
                         TerminalCubeShardLogCollator.WriteLine(Player.DatabaseUniqueId, $"[RegionChange] Leaving region (tracker) {(region != null ? region.PrototypeDataRef.GetName() : "null")}.");
-                    // Do NOT EndSession here — keep the session continuous across region changes.
+                    // Do NOT EndSession here - keep the session continuous across region changes.
                     // Session is ended in Player.OnDeallocate when the player truly disconnects.
                 }
             }
@@ -178,7 +178,7 @@ namespace MHServerEmu.Games.Missions
             bool trackerFeatureEnabled = Game?.CustomGameOptions?.MissionTrackerHideCompletedSharedQuestsEnable == true;
             if (terminalFeatureEnabled || trackerFeatureEnabled)
             {
-                // Keep session continuous across region changes — only begin if not already tracked
+                // Keep session continuous across region changes - only begin if not already tracked
                 if (TerminalCubeShardLogCollator.IsTracked(player.DatabaseUniqueId) == false)
                     TerminalCubeShardLogCollator.BeginSession(player.DatabaseUniqueId, player.GetName());
                 if (terminalFeatureEnabled && Game.CustomGameOptions.TerminalDailyCompleteAnyDifficultyLoggingEnable)

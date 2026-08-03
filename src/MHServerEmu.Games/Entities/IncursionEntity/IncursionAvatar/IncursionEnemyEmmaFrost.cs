@@ -46,8 +46,8 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/EmmaFrost/BasicSpiritGain.prototype",                         true,  0.1494f), // 2026-06-07
-            new("Powers/Player/EmmaFrost/ControlMob.prototype",                              true,  0.0860f), // 2026-06-07
+            new("Powers/Player/EmmaFrost/BasicSpiritGain.prototype",                         true,  0.1890f), // 2026-06-07
+            new("Powers/Player/EmmaFrost/ControlMob.prototype",                              true,  0.0978f), // 2026-06-07
             new("Powers/Player/EmmaFrost/Talents/AmpControlledMobCDR.prototype",             false, 0.05f),
             new("Powers/Player/EmmaFrost/Talents/AmpControlledMobMentalOverload.prototype",  false, 0.05f),
             new("Powers/Player/EmmaFrost/Talents/AmpControlledMobNoKill.prototype",          false, 0.05f),
@@ -67,26 +67,26 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/EmmaFrost/Traits/DiamondFormCondition.prototype",             false, 0.05f),
             new("Powers/Player/EmmaFrost/Traits/MechanicTraitDiamondForm.prototype",         false, 0.05f),
             new("Powers/Player/EmmaFrost/Traits/OffenseTrait.prototype",                     false, 0.05f),
-            new("Powers/Player/EmmaFrost/Ultimate.prototype",                                true,  0.0126f), // 2026-06-07
+            new("Powers/Player/EmmaFrost/Ultimate.prototype",                                true,  0.0119f), // 2026-06-07
             new("Powers/Player/EmmaFrost/Update/AmpControlledMob.prototype",                 true,  0.05f),
-            new("Powers/Player/EmmaFrost/Update/AoEFear.prototype",                          true,  0.1220f), // 2026-06-07
-            new("Powers/Player/EmmaFrost/Update/AreaDoT.prototype",                          true,  0.0815f), // 2026-06-07
-            new("Powers/Player/EmmaFrost/Update/AstralWhip.prototype",                       true,  0.0571f), // 2026-06-07
-            new("Powers/Player/EmmaFrost/Update/AxeHeelDrop.prototype",                      true,  0.0349f), // 2026-07-02
-            new("Powers/Player/EmmaFrost/Update/BigPunch.prototype",                         true,  0.0467f), // 2026-07-02
+            new("Powers/Player/EmmaFrost/Update/AoEFear.prototype",                          true,  0.1775f), // 2026-06-07
+            new("Powers/Player/EmmaFrost/Update/AreaDoT.prototype",                          true,  0.0806f), // 2026-06-07
+            new("Powers/Player/EmmaFrost/Update/AstralWhip.prototype",                       true,  0.0555f), // 2026-06-07
+            new("Powers/Player/EmmaFrost/Update/AxeHeelDrop.prototype",                      true,  0.0325f), // 2026-07-02
+            new("Powers/Player/EmmaFrost/Update/BigPunch.prototype",                         true,  0.0456f), // 2026-07-02
             new("Powers/Player/EmmaFrost/Update/ControlledMobHiddenPassive.prototype",       false, 0.05f),
-            new("Powers/Player/EmmaFrost/Update/DamageCone.prototype",                       true,  0.0999f), // 2026-06-07
+            new("Powers/Player/EmmaFrost/Update/DamageCone.prototype",                       true,  0.1186f), // 2026-06-07
             new("Powers/Player/EmmaFrost/Update/DiamondArmorCondition.prototype",            true,  0.05f),
             new("Powers/Player/EmmaFrost/Update/DiamondHeart.prototype",                     true,  0.05f),
-            new("Powers/Player/EmmaFrost/Update/DiamondKnee.prototype",                      true,  0.05f),
-            new("Powers/Player/EmmaFrost/Update/DiamondStrike.prototype",                    true,  0.0984f), // 2026-07-02
-            new("Powers/Player/EmmaFrost/Update/DiamondSweepKick.prototype",                 true,  0.1147f), // 2026-06-05
-            new("Powers/Player/EmmaFrost/Update/DiamondWhirlwind.prototype",                 true,  0.0853f), // 2026-06-11
-            new("Powers/Player/EmmaFrost/Update/Drain.prototype",                            true,  0.0394f), // 2026-06-07
-            new("Powers/Player/EmmaFrost/Update/KneelBeforeMe.prototype",                    true,  0.0122f), // 2026-07-02
-            new("Powers/Player/EmmaFrost/Update/MegaSlap.prototype",                         true,  0.0618f), // 2026-06-19
-            new("Powers/Player/EmmaFrost/Update/PsychicSpear.prototype",                     true,  0.0632f), // 2026-06-07
-            new("Powers/Player/EmmaFrost/Update/RangedSplashShot.prototype",                 true,  0.05f),
+            new("Powers/Player/EmmaFrost/Update/DiamondKnee.prototype",                      true,  0.1892f), // 2026-06-07
+            new("Powers/Player/EmmaFrost/Update/DiamondStrike.prototype",                    true,  0.1203f), // 2026-07-02
+            new("Powers/Player/EmmaFrost/Update/DiamondSweepKick.prototype",                 true,  0.1413f), // 2026-06-05
+            new("Powers/Player/EmmaFrost/Update/DiamondWhirlwind.prototype",                 true,  0.1024f), // 2026-06-11
+            new("Powers/Player/EmmaFrost/Update/Drain.prototype",                            true,  0.0346f), // 2026-06-07
+            new("Powers/Player/EmmaFrost/Update/KneelBeforeMe.prototype",                    true,  0.0072f), // 2026-07-02
+            new("Powers/Player/EmmaFrost/Update/MegaSlap.prototype",                         true,  0.0616f), // 2026-06-19
+            new("Powers/Player/EmmaFrost/Update/PsychicSpear.prototype",                     true,  0.0645f), // 2026-06-07
+            new("Powers/Player/EmmaFrost/Update/RangedSplashShot.prototype",                 true,  0.0869f), // 2026-06-07
             new("Powers/Player/TravelPower/EmmaFrostSprint.prototype",                       false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/EmmaFrostStolenPower.prototype",        false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",                   false, 0.05f),

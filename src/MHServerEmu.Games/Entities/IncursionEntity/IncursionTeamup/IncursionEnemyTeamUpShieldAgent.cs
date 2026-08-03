@@ -18,6 +18,9 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         public override PrototypeId RenderTeamupRef => TeamUpRef;
         public override string InvaderDisplayName => "Shield Agent Invader";
 
+        // HardcodeExclude: lacks powers, uninteresting to fight. , maybe could summon more agents 
+        public override bool HardcodeExclude => true;
+
         protected override int ThinkIntervalMs => 250;
         protected override float AttackRange => 200f;
         protected override float ChaseRange => 5000f;
@@ -39,7 +42,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/TeamUps/AgentCoulson/ShotgunShieldAgentSummon.prototype", false,  0.026667f),  // AgentCoulson/ShotgunShieldAgentSummon.prototype - defensive
             new("Powers/TeamUps/AgentCoulson/MinigunAgentSummon.prototype",  true,  0.026667f),  // AgentCoulson/MinigunAgentSummon.prototype
             new("Powers/TeamUps/AgentCoulson/AwaySummonShieldAgentsProc.prototype", false,  0.026667f),  // AgentCoulson/AwaySummonShieldAgentsProc.prototype - away passive
-            new("Powers/TeamUps/ShieldAgent/Signature.prototype",  true, 0.013333f),  // ShieldAgent/Signature.prototype - signature / ultimate
+            new("Powers/TeamUps/ShieldAgent/Signature.prototype",  true, 0.0164f), // 2026-08-01
             new("Powers/TeamUps/TeamUpSynergyHeroPassive.prototype", false,  0.026667f),  // TeamUpSynergyHeroPassive.prototype - synergy passive
         };
     }

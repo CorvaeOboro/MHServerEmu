@@ -18,6 +18,9 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         public override PrototypeId RenderTeamupRef => TeamUpRef;
         public override string InvaderDisplayName => "Carnage Invader";
 
+                        // HardcodeExclude: Carnage has Avatar version better power set
+        public override bool HardcodeExclude => true;
+
         protected override int ThinkIntervalMs => 250;
         protected override float AttackRange => 200f;
         protected override float ChaseRange => 5000f;
@@ -30,16 +33,16 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/TeamUps/Carnage/Impale.prototype",  true,  0.023333f),  // Carnage/Impale.prototype
-            new("Powers/TeamUps/Carnage/DeathFromAbove.prototype",  true,  0.023333f),  // Carnage/DeathFromAbove.prototype
+            new("Powers/TeamUps/Carnage/Impale.prototype",  true,  0.0577f), // 2026-07-30
+            new("Powers/TeamUps/Carnage/DeathFromAbove.prototype",  true,  0.0260f), // 2026-07-30
             new("Powers/TeamUps/Carnage/AwayDFAProc.prototype", false,  0.023333f),  // Carnage/AwayDFAProc.prototype - away passive
-            new("Powers/TeamUps/Carnage/PBAoE.prototype",  true,  0.023333f),  // Carnage/PBAoE.prototype
-            new("Powers/TeamUps/Carnage/AxeSweep.prototype",  true,  0.023333f),  // Carnage/AxeSweep.prototype
-            new("Powers/TeamUps/Carnage/AxeThrow.prototype",  true,  0.023333f),  // Carnage/AxeThrow.prototype
+            new("Powers/TeamUps/Carnage/PBAoE.prototype",  true,  0.0355f), // 2026-07-30
+            new("Powers/TeamUps/Carnage/AxeSweep.prototype",  true,  0.0389f), // 2026-07-30
+            new("Powers/TeamUps/Carnage/AxeThrow.prototype",  true,  0.0580f), // 2026-07-30
             new("Powers/TeamUps/Carnage/AwayPBAoEProc.prototype", false,  0.023333f),  // Carnage/AwayPBAoEProc.prototype - away passive
             new("Powers/TeamUps/Carnage/Hamstring.prototype",  true,  0.023333f),  // Carnage/Hamstring.prototype
             new("Powers/TeamUps/Carnage/BleedingAxe.prototype",  true,  0.023333f),  // Carnage/BleedingAxe.prototype
-            new("Powers/TeamUps/Carnage/MeleeOneOff.prototype",  true,  0.023333f),  // Carnage/MeleeOneOff.prototype
+            new("Powers/TeamUps/Carnage/MeleeOneOff.prototype",  true,  0.0193f), // 2026-07-30
             new("Powers/TeamUps/TeamUpSynergyHeroPassive.prototype", false,  0.023333f),  // TeamUpSynergyHeroPassive.prototype - synergy passive
         };
     }

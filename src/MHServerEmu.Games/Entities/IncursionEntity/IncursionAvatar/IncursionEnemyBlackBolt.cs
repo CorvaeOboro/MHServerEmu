@@ -41,21 +41,21 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         private static readonly IncursionPowerEntry[] _powerTable =
         {
             new("Powers/Player/BlackBolt/Barrier.prototype",                                  true,  0.05f),
-            new("Powers/Player/BlackBolt/BasicPunch.prototype",                               true,  0.1658f), // 2026-06-11
-            new("Powers/Player/BlackBolt/Bolt.prototype",                                     true,  0.1753f), // 2026-06-11
-            new("Powers/Player/BlackBolt/Burst.prototype",                                    true,  0.1938f), // 2026-06-11
-            new("Powers/Player/BlackBolt/ChanneledBeam.prototype",                            true,  0.0491f), // 2026-06-11
-            new("Powers/Player/BlackBolt/Dash.prototype",                                     true,  0.1292f), // 2026-06-11
-            new("Powers/Player/BlackBolt/DeathFromAboveStart.prototype",                      true,  0.0335f), // 2026-06-27
-            new("Powers/Player/BlackBolt/GapClose.prototype",                                 true,  0.0666f), // 2026-06-27
+            new("Powers/Player/BlackBolt/BasicPunch.prototype",                               true,  0.1994f), // 2026-06-11
+            new("Powers/Player/BlackBolt/Bolt.prototype",                                     true,  0.2292f), // 2026-06-11
+            new("Powers/Player/BlackBolt/Burst.prototype",                                    true,  0.2675f), // 2026-06-11
+            new("Powers/Player/BlackBolt/ChanneledBeam.prototype",                            true,  0.0429f), // 2026-06-11
+            new("Powers/Player/BlackBolt/Dash.prototype",                                     true,  0.2317f), // 2026-06-11
+            new("Powers/Player/BlackBolt/DeathFromAboveStart.prototype",                      true,  0.0310f), // 2026-07-31
+            new("Powers/Player/BlackBolt/GapClose.prototype",                                 true,  0.0670f), // 2026-07-31
             new("Powers/Player/BlackBolt/Geyser.prototype",                                   true,  0.1027f), // 2026-06-11
-            new("Powers/Player/BlackBolt/HypersonicScream.prototype",                         true,  0.0132f), // 2026-06-27
-            new("Powers/Player/BlackBolt/Implode.prototype",                                  true,  0.1080f), // 2026-06-11
-            new("Powers/Player/BlackBolt/KillingWord.prototype",                              true,  0.0094f), // 2026-06-11
+            new("Powers/Player/BlackBolt/HypersonicScream.prototype",                         true,  0.0091f), // 2026-07-24
+            new("Powers/Player/BlackBolt/Implode.prototype",                                  true,  0.1205f), // 2026-06-11
+            new("Powers/Player/BlackBolt/KillingWord.prototype",                              true,  0.0078f), // 2026-06-11
             new("Powers/Player/BlackBolt/MasterBlowStart.prototype",                          true,  0.05f),
-            new("Powers/Player/BlackBolt/PBAoE.prototype",                                    true,  0.1555f), // 2026-06-11
-            new("Powers/Player/BlackBolt/Pummel.prototype",                                   true,  0.0653f), // 2026-06-11
-            new("Powers/Player/BlackBolt/SwoopingStrikes.prototype",                          true,  0.0432f), // 2026-06-11
+            new("Powers/Player/BlackBolt/PBAoE.prototype",                                    true,  0.2497f), // 2026-06-11
+            new("Powers/Player/BlackBolt/Pummel.prototype",                                   true,  0.0655f), // 2026-06-11
+            new("Powers/Player/BlackBolt/SwoopingStrikes.prototype",                          true,  0.0425f), // 2026-06-11
             new("Powers/Player/BlackBolt/Talents/Talent1DeathFromAboveAuraHotspot.prototype", false, 0.008f),
             new("Powers/Player/BlackBolt/Talents/Talent1EnergyPassive.prototype",             false, 0.05f),
             new("Powers/Player/BlackBolt/Talents/Talent1GapCloseRemap.prototype",             false, 0.0666f), // 2026-06-27

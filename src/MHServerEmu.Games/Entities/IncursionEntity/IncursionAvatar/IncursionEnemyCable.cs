@@ -47,23 +47,23 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/Cable/ConcussionBlast.prototype",                  true,  0.1006f), // 2026-06-11
-            new("Powers/Player/Cable/EnergyPulse.prototype",                      true,  0.2376f), // 2026-06-11
+            new("Powers/Player/Cable/ConcussionBlast.prototype",                  true,  0.1125f), // 2026-06-11
+            new("Powers/Player/Cable/EnergyPulse.prototype",                      true,  0.3846f), // 2026-06-11
             new("Powers/Player/Cable/EyeForWeakness.prototype",                   true,  0.05f),
-            new("Powers/Player/Cable/FutureBomb.prototype",                       true,  0.0298f), // 2026-06-11
+            new("Powers/Player/Cable/FutureBomb.prototype",                       true,  0.0249f), // 2026-06-11
             new("Powers/Player/Cable/KineticBarrier.prototype",                   true,  0.05f),
-            new("Powers/Player/Cable/ParticleAccelerator.prototype",              true,  0.1089f), // 2026-06-11
-            new("Powers/Player/Cable/PlasmaBarrage.prototype",                    true,  0.0613f), // 2026-06-11
-            new("Powers/Player/Cable/PsimitarCyclone.prototype",                  true,  0.1009f), // 2026-06-11
-            new("Powers/Player/Cable/PsimitarImpale.prototype",                   true,  0.0806f), // 2026-06-10
-            new("Powers/Player/Cable/PsimitarLunge.prototype",                    true,  0.1276f), // 2026-07-08
-            new("Powers/Player/Cable/PsimitarLungeHiddenPassive.prototype",       false, 0.1276f), // 2026-07-08
-            new("Powers/Player/Cable/PsimitarWaves.prototype",                    true,  0.0881f), // 2026-06-10
-            new("Powers/Player/Cable/PsychicBullets.prototype",                   true,  0.1898f), // 2026-06-11
-            new("Powers/Player/Cable/PsychicHaze.prototype",                      true,  0.1066f), // 2026-06-11
-            new("Powers/Player/Cable/PulseBolt.prototype",                        true,  0.1831f), // 2026-06-11
-            new("Powers/Player/Cable/TKOverload.prototype",                       true,  0.0453f), // 2026-07-08
-            new("Powers/Player/Cable/TKSpearSlam.prototype",                      true,  0.0344f), // 2026-06-11
+            new("Powers/Player/Cable/ParticleAccelerator.prototype",              true,  0.1119f), // 2026-06-11
+            new("Powers/Player/Cable/PlasmaBarrage.prototype",                    true,  0.0609f), // 2026-06-11
+            new("Powers/Player/Cable/PsimitarCyclone.prototype",                  true,  0.1075f), // 2026-06-11
+            new("Powers/Player/Cable/PsimitarImpale.prototype",                   true,  0.0934f), // 2026-06-10
+            new("Powers/Player/Cable/PsimitarLunge.prototype",                    true,  0.1288f), // 2026-07-29
+            new("Powers/Player/Cable/PsimitarLungeHiddenPassive.prototype",       false, 0.1288f), // 2026-07-29
+            new("Powers/Player/Cable/PsimitarWaves.prototype",                    true,  0.0991f), // 2026-06-10
+            new("Powers/Player/Cable/PsychicBullets.prototype",                   true,  0.2378f), // 2026-06-11
+            new("Powers/Player/Cable/PsychicHaze.prototype",                      true,  0.1069f), // 2026-06-11
+            new("Powers/Player/Cable/PulseBolt.prototype",                        true,  0.3191f), // 2026-06-11
+            new("Powers/Player/Cable/TKOverload.prototype",                       true,  0.0296f), // 2026-07-29
+            new("Powers/Player/Cable/TKSpearSlam.prototype",                      true,  0.0343f), // 2026-06-11
             new("Powers/Player/Cable/Talents/ConcussionBlastLayer.prototype",     false, 0.1006f), // 2026-06-11
             new("Powers/Player/Cable/Talents/IllusionLayer.prototype",            false, 0.05f),
             new("Powers/Player/Cable/Talents/ImpaleLayer.prototype",              false, 0.05f),
@@ -85,8 +85,8 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Cable/Traits/OffenseTrait.prototype",              false, 0.05f),
             new("Powers/Player/Cable/Ultimate.prototype",                         true,  0.006f),
             new("Powers/Player/Cable/UltimateHiddenPassive.prototype",            false, 0.006f),
-            new("Powers/Player/Cable/ViperBeam.prototype",                        true,  0.0560f), // 2026-06-11
-            new("Powers/Player/Cable/VortexGrenade.prototype",                    true,  0.1045f), // 2026-06-11
+            new("Powers/Player/Cable/ViperBeam.prototype",                        true,  0.0520f), // 2026-06-11
+            new("Powers/Player/Cable/VortexGrenade.prototype",                    true,  0.1236f), // 2026-06-11
             new("Powers/Player/TravelPower/CableSprint.prototype",                false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/CableStolenPower.prototype", false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",        false, 0.05f),

@@ -30,14 +30,14 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/TeamUps/DeadpoolTheKid/BulletSpray.prototype",  true,  0.026667f),  // DeadpoolTheKid/BulletSpray.prototype
-            new("Powers/TeamUps/DeadpoolTheKid/Caltrops.prototype",  true,  0.026667f),  // DeadpoolTheKid/Caltrops.prototype
+            new("Powers/TeamUps/DeadpoolTheKid/BulletSpray.prototype",  true,  0.1232f), // 2026-07-25
+            new("Powers/TeamUps/DeadpoolTheKid/Caltrops.prototype",  true,  0.0559f), // 2026-07-25
             new("Powers/TeamUps/DeadpoolTheKid/PirateDeadpool/AwayCaltropsProc.prototype", false,  0.026667f),  // DeadpoolTheKid/PirateDeadpool/AwayCaltropsProc.prototype - away passive
-            new("Powers/TeamUps/DeadpoolTheKid/PirateDeadpoolGrenado.prototype",  true,  0.026667f),  // DeadpoolTheKid/PirateDeadpoolGrenado.prototype
-            new("Powers/TeamUps/DeadpoolTheKid/PirateDeadpool/Decoy.prototype",  true,  0.026667f),  // DeadpoolTheKid/PirateDeadpool/Decoy.prototype
+            new("Powers/TeamUps/DeadpoolTheKid/PirateDeadpoolGrenado.prototype",  true,  0.0798f), // 2026-07-25
+            new("Powers/TeamUps/DeadpoolTheKid/PirateDeadpool/Decoy.prototype",  true,  0.0184f), // 2026-07-25
             new("Powers/TeamUps/DeadpoolTheKid/PirateDeadpool/AwayDecoyProc.prototype", false,  0.026667f),  // DeadpoolTheKid/PirateDeadpool/AwayDecoyProc.prototype - away passive
             new("Powers/TeamUps/DeadpoolTheKid/PirateDeadpool/GrenadoDoTTrigger.prototype", false,  0.026667f),  // DeadpoolTheKid/PirateDeadpool/GrenadoDoTTrigger.prototype - trigger/secondary
-            new("Powers/TeamUps/DeadpoolTheKid/GatlingGun.prototype",  true,  0.026667f),  // DeadpoolTheKid/GatlingGun.prototype
+            new("Powers/TeamUps/DeadpoolTheKid/GatlingGun.prototype",  true,  0.0469f), // 2026-07-25
             new("Powers/TeamUps/DeadpoolTheKid/PirateDeadpool/Godmode.prototype", false,  0.026667f),  // DeadpoolTheKid/PirateDeadpool/Godmode.prototype - away passive
             new("Powers/TeamUps/DeadpoolTheKid/ServerLag.prototype",  true,  0.026667f),  // DeadpoolTheKid/ServerLag.prototype
             new("Powers/TeamUps/TeamUpSynergyHeroPassive.prototype", false,  0.026667f),  // TeamUpSynergyHeroPassive.prototype - synergy passive

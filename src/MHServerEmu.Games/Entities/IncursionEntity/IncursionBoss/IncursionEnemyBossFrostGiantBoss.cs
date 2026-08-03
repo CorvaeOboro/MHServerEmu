@@ -25,5 +25,18 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         protected override float GlobalAttackCooldownMs => 800f;
         protected override float PerPowerCooldownMs => 6000f;
         protected override float DamageScale => 1.0f;
+
+        protected override IncursionPowerEntry[] PowerTable => _powerTable;
+
+        private static readonly IncursionPowerEntry[] _powerTable =
+        {
+            new("Powers/EnemyPowers/MobPowers/FrostGiants/FGIceShaperIceCageSummonMarker.prototype",   true,  1.0f),
+            new("Powers/EnemyPowers/MobPowers/FrostGiants/FGShamanIceOrb.prototype",                   true,  1.1897f), // 2026-08-01
+            new("Powers/EnemyPowers/Shared/LeashReturnHeal.prototype",                                 false, 1.0f),
+            new("Powers/EnemyPowers/MobPowers/FrostGiants/FGIceShaperFrostNova.prototype",             true,  1.1708f), // 2026-08-01
+            new("Powers/EnemyPowers/MobPowers/FrostGiants/FGIceShaperIceShard.prototype",              true,  0.9831f), // 2026-08-01
+            new("Powers/EnemyPowers/Shared/LeashReturnNegStatusEffectImmune.prototype",                false, 1.0f),
+            new("Powers/EnemyPowers/MobPowers/FrostGiants/FGSummonBlizzardHotspot.prototype",          true,  1.5193f), // 2026-08-01
+        };
     }
 }

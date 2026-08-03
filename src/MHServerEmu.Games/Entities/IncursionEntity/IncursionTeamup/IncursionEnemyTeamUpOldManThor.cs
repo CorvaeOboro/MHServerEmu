@@ -30,16 +30,16 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/TeamUps/BetaRayBill/KingThor/DeathFromAbove.prototype",  true,  0.023333f),  // BetaRayBill/KingThor/DeathFromAbove.prototype
-            new("Powers/TeamUps/BetaRayBill/KingThor/DeathFromAboveHotspotTrigger.prototype", false,  0.023333f),  // BetaRayBill/KingThor/DeathFromAboveHotspotTrigger.prototype - trigger/secondary
+            new("Powers/TeamUps/BetaRayBill/KingThor/DeathFromAbove.prototype",  true,  0.0360f), // 2026-07-30
+            new("Powers/TeamUps/BetaRayBill/KingThor/DeathFromAboveHotspotTrigger.prototype", false,  0.0360f), // 2026-07-30
             new("Powers/TeamUps/BetaRayBill/KingThor/AwayThunderstormProc.prototype", false,  0.023333f),  // BetaRayBill/KingThor/AwayThunderstormProc.prototype - away passive
-            new("Powers/TeamUps/BetaRayBill/HammerSmash.prototype",  true,  0.023333f),  // BetaRayBill/HammerSmash.prototype
-            new("Powers/TeamUps/BetaRayBill/KingThor/StormBreaker.prototype",  true,  0.023333f),  // BetaRayBill/KingThor/StormBreaker.prototype
-            new("Powers/TeamUps/BetaRayBill/KingThor/StormBreakerArcTrigger.prototype", false,  0.023333f),  // BetaRayBill/KingThor/StormBreakerArcTrigger.prototype - trigger/secondary
-            new("Powers/TeamUps/BetaRayBill/KingThor/LightningBarrage.prototype",  true,  0.023333f),  // BetaRayBill/KingThor/LightningBarrage.prototype
+            new("Powers/TeamUps/BetaRayBill/HammerSmash.prototype",  true,  0.0580f), // 2026-07-30
+            new("Powers/TeamUps/BetaRayBill/KingThor/StormBreaker.prototype",  true,  0.0696f), // 2026-07-30
+            new("Powers/TeamUps/BetaRayBill/KingThor/StormBreakerArcTrigger.prototype", false,  0.0696f), // 2026-07-30
+            new("Powers/TeamUps/BetaRayBill/KingThor/LightningBarrage.prototype",  true,  0.0455f), // 2026-07-30
             new("Powers/TeamUps/BetaRayBill/LightningBarrageDoTTrigger.prototype", false,  0.023333f),  // BetaRayBill/LightningBarrageDoTTrigger.prototype - trigger/secondary
             new("Powers/TeamUps/BetaRayBill/KingThor/AwaySkuttlebuttProc.prototype", false,  0.023333f),  // BetaRayBill/KingThor/AwaySkuttlebuttProc.prototype - away passive
-            new("Powers/TeamUps/BetaRayBill/Antiforce.prototype",  true, 0.011667f),  // BetaRayBill/Antiforce.prototype - signature / ultimate
+            new("Powers/TeamUps/BetaRayBill/Antiforce.prototype",  true, 0.0110f), // 2026-07-30
             new("Powers/TeamUps/TeamUpSynergyHeroPassive.prototype", false,  0.023333f),  // TeamUpSynergyHeroPassive.prototype - synergy passive
         };
     }

@@ -25,5 +25,18 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         protected override float GlobalAttackCooldownMs => 800f;
         protected override float PerPowerCooldownMs => 6000f;
         protected override float DamageScale => 1.0f;
+
+        protected override IncursionPowerEntry[] PowerTable => _powerTable;
+
+        private static readonly IncursionPowerEntry[] _powerTable =
+        {
+            new("Powers/EnemyPowers/MobPowers/Kronan/KronanShockTroopTrapThrow.prototype",              true,  0.7626f), // 2026-08-01
+            new("Powers/EnemyPowers/Boss/LimboEvent/KronanBoss/RangedAttack.prototype",                 true,  0.8999f), // 2026-08-01
+            new("Powers/EnemyPowers/Boss/LimboEvent/KronanBoss/SummonHotspot.prototype",                true,  1.1296f), // 2026-08-01
+            new("Powers/Player/SilverSurfer/BlackHoleSummonLocusCombo.prototype",                       false, 1.0f),
+            new("Powers/EnemyPowers/Shared/LeashReturnHeal.prototype",                                  false, 1.0f),
+            new("Powers/EnemyPowers/Boss/LimboEvent/KronanBoss/RangedAttack2.prototype",                true,  0.8999f), // 2026-08-01
+            new("Powers/EnemyPowers/Shared/LeashReturnNegStatusEffectImmune.prototype",                 false, 1.0f),
+        };
     }
 }

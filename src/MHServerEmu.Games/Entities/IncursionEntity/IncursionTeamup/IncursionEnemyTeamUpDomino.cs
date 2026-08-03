@@ -30,11 +30,11 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/TeamUps/Domino/Grenade.prototype",  true,  0.026667f),  // Domino/Grenade.prototype
-            new("Powers/TeamUps/Domino/BrutalTakedown.prototype",  true,  0.026667f),  // Domino/BrutalTakedown.prototype
+            new("Powers/TeamUps/Domino/Grenade.prototype",  true,  0.0302f), // 2026-07-30
+            new("Powers/TeamUps/Domino/BrutalTakedown.prototype",  true,  0.0487f), // 2026-07-30
             new("Powers/TeamUps/Domino/SnowballsChance.prototype", false,  0.026667f),  // Domino/SnowballsChance.prototype - away passive
-            new("Powers/TeamUps/Domino/MagicBullet.prototype",  true,  0.026667f),  // Domino/MagicBullet.prototype
-            new("Powers/TeamUps/Domino/NoScope.prototype",  true,  0.026667f),  // Domino/NoScope.prototype
+            new("Powers/TeamUps/Domino/MagicBullet.prototype",  true,  0.0245f), // 2026-07-30
+            new("Powers/TeamUps/Domino/NoScope.prototype",  true,  0.0435f), // 2026-07-30
             new("Powers/TeamUps/Domino/AwaySniperShot.prototype", false,  0.026667f),  // Domino/AwaySniperShot.prototype - away passive
             new("Powers/TeamUps/Domino/MagicBulletMoreBounces.prototype",  true,  0.026667f),  // Domino/MagicBulletMoreBounces.prototype
             new("Powers/TeamUps/Domino/BombSummoner.prototype",  true,  0.026667f),  // Domino/BombSummoner.prototype

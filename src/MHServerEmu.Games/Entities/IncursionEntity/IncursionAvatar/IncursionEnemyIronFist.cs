@@ -45,20 +45,20 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/IronFist/BlackBlackPoisonTouch.prototype",                           true,  0.0240f), // 2026-07-02
-            new("Powers/Player/IronFist/ChiBlast.prototype",                                        true,  0.0526f), // 2026-07-02
-            new("Powers/Player/IronFist/ChiBurst.prototype",                                        true,  0.0805f), // 2026-07-02
+            new("Powers/Player/IronFist/BlackBlackPoisonTouch.prototype",                           true,  0.0200f), // 2026-07-02
+            new("Powers/Player/IronFist/ChiBlast.prototype",                                        true,  0.0524f), // 2026-07-02
+            new("Powers/Player/IronFist/ChiBurst.prototype",                                        true,  0.0733f), // 2026-07-02
             new("Powers/Player/IronFist/ChiMastery.prototype",                                      true,  0.05f),
             new("Powers/Player/IronFist/CraneStance.prototype",                                     false, 0.05f),
             new("Powers/Player/IronFist/DragonSliceStance.prototype",                               false, 0.05f),
             new("Powers/Player/IronFist/FlyingKick.prototype",                                      false, 0.05f),
-            new("Powers/Player/IronFist/IronFistPunchStartMove.prototype",                          true,  0.0119f), // 2026-07-02
-            new("Powers/Player/IronFist/KunlunStrike.prototype",                                    true,  0.1400f), // 2026-07-02
+            new("Powers/Player/IronFist/IronFistPunchStartMove.prototype",                          true,  0.0109f), // 2026-07-02
+            new("Powers/Player/IronFist/KunlunStrike.prototype",                                    true,  0.1763f), // 2026-07-02
             new("Powers/Player/IronFist/LeopardSlashStance.prototype",                              false, 0.05f),
-            new("Powers/Player/IronFist/NinjutsuDash.prototype",                                    true,  0.1214f), // 2026-07-02
-            new("Powers/Player/IronFist/Pummel.prototype",                                          true,  0.0815f), // 2026-07-02
-            new("Powers/Player/IronFist/SevenSidedStrike.prototype",                                true,  0.0340f), // 2026-07-02
-            new("Powers/Player/IronFist/ShaolinStrike.prototype",                                   true,  0.0944f), // 2026-06-30
+            new("Powers/Player/IronFist/NinjutsuDash.prototype",                                    true,  0.1135f), // 2026-07-02
+            new("Powers/Player/IronFist/Pummel.prototype",                                          true,  0.0613f), // 2026-07-02
+            new("Powers/Player/IronFist/SevenSidedStrike.prototype",                                true,  0.0286f), // 2026-07-02
+            new("Powers/Player/IronFist/ShaolinStrike.prototype",                                   true,  0.1153f), // 2026-06-30
             new("Powers/Player/IronFist/SnakeStance.prototype",                                     false, 0.05f),
             new("Powers/Player/IronFist/Talents/Talent1OpenerCDR.prototype",                        false, 0.05f),
             new("Powers/Player/IronFist/Talents/Talent1OpenerDamageMult.prototype",                 false, 0.05f),
@@ -79,7 +79,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/IronFist/Traits/DefenseTrait.prototype",                             false, 0.05f),
             new("Powers/Player/IronFist/Traits/MechanicTraitChi.prototype",                         false, 0.05f),
             new("Powers/Player/IronFist/Traits/OffenseTrait.prototype",                             false, 0.05f),
-            new("Powers/Player/IronFist/Ultimate.prototype",                                        true,  0.0160f), // 2026-06-03
+            new("Powers/Player/IronFist/Ultimate.prototype",                                        true,  0.0229f), // 2026-06-03
             new("Powers/Player/TravelPower/IronFistSprint.prototype",                               false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/IronFistStolenPower.prototype",                false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",                          false, 0.05f),

@@ -171,6 +171,22 @@ namespace MHServerEmu.Games.Entities
             return true;
         }
 
+        /// <summary>
+        /// Force-creates and initializes a locomotor using the supplied locomotion prototype.
+        /// Used by external controllers (e.g. IncursionEnemyController) when the agent's own
+        /// prototype is immobile but the controller needs the agent to chase and path.
+        /// </summary>
+        public bool ForceCreateLocomotor(LocomotorPrototype locomotionProto, float height = 0.0f)
+        {
+            if (Locomotor != null) return true;
+            if (locomotionProto == null || locomotionProto.Immobile) return false;
+
+            Locomotor = new Locomotor();
+            Locomotor.Initialize(locomotionProto, this, height);
+            Locomotor.SetGiveUpLimits(8.0f, TimeSpan.FromMilliseconds(250));
+            return true;
+        }
+
 
         #endregion
 

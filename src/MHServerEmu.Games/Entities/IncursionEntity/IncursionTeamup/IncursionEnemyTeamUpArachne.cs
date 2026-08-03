@@ -30,16 +30,16 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/TeamUps/Arachne/WebWhipCross.prototype",  true,  0.026667f),  // Arachne/WebWhipCross.prototype
-            new("Powers/TeamUps/Arachne/Cocoon.prototype",  true,  0.026667f),  // Arachne/Cocoon.prototype
+            new("Powers/TeamUps/Arachne/WebWhipCross.prototype",  true,  0.0929f), // 2026-07-24
+            new("Powers/TeamUps/Arachne/Cocoon.prototype",  true,  0.0383f), // 2026-07-31
             new("Powers/TeamUps/Arachne/Counterattack.prototype", false,  0.026667f),  // Arachne/Counterattack.prototype - away passive
-            new("Powers/TeamUps/Arachne/ConeYank.prototype",  true,  0.026667f),  // Arachne/ConeYank.prototype
+            new("Powers/TeamUps/Arachne/ConeYank.prototype",  true,  0.0505f), // 2026-07-24
             new("Powers/TeamUps/Arachne/AwayStrafe.prototype", false,  0.026667f),  // Arachne/AwayStrafe.prototype - away passive
-            new("Powers/TeamUps/Arachne/TKToss.prototype",  true,  0.026667f),  // Arachne/TKToss.prototype
-            new("Powers/TeamUps/Arachne/BouncingWeb.prototype",  true,  0.026667f),  // Arachne/BouncingWeb.prototype
-            new("Powers/TeamUps/Arachne/BouncingWebMoreBounces.prototype",  true,  0.026667f),  // Arachne/BouncingWebMoreBounces.prototype
+            new("Powers/TeamUps/Arachne/TKToss.prototype",  true,  0.0627f), // 2026-07-31
+            new("Powers/TeamUps/Arachne/BouncingWeb.prototype",  true,  0.0429f), // 2026-07-31
+            new("Powers/TeamUps/Arachne/BouncingWebMoreBounces.prototype",  true,  0.0429f), // 2026-07-31
             new("Powers/TeamUps/Arachne/AwayBouncingWeb.prototype", false,  0.026667f),  // Arachne/AwayBouncingWeb.prototype - away passive
-            new("Powers/TeamUps/Arachne/MegaStun.prototype",  true,  0.026667f),  // Arachne/MegaStun.prototype
+            new("Powers/TeamUps/Arachne/MegaStun.prototype",  true,  0.0223f), // 2026-07-31
             new("Powers/TeamUps/TeamUpSynergyHeroPassive.prototype", false,  0.026667f),  // TeamUpSynergyHeroPassive.prototype - synergy passive
         };
     }

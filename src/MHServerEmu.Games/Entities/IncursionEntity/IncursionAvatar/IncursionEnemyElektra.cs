@@ -42,19 +42,19 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/Elektra/Assassinate.prototype",                                true,  0.0431f), // 2026-06-10
-            new("Powers/Player/Elektra/BamfDiveBomb.prototype",                               true,  0.0169f), // 2026-06-16
-            new("Powers/Player/Elektra/BasicSai.prototype",                                   true,  0.1713f), // 2026-06-10
-            new("Powers/Player/Elektra/BlowDart.prototype",                                   true,  0.1255f), // 2026-06-17
-            new("Powers/Player/Elektra/CrossStrike.prototype",                                true,  0.0399f), // 2026-06-10
+            new("Powers/Player/Elektra/Assassinate.prototype",                                true,  0.0500f), // 2026-06-10
+            new("Powers/Player/Elektra/BamfDiveBomb.prototype",                               true,  0.0240f), // 2026-07-28
+            new("Powers/Player/Elektra/BasicSai.prototype",                                   true,  0.2468f), // 2026-06-10
+            new("Powers/Player/Elektra/BlowDart.prototype",                                   true,  0.1452f), // 2026-06-17
+            new("Powers/Player/Elektra/CrossStrike.prototype",                                true,  0.0291f), // 2026-06-10
             new("Powers/Player/Elektra/KillCommand.prototype",                                true,  0.05f),
-            new("Powers/Player/Elektra/KnifeRopeChain.prototype",                             true,  0.0313f), // 2026-06-17
-            new("Powers/Player/Elektra/KnifeThrow.prototype",                                 true,  0.0148f), // 2026-06-16
+            new("Powers/Player/Elektra/KnifeRopeChain.prototype",                             true,  0.0267f), // 2026-07-28
+            new("Powers/Player/Elektra/KnifeThrow.prototype",                                 true,  0.0135f), // 2026-06-16
             new("Powers/Player/Elektra/MarkForDeath.prototype",                               true,  0.05f),
-            new("Powers/Player/Elektra/SaiStrike.prototype",                                  true,  0.1101f), // 2026-06-06
-            new("Powers/Player/Elektra/ShadowStrike.prototype",                               true,  0.0498f), // 2026-06-17
-            new("Powers/Player/Elektra/SpinningStrike.prototype",                             true,  0.0485f), // 2026-06-06
-            new("Powers/Player/Elektra/StaffStrike.prototype",                                true,  0.1340f), // 2026-06-10
+            new("Powers/Player/Elektra/SaiStrike.prototype",                                  true,  0.1272f), // 2026-06-06
+            new("Powers/Player/Elektra/ShadowStrike.prototype",                               true,  0.0490f), // 2026-07-28
+            new("Powers/Player/Elektra/SpinningStrike.prototype",                             true,  0.0306f), // 2026-07-28
+            new("Powers/Player/Elektra/StaffStrike.prototype",                                true,  0.1566f), // 2026-06-10
             new("Powers/Player/Elektra/Stealth.prototype",                                    true,  0.05f),
             new("Powers/Player/Elektra/Talents/CooldownResetOnKillMark.prototype",            false, 0.05f),
             new("Powers/Player/Elektra/Talents/KillCommandStealthTalent.prototype",           false, 0.05f),
@@ -71,14 +71,14 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Elektra/Talents/StealthNoBreakTalent.prototype",               false, 0.05f),
             new("Powers/Player/Elektra/Talents/StealthTeamBuffTalent.prototype",              false, 0.05f),
             new("Powers/Player/Elektra/Talents/TripleChainCDReset.prototype",                 false, 0.1645f), // 2026-06-06
-            new("Powers/Player/Elektra/TeleportDash.prototype",                               true,  0.05f),
-            new("Powers/Player/Elektra/ThrowShuriken.prototype",                              true,  0.1304f), // 2026-06-10
+            new("Powers/Player/Elektra/TeleportDash.prototype",                               true,  0.0773f), // 2026-07-28
+            new("Powers/Player/Elektra/ThrowShuriken.prototype",                              true,  0.1592f), // 2026-06-10
             new("Powers/Player/Elektra/Traits/DefenseTrait.prototype",                        false, 0.05f),
             new("Powers/Player/Elektra/Traits/MechanicTrait.prototype",                       false, 0.05f),
             new("Powers/Player/Elektra/Traits/OffenseTrait.prototype",                        false, 0.05f),
-            new("Powers/Player/Elektra/TripleChain.prototype",                                true,  0.1645f), // 2026-06-06
-            new("Powers/Player/Elektra/Ultimate.prototype",                                   true,  0.0087f), // 2026-06-06
-            new("Powers/Player/Elektra/UltimateHiddenPassive.prototype",                      false, 0.0087f), // 2026-06-06
+            new("Powers/Player/Elektra/TripleChain.prototype",                                true,  0.2244f), // 2026-06-06
+            new("Powers/Player/Elektra/Ultimate.prototype",                                   true,  0.0079f), // 2026-06-06
+            new("Powers/Player/Elektra/UltimateHiddenPassive.prototype",                      false, 0.0079f), // 2026-06-06
             new("Powers/Player/TravelPower/ElektraSprint.prototype",                          false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/ElektraStolenPower.prototype",           false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",                    false, 0.05f),

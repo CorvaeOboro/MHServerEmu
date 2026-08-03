@@ -42,19 +42,19 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/SilverSurfer/BasicBeam.prototype",                        true,  0.1981f), // 2026-06-11
-            new("Powers/Player/SilverSurfer/BasicBouncingBeam.prototype",                true,  0.1013f), // 2026-06-17
-            new("Powers/Player/SilverSurfer/BigBeam.prototype",                          true,  0.1354f), // 2026-06-17
-            new("Powers/Player/SilverSurfer/BlackHole.prototype",                        true,  0.0518f), // 2026-06-11
-            new("Powers/Player/SilverSurfer/BoardDash.prototype",                        true,  0.1210f), // 2026-06-11
-            new("Powers/Player/SilverSurfer/BoardSweep.prototype",                       true,  0.0682f), // 2026-06-11
-            new("Powers/Player/SilverSurfer/ChanneledBeam.prototype",                    true,  0.0950f), // 2026-06-11
-            new("Powers/Player/SilverSurfer/CosmicRift.prototype",                       true,  0.1213f), // 2026-06-11
-            new("Powers/Player/SilverSurfer/DeathFromBelow.prototype",                   true,  0.0498f), // 2026-06-11
-            new("Powers/Player/SilverSurfer/Deconstruction.prototype",                   true,  0.1115f), // 2026-06-11
-            new("Powers/Player/SilverSurfer/Disengage.prototype",                        true,  0.0452f), // 2026-06-20
+            new("Powers/Player/SilverSurfer/BasicBeam.prototype",                        true,  0.3161f), // 2026-06-11
+            new("Powers/Player/SilverSurfer/BasicBouncingBeam.prototype",                true,  0.0944f), // 2026-07-30
+            new("Powers/Player/SilverSurfer/BigBeam.prototype",                          true,  0.1208f), // 2026-07-30
+            new("Powers/Player/SilverSurfer/BlackHole.prototype",                        true,  0.0454f), // 2026-06-11
+            new("Powers/Player/SilverSurfer/BoardDash.prototype",                        true,  0.1397f), // 2026-06-11
+            new("Powers/Player/SilverSurfer/BoardSweep.prototype",                       true,  0.0635f), // 2026-06-11
+            new("Powers/Player/SilverSurfer/ChanneledBeam.prototype",                    true,  0.1075f), // 2026-06-11
+            new("Powers/Player/SilverSurfer/CosmicRift.prototype",                       true,  0.1464f), // 2026-06-11
+            new("Powers/Player/SilverSurfer/DeathFromBelow.prototype",                   true,  0.0370f), // 2026-07-30
+            new("Powers/Player/SilverSurfer/Deconstruction.prototype",                   true,  0.1167f), // 2026-06-11
+            new("Powers/Player/SilverSurfer/Disengage.prototype",                        true,  0.0368f), // 2026-07-30
             new("Powers/Player/SilverSurfer/Reconstruction.prototype",                   true,  0.05f),
-            new("Powers/Player/SilverSurfer/Singularity.prototype",                      true,  0.0693f), // 2026-06-11
+            new("Powers/Player/SilverSurfer/Singularity.prototype",                      true,  0.0669f), // 2026-06-11
             new("Powers/Player/SilverSurfer/Talents/AutoReconstruct.prototype",          false, 0.05f),
             new("Powers/Player/SilverSurfer/Talents/AutoShield.prototype",               false, 0.05f),
             new("Powers/Player/SilverSurfer/Talents/AutoSingularity.prototype",          false, 0.05f),
@@ -70,13 +70,13 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/SilverSurfer/Talents/MovementPowerCDR.prototype",         false, 0.05f),
             new("Powers/Player/SilverSurfer/Talents/PowerCosmicRegen.prototype",         false, 0.05f),
             new("Powers/Player/SilverSurfer/Talents/ReconstructDeconstruct.prototype",   false, 0.05f),
-            new("Powers/Player/SilverSurfer/TeleportDash.prototype",                     true,  0.1211f), // 2026-06-11
+            new("Powers/Player/SilverSurfer/TeleportDash.prototype",                     true,  0.1585f), // 2026-06-11
             new("Powers/Player/SilverSurfer/TimeWarp.prototype",                         true,  0.05f),
             new("Powers/Player/SilverSurfer/Traits/DefenseTrait.prototype",              false, 0.05f),
             new("Powers/Player/SilverSurfer/Traits/MechanicTraitPowerCosmic.prototype",  false, 0.05f),
             new("Powers/Player/SilverSurfer/Traits/OffenseTrait.prototype",              false, 0.05f),
-            new("Powers/Player/SilverSurfer/Ultimate.prototype",                         true,  0.0091f), // 2026-06-11
-            new("Powers/Player/SilverSurfer/UltimateHiddenPassive.prototype",            false, 0.0091f), // 2026-06-11
+            new("Powers/Player/SilverSurfer/Ultimate.prototype",                         true,  0.0089f), // 2026-06-11
+            new("Powers/Player/SilverSurfer/UltimateHiddenPassive.prototype",            false, 0.0089f), // 2026-06-11
             new("Powers/Player/TravelPower/SilverSurferFlight.prototype",                false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/SilverSurferStolenPower.prototype", false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",               false, 0.05f),

@@ -43,22 +43,22 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/InvisibleWoman/BoomerangBubble.prototype",                  true,  0.1530f), // 2026-06-10
-            new("Powers/Player/InvisibleWoman/BouncingBubble.prototype",                   true,  0.1932f), // 2026-06-10
-            new("Powers/Player/InvisibleWoman/BubbleSpray.prototype",                      true,  0.0775f), // 2026-06-10
+            new("Powers/Player/InvisibleWoman/BoomerangBubble.prototype",                  true,  0.1659f), // 2026-06-10
+            new("Powers/Player/InvisibleWoman/BouncingBubble.prototype",                   true,  0.2903f), // 2026-06-10
+            new("Powers/Player/InvisibleWoman/BubbleSpray.prototype",                      true,  0.0858f), // 2026-06-10
             new("Powers/Player/InvisibleWoman/DefenseHotspot.prototype",                   true,  0.008f),
-            new("Powers/Player/InvisibleWoman/ForceDash.prototype",                        true,  0.1641f), // 2026-06-10
-            new("Powers/Player/InvisibleWoman/ForcePillar.prototype",                      true,  0.0977f), // 2026-06-10
+            new("Powers/Player/InvisibleWoman/ForceDash.prototype",                        true,  0.2117f), // 2026-06-10
+            new("Powers/Player/InvisibleWoman/ForcePillar.prototype",                      true,  0.1036f), // 2026-06-10
             new("Powers/Player/InvisibleWoman/ForceWall.prototype",                        true,  0.05f),
-            new("Powers/Player/InvisibleWoman/ImplodeExplode.prototype",                   true,  0.0241f), // 2026-06-19
+            new("Powers/Player/InvisibleWoman/ImplodeExplode.prototype",                   true,  0.0208f), // 2026-06-19
             new("Powers/Player/InvisibleWoman/Invisibility.prototype",                     true,  0.05f),
-            new("Powers/Player/InvisibleWoman/OrbStorm.prototype",                         true,  0.1328f), // 2026-06-10
-            new("Powers/Player/InvisibleWoman/Pancake.prototype",                          true,  0.1459f), // 2026-06-10
-            new("Powers/Player/InvisibleWoman/SeekerOrbs.prototype",                       true,  0.0884f), // 2026-06-10
-            new("Powers/Player/InvisibleWoman/ShieldedFist.prototype",                     true,  0.1355f), // 2026-06-10
-            new("Powers/Player/InvisibleWoman/ShockwavePBAoE.prototype",                   true,  0.0821f), // 2026-06-10
+            new("Powers/Player/InvisibleWoman/OrbStorm.prototype",                         true,  0.1636f), // 2026-06-10
+            new("Powers/Player/InvisibleWoman/Pancake.prototype",                          true,  0.1969f), // 2026-06-10
+            new("Powers/Player/InvisibleWoman/SeekerOrbs.prototype",                       true,  0.0835f), // 2026-06-10
+            new("Powers/Player/InvisibleWoman/ShieldedFist.prototype",                     true,  0.1781f), // 2026-06-10
+            new("Powers/Player/InvisibleWoman/ShockwavePBAoE.prototype",                   true,  0.0947f), // 2026-06-10
             new("Powers/Player/InvisibleWoman/StealthToggle.prototype",                    false, 0.05f),
-            new("Powers/Player/InvisibleWoman/Suffocate.prototype",                        true,  0.0913f), // 2026-06-10
+            new("Powers/Player/InvisibleWoman/Suffocate.prototype",                        true,  0.0960f), // 2026-06-10
             new("Powers/Player/InvisibleWoman/SummonSpikedBall.prototype",                 true,  0.05f),
             new("Powers/Player/InvisibleWoman/Talents/AOESpamBuff.prototype",              false, 0.03f),
             new("Powers/Player/InvisibleWoman/Talents/AppliedBarrier.prototype",           false, 0.05f),
@@ -77,7 +77,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/InvisibleWoman/Talents/StealthySupport.prototype",          false, 0.05f),
             new("Powers/Player/InvisibleWoman/Traits/DefenseTrait.prototype",              false, 0.05f),
             new("Powers/Player/InvisibleWoman/Traits/OffenseTrait.prototype",              false, 0.05f),
-            new("Powers/Player/InvisibleWoman/UltimateBubblestorm.prototype",              true,  0.0123f), // 2026-06-19
+            new("Powers/Player/InvisibleWoman/UltimateBubblestorm.prototype",              true,  0.0115f), // 2026-06-19
             new("Powers/Player/TravelPower/InvisibleWomanFlight.prototype",                false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/InvisibleWomanStolenPower.prototype", false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",                 false, 0.05f),

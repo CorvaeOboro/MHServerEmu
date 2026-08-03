@@ -63,7 +63,10 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         public override PrototypeId RenderBossRef => BossRef;
         public override string InvaderDisplayName => "Onslaught Invader";
 
-        // 8x smaller than the default 1.5x scale → 1.5 / 8 ≈ 0.1875
+        // HardcodeExclude: raid boss - too specific to the Onslaught raid, not viable for random encounters.
+        public override bool HardcodeExclude => true;
+
+        // 8x smaller than the default 1.5x scale -> 1.5 / 8 ≈ 0.1875
         // NOTE: This only affects server-side collision bounds (BoundsScaleOverride).
         // Visual shrink is achieved via the SizeDecrease condition power in OnSetup.
         public override float VisualScaleOverride => 0.1875f;
@@ -80,6 +83,46 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         protected override float GlobalAttackCooldownMs => 800f;
         protected override float PerPowerCooldownMs => 6000f;
         protected override float DamageScale => 1.0f;
+
+        protected override IncursionPowerEntry[] PowerTable => _powerTable;
+
+        private static readonly IncursionPowerEntry[] _powerTable =
+        {
+            new("Powers/EnemyPowers/Boss/OnslaughtRaid/CallSentinel.prototype",                         false, 1.0396f), // 2026-07-24
+            new("Powers/EnemyPowers/Boss/OnslaughtRaid/CallSentinelPowerVFXOnly.prototype",             false, 1.0396f), // 2026-07-24
+            new("Powers/EnemyPowers/Boss/OnslaughtRaid/OnslaughtConeBlastReworkFront.prototype",        true,  1.2120f), // 2026-07-24
+            new("Powers/EnemyPowers/Boss/OnslaughtRaid/OnslaughtConeBlastReworkLeft.prototype",         true,  1.0f),
+            new("Powers/EnemyPowers/Boss/OnslaughtRaid/OnslaughtConeBlastReworkRight.prototype",        true,  1.0f),
+            new("Powers/EnemyPowers/Boss/OnslaughtRaid/OnslaughtFinalEnrage.prototype",                 true,  1.0f),
+            new("Powers/EnemyPowers/Boss/OnslaughtRaid/OnslaughtMentalBombStartFront.prototype",        true,  1.0f),
+            new("Powers/EnemyPowers/Boss/OnslaughtRaid/OnslaughtMentalBombStartLeft.prototype",         true,  1.0f),
+            new("Powers/EnemyPowers/Boss/OnslaughtRaid/OnslaughtMentalBombStartRight.prototype",        true,  1.0f),
+            new("Powers/EnemyPowers/Boss/OnslaughtRaid/OnslaughtNarrowPsionicBeamFront.prototype",      true,  1.0f),
+            new("Powers/EnemyPowers/Boss/OnslaughtRaid/OnslaughtNarrowPsionicBeamLeft.prototype",       true,  1.0f),
+            new("Powers/EnemyPowers/Boss/OnslaughtRaid/OnslaughtNarrowPsionicBeamRight.prototype",      true,  1.0f),
+            new("Powers/EnemyPowers/Boss/OnslaughtRaid/OnslaughtSpikedanceDelay.prototype",             true,  1.0f),
+            new("Powers/EnemyPowers/Boss/OnslaughtRaid/OnslaughtSummonMentalOrb.prototype",             true,  1.0f),
+            new("Powers/EnemyPowers/Boss/OnslaughtRaid/OnslaughtSummonMentalVoidFront.prototype",       true,  0.6325f), // 2026-07-24
+            new("Powers/EnemyPowers/Boss/OnslaughtRaid/OnslaughtSummonMentalVoidLeft.prototype",        true,  1.0f),
+            new("Powers/EnemyPowers/Boss/OnslaughtRaid/OnslaughtSummonMentalVoidRight.prototype",       true,  1.0f),
+            new("Powers/EnemyPowers/Boss/RedSkullOneShot/Onslaught/BubblePrisonFront.prototype",        true,  1.0f),
+            new("Powers/EnemyPowers/Boss/RedSkullOneShot/Onslaught/BubblePrisonLeft.prototype",         true,  1.0f),
+            new("Powers/EnemyPowers/Boss/RedSkullOneShot/Onslaught/BubblePrisonRight.prototype",        true,  1.0f),
+            new("Powers/EnemyPowers/Boss/RedSkullOneShot/Onslaught/PrisonBeamCenterRework.prototype",   true,  1.0f),
+            new("Powers/EnemyPowers/Boss/RedSkullOneShot/Onslaught/PrisonBeamLeftRework.prototype",     true,  1.0f),
+            new("Powers/EnemyPowers/Boss/RedSkullOneShot/Onslaught/PrisonBeamRightRework.prototype",    true,  1.0f),
+            new("Powers/EnemyPowers/Boss/OnslaughtRaid/OnslaughtConeBlastFrontDamage.prototype",        false, 1.0f),
+            new("Powers/EnemyPowers/Boss/OnslaughtRaid/OnslaughtConeBlastLeftDamage.prototype",         false, 1.0f),
+            new("Powers/EnemyPowers/Boss/OnslaughtRaid/OnslaughtConeBlastRightDamage.prototype",        false, 1.0f),
+            new("Powers/EnemyPowers/Boss/OnslaughtRaid/OnslaughtLeftPlatformBonus.prototype",           false, 1.0f),
+            new("Powers/EnemyPowers/Boss/OnslaughtRaid/OnslaughtMentalBombCreation.prototype",          false, 1.0f),
+            new("Powers/EnemyPowers/Boss/OnslaughtRaid/OnslaughtRightPlatformBonus.prototype",          false, 1.0f),
+            new("Powers/EnemyPowers/Boss/OnslaughtRaid/OnslaughtShieldPowerEffect.prototype",           false, 1.0f),
+            new("Powers/EnemyPowers/Boss/OnslaughtRaid/PrisonBeamSafespot.prototype",                   false, 1.0f),
+            new("Powers/EnemyPowers/Boss/OnslaughtRaid/SpikeDanceVFXOnly.prototype",                    false, 1.0f),
+            new("Powers/EnemyPowers/Shared/LeashReturnHeal.prototype",                                  false, 1.0f),
+            new("Powers/EnemyPowers/Shared/LeashReturnNegStatusEffectImmune.prototype",                 false, 1.0f),
+        };
 
         protected override void OnSetup(Agent agent)
         {
@@ -118,7 +161,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         /// <summary>
         /// Extracts the first ConditionPrototype from a power's AppliesConditions mixin list.
         /// </summary>
-        private static ConditionPrototype GetConditionPrototypeFromPower(PrototypeId powerProtoRef)
+        private new static ConditionPrototype GetConditionPrototypeFromPower(PrototypeId powerProtoRef)
         {
             if (powerProtoRef == PrototypeId.Invalid) return null;
             var powerProto = powerProtoRef.As<PowerPrototype>();
@@ -135,7 +178,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         /// Creates a minimal PowerPayload with just enough data for InitializeFromPower.
         /// Uses reflection to set private/protected setters on PowerPayload and PowerEffectsPacket.
         /// </summary>
-        private PowerPayload CreateMinimalPayload(PrototypeId powerProtoRef, Agent agent)
+        private new PowerPayload CreateMinimalPayload(PrototypeId powerProtoRef, Agent agent)
         {
             PowerPrototype powerProto = powerProtoRef.As<PowerPrototype>();
             if (powerProto == null) return null;

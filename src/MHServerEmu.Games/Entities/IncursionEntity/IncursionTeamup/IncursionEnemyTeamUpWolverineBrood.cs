@@ -18,6 +18,9 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         public override PrototypeId RenderTeamupRef => TeamUpRef;
         public override string InvaderDisplayName => "Wolverine Brood Invader";
 
+                 // HardcodeExclude: has avatar version 
+        public override bool HardcodeExclude => true;
+
         protected override int ThinkIntervalMs => 250;
         protected override float AttackRange => 200f;
         protected override float ChaseRange => 5000f;
@@ -30,16 +33,16 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/TeamUps/WolverineBrood/CrimsonLeap.prototype",  true,  0.023333f),  // WolverineBrood/CrimsonLeap.prototype
-            new("Powers/TeamUps/WolverineBrood/FuriousLunge.prototype",  true,  0.023333f),  // WolverineBrood/FuriousLunge.prototype
+            new("Powers/TeamUps/WolverineBrood/CrimsonLeap.prototype",  true,  0.0375f), // 2026-07-30
+            new("Powers/TeamUps/WolverineBrood/FuriousLunge.prototype",  true,  0.0397f), // 2026-07-30
             new("Powers/TeamUps/WolverineBrood/UnstoppableBeast.prototype", false,  0.023333f),  // WolverineBrood/UnstoppableBeast.prototype - away passive
             new("Powers/TeamUps/WolverineBrood/HasteSteroidTrigger.prototype", false,  0.023333f),  // WolverineBrood/HasteSteroidTrigger.prototype - trigger/secondary
-            new("Powers/TeamUps/WolverineBrood/BloodySweep.prototype",  true,  0.023333f),  // WolverineBrood/BloodySweep.prototype
+            new("Powers/TeamUps/WolverineBrood/BloodySweep.prototype",  true,  0.0555f), // 2026-07-30
             new("Powers/TeamUps/WolverineBrood/BloodyClaws.prototype",  true,  0.023333f),  // WolverineBrood/BloodyClaws.prototype
-            new("Powers/TeamUps/WolverineBrood/Eviscerate.prototype",  true,  0.023333f),  // WolverineBrood/Eviscerate.prototype
-            new("Powers/TeamUps/WolverineBrood/EviscerateTrigger.prototype", false,  0.023333f),  // WolverineBrood/EviscerateTrigger.prototype - trigger/secondary
+            new("Powers/TeamUps/WolverineBrood/Eviscerate.prototype",  true,  0.0226f), // 2026-07-30
+            new("Powers/TeamUps/WolverineBrood/EviscerateTrigger.prototype", false,  0.0226f), // 2026-07-30
             new("Powers/TeamUps/WolverineBrood/WetworkBuffProc.prototype", false,  0.023333f),  // WolverineBrood/WetworkBuffProc.prototype - away passive
-            new("Powers/TeamUps/WolverineBrood/FuriousAssault.prototype",  true,  0.023333f),  // WolverineBrood/FuriousAssault.prototype
+            new("Powers/TeamUps/WolverineBrood/FuriousAssault.prototype",  true,  0.0228f), // 2026-07-30
             new("Powers/TeamUps/TeamUpSynergyHeroPassive.prototype", false,  0.023333f),  // TeamUpSynergyHeroPassive.prototype - synergy passive
         };
     }

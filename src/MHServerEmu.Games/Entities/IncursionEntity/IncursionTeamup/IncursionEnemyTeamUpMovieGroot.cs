@@ -16,7 +16,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         public IncursionEnemyTeamUpMovieGroot(Game game) : base(game) { }
 
         public override PrototypeId RenderTeamupRef => TeamUpRef;
-        public override string InvaderDisplayName => "Movie Groot Invader";
+        public override string InvaderDisplayName => "Groot Invader";
 
         protected override int ThinkIntervalMs => 250;
         protected override float AttackRange => 200f;

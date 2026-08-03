@@ -217,28 +217,8 @@ namespace MHServerEmu.Games.Entities
             SpawnSpec = settings.SpawnSpec;
             SetFlag(EntityFlags.IsPopulation, settings.IsPopulation);
 
-            // Apply the client render-prototype override before replication.
-            if (settings.SpawnSpec != null && settings.SpawnSpec.ClientRenderPrototypeRef != PrototypeId.Invalid)
-            {
-                ClientPrototypeRefOverride = settings.SpawnSpec.ClientRenderPrototypeRef;
-
-                // Prepare avatar-compatible replication state for non-avatar entities rendered
-                // as an avatar (e.g. Incursion avatar enemies that use a playable character model).
-                if (this is not Avatar && ClientPrototypeRefOverride.As<AvatarPrototype>() != null)
-                {
-                    IsClientRenderedAsAvatar = true;
-                    SpoofAvatarWorldInstanceId = 1;     // any non-zero id; we never reuse/track it
-
-                    _spoofAvatarPlayerName = new();
-                    _spoofAvatarPlayerName.Bind(this, AOINetworkPolicyValues.AOIChannelProximity | AOINetworkPolicyValues.AOIChannelParty | AOINetworkPolicyValues.AOIChannelOwner);
-
-                    // Custom name drawn above the entity when rendered as an avatar.
-                    if (string.IsNullOrEmpty(settings.SpawnSpec.ClientRenderPlayerName) == false)
-                        _spoofAvatarPlayerName.Set(settings.SpawnSpec.ClientRenderPlayerName);
-
-                    _spoofAvatarAbilityKeyMappings = new();
-                }
-            }
+            // Decoupled rendering setup (mod) - see WorldEntity.ModDecoupledRendering.cs
+            InitializeDecoupledRendering(settings);
 
             // When rendering as a different prototype (e.g. Incursion avatar render),
             // use the render prototype's bounds so server-side collision matches the
@@ -290,8 +270,8 @@ namespace MHServerEmu.Games.Entities
         {
             base.UnbindReplicatedFields();
 
-            // Bound in Initialize only when rendering as an avatar (decoupled rendering).
-            _spoofAvatarPlayerName?.Unbind();
+            // Decoupled rendering unbind (mod) - see WorldEntity.ModDecoupledRendering.cs
+            UnbindDecoupledRendering();
         }
 
         public override bool Serialize(Archive archive)
@@ -325,30 +305,8 @@ namespace MHServerEmu.Games.Entities
                 success &= Serializer.Transfer(archive, ref unknown);
             }
 
-            // Append the avatar transient tail for non-avatar entities rendered as an avatar.
-            if (IsClientRenderedAsAvatar && this is not Avatar)
-            {
-                if (archive.IsTransient)
-                {
-                    success &= Serializer.Transfer(archive, ref _spoofAvatarPlayerName);
-
-                    ulong ownerPlayerDbId = 0;
-                    success &= Serializer.Transfer(archive, ref ownerPlayerDbId);
-
-                    string emptyString = string.Empty;
-                    success &= Serializer.Transfer(archive, ref emptyString);
-
-                    if (archive.IsReplication)
-                    {
-                        ulong guildId = GuildManager.InvalidGuildId;
-                        string guildName = string.Empty;
-                        GuildMembership guildMembership = GuildMembership.eGMNone;
-                        success &= GuildMember.SerializeReplicationRuntimeInfo(archive, ref guildId, ref guildName, ref guildMembership);
-                    }
-                }
-
-                success &= Serializer.Transfer(archive, ref _spoofAvatarAbilityKeyMappings);
-            }
+            // Decoupled rendering serialization (mod) - see WorldEntity.ModDecoupledRendering.cs
+            SerializeDecoupledRendering(archive, ref success);
 
             return success;
         }
@@ -2274,20 +2232,8 @@ namespace MHServerEmu.Games.Entities
             health += healthDelta;
             health = Math.Clamp(health, Properties[PropertyEnum.HealthMin], Properties[PropertyEnum.HealthMax]);
 
-            // Log health changes caused by incursion enemies for tuning visibility.
-            bool ultimateOwnerIsIncursion = ultimateOwner != null
-                && (ultimateOwner.IsClientRenderedAsAvatar
-                    || (Game?.IncursionManager != null && Game.IncursionManager.IsIncursionEntity(ultimateOwner.Id)));
-            if (ultimateOwnerIsIncursion && health != startHealth)
-            {
-                PrototypeId hitPowerRef = powerResults.PowerPrototype != null ? powerResults.PowerPrototype.DataRef : PrototypeId.Invalid;
-                string hpMsg = $"[IncursionEnemy] HP: target '{PrototypeName}' (id {Id}) {startHealth} -> {health} " +
-                               $"(delta {health - startHealth}) from '{ultimateOwner.PrototypeName}' power '{GameDatabase.GetPrototypeName(hitPowerRef)}'.";
-                if (Game?.CustomGameOptions?.IncursionLoggingEnable == true)
-                    Logger.Info(hpMsg);
-                IncursionLogCollator.WriteLine(Id, hpMsg);
-                IncursionLogCollator.WriteLine(ultimateOwner.Id, hpMsg);
-            }
+            // Incursion health change logging (mod) - see WorldEntity.ModDecoupledRendering.cs
+            LogIncursionHealthChange(powerResults, ultimateOwner, startHealth, health);
 
             // [DeathRecap] Record incoming damage/healing for death recap
             if (this is Avatar recapAvatar)
@@ -4288,38 +4234,11 @@ namespace MHServerEmu.Games.Entities
 
         #endregion
 
-        // Prototype the client renders this entity as. The server continues driving the real prototype as the combat body.
-        public PrototypeId ClientPrototypeRefOverride { get; set; } = PrototypeId.Invalid;
-
-        // True when the render override is an AvatarPrototype. Extra replication fields are emitted
-        // so the client builds an avatar actor.
-        public bool IsClientRenderedAsAvatar { get; private set; }
-        public uint SpoofAvatarWorldInstanceId { get; private set; }
-
         // Persistent flag: the client should hide this entity's pawn (not render it) even on AOI re-entry.
         // Set from EntitySettingsOptionFlags.IsClientEntityHidden during Initialize.
         public bool IsClientEntityHidden { get; private set; }
 
-        // Bound only when rendering as an avatar.
-        private RepVar_string _spoofAvatarPlayerName;
-        private List<AbilityKeyMapping> _spoofAvatarAbilityKeyMappings;
-
-        /// <summary>
-        /// Clears the replicated overhead name drawn above this entity when it is rendered as an avatar.
-        /// </summary>
-        public void ClearSpoofAvatarPlayerName()
-        {
-            _spoofAvatarPlayerName?.Set(string.Empty);
-        }
-
-        /// <summary>
-        /// The prototype the client should render this entity as. Returns the real
-        /// <see cref="Entity.PrototypeDataRef"/> unless a render override is active.
-        /// </summary>
-        public PrototypeId GetClientPrototypeDataRef()
-        {
-            return ClientPrototypeRefOverride != PrototypeId.Invalid ? ClientPrototypeRefOverride : PrototypeDataRef;
-        }
+        // Decoupled rendering fields and methods are in WorldEntity.ModDecoupledRendering.cs (partial class)
 
         public virtual AssetId GetEntityWorldAsset()
         {

@@ -25,5 +25,20 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         protected override float GlobalAttackCooldownMs => 800f;
         protected override float PerPowerCooldownMs => 6000f;
         protected override float DamageScale => 1.0f;
+
+        protected override IncursionPowerEntry[] PowerTable => _powerTable;
+
+        private static readonly IncursionPowerEntry[] _powerTable =
+        {
+            new("Powers/EnemyPowers/Boss/ManApe/BeatChest.prototype",                     true,  1.0f),
+            new("Powers/EnemyPowers/Boss/ManApe/LeapStart.prototype",                     true,  1.0149f), // 2026-07-30
+            new("Powers/EnemyPowers/Boss/ManApe/SpearJab.prototype",                      true,  1.0f),
+            new("Powers/EnemyPowers/Boss/ManApe/SpearThrow.prototype",                    true,  0.7506f), // 2026-07-30
+            new("Powers/EnemyPowers/Boss/ManApe/LeapEnd.prototype",                       false, 1.0f),
+            new("Powers/EnemyPowers/Boss/ManApe/LeapMovement.prototype",                  false, 1.0f),
+            new("Powers/EnemyPowers/Shared/LeashReturnHeal.prototype",                    false, 1.0f),
+            new("Powers/EnemyPowers/Shared/LeashReturnNegStatusEffectImmune.prototype",   false, 1.0f),
+            new("Powers/Player/CCImmune2SecondCombo.prototype",                           false, 1.0f),
+        };
     }
 }

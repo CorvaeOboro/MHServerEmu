@@ -50,20 +50,20 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/BlackWidow/CoupDeGrace.prototype",                           true,  0.0653f), // 2026-06-11
-            new("Powers/Player/BlackWidow/ElectricBatons.prototype",                        true,  0.1347f), // 2026-06-11
-            new("Powers/Player/BlackWidow/FlashGrenade.prototype",                          true,  0.1958f), // 2026-06-11
-            new("Powers/Player/BlackWidow/FlipKick.prototype",                              true,  0.0272f), // 2026-06-20
-            new("Powers/Player/BlackWidow/Microdrones.prototype",                           true,  0.0775f), // 2026-06-10
-            new("Powers/Player/BlackWidow/PBAoETaser.prototype",                            true,  0.0486f), // 2026-06-11
-            new("Powers/Player/BlackWidow/PistolShot.prototype",                            true,  0.1968f), // 2026-06-11
-            new("Powers/Player/BlackWidow/Plastique.prototype",                             true,  0.1714f), // 2026-06-10
-            new("Powers/Player/BlackWidow/Punch.prototype",                                 true,  0.0983f), // 2026-06-10
-            new("Powers/Player/BlackWidow/RapidShot.prototype",                             true,  0.1991f), // 2026-06-11
-            new("Powers/Player/BlackWidow/RollingGrenades.prototype",                       true,  0.1357f), // 2026-06-17
-            new("Powers/Player/BlackWidow/RoundhouseKick.prototype",                        true,  0.0298f), // 2026-06-11
+            new("Powers/Player/BlackWidow/CoupDeGrace.prototype",                           true,  0.0658f), // 2026-06-11
+            new("Powers/Player/BlackWidow/ElectricBatons.prototype",                        true,  0.1870f), // 2026-06-11
+            new("Powers/Player/BlackWidow/FlashGrenade.prototype",                          true,  0.1619f), // 2026-06-11
+            new("Powers/Player/BlackWidow/FlipKick.prototype",                              true,  0.0267f), // 2026-07-31
+            new("Powers/Player/BlackWidow/Microdrones.prototype",                           true,  0.0761f), // 2026-06-10
+            new("Powers/Player/BlackWidow/PBAoETaser.prototype",                            true,  0.0499f), // 2026-06-11
+            new("Powers/Player/BlackWidow/PistolShot.prototype",                            true,  0.3136f), // 2026-06-11
+            new("Powers/Player/BlackWidow/Plastique.prototype",                             true,  1.4533f), // 2026-06-10
+            new("Powers/Player/BlackWidow/Punch.prototype",                                 true,  0.1224f), // 2026-06-10
+            new("Powers/Player/BlackWidow/RapidShot.prototype",                             true,  0.5771f), // 2026-06-11
+            new("Powers/Player/BlackWidow/RollingGrenades.prototype",                       true,  0.0784f), // 2026-07-31
+            new("Powers/Player/BlackWidow/RoundhouseKick.prototype",                        true,  0.0281f), // 2026-06-11
             new("Powers/Player/BlackWidow/SniperShot.prototype",                            true,  0.05f),
-            new("Powers/Player/BlackWidow/SweepingKick.prototype",                          true,  0.0897f), // 2026-06-11
+            new("Powers/Player/BlackWidow/SweepingKick.prototype",                          true,  0.0919f), // 2026-06-11
             new("Powers/Player/BlackWidow/Talents/FightingFocus.prototype",                 false, 0.05f),
             new("Powers/Player/BlackWidow/Talents/FlashGrenadeConductiveGrenade.prototype", false, 0.1958f), // 2026-06-11
             new("Powers/Player/BlackWidow/Talents/FlipKickExplosives.prototype",            false, 0.0272f), // 2026-06-20
@@ -83,10 +83,10 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/BlackWidow/Traits/MechanicTraitElectricCharge.prototype",    false, 0.05f),
             new("Powers/Player/BlackWidow/Traits/OffenseTrait.prototype",                   false, 0.05f),
             new("Powers/Player/BlackWidow/Tumble.prototype",                                true,  0.05f),
-            new("Powers/Player/BlackWidow/TwilightInitiative.prototype",                    true,  0.0301f), // 2026-06-20
-            new("Powers/Player/BlackWidow/Ultimate.prototype",                              true,  0.0243f), // 2026-06-20
-            new("Powers/Player/BlackWidow/WidowsBite.prototype",                            true,  0.0677f), // 2026-06-10
-            new("Powers/Player/BlackWidow/WidowsKiss.prototype",                            true,  0.0848f), // 2026-06-11
+            new("Powers/Player/BlackWidow/TwilightInitiative.prototype",                    true,  0.0181f), // 2026-07-31
+            new("Powers/Player/BlackWidow/Ultimate.prototype",                              true,  0.0219f), // 2026-07-31
+            new("Powers/Player/BlackWidow/WidowsBite.prototype",                            true,  0.0679f), // 2026-06-10
+            new("Powers/Player/BlackWidow/WidowsKiss.prototype",                            true,  0.0816f), // 2026-06-11
             new("Powers/Player/TravelPower/BlackWidowRide.prototype",                       false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/BlackWidowStolenPower.prototype",      false, 0.05f),
             new("Powers/Blueprints/Conditions/CCReactCondition.prototype",                  false, 0.05f),

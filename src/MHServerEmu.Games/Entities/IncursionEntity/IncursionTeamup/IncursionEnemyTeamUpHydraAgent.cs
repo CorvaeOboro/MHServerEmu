@@ -39,7 +39,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/TeamUps/ShieldAgent/HydraAgent/SummonHydraBrawler.prototype", false,  0.026667f),  // ShieldAgent/HydraAgent/SummonHydraBrawler.prototype - defensive
             new("Powers/TeamUps/ShieldAgent/HydraAgent/SummonHydraGunner.prototype", false,  0.026667f),  // ShieldAgent/HydraAgent/SummonHydraGunner.prototype - defensive
             new("Powers/TeamUps/ShieldAgent/HydraAgent/AwaySummonHydraAgents.prototype", false,  0.026667f),  // ShieldAgent/HydraAgent/AwaySummonHydraAgents.prototype - away passive
-            new("Powers/TeamUps/ShieldAgent/HydraAgent/Signature.prototype",  true, 0.013333f),  // ShieldAgent/HydraAgent/Signature.prototype - signature / ultimate
+            new("Powers/TeamUps/ShieldAgent/HydraAgent/Signature.prototype",  true, 0.0133f), // 2026-08-01
             new("Powers/TeamUps/TeamUpSynergyHeroPassive.prototype", false,  0.026667f),  // TeamUpSynergyHeroPassive.prototype - synergy passive
         };
     }

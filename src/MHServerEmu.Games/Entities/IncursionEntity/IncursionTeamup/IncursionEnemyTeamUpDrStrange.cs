@@ -18,6 +18,9 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         public override PrototypeId RenderTeamupRef => TeamUpRef;
         public override string InvaderDisplayName => "Dr Strange Invader";
 
+                 // HardcodeExclude: has avatar version 
+        public override bool HardcodeExclude => true;
+
         protected override int ThinkIntervalMs => 250;
         protected override float AttackRange => 200f;
         protected override float ChaseRange => 5000f;
@@ -31,15 +34,15 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         private static readonly IncursionPowerEntry[] _powerTable =
         {
             new("Powers/TeamUps/DrStrange/Daggers.prototype",  true,  0.026667f),  // DrStrange/Daggers.prototype
-            new("Powers/TeamUps/DrStrange/SummonFlame.prototype",  true,  0.026667f),  // DrStrange/SummonFlame.prototype
+            new("Powers/TeamUps/DrStrange/SummonFlame.prototype",  true,  0.0475f), // 2026-07-30
             new("Powers/TeamUps/DrStrange/AwaySummonFlames.prototype", false,  0.026667f),  // DrStrange/AwaySummonFlames.prototype - away passive
             new("Powers/TeamUps/DrStrange/ExplosiveOrb.prototype",  true,  0.026667f),  // DrStrange/ExplosiveOrb.prototype
-            new("Powers/TeamUps/DrStrange/AstralClone.prototype",  true,  0.026667f),  // DrStrange/AstralClone.prototype
+            new("Powers/TeamUps/DrStrange/AstralClone.prototype",  true,  0.1328f), // 2026-07-30
             new("Powers/TeamUps/DrStrange/AwayAstralClone.prototype", false,  0.026667f),  // DrStrange/AwayAstralClone.prototype - away passive
             new("Powers/TeamUps/DrStrange/VishantiSeal.prototype",  true,  0.026667f),  // DrStrange/VishantiSeal.prototype
             new("Powers/TeamUps/DrStrange/SeraphimShield.prototype", false,  0.026667f),  // DrStrange/SeraphimShield.prototype - defensive
             new("Powers/TeamUps/DrStrange/AwaySeraphimShield.prototype", false,  0.026667f),  // DrStrange/AwaySeraphimShield.prototype - away passive
-            new("Powers/TeamUps/DrStrange/Vapor.prototype",  true,  0.026667f),  // DrStrange/Vapor.prototype
+            new("Powers/TeamUps/DrStrange/Vapor.prototype",  true,  0.0305f), // 2026-07-30
             new("Powers/TeamUps/TeamUpSynergyHeroPassive.prototype", false,  0.026667f),  // TeamUpSynergyHeroPassive.prototype - synergy passive
         };
     }

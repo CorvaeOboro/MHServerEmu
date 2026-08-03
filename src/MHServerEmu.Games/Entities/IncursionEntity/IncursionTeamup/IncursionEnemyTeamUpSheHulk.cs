@@ -18,6 +18,9 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         public override PrototypeId RenderTeamupRef => TeamUpRef;
         public override string InvaderDisplayName => "She Hulk Invader";
 
+         // HardcodeExclude: has avatar version 
+        public override bool HardcodeExclude => true;
+
         protected override int ThinkIntervalMs => 250;
         protected override float AttackRange => 200f;
         protected override float ChaseRange => 5000f;
@@ -30,16 +33,16 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/TeamUps/SheHulk/PBAoE.prototype",  true,  0.023333f),  // SheHulk/PBAoE.prototype
-            new("Powers/TeamUps/SheHulk/GammaElbowDrop.prototype",  true,  0.023333f),  // SheHulk/GammaElbowDrop.prototype
+            new("Powers/TeamUps/SheHulk/PBAoE.prototype",  true,  0.0703f), // 2026-07-30
+            new("Powers/TeamUps/SheHulk/GammaElbowDrop.prototype",  true,  0.0262f), // 2026-07-30
             new("Powers/TeamUps/SheHulk/AwayElbowDropProc.prototype", false,  0.023333f),  // SheHulk/AwayElbowDropProc.prototype - away passive
             new("Powers/TeamUps/SheHulk/BarristerBeatdown.prototype",  true,  0.023333f),  // SheHulk/BarristerBeatdown.prototype
-            new("Powers/TeamUps/SheHulk/BriefcaseThrow.prototype",  true,  0.023333f),  // SheHulk/BriefcaseThrow.prototype
-            new("Powers/TeamUps/SheHulk/MoveToStrike.prototype",  true,  0.023333f),  // SheHulk/MoveToStrike.prototype
+            new("Powers/TeamUps/SheHulk/BriefcaseThrow.prototype",  true,  0.0434f), // 2026-07-30
+            new("Powers/TeamUps/SheHulk/MoveToStrike.prototype",  true,  0.0317f), // 2026-07-30
             new("Powers/TeamUps/SheHulk/Taunt.prototype",  true,  0.023333f),  // SheHulk/Taunt.prototype
             new("Powers/TeamUps/SheHulk/HulkOutSteroid.prototype", false,  0.023333f),  // SheHulk/HulkOutSteroid.prototype - defensive
             new("Powers/TeamUps/SheHulk/AwayLawyerUpProc.prototype", false,  0.023333f),  // SheHulk/AwayLawyerUpProc.prototype - away passive
-            new("Powers/TeamUps/SheHulk/Conviction.prototype",  true,  0.023333f),  // SheHulk/Conviction.prototype
+            new("Powers/TeamUps/SheHulk/Conviction.prototype",  true,  0.0181f), // 2026-07-30
             new("Powers/TeamUps/TeamUpSynergyHeroPassive.prototype", false,  0.023333f),  // TeamUpSynergyHeroPassive.prototype - synergy passive
         };
     }

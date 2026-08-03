@@ -30,15 +30,15 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/TeamUps/Drax/SwordLeap.prototype",  true,  0.023333f),  // Drax/SwordLeap.prototype
-            new("Powers/TeamUps/Drax/KnifeThrow.prototype",  true,  0.023333f),  // Drax/KnifeThrow.prototype
+            new("Powers/TeamUps/Drax/SwordLeap.prototype",  true,  0.0274f), // 2026-07-30
+            new("Powers/TeamUps/Drax/KnifeThrow.prototype",  true,  0.0401f), // 2026-07-30
             new("Powers/TeamUps/Drax/MeleeBuffProc.prototype", false,  0.023333f),  // Drax/MeleeBuffProc.prototype - away passive
-            new("Powers/TeamUps/Drax/SwordLeapBleedTrigger.prototype", false,  0.023333f),  // Drax/SwordLeapBleedTrigger.prototype - trigger/secondary
-            new("Powers/TeamUps/Drax/PBAoE.prototype",  true,  0.023333f),  // Drax/PBAoE.prototype
-            new("Powers/TeamUps/Drax/PBAoEBleedTrigger.prototype", false,  0.023333f),  // Drax/PBAoEBleedTrigger.prototype - trigger/secondary
+            new("Powers/TeamUps/Drax/SwordLeapBleedTrigger.prototype", false,  0.0274f), // 2026-07-30
+            new("Powers/TeamUps/Drax/PBAoE.prototype",  true,  0.0559f), // 2026-07-30
+            new("Powers/TeamUps/Drax/PBAoEBleedTrigger.prototype", false,  0.0559f), // 2026-07-30
             new("Powers/TeamUps/Drax/AwaySwordLeapVol2.prototype", false,  0.023333f),  // Drax/AwaySwordLeapVol2.prototype - away passive
-            new("Powers/TeamUps/Drax/ChuckConcrete.prototype",  true,  0.023333f),  // Drax/ChuckConcrete.prototype
-            new("Powers/TeamUps/Drax/Whirlwind.prototype",  true,  0.023333f),  // Drax/Whirlwind.prototype
+            new("Powers/TeamUps/Drax/ChuckConcrete.prototype",  true,  0.0536f), // 2026-07-28
+            new("Powers/TeamUps/Drax/Whirlwind.prototype",  true,  0.0341f), // 2026-07-30
             new("Powers/TeamUps/Drax/RageSteroid.prototype", false,  0.023333f),  // Drax/RageSteroid.prototype - defensive
             new("Powers/TeamUps/TeamUpSynergyHeroPassive.prototype", false,  0.023333f),  // TeamUpSynergyHeroPassive.prototype - synergy passive
         };

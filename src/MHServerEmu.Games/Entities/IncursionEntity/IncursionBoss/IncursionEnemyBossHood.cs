@@ -25,5 +25,22 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         protected override float GlobalAttackCooldownMs => 800f;
         protected override float PerPowerCooldownMs => 6000f;
         protected override float DamageScale => 1.0f;
+
+        protected override IncursionPowerEntry[] PowerTable => _powerTable;
+
+        private static readonly IncursionPowerEntry[] _powerTable =
+        {
+            new("Powers/EnemyPowers/Boss/TheHood/ChargeShotStart.prototype",              true,  0.8056f), // 2026-07-28
+            new("Powers/EnemyPowers/Boss/TheHood/TheHoodDoubleTap.prototype",             true,  1.0f),
+            new("Powers/EnemyPowers/Boss/TheHood/TimeBomb.prototype",                     true,  1.0f),
+            new("Powers/EnemyPowers/Boss/TheHood/ChargeShot.prototype",                   false, 0.8056f), // 2026-07-28
+            new("Powers/EnemyPowers/Boss/TheHood/DeathBlossom.prototype",                 false, 0.9888f), // 2026-07-28
+            new("Powers/EnemyPowers/Boss/TheHood/DeathBlossomStart.prototype",            false, 0.9888f), // 2026-07-28
+            new("Powers/EnemyPowers/Boss/TheHood/TheHoodBlink.prototype",                 false, 1.0f),
+            new("Powers/EnemyPowers/Boss/TheHood/TheHoodDoubleTapLeft.prototype",         false, 1.0f),
+            new("Powers/EnemyPowers/Boss/TheHood/TheHoodDoubleTapRight.prototype",        false, 1.0f),
+            new("Powers/EnemyPowers/Shared/LeashReturnHeal.prototype",                    false, 1.0f),
+            new("Powers/EnemyPowers/Shared/LeashReturnNegStatusEffectImmune.prototype",   false, 1.0f),
+        };
     }
 }

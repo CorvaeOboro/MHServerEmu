@@ -25,5 +25,19 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         protected override float GlobalAttackCooldownMs => 800f;
         protected override float PerPowerCooldownMs => 6000f;
         protected override float DamageScale => 1.0f;
+
+        protected override IncursionPowerEntry[] PowerTable => _powerTable;
+
+        private static readonly IncursionPowerEntry[] _powerTable =
+        {
+            new("Powers/EnemyPowers/Boss/Loki/LokiBossEnergyBlast.prototype",             true,  0.8151f), // 2026-07-29
+            new("Powers/EnemyPowers/Boss/Loki/LokiBossSummonIceWall.prototype",           true,  1.0f),
+            new("Powers/EnemyPowers/Boss/Loki/LokiBossSummonIllusions.prototype",         true,  1.0f),
+            new("Powers/EnemyPowers/Boss/Loki/LokiBossSummonIllusionResist.prototype",    false, 1.0f),
+            new("Powers/EnemyPowers/Boss/Loki/LokiBossTeleportAttack.prototype",          false, 1.0f),
+            new("Powers/EnemyPowers/Boss/Loki/LokiBossTeleportStart.prototype",           false, 1.0f),
+            new("Powers/EnemyPowers/Shared/LeashReturnHeal.prototype",                    false, 1.0f),
+            new("Powers/EnemyPowers/Shared/LeashReturnNegStatusEffectImmune.prototype",   false, 1.0f),
+        };
     }
 }

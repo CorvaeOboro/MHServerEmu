@@ -34,6 +34,9 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         // ЯΛSPЦTI₦ IV //  example glyphs = ЦGGΣЯ₦Λ
         public override string InvaderDisplayName => "ЯΛSPЦTI₦ IV";
 
+        // HardcodeExclude: WIP chimera system for playing other heroes powers , CalamityBoss for example
+        public override bool HardcodeExclude => true;
+
         // Base Incursion Attributes
         protected override int ThinkIntervalMs => 250;
         protected override float AttackRange => 150.0f;

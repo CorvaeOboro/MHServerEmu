@@ -45,22 +45,22 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/Player/Gambit/AceOfSpades.prototype",                       true,  0.0446f), // 2026-07-05
-            new("Powers/Player/Gambit/BasicBoStrike.prototype",                     true,  0.0960f), // 2026-06-10
-            new("Powers/Player/Gambit/BasicKineticCard.prototype",                  true,  0.1909f), // 2026-06-10
+            new("Powers/Player/Gambit/AceOfSpades.prototype",                       true,  0.0459f), // 2026-07-05
+            new("Powers/Player/Gambit/BasicBoStrike.prototype",                     true,  0.1128f), // 2026-06-10
+            new("Powers/Player/Gambit/BasicKineticCard.prototype",                  true,  0.1852f), // 2026-06-10
             new("Powers/Player/Gambit/BasicKineticCardHiddenPassive.prototype",     false, 0.05f),
-            new("Powers/Player/Gambit/BatterUp.prototype",                          true,  0.0615f), // 2026-06-10
-            new("Powers/Player/Gambit/BoBeatdown.prototype",                        true,  0.0606f), // 2026-06-10
-            new("Powers/Player/Gambit/BoVault.prototype",                           true,  0.1503f), // 2026-07-05
-            new("Powers/Player/Gambit/BoWhirlwind.prototype",                       true,  0.1360f), // 2026-07-05
-            new("Powers/Player/Gambit/CardPickup.prototype",                        true,  0.0463f), // 2026-06-05
+            new("Powers/Player/Gambit/BatterUp.prototype",                          true,  0.0528f), // 2026-06-10
+            new("Powers/Player/Gambit/BoBeatdown.prototype",                        true,  0.4273f), // 2026-06-10
+            new("Powers/Player/Gambit/BoVault.prototype",                           true,  0.2269f), // 2026-07-05
+            new("Powers/Player/Gambit/BoWhirlwind.prototype",                       true,  0.1244f), // 2026-07-05
+            new("Powers/Player/Gambit/CardPickup.prototype",                        true,  0.0304f), // 2026-06-05
             new("Powers/Player/Gambit/ChargeUpCard.prototype",                      true,  0.05f),
-            new("Powers/Player/Gambit/FoldEm.prototype",                            true,  0.1056f), // 2026-06-05
-            new("Powers/Player/Gambit/GrandSlam.prototype",                         true,  0.0348f), // 2026-06-20
-            new("Powers/Player/Gambit/JacksOrBetter.prototype",                     true,  0.2055f), // 2026-06-05
-            new("Powers/Player/Gambit/RaininPain.prototype",                        true,  0.0903f), // 2026-06-05
-            new("Powers/Player/Gambit/RoyalFlush.prototype",                        true,  0.1632f), // 2026-06-05
-            new("Powers/Player/Gambit/StreetSweep.prototype",                       true,  0.1449f), // 2026-06-05
+            new("Powers/Player/Gambit/FoldEm.prototype",                            true,  0.1228f), // 2026-06-05
+            new("Powers/Player/Gambit/GrandSlam.prototype",                         true,  0.0305f), // 2026-06-20
+            new("Powers/Player/Gambit/JacksOrBetter.prototype",                     true,  0.2034f), // 2026-06-05
+            new("Powers/Player/Gambit/RaininPain.prototype",                        true,  0.0969f), // 2026-06-05
+            new("Powers/Player/Gambit/RoyalFlush.prototype",                        true,  0.1619f), // 2026-06-05
+            new("Powers/Player/Gambit/StreetSweep.prototype",                       true,  0.1861f), // 2026-06-05
             new("Powers/Player/Gambit/Talents/Talent1LessDowntime.prototype",       false, 0.05f),
             new("Powers/Player/Gambit/Talents/Talent1LongerBurn.prototype",         false, 0.05f),
             new("Powers/Player/Gambit/Talents/Talent1RaginCajun.prototype",         false, 0.05f),
@@ -80,7 +80,7 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
             new("Powers/Player/Gambit/Traits/MechanicTraitKineticEnergy.prototype", false, 0.05f),
             new("Powers/Player/Gambit/Traits/OffenseTrait.prototype",               false, 0.05f),
             new("Powers/Player/Gambit/Tumble.prototype",                            true,  0.05f),
-            new("Powers/Player/Gambit/Ultimate.prototype",                          true,  0.0121f), // 2026-06-18
+            new("Powers/Player/Gambit/Ultimate.prototype",                          true,  0.0125f), // 2026-06-18
             new("Powers/Player/TravelPower/GambitSprint.prototype",                 false, 0.05f),
             new("Powers/StolenPowers/StealablePowers/GambitStolenPower.prototype",  false, 0.05f),
             new("Powers/Player/Active/ResurrectAnimOnly.prototype",                 false, 0.05f),

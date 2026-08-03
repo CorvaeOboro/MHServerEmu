@@ -19,6 +19,9 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
         public override PrototypeId RenderBossRef => BossRef;
         public override string InvaderDisplayName => "Mole Man Invader";
 
+        // HardcodeExclude: invis , summons moloids but no body
+        public override bool HardcodeExclude => true;
+
         protected override int ThinkIntervalMs => 300;
         protected override float AttackRange => 300f;
         protected override float ChaseRange => 5000f;

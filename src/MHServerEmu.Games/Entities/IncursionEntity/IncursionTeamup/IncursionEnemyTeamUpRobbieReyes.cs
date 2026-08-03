@@ -30,16 +30,16 @@ namespace MHServerEmu.Games.Entities.IncursionEntity
 
         private static readonly IncursionPowerEntry[] _powerTable =
         {
-            new("Powers/TeamUps/RobbieReyes/ChainRoot.prototype",  true,  0.023333f),  // RobbieReyes/ChainRoot.prototype
-            new("Powers/TeamUps/RobbieReyes/FirePillar.prototype",  true,  0.023333f),  // RobbieReyes/FirePillar.prototype
+            new("Powers/TeamUps/RobbieReyes/ChainRoot.prototype",  true,  0.0534f), // 2026-07-30
+            new("Powers/TeamUps/RobbieReyes/FirePillar.prototype",  true,  0.0463f), // 2026-07-30
             new("Powers/TeamUps/RobbieReyes/AwayFirePillar.prototype", false,  0.023333f),  // RobbieReyes/AwayFirePillar.prototype - away passive
-            new("Powers/TeamUps/RobbieReyes/TireIron.prototype",  true,  0.023333f),  // RobbieReyes/TireIron.prototype
-            new("Powers/TeamUps/RobbieReyes/DriveBy.prototype",  true,  0.023333f),  // RobbieReyes/DriveBy.prototype
-            new("Powers/TeamUps/RobbieReyes/FireBreath.prototype",  true,  0.023333f),  // RobbieReyes/FireBreath.prototype
+            new("Powers/TeamUps/RobbieReyes/TireIron.prototype",  true,  0.0433f), // 2026-07-30
+            new("Powers/TeamUps/RobbieReyes/DriveBy.prototype",  true,  0.0359f), // 2026-07-30
+            new("Powers/TeamUps/RobbieReyes/FireBreath.prototype",  true,  0.0521f), // 2026-07-30
             new("Powers/TeamUps/RobbieReyes/AwayTireIron.prototype", false,  0.023333f),  // RobbieReyes/AwayTireIron.prototype - away passive
-            new("Powers/TeamUps/RobbieReyes/DriveByHotspotTrigger.prototype", false,  0.023333f),  // RobbieReyes/DriveByHotspotTrigger.prototype - trigger/secondary
-            new("Powers/TeamUps/RobbieReyes/Hellfire.prototype",  true,  0.023333f),  // RobbieReyes/Hellfire.prototype
-            new("Powers/TeamUps/RobbieReyes/Signature.prototype",  true, 0.011667f),  // RobbieReyes/Signature.prototype - signature / ultimate
+            new("Powers/TeamUps/RobbieReyes/DriveByHotspotTrigger.prototype", false,  0.0359f), // 2026-07-30
+            new("Powers/TeamUps/RobbieReyes/Hellfire.prototype",  true,  0.0392f), // 2026-07-30
+            new("Powers/TeamUps/RobbieReyes/Signature.prototype",  true, 0.0161f), // 2026-07-30
             new("Powers/TeamUps/TeamUpSynergyHeroPassive.prototype", false,  0.023333f),  // TeamUpSynergyHeroPassive.prototype - synergy passive
         };
     }
