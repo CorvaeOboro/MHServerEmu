@@ -2244,6 +2244,12 @@ namespace MHServerEmu.Games.Entities
 
             long adjustHealth = health - startHealth;
 
+            // [ModOverlay DpsTracker] Record outgoing damage for the server-side DPS overlay
+            //   see WorldEntity.ModOverlayDpsTracker.cs
+            //   Master switch check here (hot path) avoids the method call entirely when disabled.
+            if (Game?.CustomGameOptions?.ModOverlayEnable == true)
+                ModOverlayRecordDpsEvent(powerResults, ultimateOwner, adjustHealth);
+
             var avatar = ultimateOwner?.GetMostResponsiblePowerUser<Avatar>();
 
             if (region != null)

@@ -1,3 +1,18 @@
+// =============================================================================
+//  MOD Incursion - commands
+// =============================================================================
+//  Feature:    Hostile invader spawn system. Periodically spawns enemies near
+//              players, supports static enemy override, 1v1 trial gauntlets,
+//              and a per-player/per-character hunt tracker.
+//  Commands:   !incursion now | spawn | start | stop | status | debug |
+//              enemy | trial | hunt
+//  Config :    IncursionCommandsRequireAdmin in Config.ini
+//  Example :   "!incursion now"              = spawn a random invader near you
+//  Example :   "!incursion enemy Venom"      = set the static invader to Venom
+//  Example :   "!incursion trial boss"       = start a boss-only trial gauntlet
+//  Example :   "!incursion hunt reset all"   = reset all hunt data
+// =============================================================================
+
 using System.Linq;
 using MHServerEmu.Commands.Attributes;
 using MHServerEmu.Core.Config;
@@ -16,8 +31,10 @@ namespace MHServerEmu.Commands.Implementations
 {
     [CommandGroup("incursion")]
     [CommandGroupDescription("Controls the incursion system.")]
-    public class IncursionCommands : CommandGroup
+    public class ModIncursionCommands : CommandGroup
     {
+        #region now
+
         [Command("now")]
         [CommandDescription("Spawns a hostile invader near your avatar. In-game only.")]
         [CommandUsage("incursion now")]
@@ -38,6 +55,10 @@ namespace MHServerEmu.Commands.Implementations
 
             return $"Invader spawned: {entity.PrototypeName} (id {entity.Id}).";
         }
+
+        #endregion
+
+        #region spawn
 
         [Command("spawn")]
         [CommandDescription("Spawns a specific incursion invader by name pattern near your avatar. In-game only.")]
@@ -61,6 +82,10 @@ namespace MHServerEmu.Commands.Implementations
             return $"Invader spawned: {entity.PrototypeName} (id {entity.Id}).";
         }
 
+        #endregion
+
+        #region start
+
         [Command("start")]
         [CommandDescription("Enables incursion spawning process-wide.")]
         [CommandUsage("incursion start")]
@@ -72,6 +97,10 @@ namespace MHServerEmu.Commands.Implementations
             bool changed = IncursionManager.EnableSpawning();
             return changed ? "Incursion spawning enabled." : "Incursion spawning was already enabled.";
         }
+
+        #endregion
+
+        #region stop
 
         [Command("stop")]
         [CommandDescription("Disables incursion spawning process-wide.")]
@@ -85,6 +114,10 @@ namespace MHServerEmu.Commands.Implementations
             return changed ? "Incursion spawning disabled." : "Incursion spawning was already disabled.";
         }
 
+        #endregion
+
+        #region status
+
         [Command("status")]
         [CommandDescription("Shows the current incursion system state and configuration.")]
         [CommandUsage("incursion status")]
@@ -95,6 +128,10 @@ namespace MHServerEmu.Commands.Implementations
 
             return IncursionManager.GetStatusString();
         }
+
+        #endregion
+
+        #region debug
 
         [Command("debug")]
         [CommandDescription("Toggles verbose incursion enemy diagnostics.")]
@@ -124,6 +161,10 @@ namespace MHServerEmu.Commands.Implementations
             return $"Incursion enemy verbose logging {(enabled ? "enabled" : "disabled")}.";
         }
 
+        #endregion
+
+        #region enemy
+
         [Command("enemy")]
         [CommandDescription("Sets the invader prototype by name pattern (searches agent prototypes). Works in-game and from the server console.")]
         [CommandUsage("incursion enemy [pattern]")]
@@ -138,6 +179,10 @@ namespace MHServerEmu.Commands.Implementations
 
             return IncursionManager.SetEnemyStatic(enemyRef);
         }
+
+        #endregion
+
+        #region trial
 
         [Command("trial")]
         [CommandDescription("Starts or stops an incursion trial: a 1v1 gauntlet against incursion enemy types. Optionally filter by mode.")]
@@ -165,6 +210,10 @@ namespace MHServerEmu.Commands.Implementations
             return game.IncursionManager.StartTrial(player, mode);
         }
 
+        #endregion
+
+        #region hunt
+
         [Command("hunt")]
         [CommandDescription("Shows incursion hunt completion status, or resets hunt data. Hunt tracks unique enemy encounters per player and per character.")]
         [CommandUsage("incursion hunt [reset [all]]")]
@@ -187,6 +236,10 @@ namespace MHServerEmu.Commands.Implementations
             // Default: show status
             return IncursionManager.GetHuntStatusString(player);
         }
+
+        #endregion
+
+        #region helpers
 
         /// <summary>
         /// Resolves an agent prototype from a name pattern.
@@ -237,5 +290,7 @@ namespace MHServerEmu.Commands.Implementations
             error = "You do not have enough privileges to use incursion commands (IncursionCommandsRequireAdmin is enabled).";
             return false;
         }
+
+        #endregion
     }
 }

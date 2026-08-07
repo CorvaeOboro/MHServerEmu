@@ -1,3 +1,18 @@
+// =============================================================================
+//  MOD Note - commands
+// =============================================================================
+//  Feature:    Area design note placement tool. Marks world positions for
+//              enemy placement, event design, etc. Notes are persisted to a
+//              JSON file under Logs/AreaNotes/ and rendered as invisible
+//              nameplate markers in-world.
+//  Commands:   !note place | list | clear | remove | save | status | clearall
+//  Access  :   Admin only (in-game); server console always allowed.
+//  Example :   "!note place boss good spawn for vampire lord"
+//  Example :   "!note remove NOTE_BOSS_01"
+//  Example :   "!note save"        = flush all notes to JSON
+//  Example :   "!note clearall"    = clear every note across all regions
+// =============================================================================
+
 using System.Text;
 using MHServerEmu.Commands.Attributes;
 using MHServerEmu.Core.Network;
@@ -12,8 +27,10 @@ namespace MHServerEmu.Commands.Implementations
 {
     [CommandGroup("note")]
     [CommandGroupDescription("Area design note placement tool. Marks world positions for enemy placement, event design, etc.")]
-    public class NoteCommands : CommandGroup
+    public class ModNoteCommands : CommandGroup
     {
+        #region place
+
         [Command("place")]
         [CommandDescription("Places a note at your current position with the given category. Spawns an invisible nameplate marker.")]
         [CommandUsage("note place <category> [comment...]\nCategories: boss, mob, miniboss, or any custom word.\nExample: !note place boss good spawn for vampire lord")]
@@ -44,6 +61,10 @@ namespace MHServerEmu.Commands.Implementations
             string commentPart = string.IsNullOrEmpty(comment) ? "" : $". Comment: \"{comment}\"";
             return $"Placed {label} at {pos}{commentPart}";
         }
+
+        #endregion
+
+        #region list
 
         [Command("list")]
         [CommandDescription("Lists all notes in the current region.")]
@@ -80,6 +101,10 @@ namespace MHServerEmu.Commands.Implementations
             return string.Empty;
         }
 
+        #endregion
+
+        #region clear
+
         [Command("clear")]
         [CommandDescription("Clears all notes in the current region and despawns their markers.")]
         [CommandUsage("note clear")]
@@ -105,6 +130,10 @@ namespace MHServerEmu.Commands.Implementations
                 : $"No notes to clear in '{region.PrototypeName}'.";
         }
 
+        #endregion
+
+        #region remove
+
         [Command("remove")]
         [CommandDescription("Removes a specific note by label (e.g. NOTE_BOSS_01) and despawns its marker.")]
         [CommandUsage("note remove <label>")]
@@ -125,6 +154,10 @@ namespace MHServerEmu.Commands.Implementations
                 : $"Note '{label}' not found.";
         }
 
+        #endregion
+
+        #region save
+
         [Command("save")]
         [CommandDescription("Flushes all notes to a JSON file in Logs/AreaNotes/.")]
         [CommandUsage("note save")]
@@ -137,6 +170,10 @@ namespace MHServerEmu.Commands.Implementations
             return result.StartsWith("Error") ? result : $"Saved notes to: {result}";
         }
 
+        #endregion
+
+        #region status
+
         [Command("status")]
         [CommandDescription("Shows a summary of all placed notes across all regions.")]
         [CommandUsage("note status")]
@@ -147,6 +184,10 @@ namespace MHServerEmu.Commands.Implementations
 
             return AreaNoteCollator.GetSummary();
         }
+
+        #endregion
+
+        #region clearall
 
         [Command("clearall")]
         [CommandDescription("Clears ALL notes across all regions and despawns their markers.")]
@@ -164,6 +205,10 @@ namespace MHServerEmu.Commands.Implementations
             return $"Cleared all {count} note(s) across all regions.";
         }
 
+        #endregion
+
+        #region helpers
+
         private static bool HasAccess(NetClient client, out string error)
         {
             error = null;
@@ -178,5 +223,7 @@ namespace MHServerEmu.Commands.Implementations
             error = "You need admin privileges to use note commands.";
             return false;
         }
+
+        #endregion
     }
 }

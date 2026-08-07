@@ -16,8 +16,10 @@ namespace MHServerEmu.Commands.Implementations
     [CommandGroup("recap")]
     [CommandGroupDescription("Re-display your last death recap in chat.")]
     [CommandGroupFlags(CommandGroupFlags.SingleCommand)]
-    public class DeathRecapCommands : CommandGroup
+    public class ModDeathRecapCommands : CommandGroup
     {
+        #region recap
+
         [DefaultCommand]
         [CommandInvokerType(CommandInvokerType.Client)]
         public string Recap(string[] @params, NetClient client)
@@ -33,5 +35,7 @@ namespace MHServerEmu.Commands.Implementations
 
             return "No death recap available. Die first, then use !recap.";
         }
+
+        #endregion
     }
 }

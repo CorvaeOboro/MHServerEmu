@@ -9,6 +9,16 @@
 //   It intercepts the boss's power collection to inject bonus powers, schedule timed
 //   casts, and spawn visual proxy entities for powers that need a separate render body.
 //   Supports pattern-based casting sequences and cooldown management per augmented power.
+//  currently the VampireBloodLord casts them herself ( causing T pose ) but then 
+// immeadiately uses one of her own powers to play that animation and cover up the Tpose . 
+// currently we see the T pose most on the LineCascade type which casts the powers in sequence 
+// perhaps not enough time inbetween .
+// previous attempts at spawning proxy invisible avatars caused them to become visible ,
+// there are lots of buggy cases where the 3d mesh of the avatar character becomes visible ,
+// for example there seems to be a client side optimization where if the 3d mesh of 
+// another avatar exists then they are maybe cached together or something that affects both 
+// visual inctances of that character , incursion spoofed nameplated for example need to 
+// cycle thru avatars to not overlap with existing .
 //
 //  VERSION:: 20260713
 // =============================================================================

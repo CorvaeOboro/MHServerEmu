@@ -5,8 +5,15 @@ MHServerEmu is a server emulator for Marvel Heroes.
 
 | [DOWNLOAD](https://github.com/CorvaeOboro/MHServerEmu/archive/refs/heads/master.zip) | [VIEW MOD WEBSITE](https://corvaeoboro.github.io/MHServerEmu/) | 
 
+feel free to integrate and modify any of the mods for modpacks or custom servers !
+ - check out these other great modded server projects that were very inspiring =
+
+| Lord Unborn | TruSkillzzRuns | Doods | mtzimas92 |
+| --- | --- | --- | --- |
+| [GITHUB](https://github.com/lordunborn/MHServerEmu) | [GITHUB](https://github.com/TruSkillzzRuns/MHServerEmu) | [GITHUB](https://github.com/Doodswh/MHServerEmu/tree/COA_Build) | [GITHUB](https://github.com/mtzimas92/MHServerEmu) |
+
 ## MODS
-[LootFilter](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_LootFilter.html) | [StashAffinity](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_StashAffinity.html) | [ItemPickupAuto](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_ItemPickupAuto.html) | [OrbPickupRadius](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_OrbPickupRadius.html) | [ChestOpenAuto](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_ChestOpenAuto.html) | [ThrowableDisable](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_ThrowableDisable.html) | [InteractNearbyAuto](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_InteractNearbyAuto.html) | [DangerRoomCombine](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_DangerRoomCombine.html) | [Incursion](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_Incursion.html) | [CharactersAdditional](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_CharactersAdditional.html)
+[LootFilter](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_LootFilter.html) | [StashAffinity](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_StashAffinity.html) | [ItemPickupAuto](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_ItemPickupAuto.html) | [OrbPickupRadius](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_OrbPickupRadius.html) | [ChestOpenAuto](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_ChestOpenAuto.html) | [ThrowableDisable](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_ThrowableDisable.html) | [InteractNearbyAuto](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_InteractNearbyAuto.html) | [DangerRoomCombine](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_DangerRoomCombine.html) | [Incursion](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_Incursion.html) | [CharactersAdditional](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_CharactersAdditional.html) | [Calamity](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_Calamity.html) | [DeathRecap](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_DeathRecap.html) | [AreaNotes](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_Note.html) | [ItemMergeBestAffix](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_ItemMergeBestAffix.html) | 
 
 **Server Mods**
 - [Loot Filter](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_LootFilter.html) - Per-player rarity filtering for unwanted drops for additional item types (ring, medal, insignia, team-up, catalyst, etc.). Set globally or per-hero via commands.
@@ -26,20 +33,35 @@ MHServerEmu is a server emulator for Marvel Heroes.
 - [![Incursion](docs/Mods/marvel_heroes_omega_mod_incursion_title_wide.png)](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_Incursion.html)
 - [CharactersAdditional](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_CharactersAdditional.html) - Swap your hero into playable Team-Up characters
 - [![CharactersAdditional](docs/Mods/marvel_heroes_omega_mod_playas_jubilee.webp)](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_CharactersAdditional.html)
+- [Calamity](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_Calamity.html) - Short themed scenario encounters with customized enemies wielding augmented powers.
+- [Death Recap](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_DeathRecap.html) - Shows the top damage sources in chat on death.
+- [Area Notes](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_Note.html) - Place labelled map pins at world positions for area design.
+- [Item Merge Best Affix](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_ItemMergeBestAffix.html) - Merges pairs of  items into one with the best rolled stat values from both sources.
+- [![Item Merge Best Affix](docs/Mods/marvel_heroes_omega_mod_item_merge_best_affix.png)](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_ItemMergeBestAffix.html)
 
 
 **Client Mods**
+Client art and UI mods are hosted in the [marvel_heroes_omega_art_mods](https://github.com/CorvaeOboro/marvel_heroes_omega_art_mods) repository.
+- [Dark Runes](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_DarkRunes.html) - Dark-themed replacements for rune item icons.
+- [![Dark Runes](https://raw.githubusercontent.com/CorvaeOboro/marvel_heroes_omega_art_mods/main/ITEM/ITEM_DarkRunes/00_ITEM_DarkRunes.png)](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_DarkRunes.html)
+- [Uru Reforged](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_UruReforged.html) - Reforged replacements for Uru-Forged item icons.
+- [![Uru Reforged](https://raw.githubusercontent.com/CorvaeOboro/marvel_heroes_omega_art_mods/main/ITEM/ITEM_UruReForged/00_ITEM_UruReForged.png)](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_UruReforged.html)
+- [Artifacts Armor](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_ArtifactsArmor.html) - Ancient Artifacts of powers cosmic, awakened Armor enchanted by the techno-logical.
+- [![Artifacts Armor](https://raw.githubusercontent.com/CorvaeOboro/marvel_heroes_omega_art_mods/main/ITEM/ITEM_ArtifactsArmor/00_ITEM_ArtifactsArmor.png)](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_ArtifactsArmor.html)
+- [Battleforged Baubles](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_BattleforgedBaubles.html) - Bionically built Baubles forged in Battles from the beyond.
+- [![Battleforged Baubles](https://raw.githubusercontent.com/CorvaeOboro/marvel_heroes_omega_art_mods/main/ITEM/ITEM_BattleforgedBaubles/00_ITEM_BattleforgedBaubles.png)](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_BattleforgedBaubles.html)
+- [No Glass Overlay](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_NoGlassOverlay.html) - Removes the glass bevel emboss from item and power icons.
+- [![No Glass Overlay](https://raw.githubusercontent.com/CorvaeOboro/marvel_heroes_omega_art_mods/main/UI/UI_Item_NoGlassOverlay_compare.webp)](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_NoGlassOverlay.html)
 - [Display Message Removal](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_DisplayMessageRemoval.html) - Suppresses on-screen power failure messages (e.g. "Power Not Ready")
-- [![Display Message Removal](docs/Mods/marvel_heroes_omega_mod_display_message_removal.png)](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_DisplayMessageRemoval.html)
-- [Sound Silencer](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_SoundSilencer.html) - Mutes unwanted voicelines and SFX 
+- [![Display Message Removal](https://raw.githubusercontent.com/CorvaeOboro/marvel_heroes_omega_art_mods/main/UI/marvel_heroes_omega_mod_display_message_removal.png)](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_DisplayMessageRemoval.html)
+- [Sound Silencer](https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_SoundSilencer.html) - Mutes unwanted voicelines and SFX (separate repo)
 - <a href="https://corvaeoboro.github.io/MHServerEmu/Mods/Mods_SoundSilencer.html"><img src="https://raw.githubusercontent.com/CorvaeOboro/MH_PCK_SoundSilencer/main/docs/MH_PCK_SoundSilencer_header.png" alt="Sound Silencer" height="400"></a>
+
+Downloads: [DarkRunes](https://raw.githubusercontent.com/CorvaeOboro/marvel_heroes_omega_art_mods/main/00_MODS/ITEM_DarkRunes_20260630.zip) | [UruReForged](https://raw.githubusercontent.com/CorvaeOboro/marvel_heroes_omega_art_mods/main/00_MODS/ITEM_UruReForged_20260630.zip) | [NoGlassOverlay](https://raw.githubusercontent.com/CorvaeOboro/marvel_heroes_omega_art_mods/main/00_MODS/UI_Item_NoGlassOverlay_20260630.zip) | [PowerNotReady](https://raw.githubusercontent.com/CorvaeOboro/marvel_heroes_omega_art_mods/main/00_MODS/PowerNotReady_removal.zip)
 
 ## MODDED INSTALL
 - backup any existing MHServerEmu and accounts .db 
 - build the server using Build.bat
-
-- for increased Orb pickup radius = copy the patch into the built serveremu ( MHServerEmu\bin\x64\Release\net8.0\Data\Game\Patches )
-- to remove the "Power Not Ready" message  = copy the .string file in the /client folder to your game installation folder ( C:\Steam\steamapps\common\Marvel Heroes\Data\Game\Loco\eng.all)
 - adjust the settings in the config.ini of server to you preference defaults are all enabled 
 - start server
 - commands in game : `!filter list` , for example show only cosmic+ rings = `!filter set ring epic`  

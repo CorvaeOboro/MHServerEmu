@@ -16,6 +16,9 @@
          * built-in access types.
          */
 
+        // ModOverlay DPS Tracker - required to POST /webapi/dps/reset (GET is open/localhost-only)
+        ModOverlayDpsReset = 100000,
+
         NumTypes,
     }
 }

@@ -330,7 +330,7 @@ namespace MHServerEmu.Games.Entities.CalamityEntity
                     ChangePositionFlags.ForceUpdate);
             }
 
-            // Reassert properties after spawn (some may be overwritten during initialization).
+            // Reassert properties after spawn (some may be overwritten during initialization) .
             entity.Properties[PropertyEnum.Untargetable] = true;
             entity.Properties[PropertyEnum.Unaffectable] = true;
             entity.Properties[PropertyEnum.Invulnerable] = true;

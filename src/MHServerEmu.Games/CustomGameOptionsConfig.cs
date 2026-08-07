@@ -106,17 +106,24 @@ namespace MHServerEmu.Games
         // MOD DANGER ROOM COMBINE COMMAND = combines lower-rarity scenarios into higher-rarity ones
         public bool ModDangerRoomCombineCommandEnable { get; private set; } = true;
 
+        // MOD ITEM MERGE BEST AFFIX = merges two identical items into one with best affix rolls, costs 1 Cosmic Essence (or free)
+        public bool ModItemMergeBestAffixCommandEnable { get; private set; } = true;
+        public string ModItemMergeBestAffixCurrencyProtoName { get; private set; } = "Entity/Items/Crafting/Ingredients/CosmicEssence.prototype";
+        public bool ModItemMergeBestAffixFree { get; private set; } = false;
+        public bool ModItemMergeBestAffixSkipBoundItems { get; private set; } = false;
+        public bool ModItemMergeBestAffixLoggingEnable { get; private set; } = false;
+        public int ModItemMergeBestAffixSeedSearchCount { get; private set; } = 100000;
+        public int ModItemMergeBestAffixSeedBatchSize { get; private set; } = 1000;
+
         // MOD STASH AFFINITY = redirects items to stash tabs whose custom names match item type
         public bool ModStashAffinityEnable { get; private set; } = true;
         public bool ModStashAffinityLoggingEnable { get; private set; } = false;
 
-        // REVIEW PROP PREVIEW = dev tool for exploring and previewing game props in-world
+        // REVIEW PROP PREVIEW = WIP dev tool for exploring and previewing game props in-world
         public bool ReviewPropPreviewLoggingEnable { get; private set; } = false;
-
-        // REVIEW DECO PREFAB = dev tool for multi-prop arrangements with VFX
+        // REVIEW DECO PREFAB = WIP dev tool for multi-prop arrangements with VFX
         public bool ReviewDecoPrefabLoggingEnable { get; private set; } = false;
-
-        // REVIEW MATERIAL OVERRIDE = dev tool for material/texture/model override research
+        // REVIEW MATERIAL OVERRIDE = WIP dev tool for material/texture/model override research
         public bool ReviewMaterialOverrideLoggingEnable { get; private set; } = false;
 
         // DEATH RECAP = chat output of biggest damage sources moments before death
@@ -126,6 +133,13 @@ namespace MHServerEmu.Games
         public int DeathRecapNameLength { get; private set; } = 3;
         public int DeathRecapDamageTypeLength { get; private set; } = 1;
         public bool DeathRecapLoggingEnable { get; private set; } = false;
+
+        // MODOVERLAY = server-side data feeds for the MhServerOverlay tool (DPS meter + condition panel)
+        public bool ModOverlayEnable { get; private set; } = false;
+        // ModOverlay DPS TRACKER = server-side damage aggregation for the MhServerOverlay
+        public bool ModOverlayDpsTrackerEnable { get; private set; } = false;
+        // ModOverlay CONDITION TRACKER = server-side condition (buff/debuff) snapshots for the MhServerOverlay
+        public bool ModOverlayConditionTrackerEnable { get; private set; } = false;
 
         // VAMPIRE BLOOD RITUAL = custom scenario entered via Cloak NPC in Avengers Tower
         public bool VampireBloodRitualEventEnable { get; private set; } = true;

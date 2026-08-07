@@ -1,3 +1,18 @@
+// =============================================================================
+//  MOD PlayableExpanded - commands
+// =============================================================================
+//  Feature:    Play as an expanded character built from Team-Up and other
+//              assets. Swap into dedicated characters or generic Team-Up
+//              prototypes, restore your hero's original powers, and inspect
+//              the available roster.
+//  Commands:   !playas <pattern> | off | me | status | list
+//  Config :    PlayableExpandedCommandsRequireAdmin in Config.ini
+//  Example :   "!playas Spider-Man"  = swap into matching expanded character
+//  Example :   "!playas off"         = swap back to your hero
+//  Example :   "!playas me"          = restore your hero's original powers
+//  Example :   "!playas list venom"  = list expanded characters matching "venom"
+// =============================================================================
+
 using System.Text;
 using MHServerEmu.Commands.Attributes;
 using MHServerEmu.Core.Config;
@@ -14,8 +29,10 @@ namespace MHServerEmu.Commands.Implementations
 {
     [CommandGroup("playas")]
     [CommandGroupDescription("Play as an expanded character (PlayableExpanded - new playable characters built from Team-Up and other assets).")]
-    public class PlayableExpandedCommands : CommandGroup
+    public class ModPlayableExpandedCommands : CommandGroup
     {
+        #region swap (default)
+
         [DefaultCommand]
         [CommandDescription("Swaps your hero into the expanded character matching the name pattern. In-game only.")]
         [CommandUsage("playas <pattern>")]
@@ -36,6 +53,10 @@ namespace MHServerEmu.Commands.Implementations
             return avatar.EnterPlayableExpanded(character);
         }
 
+        #endregion
+
+        #region off
+
         [Command("off")]
         [CommandDescription("Swaps back to your hero.")]
         [CommandUsage("playas off")]
@@ -49,6 +70,10 @@ namespace MHServerEmu.Commands.Implementations
 
             return avatar.ExitPlayableExpanded();
         }
+
+        #endregion
+
+        #region me
 
         [Command("me")]
         [CommandDescription("Restores your current hero's original powers. Use this if your powers were permanently messed up by previous playas sessions.")]
@@ -69,6 +94,10 @@ namespace MHServerEmu.Commands.Implementations
             return "Your hero's powers have been restored. If you were in playas mode, it has been turned off.";
         }
 
+        #endregion
+
+        #region status
+
         [Command("status")]
         [CommandDescription("Shows the current play-as state.")]
         [CommandUsage("playas status")]
@@ -85,6 +114,10 @@ namespace MHServerEmu.Commands.Implementations
 
             return $"Currently playing as {avatar.PlayableExpanded.Character?.DisplayName}.";
         }
+
+        #endregion
+
+        #region list
 
         [Command("list")]
         [CommandDescription("Lists dedicated expanded characters and Team-Up prototypes matching an optional pattern.")]
@@ -137,6 +170,10 @@ namespace MHServerEmu.Commands.Implementations
             return sb.ToString();
         }
 
+        #endregion
+
+        #region helpers
+
         private static string GetShortName(string prototypeName)
         {
             int index = prototypeName.LastIndexOf('/');
@@ -181,5 +218,7 @@ namespace MHServerEmu.Commands.Implementations
             error = "You do not have enough privileges to use playas commands (PlayableExpandedCommandsRequireAdmin is enabled).";
             return false;
         }
+
+        #endregion
     }
 }

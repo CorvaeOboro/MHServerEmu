@@ -1,3 +1,13 @@
+// =============================================================================
+//  MOD DangerRoom - commands
+// =============================================================================
+//  Feature:    Combines lower-rarity Danger Room scenarios into higher-rarity
+//              ones so players can upgrade their scenario collection.
+//  Commands:   !dangerroom combine [maxRarity]
+//  Example :   "!dangerroom combine"        = combine up to Epic rarity (default)
+//  Example :   "!dangerroom combine Cosmic" = combine up to Cosmic rarity
+// =============================================================================
+
 using MHServerEmu.Commands.Attributes;
 using MHServerEmu.Core.Network;
 using MHServerEmu.Games.Entities;
@@ -9,8 +19,10 @@ namespace MHServerEmu.Commands.Implementations
 {
     [CommandGroup("dangerroom")]
     [CommandGroupDescription("Danger Room scenario management.")]
-    public class DangerRoomCommands : CommandGroup
+    public class ModDangerRoomCommands : CommandGroup
     {
+        #region helpers
+
         private static Dictionary<string, PrototypeId> _rarityNameMap;
         private static readonly object _rarityMapLock = new();
 
@@ -68,6 +80,10 @@ namespace MHServerEmu.Commands.Implementations
             return epicProto?.Tier ?? int.MaxValue;
         }
 
+        #endregion
+
+        #region combine
+
         [Command("combine")]
         [CommandDescription("Combines lower-rarity Danger Room scenarios into higher-rarity ones.")]
         [CommandUsage("dangerroom combine [maxRarity]")]
@@ -94,5 +110,7 @@ namespace MHServerEmu.Commands.Implementations
 
             return player.CombineModDangerRoomScenarios(maxTier);
         }
+
+        #endregion
     }
 }

@@ -40,6 +40,18 @@ namespace MHServerEmu.WebFrontend
 
             _webService = new(webServiceSettings);
 
+            // SECURITY: Warn if the WebFrontend is bound to a non-localhost address.
+            // The /webapi/dps GET endpoint is open (no API key) and exposes player names
+            // and damage data. If the server is reachable from the network, any client
+            // can read this data. The POST /webapi/dps/reset endpoint requires an API key,
+            // but the GET endpoint does not - by design, for overlay convenience.
+            if (config.Address != "localhost" && config.Address != "127.0.0.1" && config.Address != "::1")
+            {
+                Logger.Warn($"WebFrontend is bound to '{config.Address}' (non-localhost). " +
+                    "The /webapi/dps endpoint exposes player names and damage data without authentication. " +
+                    "Ensure the server is behind a firewall or reverse proxy, or set Address=localhost in Config.ini.");
+            }
+
             // Register the protobuf handler to the /Login/IndexPB path for compatibility with legacy reverse proxy setups.
             // We should probably prefer to use /AuthServer/Login/IndexPB because it's more accurate to what Gazillion had.
             ProtobufWebHandler protobufHandler = new(config.EnableLoginRateLimit, TimeSpan.FromMilliseconds(config.LoginRateLimitCostMS), config.LoginRateLimitBurst);
@@ -130,6 +142,16 @@ namespace MHServerEmu.WebFrontend
             _webService.RegisterHandler("/ServerStatus", new ServerStatusWebHandler());
             _webService.RegisterHandler("/RegionReport", new RegionReportWebHandler());
             _webService.RegisterHandler("/Metrics/Performance", new MetricsPerformanceWebHandler());
+
+            // ModOverlay DPS Tracker - server-side damage data for the MhServerOverlay
+            //   GET  /webapi/dps         - open (localhost-only by default), returns DPS snapshot
+            //   POST /webapi/dps/reset   - requires ModOverlayDpsReset API key, clears all DPS data
+            _webService.RegisterHandler("/webapi/dps",       new ModOverlayDpsWebHandler());
+            _webService.RegisterHandler("/webapi/dps/reset", new ModOverlayDpsResetWebHandler());
+
+            // ModOverlay Condition Tracker - server-side buff/debuff data for the MhServerOverlay
+            //   GET  /webapi/conditions  - open (localhost-only by default), returns condition snapshot
+            _webService.RegisterHandler("/webapi/conditions", new ModOverlayConditionsWebHandler());
         }
 
         private void InitializeWebDashboard(string dashboardDirectoryName, string localPath)

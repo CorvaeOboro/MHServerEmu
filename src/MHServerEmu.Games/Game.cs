@@ -45,7 +45,7 @@ namespace MHServerEmu.Games
         GameInstanceCrash
     }
 
-    public class Game
+    public partial class Game
     {
         public const string Version = "1.52.0.1700";
 
@@ -201,6 +201,12 @@ namespace MHServerEmu.Games
             UpdateLiveTuning();                                 // Check if live tuning data is out of date
 
             UpdateFixedTime();                                  // Update simulation state
+
+            // [ModOverlay ConditionTracker] Snapshot player conditions for the overlay
+            //   see Game.ModOverlayConditionTracker.cs
+            //   Master switch check here avoids the method call entirely when disabled.
+            if (CustomGameOptions?.ModOverlayEnable == true)
+                ModOverlaySnapshotConditions();
 
             SendServerFrameProfile();
             RecordPerformanceMetrics();

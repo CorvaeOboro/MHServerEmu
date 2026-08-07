@@ -105,7 +105,7 @@ namespace MHServerEmu.Games.Entities.CalamityEntity
 
         /// <summary>
         /// Main entry point: spawns all enemies, minibosses, boss, and ritual prop.
-        /// Called from Region.Initialize() when the region is the Princess Bar.
+        /// Called from Region.Initialize() when the region is the HulkBusters
         /// </summary>
         public void Initialize()
         {
